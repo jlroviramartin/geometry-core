@@ -1,0 +1,134 @@
+delimiters "$", "$"
+
+BuffVector(desc) ::= <<
+package $desc._package$;
+
+/**
+ * A {@code BuffVector$desc.dim$\} is a read/write $desc.dim$ dimensional collection of values
+ * that represents a vector.
+ */
+public interface BuffVector$desc.dim$ extends BuffTuple$desc.dim$, Vector$desc.dim$ {
+
+    /**
+     * This method sets {@code this} vector to an unit vector.
+     *
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ setUnit();
+
+    /**
+     * This method adds {@code this} vector to {@code other} vector and sets the result.
+     * <p>
+     * {@code this = this + other}
+     *
+     * @param other Other vector.
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ addAndSet(Vector$desc.dim$ other);
+
+    /**
+     * This method subs {@code this} vector to {@code other} vector and sets the result.
+     * <p>
+     * {@code this = this - other}
+     *
+     * @param other Other vector.
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ subAndSet(Vector$desc.dim$ other);
+
+    /**
+     * This method multiplies {@code this} vector to {@code other} vector (coordinate by coordenate) and sets the result.
+     * <p>
+     * {@code this = this * other}
+     *
+     * @param other Other vector.
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ simpleMulAndSet(Vector$desc.dim$ other);
+
+    /**
+     * This method divides {@code this} vector by {@code other} vector (coordinate by coordenate) and sets the result.
+     * <p>
+     * {@code this = this / other}
+     *
+     * @param other Other vector.
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ simpleDivAndSet(Vector$desc.dim$ other);
+
+    /**
+     * This method multiplies {@code this} vector to {@code v} and sets the result.
+     * <p>
+     * {@code this = this * v}
+     *
+     * @param v Scalar.
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ mulAndSet(double v);
+
+    /**
+     * This method divides {@code this} vector by {@code v} and sets the result.
+     * <p>
+     * {@code this = this / v}
+     *
+     * @param v Scalar.
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ divAndSet(double v);
+
+    /**
+     * This method evaluates the negation of {@code this} vector and sets the result.
+     * <p>
+     * {@code this = -this}
+     *
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ negAndSet();
+
+    /**
+     * This method evaluates the absolute value of {@code this} vector and sets the result.
+     * <p>
+     * {@code this = abs( this )}
+     *
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ absAndSet();
+
+    /**
+     * This method evaluates the linear interpolation of {@code this} vector and {@code other} vector at {@code alpha} and sets the result.
+     * <p>
+     * {@code this = this * alpha + other * (1 - alpha)}
+     *
+     * @param other Other vector.
+     * @param alpha Interpolation.
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ lerpAndSet(Vector$desc.dim$ other, double alpha);
+
+    /**
+     * This method evaluates the linear combination of {@code this} vector and {@code other} vector at {@code alpha} and {@code beta} and sets the result.
+     * <p>
+     * {@code this = this * alpha + other * beta}
+     *
+     * @param other Other vector.
+     * @param alpha Interpolation for {@code this}.
+     * @param beta Interpolation for {@code other}.
+     * @return This vector.
+     */
+    BuffVector$desc.dim$ linealAndSet(Vector$desc.dim$ other, double alpha, double beta);
+
+    /**
+     * This method evaluates the vector projection of {@code this} vector over {@code where} vector and sets the result.
+     * <p>
+     * {@code this = this.scalarProjection(where) . where.getUnit()}
+     *
+     * @param where Other vector.
+     * @return This vector.
+     */
+    default BuffVector$desc.dim$ vectorProjectionAndSet(Vector$desc.dim$ where) {
+        Vector$desc.dim$ u = where.getUnit();
+        set(u.mul(dot(u)));
+        return this;
+    }
+}
+>>

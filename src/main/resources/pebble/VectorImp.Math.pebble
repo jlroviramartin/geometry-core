@@ -1,0 +1,241 @@
+{%  import "pebble/Tuple.Core.pebble" %}
+{%  macro Math( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="{{ desc.vectorName }}">
+    @Override
+    public boolean isUnit() {
+        return isUnit(EPSILON);
+    }
+
+    @Override
+    public boolean isUnit(double epsilon) {
+        return DoubleUtils.epsilonEquals(getLength(), 1, epsilon);
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} getUnit() {
+        return clone().setUnit();
+    }
+
+    @Override
+    public int getQuadrant() {
+        {{ GetQuadrant(desc) | indent(2) }}
+    }
+
+    @Override
+    public double getLengthL1() {
+        return {{ GetLengthL1(desc) | indent(4) }};
+    }
+{%      if desc.dim == 2 %}
+
+    @Override
+    public double getAngle() {
+        return (double) Math.atan2(getY(), getX());
+    }
+
+    @Override
+    public double angleTo({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = toTuple(other);
+
+        // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
+        return Math.atan2(getX() * _other.getY() - getY() * _other.getX(),
+                getX() * _other.getX() + getY() * _other.getY());
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} getPerpLeft() {
+        return clone().setPerpLeft();
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} getPerpRight() {
+        return clone().setPerpRight();
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} rotate(double angle) {
+        return clone().setRotate(angle);
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} rotateAndScale(double angle, double len) {
+        return clone().setRotateAndScale(angle, len);
+    }
+{%      endif %}
+
+    @Override
+    public {{ desc.vectorImpName }} add({{ desc.vectorName }} other) {
+        return clone().addAndSet(other);
+    }
+
+    public {{ desc.vectorImpName }} add({{ desc.vectorImpName }} other) {
+        return clone().addAndSet(other);
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} sub({{ desc.vectorName }} other) {
+        return clone().subAndSet(other);
+    }
+
+    public {{ desc.vectorImpName }} sub({{ desc.vectorImpName }} other) {
+        return clone().subAndSet(other);
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} simpleMul({{ desc.vectorName }} other) {
+        return clone().simpleMulAndSet(other);
+    }
+
+    public {{ desc.vectorImpName }} simpleMul({{ desc.vectorImpName }} other) {
+        return clone().simpleMulAndSet(other);
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} simpleDiv({{ desc.vectorName }} other) {
+        return clone().simpleDivAndSet(other);
+    }
+
+    public {{ desc.vectorImpName }} simpleDiv({{ desc.vectorImpName }} other) {
+        return clone().simpleDivAndSet(other);
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} mul(double v) {
+        return clone().mulAndSet(v);
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} div(double v) {
+        return clone().divAndSet(v);
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} neg() {
+        return clone().negAndSet();
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} abs() {
+        return clone().absAndSet();
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} lerp({{ desc.vectorName }} other, double alpha) {
+        return clone().lerpAndSet(other, alpha);
+    }
+
+    public {{ desc.vectorImpName }} lerp({{ desc.vectorImpName }} other, double alpha) {
+        return clone().lerpAndSet(other, alpha);
+    }
+
+    @Override
+    public double invLerp({{ desc.vectorName }} other, {{ desc.vectorName }} vLerp) {
+        {{ desc.tupleTypeName }} _other = toTuple(other);
+        {{ desc.tupleTypeName }} _vLerp = toTuple(vLerp);
+
+        {{ InvLerp(desc, "", "_other.", "_vLerp.") | indent(2) }}
+    }
+
+    public double invLerp({{ desc.vectorImpName }} other, {{ desc.vectorImpName }} vLerp) {
+        {{ InvLerp(desc, "", "other.", "vLerp.") | indent(2) }}
+    }
+
+    @Override
+    public {{ desc.vectorImpName }} lineal({{ desc.vectorName }} other, double alpha, double beta) {
+        return clone().linealAndSet(other, alpha, beta);
+    }
+
+    public {{ desc.vectorImpName }} lineal({{ desc.vectorImpName }} other, double alpha, double beta) {
+        return clone().linealAndSet(other, alpha, beta);
+    }
+
+    @Override
+    public double dot({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = toTuple(other);
+{%      dynmacro Math_dot1( desc, property ) %}
+get{{ property.upperName }}() * _other.get{{ property.upperName }}()
+{%-     enddynmacro %}
+        return {{ Properties( desc, " + ", Math_dot1 ) }};
+    }
+
+    public double dot({{ desc.vectorImpName }} other) {
+{%      dynmacro Math_dot2( desc, property ) %}
+get{{ property.upperName }}() * other.get{{ property.upperName }}()
+{%-     enddynmacro %}
+        return {{ Properties( desc, " + ", Math_dot2 ) }};
+    }
+{%      if desc.dim == 2 %}
+
+    @Override
+    public double cross({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = toTuple(other);
+
+        return getX() * _other.getY() - getY() * _other.getX();
+    }
+
+    public double cross({{ desc.vectorImpName }} other) {
+        return getX() * other.getY() - getY() * other.getX();
+    }
+{%      elseif desc.dim == 3 %}
+
+    @Override
+    public {{ desc.vectorImpName }} cross({{ desc.vectorName }} other) {
+        return clone().crossAndSet(other);
+    }
+
+    public {{ desc.vectorImpName }} cross({{ desc.vectorImpName }} other) {
+        return clone().crossAndSet(other);
+    }
+{%      endif %}
+
+    @Override
+    public {{ desc.vectorImpName }} vectorProjection({{ desc.vectorName }} where) {
+        return clone().vectorProjectionAndSet(where);
+    }
+
+    public {{ desc.vectorImpName }} vectorProjection({{ desc.vectorImpName }} where) {
+        return clone().vectorProjectionAndSet(where);
+    }
+//</editor-fold>
+{%  endmacro %}
+
+{#
+ # This macro renders the function GetLengthL1.
+ #}
+{%  macro GetLengthL1( desc, this="" ) %}
+{%      dynmacro GetLengthL1_anonymous1( desc, property ) %}
+Math.abs({{ p().this }}get{{ property.upperName }}())
+{%-     enddynmacro %}
+{{ Properties( desc, "%n+ ", GetLengthL1_anonymous1 ) }}
+{%- endmacro %}
+
+{#
+ # This macro renders the function InvLerp of the vector.
+ #}
+{%  macro InvLerp( desc, this="", other="other.", vLerp="vLerp." ) %}
+{#
+ #      v12 = other.sub(this)
+ #}
+{%      dynmacro InvLerp_anonymous1( desc, property ) %}
+double {{ property.name }}1 = {{ p().other }}get{{ property.upperName }}() - {{ p().this }}get{{ property.upperName }}();
+{%-     enddynmacro %}
+{{ Properties( desc, "%n", InvLerp_anonymous1 ) }}
+
+{#
+ #      v1Lerp = vLerp.sub(this)
+ #}
+{%      dynmacro InvLerp_anonymous2( desc, property ) %}
+double {{ property.name }}2 = {{ p().vLerp }}get{{ property.upperName }}() - {{ p().this }}get{{ property.upperName }}();
+{%-     enddynmacro %}
+{{ Properties( desc, "%n", InvLerp_anonymous2 ) }}
+
+{#
+ #      v12.dot( v1Lerp ) / v12.getLength()
+ #}
+{%      dynmacro InvLerp_anonymous3( desc, property ) %}
+{{ property.name }}1 * {{ property.name }}2
+{%-     enddynmacro %}
+{%      dynmacro InvLerp_anonymous4( desc, property ) %}
+{{ property.name }}1 * {{ property.name }}1
+{%-     enddynmacro %}
+return ({{ Properties( desc, " + ", InvLerp_anonymous3 ) }}) / Math.sqrt({{ Properties( desc, " + ", InvLerp_anonymous4 ) }});
+{%  endmacro %}

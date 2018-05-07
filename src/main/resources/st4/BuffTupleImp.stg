@@ -1,0 +1,139 @@
+delimiters "$", "$"
+
+import "TupleImp.stg"
+
+BuffTupleImp(desc) ::= <<
+package $desc._package$;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import essence.util.math.$desc.type$s.MathUtils;
+import essence.geometry.core.VectorFormatInfo;
+import $desc.corePackage$.Tuple$desc.dim$;
+import $desc.corePackage$.Tuple$desc.dim$_Number;
+import $desc.corePackage$.BuffTuple$desc.dim$;
+import $desc.corePackage$.BuffTuple$desc.dim$_Number;
+
+import static essence.util.math.$desc.type$s.MathUtils.EPSILON;
+
+/**
+ * Basic implementation of {@code BuffTuple$desc.dim$\} and {@code BuffTuple$desc.dim$_$desc.ctype$\}.
+ */
+public class BuffTuple$desc.dim$$desc.suffix$ implements BuffTuple$desc.dim$, BuffTuple$desc.dim$_$desc.ctype$ {
+
+$BuffTupleImp_Fields(desc)$
+
+$TupleImp_Constructors(desc, {BuffTuple$desc.dim$$desc.suffix$})$
+
+$TupleImp_Public(desc)$
+
+$TupleImp_Private(desc)$
+
+$TupleImp_Object(desc)$
+
+$BuffTupleImp_BuffTuple(desc)$
+
+$BuffTupleImp_BuffTuple_Number(desc)$
+
+$BuffTupleImp_BuffTuple_Type(desc)$
+
+$TupleImp_Tuple(desc)$
+
+$TupleImp_Tuple_Number(desc)$
+
+$TupleImp_Tuple_Type(desc)$
+
+$TupleImp_EpsilonEquatable(desc)$
+}
+>>
+
+BuffTupleImp_Fields(desc) ::= <<
+//<editor-fold defaultstate="collapsed" desc="fields">
+$desc.properties :{ property |
+    /** $property.upperName$ coordinate. */
+    private $property.type$ $property.name$;
+}$
+    private static final Logger LOG = Logger.getLogger(Tuple$desc.dim$$desc.suffix$.class.getName());
+    private static String format;
+//</editor-fold>
+>>
+
+BuffTupleImp_BuffTuple(desc) ::= <<
+//<editor-fold defaultstate="collapsed" desc="BuffTuple$desc.dim$">
+    /**
+     * This method sets the values of {@code this} tuple from the {@code other} tuple.
+     *
+     * @param other Where to get the values.
+     */
+    @Override
+    public BuffTuple$desc.dim$$desc.suffix$ set(Tuple$desc.dim$ other) {
+        Tuple$desc.dim$_$desc.ctype$ _other = toTuple(other);
+$desc.properties :{ property |
+        $property.name$ = _other.get$property.upperName$();
+}$
+        return this;
+    }
+
+    /**
+     * This method sets the values of {@code this} tuple to zero.
+     *
+     * @return This tuple.
+     */
+    @Override
+    public BuffTuple$desc.dim$$desc.suffix$ setZero() {
+        set($desc.properties :{ property | 0}; separator=", "$);
+        return this;
+    }
+//</editor-fold>
+>>
+
+BuffTupleImp_BuffTuple_Number(desc) ::= <<
+//<editor-fold defaultstate="collapsed" desc="BuffTuple$desc.dim$_Number">
+    @Override
+    public void setDouble($desc.properties :{ property | double $property.name$}; separator=", "$) {
+        set($desc.properties :{ property |($property.type$)$property.name$}; separator=", "$);
+    }
+
+    @Override
+    public void setFloat($desc.properties :{ property | float $property.name$}; separator=", "$) {
+        set($desc.properties :{ property |($property.type$)$property.name$}; separator=", "$);
+    }
+
+    @Override
+    public void setLong($desc.properties :{ property | long $property.name$}; separator=", "$) {
+        set($desc.properties :{ property |($property.type$)$property.name$}; separator=", "$);
+    }
+
+    @Override
+    public void setInt($desc.properties :{ property | int $property.name$}; separator=", "$) {
+        set($desc.properties :{ property |($property.type$)$property.name$}; separator=", "$);
+    }
+
+    @Override
+    public void setShort($desc.properties :{ property | short $property.name$}; separator=", "$) {
+        set($desc.properties :{ property |($property.type$)$property.name$}; separator=", "$);
+    }
+
+    @Override
+    public void setByte($desc.properties :{ property | byte $property.name$}; separator=", "$) {
+        set($desc.properties :{ property |($property.type$)$property.name$}; separator=", "$);
+    }
+//</editor-fold>
+>>
+
+BuffTupleImp_BuffTuple_Type(desc) ::= <<
+//<editor-fold defaultstate="collapsed" desc="BuffTuple$desc.dim$_$desc.ctype$">
+$desc.properties :{ property |
+    @Override
+    public void set$property.upperName$($property.type$ value) {
+        $property.name$ = value;
+    \}
+}; separator="\n"$
+    @Override
+    public void set($desc.properties :{ property | $property.type$ $property.name$}; separator=", "$) {
+$desc.properties :{ property |
+        this.$property.name$ = $property.name$;
+}$
+    }
+//</editor-fold>
+>>

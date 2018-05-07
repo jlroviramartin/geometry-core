@@ -1,0 +1,123 @@
+{#
+ # This macro renders all properties using a separator.
+ #}
+{%  macro Properties( desc, separator, macroItem ) %}
+{%      for property in desc.properties %}
+{%          if not (loop.first) %}{{ separator | nl }}{% endif %}
+{{ dynamic( macroItem, [desc, property] ) | nl }}
+{%      endfor %}
+{%  endmacro %}
+
+{%  macro PropertiesReverse( desc, separator, macroItem ) %}
+{%      for property in desc.properties | reverse %}
+{%          if not (loop.first) %}{{ separator | nl }}{% endif %}
+{{ dynamic( macroItem, [desc, property] ) | nl }}
+{%      endfor %}
+{%  endmacro %}
+
+{#
+ # This macro renders the type and name of all properties.
+ #}
+{%  macro TypeNameCommaSeparated( desc ) %}
+{%      dynmacro TypeNameCommaSeparated_anonymous( desc, property ) %}
+{{ property.type }} {{ property.name }}
+{%      enddynmacro %}
+{{ Properties( desc, ", ", TypeNameCommaSeparated_anonymous ) }}
+{%  endmacro %}
+
+{#
+ # This macro renders the name of all properties.
+ #}
+{%  macro NameCommaSeparated( desc ) %}
+{%      dynmacro NameCommaSeparated_anonymous( desc, property ) %}
+{{ property.name }}
+{%      enddynmacro %}
+{{ Properties( desc, ", ", NameCommaSeparated_anonymous ) }}
+{%  endmacro %}
+
+{%  macro FixedTypeNameCommaSeparated( desc, type ) %}
+{%      for property in desc.properties %}
+{%          if not (loop.first) %}, {% endif %}
+{{ type }} {{ property.name }}
+{%      endfor %}
+{%  endmacro %}
+
+{%  macro UnaryOperator( desc, op, this, type ) %}
+{%      dynmacro UnaryOperator_anonymous( desc, property ) %}
+{{ p().op }} {{ p().this }}get{{ property.upperName }}()
+{%-     enddynmacro %}
+({{ Properties( desc, ", ", UnaryOperator_anonymous ) }})
+{%- endmacro %}
+
+{%  macro UnaryFunction( desc, op, this, type ) %}
+{%      dynmacro UnaryFunction_anonymous( desc, property ) %}
+{{ p().op }}({{ p().this }}get{{ property.upperName }}())
+{%-     enddynmacro %}
+({{ Properties( desc, ", ", UnaryFunction_anonymous ) }})
+{%- endmacro %}
+
+{%  macro BinaryOperator( desc, op, this, other, type ) %}
+{%      dynmacro BinaryOperator_anonymous( desc, property ) %}
+{{ p().this }}get{{ property.upperName }}() {{ p().op }} {{ p().other }}get{{ property.upperName }}()
+{%-     enddynmacro %}
+({{ Properties( desc, ", ", BinaryOperator_anonymous ) }})
+{%- endmacro %}
+
+{%  macro BinaryOperator2( desc, op, this, other, type ) %}
+{%      dynmacro BinaryOperator2_anonymous( desc, property ) %}
+{{ p().this }}{{ property.name }} {{ p().op }} {{ p().other }}{{ property.name }}
+{%-     enddynmacro %}
+({{ Properties( desc, ", ", BinaryOperator2_anonymous ) }})
+{%- endmacro %}
+
+{%  macro BinaryFunction( desc, op, this, other ) %}
+{%      dynmacro BinaryFunction_anonymous( desc, property ) %}
+{{ p().op }}({{ p().this }}get{{ property.upperName }}(), {{ p().other }}get{{ property.upperName }}())
+{%-     enddynmacro %}
+({{ Properties( desc, ", ", BinaryFunction_anonymous ) }})
+{%- endmacro %}
+
+{%  macro BinaryOperatorScalar( desc, op, this, scalar ) %}
+{%      dynmacro BinaryOperatorScalar_anonymous( desc, property ) %}
+({{ property.type }})({{ p().this }}get{{ property.upperName }}() {{ p().op }} {{ p().scalar }})
+{%-     enddynmacro %}
+({{ Properties( desc, ", ", BinaryOperatorScalar_anonymous ) }})
+{%- endmacro %}
+
+
+
+{#
+ # This macro renders the function GetQuadrant.
+ #}
+{%  macro GetQuadrant( desc, this="" ) %}
+int v = 0;
+int p = 1;
+{%      for property in desc.properties %}
+if ({{ this }}get{{ property.upperName }}() < 0) {
+    v |= p;
+    p <<= 1;
+}
+{%      endfor %}
+return v;
+{%  endmacro %}
+
+{#
+ # This macro renders the function ProjectTo.
+ #}
+{%  macro ProjectTo( desc, this="", where="where." ) %}
+{%      dynmacro ProjectTo_anonymous1( desc, property ) %}
+{{ p().this }}get{{ property.upperName }}() * {{ p().where }}get{{ property.upperName }}()
+{%-     enddynmacro %}
+double a = {{ Properties( desc, "%n+ ", ProjectTo_anonymous1 ) | indent(2) }};
+
+{%      dynmacro ProjectTo_anonymous2( desc, property ) %}
+square({{ p().this }}get{{ property.upperName }}())
+{%-     enddynmacro %}
+double b = {{ Properties( desc, "%n+ ", ProjectTo_anonymous2 ) | indent(2) }};
+
+double c = a / b;
+{%      dynmacro ProjectTo_anonymous3( desc, property ) %}
+{{ p().where }}get{{ property.upperName }}() * c
+{%-     enddynmacro %}
+return new Point{{ desc.dim }}{{ desc.suffix }}({{ Properties( desc, ",%n", ProjectTo_anonymous3 ) | indent(2) }});
+{%- endmacro %}
