@@ -25,6 +25,7 @@ import java.util.Map;
 
 /**
  * New Line filter. This filter replaces the %n characters with system new line characters.
+ *
  * @author joseluis
  */
 public class NlFilter implements Filter {

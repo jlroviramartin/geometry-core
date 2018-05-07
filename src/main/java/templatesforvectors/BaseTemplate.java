@@ -28,11 +28,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import templatesforvectors.pebble.DynamicExtension;
+
+/*import java.net.URL;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import org.jtwig.environment.DefaultEnvironmentConfiguration;
@@ -44,8 +46,7 @@ import org.rythmengine.extension.ICodeType;
 import org.stringtemplate.v4.AutoIndentWriter;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupFile;
-import templatesforvectors.pebble.DynamicExtension;
+import org.stringtemplate.v4.STGroupFile;*/
 
 /**
  *
@@ -55,8 +56,8 @@ public abstract class BaseTemplate {
 
 //<editor-fold defaultstate="collapsed" desc="fields">
     protected final String mainPath;
-    private final RythmEngine rythmEngine;
-    private final EnvironmentConfiguration jtwigConfiguration;
+    /*private final RythmEngine rythmEngine;
+    private final EnvironmentConfiguration jtwigConfiguration;*/
 
     private final PebbleEngine pebbleEngine;
 
@@ -64,7 +65,7 @@ public abstract class BaseTemplate {
         //mainPath = "C:\\Users\\joseluis\\source\\Java\\TemplatesForVectors\\src\\generated\\java";
         mainPath = System.getProperty("user.dir") + "\\src\\generated\\java";
 
-        Map<String, Object> rythmConfiguration = new HashMap<>();
+        /*Map<String, Object> rythmConfiguration = new HashMap<>();
         rythmConfiguration.put(RythmConfigurationKey.CODEGEN_COMPACT_ENABLED.getKey(), false);
         rythmConfiguration.put(RythmConfigurationKey.HOME_TEMPLATE.getKey(), ".");
         rythmConfiguration.put(RythmConfigurationKey.HOME_TMP.getKey(), "C:/Temp/rythm/");
@@ -74,8 +75,8 @@ public abstract class BaseTemplate {
         //engine.registerFastTag(new RemoveLast());
 
         jtwigConfiguration = new EnvironmentConfigurationBuilder(new DefaultEnvironmentConfiguration())
-                /*.functions().add(new FrustifrusFunction()).and()*/
-                .build();
+                .functions().add(new FrustifrusFunction()).and()
+                .build();*/
 
         pebbleEngine = new PebbleEngine.Builder()
                 .addEscapingStrategy("none", x -> x)
@@ -87,7 +88,7 @@ public abstract class BaseTemplate {
 
     public abstract void execute();
 
-    protected Template loadSTTemplate(String fileName, String name) {
+    /*protected Template loadSTTemplate(String fileName, String name) {
         STGroup group = new STGroupFile(fileName);
         group.registerRenderer(String.class, new StringRenderer());
         return new MySTTemplate(group, name);
@@ -119,7 +120,7 @@ public abstract class BaseTemplate {
 
     protected Template loadRythmTemplate(File file) {
         return new MyRythmTemplate(file);
-    }
+    }*/
 
     protected Template loadPebbleResource(String resourceName) {
         try {
@@ -169,7 +170,7 @@ public abstract class BaseTemplate {
         void writeTo(BaseTemplate base, OutputStream str, Map<String, Object> params);
     }
 
-    protected static class MySTTemplate implements Template {
+    /*protected static class MySTTemplate implements Template {
 
         public MySTTemplate(STGroup group, String name) {
             this.group = group;
@@ -233,7 +234,7 @@ public abstract class BaseTemplate {
             //template.__setRenderArgs(params);
             //template.render(stream);
         }
-    }
+    }*/
 
     protected static class MyPebbleTemplate implements Template {
 

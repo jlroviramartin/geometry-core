@@ -42,17 +42,17 @@ public class ColorTemplates extends BaseTemplate {
     }
 
     private void buildSimple(int dim) {
-        VDesc desc = VDesc.getDefault(dim);
+        VectorDescription desc = VectorDescription.getDefault(dim);
         exec(color, desc, desc.getColorName(), desc._package);
     }
 
     private void buildFloat(int dim) {
-        VDesc desc = VDesc.getFloat(dim);
+        VectorDescription desc = VectorDescription.getFloat(dim);
         exec(colorImp, desc, desc.getColorImpName(), desc._package);
     }
 
     private void buildByte(int dim) {
-        VDesc desc = VDesc.getByte(dim);
+        VectorDescription desc = VectorDescription.getByte(dim);
         exec(colorImp, desc, desc.getColorImpName(), desc._package);
     }
 }

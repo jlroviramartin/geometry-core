@@ -23,7 +23,8 @@ package templatesforvectors;
  * @author joseluis
  */
 public class Pack {
-    MDesc matrixImp;
-    VDesc vector;
-    VDesc vectorImp;
+
+    MatrixDescrition matrixImp;
+    VectorDescription vector;
+    VectorDescription vectorImp;
 }

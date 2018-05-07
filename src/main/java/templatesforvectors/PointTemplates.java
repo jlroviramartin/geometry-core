@@ -42,22 +42,22 @@ public class PointTemplates extends BaseTemplate {
     }
 
     private void buildSimple(int dim) {
-        VDesc desc = VDesc.getDefault(dim);
+        VectorDescription desc = VectorDescription.getDefault(dim);
         exec(point, desc, desc.getPointName(), desc._package);
     }
 
     private void buildFloat(int dim) {
-        VDesc desc = VDesc.getFloat(dim);
+        VectorDescription desc = VectorDescription.getFloat(dim);
         exec(pointImp, desc, desc.getPointImpName(), desc._package);
     }
 
     private void buildDouble(int dim) {
-        VDesc desc = VDesc.getDouble(dim);
+        VectorDescription desc = VectorDescription.getDouble(dim);
         exec(pointImp, desc, desc.getPointImpName(), desc._package);
     }
 
     private void buildInteger(int dim) {
-        VDesc desc = VDesc.getInteger(dim);
+        VectorDescription desc = VectorDescription.getInteger(dim);
         exec(pointImp, desc, desc.getPointImpName(), desc._package);
     }
 }

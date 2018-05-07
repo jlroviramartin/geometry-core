@@ -22,14 +22,13 @@ package templatesforvectors;
  *
  * @author joseluis
  */
-public class MDim {
+public class VectorCell {
 
-    MDim(String name, String type, String ctype, int r, int c) {
+    VectorCell(String name, String type, String ctype, int index) {
         this.name = name;
         this.type = type;
         this.ctype = ctype;
-        this.r = r;
-        this.c = c;
+        this.index = index;
     }
 
     public String name;
@@ -40,7 +39,5 @@ public class MDim {
 
     public String type;
     public String ctype;
-    public int r;
-    public int c;
-
+    public int index;
 }

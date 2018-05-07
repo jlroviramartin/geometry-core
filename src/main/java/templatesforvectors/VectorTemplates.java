@@ -42,22 +42,22 @@ public class VectorTemplates extends BaseTemplate {
     }
 
     private void buildSimple(int dim) {
-        VDesc desc = VDesc.getDefault(dim);
+        VectorDescription desc = VectorDescription.getDefault(dim);
         exec(vector, desc, desc.getVectorName(), desc._package);
     }
 
     private void buildFloat(int dim) {
-        VDesc desc = VDesc.getFloat(dim);
+        VectorDescription desc = VectorDescription.getFloat(dim);
         exec(vectorImp, desc, desc.getVectorImpName(), desc._package);
     }
 
     private void buildDouble(int dim) {
-        VDesc desc = VDesc.getDouble(dim);
+        VectorDescription desc = VectorDescription.getDouble(dim);
         exec(vectorImp, desc, desc.getVectorImpName(), desc._package);
     }
 
     private void buildInteger(int dim) {
-        VDesc desc = VDesc.getInteger(dim);
+        VectorDescription desc = VectorDescription.getInteger(dim);
         exec(vectorImp, desc, desc.getVectorImpName(), desc._package);
     }
 }

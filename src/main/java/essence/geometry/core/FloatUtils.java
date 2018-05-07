@@ -35,8 +35,8 @@ public class FloatUtils {
 
     public static boolean epsilonEquals(float v1, float v2, double epsilon) {
         //return (System.Math.Abs(v2 - v1) <= epsilon);
-       // To resolve the PositiveInfinity / NegativeInfinity comparisons:
-         if (v2 > v1) {
+        // To resolve the PositiveInfinity / NegativeInfinity comparisons:
+        if (v2 > v1) {
             return v2 <= v1 + epsilon;
         } else {
             return v1 <= v2 + epsilon;

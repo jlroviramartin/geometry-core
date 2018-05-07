@@ -53,12 +53,11 @@
     </build>
 
     <dependencies>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>ST4</artifactId>
             <version>4.0.8</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jtwig/jtwig-core -->
         <dependency>
             <groupId>org.jtwig</groupId>
             <artifactId>jtwig-core</artifactId>
@@ -69,7 +68,7 @@
             <groupId>org.rythmengine</groupId>
             <artifactId>rythm-engine</artifactId>
             <version>1.2.2</version>
-        </dependency>
+        </dependency> -->
 
         <dependency>
             <groupId>com.mitchellbosecke</groupId>
@@ -83,11 +82,11 @@
             <version>1.9.3</version>
         </dependency>    
 
-        <dependency>
+        <!-- <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.7</version>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

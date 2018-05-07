@@ -21,11 +21,11 @@ package templatesforvectors;
 /**
  * Description of a tuple/vector/point.
  */
-public class VDesc {
+public class VectorDescription {
 
-    public static VDesc getDefault(int dim) {
+    public static VectorDescription getDefault(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
-        VDesc desc = new VDesc();
+        VectorDescription desc = new VectorDescription();
         desc._package = "essence.geometry.core";
         desc.corePackage = "essence.geometry.core";
         desc.dim = dim;
@@ -33,16 +33,16 @@ public class VDesc {
         desc.type = "";
         desc.ctype = "";
         desc.integral = false;
-        desc.properties = new VDim[dim];
+        desc.properties = new VectorCell[dim];
         for (int i = 0; i < dim; i++) {
-            desc.properties[i] = new VDim(names[i], desc.type, desc.ctype, i);
+            desc.properties[i] = new VectorCell(names[i], desc.type, desc.ctype, i);
         }
         return desc;
     }
 
-    public static VDesc getFloat(int dim) {
+    public static VectorDescription getFloat(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
-        VDesc desc = new VDesc();
+        VectorDescription desc = new VectorDescription();
         desc._package = "essence.geometry.core.floats";
         desc.corePackage = "essence.geometry.core";
         desc.dim = dim;
@@ -50,16 +50,16 @@ public class VDesc {
         desc.type = "float";
         desc.ctype = "Float";
         desc.integral = false;
-        desc.properties = new VDim[dim];
+        desc.properties = new VectorCell[dim];
         for (int i = 0; i < dim; i++) {
-            desc.properties[i] = new VDim(names[i], desc.type, desc.ctype, i);
+            desc.properties[i] = new VectorCell(names[i], desc.type, desc.ctype, i);
         }
         return desc;
     }
 
-    public static VDesc getDouble(int dim) {
+    public static VectorDescription getDouble(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
-        VDesc desc = new VDesc();
+        VectorDescription desc = new VectorDescription();
         desc._package = "essence.geometry.core.doubles";
         desc.corePackage = "essence.geometry.core";
         desc.dim = dim;
@@ -67,16 +67,16 @@ public class VDesc {
         desc.type = "double";
         desc.ctype = "Double";
         desc.integral = false;
-        desc.properties = new VDim[dim];
+        desc.properties = new VectorCell[dim];
         for (int i = 0; i < dim; i++) {
-            desc.properties[i] = new VDim(names[i], desc.type, desc.ctype, i);
+            desc.properties[i] = new VectorCell(names[i], desc.type, desc.ctype, i);
         }
         return desc;
     }
 
-    public static VDesc getInteger(int dim) {
+    public static VectorDescription getInteger(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
-        VDesc desc = new VDesc();
+        VectorDescription desc = new VectorDescription();
         desc._package = "essence.geometry.core.integers";
         desc.corePackage = "essence.geometry.core";
         desc.dim = dim;
@@ -84,16 +84,16 @@ public class VDesc {
         desc.type = "int";
         desc.ctype = "Integer";
         desc.integral = true;
-        desc.properties = new VDim[dim];
+        desc.properties = new VectorCell[dim];
         for (int i = 0; i < dim; i++) {
-            desc.properties[i] = new VDim(names[i], desc.type, desc.ctype, i);
+            desc.properties[i] = new VectorCell(names[i], desc.type, desc.ctype, i);
         }
         return desc;
     }
 
-    public static VDesc getByte(int dim) {
+    public static VectorDescription getByte(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
-        VDesc desc = new VDesc();
+        VectorDescription desc = new VectorDescription();
         desc._package = "essence.geometry.core.bytes";
         desc.corePackage = "essence.geometry.core";
         desc.dim = dim;
@@ -101,9 +101,9 @@ public class VDesc {
         desc.type = "byte";
         desc.ctype = "Byte";
         desc.integral = true;
-        desc.properties = new VDim[dim];
+        desc.properties = new VectorCell[dim];
         for (int i = 0; i < dim; i++) {
-            desc.properties[i] = new VDim(names[i], desc.type, desc.ctype, i);
+            desc.properties[i] = new VectorCell(names[i], desc.type, desc.ctype, i);
         }
         return desc;
     }
@@ -155,11 +155,11 @@ public class VDesc {
     /**
      * This function gets a vector descriptor of a {@code dim - 1} dimension.
      */
-    public VDesc getLowerDimension() {
+    public VectorDescription getLowerDimension() {
         if (this.dim <= 2) {
             return null;
         }
-        VDesc lower = new VDesc();
+        VectorDescription lower = new VectorDescription();
         lower._package = _package;
         lower.corePackage = corePackage;
         lower.dim = dim - 1;
@@ -167,7 +167,7 @@ public class VDesc {
         lower.type = type;
         lower.ctype = ctype;
         lower.integral = integral;
-        lower.properties = new VDim[lower.dim];
+        lower.properties = new VectorCell[lower.dim];
         for (int i = 0; i < lower.properties.length; i++) {
             lower.properties[i] = properties[i];
         }
@@ -181,7 +181,7 @@ public class VDesc {
     public String type;
     public String ctype;
     public boolean integral;
-    public VDim[] properties;
+    public VectorCell[] properties;
 
     public boolean is2D() {
         return dim == 2;

@@ -29,7 +29,7 @@ public class TupleTemplates extends BaseTemplate {
     private final Template tupleImp = loadPebbleResource("pebble/TupleImp.pebble");
     private final Template tupleImpList = loadPebbleResource("pebble/collections/TupleImpList.pebble");
 
-     @Override
+    @Override
     public void execute() {
 
         System.out.println("user.dir  " + System.getProperty("user.dir"));
@@ -46,32 +46,32 @@ public class TupleTemplates extends BaseTemplate {
     }
 
     private void buildSimple(int dim) {
-        VDesc desc = VDesc.getDefault(dim);
+        VectorDescription desc = VectorDescription.getDefault(dim);
         exec(tuple_Number, desc, desc.getTupleNumberName(), desc._package);
     }
 
     private void buildFloat(int dim) {
-        VDesc desc = VDesc.getFloat(dim);
+        VectorDescription desc = VectorDescription.getFloat(dim);
         exec(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
         exec(tupleImp, desc, desc.getTupleImpName(), desc._package);
         exec(tupleImpList, desc, desc.getTupleImpListName(), desc._package);
     }
 
     private void buildDouble(int dim) {
-        VDesc desc = VDesc.getDouble(dim);
+        VectorDescription desc = VectorDescription.getDouble(dim);
         exec(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
         exec(tupleImp, desc, desc.getTupleImpName(), desc._package);
         exec(tupleImpList, desc, desc.getTupleImpListName(), desc._package);
     }
 
     private void buildInteger(int dim) {
-        VDesc desc = VDesc.getInteger(dim);
+        VectorDescription desc = VectorDescription.getInteger(dim);
         exec(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
         exec(tupleImp, desc, desc.getTupleImpName(), desc._package);
     }
 
     private void buildByte(int dim) {
-        VDesc desc = VDesc.getByte(dim);
+        VectorDescription desc = VectorDescription.getByte(dim);
         exec(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
         exec(tupleImp, desc, desc.getTupleImpName(), desc._package);
     }

@@ -22,13 +22,14 @@ package templatesforvectors;
  *
  * @author joseluis
  */
-public class VDim {
+public class MatrixCell {
 
-    VDim(String name, String type, String ctype, int index) {
+    MatrixCell(String name, String type, String ctype, int r, int c) {
         this.name = name;
         this.type = type;
         this.ctype = ctype;
-        this.index = index;
+        this.r = r;
+        this.c = c;
     }
 
     public String name;
@@ -39,5 +40,7 @@ public class VDim {
 
     public String type;
     public String ctype;
-    public int index;
+    public int r;
+    public int c;
+
 }

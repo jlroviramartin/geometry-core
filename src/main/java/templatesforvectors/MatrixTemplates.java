@@ -44,12 +44,12 @@ public class MatrixTemplates extends BaseTemplate {
     }
 
     private void buildFloat(int dim) {
-        MDesc mdesc = MDesc.getFloat(dim);
+        MatrixDescrition mdesc = MatrixDescrition.getFloat(dim);
         exec(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
     }
 
     private void buildDouble(int dim) {
-        MDesc mdesc = MDesc.getDouble(dim);
+        MatrixDescrition mdesc = MatrixDescrition.getDouble(dim);
         exec(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
     }
 

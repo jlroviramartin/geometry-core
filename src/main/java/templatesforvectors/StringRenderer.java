@@ -18,16 +18,16 @@
  */
 package templatesforvectors;
 
-import java.util.Locale;
-import org.stringtemplate.v4.AttributeRenderer;
+/*import java.util.Locale;
+import org.stringtemplate.v4.AttributeRenderer;*/
 
 /**
  *
  * @author joseluis
  */
-public class StringRenderer implements AttributeRenderer {
+public class StringRenderer /*implements AttributeRenderer*/ {
 
-    @Override
+    /*@Override
     public String toString(Object o, String format, Locale locale) {
         String str = (String) o;
         if (format != null) {
@@ -43,5 +43,5 @@ public class StringRenderer implements AttributeRenderer {
             }
         }
         return o.toString();
-    }
+    }*/
 }

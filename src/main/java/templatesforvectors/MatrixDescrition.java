@@ -23,10 +23,10 @@ import java.util.Arrays;
 /**
  * Description of a matrix.
  */
-public class MDesc {
+public class MatrixDescrition {
 
-    public static MDesc getDouble(int dim) {
-        MDesc mdesc = new MDesc();
+    public static MatrixDescrition getDouble(int dim) {
+        MatrixDescrition mdesc = new MatrixDescrition();
         mdesc._package = "essence.geometry.core.doubles";
         mdesc.corePackage = "essence.geometry.core";
         mdesc.dimRows = dim;
@@ -34,22 +34,22 @@ public class MDesc {
         mdesc.suffix = "d";
         mdesc.type = "double";
         mdesc.ctype = "Double";
-        mdesc.properties = new MDim[dim * dim];
+        mdesc.properties = new MatrixCell[dim * dim];
 
-        mdesc.vector = VDesc.getDouble(dim);
+        mdesc.vector = VectorDescription.getDouble(dim);
 
         int i = 0;
         for (int r = 0; r < mdesc.dimRows; r++) {
             for (int c = 0; c < mdesc.dimCols; c++) {
-                mdesc.properties[i] = new MDim("m" + r + "" + c, mdesc.type, mdesc.ctype, r, c);
+                mdesc.properties[i] = new MatrixCell("m" + r + "" + c, mdesc.type, mdesc.ctype, r, c);
                 i++;
             }
         }
         return mdesc;
     }
 
-    public static MDesc getFloat(int dim) {
-        MDesc mdesc = new MDesc();
+    public static MatrixDescrition getFloat(int dim) {
+        MatrixDescrition mdesc = new MatrixDescrition();
         mdesc._package = "essence.geometry.core.floats";
         mdesc.corePackage = "essence.geometry.core";
         mdesc.dimRows = dim;
@@ -57,14 +57,14 @@ public class MDesc {
         mdesc.suffix = "f";
         mdesc.type = "float";
         mdesc.ctype = "Float";
-        mdesc.properties = new MDim[dim * dim];
+        mdesc.properties = new MatrixCell[dim * dim];
 
-        mdesc.vector = VDesc.getFloat(dim);
+        mdesc.vector = VectorDescription.getFloat(dim);
 
         int i = 0;
         for (int r = 0; r < mdesc.dimRows; r++) {
             for (int c = 0; c < mdesc.dimCols; c++) {
-                mdesc.properties[i] = new MDim("m" + r + "" + c, mdesc.type, mdesc.ctype, r, c);
+                mdesc.properties[i] = new MatrixCell("m" + r + "" + c, mdesc.type, mdesc.ctype, r, c);
                 i++;
             }
         }
@@ -82,9 +82,9 @@ public class MDesc {
     public String suffix;
     public String type;
     public String ctype;
-    public MDim[] properties;
+    public MatrixCell[] properties;
 
-    public VDesc vector;
+    public VectorDescription vector;
 
     // Rows -> Cols
     public Row[] getRows() {
@@ -92,7 +92,7 @@ public class MDesc {
         for (int r = 0; r < dimRows; r++) {
             rows[r] = new Row();
             rows[r].r = r;
-            rows[r].cols = new MDim[dimCols];
+            rows[r].cols = new MatrixCell[dimCols];
             for (int c = 0; c < dimCols; c++) {
                 rows[r].cols[c] = getProperty(r, c);
             }
@@ -106,7 +106,7 @@ public class MDesc {
         for (int c = 0; c < dimCols; c++) {
             cols[c] = new Col();
             cols[c].c = c;
-            cols[c].rows = new MDim[dimRows];
+            cols[c].rows = new MatrixCell[dimRows];
             for (int r = 0; r < dimRows; r++) {
                 cols[c].rows[r] = getProperty(r, c);
             }
@@ -114,7 +114,7 @@ public class MDesc {
         return cols;
     }
 
-    public MDim getProperty(int r, int c) {
+    public MatrixCell getProperty(int r, int c) {
         return Arrays.asList(properties).stream().filter((x) -> x.r == r && x.c == c).findFirst().orElse(null);
     }
 
@@ -124,12 +124,12 @@ public class MDesc {
             return r;
         }
 
-        public MDim[] getCols() {
+        public MatrixCell[] getCols() {
             return cols;
         }
 
         public int r;
-        public MDim[] cols;
+        public MatrixCell[] cols;
     }
 
     public class Col {
@@ -138,11 +138,11 @@ public class MDesc {
             return c;
         }
 
-        public MDim[] getRows() {
+        public MatrixCell[] getRows() {
             return rows;
         }
 
         public int c;
-        public MDim[] rows;
+        public MatrixCell[] rows;
     }
 }
