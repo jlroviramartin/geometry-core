@@ -1,5 +1,7 @@
 # geometry-core
-Vectorial algebra
+Vectorial algebra.
+
+This project depends of pebble-extensions.
 
 This project builds classes for vectorial algebra: tuples, vectors, points and matrix.
 
