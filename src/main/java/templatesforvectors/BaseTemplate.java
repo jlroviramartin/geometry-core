@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import templatesforvectors.pebble.DynamicExtension;
+import org.essence.pebble.DynamicExtension;
 
 /*import java.net.URL;
 import org.jtwig.JtwigModel;
@@ -154,7 +154,6 @@ public abstract class BaseTemplate {
 
             Map<String, Object> params = new HashMap<>();
             params.put("desc", desc);
-            params.put("helper", new TwigHelper());
             template.writeTo(this, stream, params);
 
             System.out.println("Output " + fileName);

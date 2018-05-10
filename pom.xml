@@ -99,5 +99,10 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>pebble-extensions</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

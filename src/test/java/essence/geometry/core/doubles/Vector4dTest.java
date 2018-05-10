@@ -1,5 +1,3 @@
-package essence.geometry.core.doubles;
-
 /*
  * Copyright (C) 2018 joseluis.
  *
@@ -18,6 +16,8 @@ package essence.geometry.core.doubles;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
+package essence.geometry.core.doubles;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
