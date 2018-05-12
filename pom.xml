@@ -100,9 +100,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.essence</groupId>
             <artifactId>pebble-extensions</artifactId>
-            <version>${project.version}</version>
+            <version>1.0.4</version>
         </dependency>
     </dependencies>
 </project>

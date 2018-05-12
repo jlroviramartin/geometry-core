@@ -24,8 +24,8 @@ package templatesforvectors;
  */
 public class PointTemplates extends BaseTemplate {
 
-    private final Template point = loadPebbleResource("pebble/Point.pebble");
-    private final Template pointImp = loadPebbleResource("pebble/PointImp.pebble");
+    private final Template point = load("pebble/Point.pebble");
+    private final Template pointImp = load("pebble/PointImp.pebble");
 
     @Override
     public void execute() {
@@ -43,21 +43,21 @@ public class PointTemplates extends BaseTemplate {
 
     private void buildSimple(int dim) {
         VectorDescription desc = VectorDescription.getDefault(dim);
-        exec(point, desc, desc.getPointName(), desc._package);
+        writeToFile(point, desc, desc.getPointName(), desc._package);
     }
 
     private void buildFloat(int dim) {
         VectorDescription desc = VectorDescription.getFloat(dim);
-        exec(pointImp, desc, desc.getPointImpName(), desc._package);
+        writeToFile(pointImp, desc, desc.getPointImpName(), desc._package);
     }
 
     private void buildDouble(int dim) {
         VectorDescription desc = VectorDescription.getDouble(dim);
-        exec(pointImp, desc, desc.getPointImpName(), desc._package);
+        writeToFile(pointImp, desc, desc.getPointImpName(), desc._package);
     }
 
     private void buildInteger(int dim) {
         VectorDescription desc = VectorDescription.getInteger(dim);
-        exec(pointImp, desc, desc.getPointImpName(), desc._package);
+        writeToFile(pointImp, desc, desc.getPointImpName(), desc._package);
     }
 }

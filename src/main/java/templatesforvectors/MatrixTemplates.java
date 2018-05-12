@@ -24,7 +24,7 @@ package templatesforvectors;
  */
 public class MatrixTemplates extends BaseTemplate {
 
-    private final Template matrixImpPebble = loadPebbleResource("pebble/MatrixImp.pebble");
+    private final Template matrixImpPebble = load("pebble/MatrixImp.pebble");
 
     @Override
     public void execute() {
@@ -45,12 +45,12 @@ public class MatrixTemplates extends BaseTemplate {
 
     private void buildFloat(int dim) {
         MatrixDescrition mdesc = MatrixDescrition.getFloat(dim);
-        exec(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
+        writeToFile(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
     }
 
     private void buildDouble(int dim) {
         MatrixDescrition mdesc = MatrixDescrition.getDouble(dim);
-        exec(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
+        writeToFile(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
     }
 
     private void buildInteger(int dim) {

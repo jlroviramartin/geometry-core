@@ -24,10 +24,10 @@ package templatesforvectors;
  */
 public class TupleTemplates extends BaseTemplate {
 
-    private final Template tuple_Number = loadPebbleResource("pebble/Tuple_Number.pebble");
-    private final Template tuple_Type = loadPebbleResource("pebble/Tuple_Type.pebble");
-    private final Template tupleImp = loadPebbleResource("pebble/TupleImp.pebble");
-    private final Template tupleImpList = loadPebbleResource("pebble/collections/TupleImpList.pebble");
+    private final Template tuple_Number = load("pebble/Tuple_Number.pebble");
+    private final Template tuple_Type = load("pebble/Tuple_Type.pebble");
+    private final Template tupleImp = load("pebble/TupleImp.pebble");
+    private final Template tupleImpList = load("pebble/collections/TupleImpList.pebble");
 
     @Override
     public void execute() {
@@ -47,32 +47,32 @@ public class TupleTemplates extends BaseTemplate {
 
     private void buildSimple(int dim) {
         VectorDescription desc = VectorDescription.getDefault(dim);
-        exec(tuple_Number, desc, desc.getTupleNumberName(), desc._package);
+        writeToFile(tuple_Number, desc, desc.getTupleNumberName(), desc._package);
     }
 
     private void buildFloat(int dim) {
         VectorDescription desc = VectorDescription.getFloat(dim);
-        exec(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
-        exec(tupleImp, desc, desc.getTupleImpName(), desc._package);
-        exec(tupleImpList, desc, desc.getTupleImpListName(), desc._package);
+        writeToFile(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
+        writeToFile(tupleImp, desc, desc.getTupleImpName(), desc._package);
+        writeToFile(tupleImpList, desc, desc.getTupleImpListName(), desc._package);
     }
 
     private void buildDouble(int dim) {
         VectorDescription desc = VectorDescription.getDouble(dim);
-        exec(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
-        exec(tupleImp, desc, desc.getTupleImpName(), desc._package);
-        exec(tupleImpList, desc, desc.getTupleImpListName(), desc._package);
+        writeToFile(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
+        writeToFile(tupleImp, desc, desc.getTupleImpName(), desc._package);
+        writeToFile(tupleImpList, desc, desc.getTupleImpListName(), desc._package);
     }
 
     private void buildInteger(int dim) {
         VectorDescription desc = VectorDescription.getInteger(dim);
-        exec(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
-        exec(tupleImp, desc, desc.getTupleImpName(), desc._package);
+        writeToFile(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
+        writeToFile(tupleImp, desc, desc.getTupleImpName(), desc._package);
     }
 
     private void buildByte(int dim) {
         VectorDescription desc = VectorDescription.getByte(dim);
-        exec(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
-        exec(tupleImp, desc, desc.getTupleImpName(), desc._package);
+        writeToFile(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
+        writeToFile(tupleImp, desc, desc.getTupleImpName(), desc._package);
     }
 }

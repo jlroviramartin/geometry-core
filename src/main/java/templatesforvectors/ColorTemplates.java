@@ -24,8 +24,8 @@ package templatesforvectors;
  */
 public class ColorTemplates extends BaseTemplate {
 
-    private final Template color = loadPebbleResource("pebble/Color.pebble");
-    private final Template colorImp = loadPebbleResource("pebble/ColorImp.pebble");
+    private final Template color = load("pebble/Color.pebble");
+    private final Template colorImp = load("pebble/ColorImp.pebble");
 
     @Override
     public void execute() {
@@ -43,16 +43,16 @@ public class ColorTemplates extends BaseTemplate {
 
     private void buildSimple(int dim) {
         VectorDescription desc = VectorDescription.getDefault(dim);
-        exec(color, desc, desc.getColorName(), desc._package);
+        writeToFile(color, desc, desc.getColorName(), desc._package);
     }
 
     private void buildFloat(int dim) {
         VectorDescription desc = VectorDescription.getFloat(dim);
-        exec(colorImp, desc, desc.getColorImpName(), desc._package);
+        writeToFile(colorImp, desc, desc.getColorImpName(), desc._package);
     }
 
     private void buildByte(int dim) {
         VectorDescription desc = VectorDescription.getByte(dim);
-        exec(colorImp, desc, desc.getColorImpName(), desc._package);
+        writeToFile(colorImp, desc, desc.getColorImpName(), desc._package);
     }
 }

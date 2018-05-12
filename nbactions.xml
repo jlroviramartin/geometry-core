@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-versions:use-latest-versions</actionName>
+            <displayName>versions:use-latest-versions</displayName>
+            <goals>
+                <goal>versions:use-latest-versions</goal>
+            </goals>
+        </action>
+    </actions>
