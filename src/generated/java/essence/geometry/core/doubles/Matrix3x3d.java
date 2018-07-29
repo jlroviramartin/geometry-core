@@ -69,8 +69,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      */
     public Matrix3x3d() {
         this(0, 0, 0,
-            0, 0, 0,
-            0, 0, 0);
+             0, 0, 0,
+             0, 0, 0);
     }
 
     /**
@@ -87,8 +87,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      * @param m22 Value of the property M22.
      */
     public Matrix3x3d(double m00, double m01, double m02,
-        double m10, double m11, double m12,
-        double m20, double m21, double m22) {
+                      double m10, double m11, double m12,
+                      double m20, double m21, double m22) {
         this.m00 = m00;
         this.m01 = m01;
         this.m02 = m02;
@@ -103,12 +103,12 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
     /*
      * This method gets an identity matrix.
      *
-     * return Identity matrix. 
+     * return Identity matrix.
      */
     public static Matrix3x3d getIdentity() {
         return new Matrix3x3d(1, 0, 0,
-            0, 1, 0,
-            0, 0, 1);
+                              0, 1, 0,
+                              0, 0, 1);
     }
 
     protected static Tuple3_Double toTuple(Tuple other) {
@@ -157,33 +157,33 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      */
     public double get(int r, int c) {
         switch(r) {
+        case 0:
+            switch(c) {
             case 0:
-                switch(c) {
-                    case 0:
-                        return m00;
-                    case 1:
-                        return m01;
-                    case 2:
-                        return m02;
-                }
+                return m00;
             case 1:
-                switch(c) {
-                    case 0:
-                        return m10;
-                    case 1:
-                        return m11;
-                    case 2:
-                        return m12;
-                }
+                return m01;
             case 2:
-                switch(c) {
-                    case 0:
-                        return m20;
-                    case 1:
-                        return m21;
-                    case 2:
-                        return m22;
-                }
+                return m02;
+            }
+        case 1:
+            switch(c) {
+            case 0:
+                return m10;
+            case 1:
+                return m11;
+            case 2:
+                return m12;
+            }
+        case 2:
+            switch(c) {
+            case 0:
+                return m20;
+            case 1:
+                return m21;
+            case 2:
+                return m22;
+            }
         }
         throw new IndexOutOfBoundsException();
     }
@@ -197,42 +197,42 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      */
     public void set(int r, int c, double value) {
         switch(r) {
+        case 0:
+            switch(c) {
             case 0:
-                switch(c) {
-                    case 0:
-                        m00 = value;
-                        return;
-                    case 1:
-                        m01 = value;
-                        return;
-                    case 2:
-                        m02 = value;
-                        return;
-                }
+                m00 = value;
+                return;
             case 1:
-                switch(c) {
-                    case 0:
-                        m10 = value;
-                        return;
-                    case 1:
-                        m11 = value;
-                        return;
-                    case 2:
-                        m12 = value;
-                        return;
-                }
+                m01 = value;
+                return;
             case 2:
-                switch(c) {
-                    case 0:
-                        m20 = value;
-                        return;
-                    case 1:
-                        m21 = value;
-                        return;
-                    case 2:
-                        m22 = value;
-                        return;
-                }
+                m02 = value;
+                return;
+            }
+        case 1:
+            switch(c) {
+            case 0:
+                m10 = value;
+                return;
+            case 1:
+                m11 = value;
+                return;
+            case 2:
+                m12 = value;
+                return;
+            }
+        case 2:
+            switch(c) {
+            case 0:
+                m20 = value;
+                return;
+            case 1:
+                m21 = value;
+                return;
+            case 2:
+                m22 = value;
+                return;
+            }
         }
         throw new IndexOutOfBoundsException();
     }
@@ -413,8 +413,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      * @param m22 Property [2, 2].
      */
     public Matrix3x3d set(double m00, double m01, double m02,
-        double m10, double m11, double m12,
-        double m20, double m21, double m22) {
+                          double m10, double m11, double m12,
+                          double m20, double m21, double m22) {
         this.m00 = m00;
         this.m01 = m01;
         this.m02 = m02;
@@ -451,8 +451,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      */
     public void mul(Vector3d v) {
         v.set(getM00() * v.getX() + getM01() * v.getY() + getM02() * v.getZ(),
-            getM10() * v.getX() + getM11() * v.getY() + getM12() * v.getZ(),
-            getM20() * v.getX() + getM21() * v.getY() + getM22() * v.getZ());
+              getM10() * v.getX() + getM11() * v.getY() + getM12() * v.getZ(),
+              getM20() * v.getX() + getM21() * v.getY() + getM22() * v.getZ());
     }
 
     /**
@@ -477,8 +477,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      */
     public void premul(Vector3d v) {
         v.set(v.getX() * getM00() + v.getY() * getM10() + v.getZ() * getM20(),
-            v.getX() * getM01() + v.getY() * getM11() + v.getZ() * getM21(),
-            v.getX() * getM02() + v.getY() * getM12() + v.getZ() * getM22());
+              v.getX() * getM01() + v.getY() * getM11() + v.getZ() * getM21(),
+              v.getX() * getM02() + v.getY() * getM12() + v.getZ() * getM22());
     }
 
     /**
@@ -599,8 +599,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      */
     public final boolean isNaN() {
         return Double.isNaN(getM00()) || Double.isNaN(getM01()) || Double.isNaN(getM02()) ||
-            Double.isNaN(getM10()) || Double.isNaN(getM11()) || Double.isNaN(getM12()) ||
-            Double.isNaN(getM20()) || Double.isNaN(getM21()) || Double.isNaN(getM22());
+               Double.isNaN(getM10()) || Double.isNaN(getM11()) || Double.isNaN(getM12()) ||
+               Double.isNaN(getM20()) || Double.isNaN(getM21()) || Double.isNaN(getM22());
     }
 
     /**
@@ -610,8 +610,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      */
     public final boolean isInfinity() {
         return Double.isInfinite(getM00()) || Double.isInfinite(getM01()) || Double.isInfinite(getM02()) ||
-            Double.isInfinite(getM10()) || Double.isInfinite(getM11()) || Double.isInfinite(getM12()) ||
-            Double.isInfinite(getM20()) || Double.isInfinite(getM21()) || Double.isInfinite(getM22());
+               Double.isInfinite(getM10()) || Double.isInfinite(getM11()) || Double.isInfinite(getM12()) ||
+               Double.isInfinite(getM20()) || Double.isInfinite(getM21()) || Double.isInfinite(getM22());
     }
 
     /**
@@ -631,8 +631,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      */
     public final boolean isZero(double epsilon) {
         return epsilonEquals(0, 0, 0,
-            0, 0, 0,
-            0, 0, 0, epsilon);
+                             0, 0, 0,
+                             0, 0, 0, epsilon);
     }
 
     /**
@@ -652,8 +652,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
      */
     public boolean isIdentity(double epsilon) {
         return epsilonEquals(1, 0, 0,
-            0, 1, 0,
-            0, 0, 1, epsilon);
+                             0, 1, 0,
+                             0, 0, 1, epsilon);
     }
 
     /**
@@ -942,9 +942,9 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
         return String.format(getFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
-            getM00(),getM01(),getM02(),
-            getM10(),getM11(),getM12(),
-            getM20(),getM21(),getM22());
+                             getM00(),getM01(),getM02(),
+                             getM10(),getM11(),getM12(),
+                             getM20(),getM21(),getM22());
     }
 
     public boolean equals(Matrix3x3d other) {
@@ -956,8 +956,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
         }
 
         return this.equals(getM00(), getM01(), getM02(),
-            getM10(), getM11(), getM12(),
-            getM20(), getM21(), getM22());
+                           getM10(), getM11(), getM12(),
+                           getM20(), getM21(), getM22());
     }
 
     @Override
@@ -1004,34 +1004,34 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
             return false;
         }
         return epsilonEquals(getM00(), getM01(), getM02(),
-            getM10(), getM11(), getM12(),
-            getM20(), getM21(), getM22(), epsilon);
+                             getM10(), getM11(), getM12(),
+                             getM20(), getM21(), getM22(), epsilon);
     }
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="private">
     private boolean epsilonEquals(double m00, double m01, double m02,
-        double m10, double m11, double m12,
-        double m20, double m21, double m22) {
+                                  double m10, double m11, double m12,
+                                  double m20, double m21, double m22) {
         return epsilonEquals(m00, m01, m02,
-            m10, m11, m12,
-            m20, m21, m22, EPSILON);
+                             m10, m11, m12,
+                             m20, m21, m22, EPSILON);
     }
 
     private boolean epsilonEquals(double m00, double m01, double m02,
-        double m10, double m11, double m12,
-        double m20, double m21, double m22, double epsilon) {
+                                  double m10, double m11, double m12,
+                                  double m20, double m21, double m22, double epsilon) {
         return DoubleUtils.epsilonEquals(getM00(), m00, epsilon) && DoubleUtils.epsilonEquals(getM01(), m01, epsilon) && DoubleUtils.epsilonEquals(getM02(), m02, epsilon)
-            && DoubleUtils.epsilonEquals(getM10(), m10, epsilon) && DoubleUtils.epsilonEquals(getM11(), m11, epsilon) && DoubleUtils.epsilonEquals(getM12(), m12, epsilon)
-            && DoubleUtils.epsilonEquals(getM20(), m20, epsilon) && DoubleUtils.epsilonEquals(getM21(), m21, epsilon) && DoubleUtils.epsilonEquals(getM22(), m22, epsilon);
+               && DoubleUtils.epsilonEquals(getM10(), m10, epsilon) && DoubleUtils.epsilonEquals(getM11(), m11, epsilon) && DoubleUtils.epsilonEquals(getM12(), m12, epsilon)
+               && DoubleUtils.epsilonEquals(getM20(), m20, epsilon) && DoubleUtils.epsilonEquals(getM21(), m21, epsilon) && DoubleUtils.epsilonEquals(getM22(), m22, epsilon);
     }
 
     private boolean equals(double m00, double m01, double m02,
-        double m10, double m11, double m12,
-        double m20, double m21, double m22) {
+                           double m10, double m11, double m12,
+                           double m20, double m21, double m22) {
         return getM00() == m00 && getM01() == m01 && getM02() == m02
-            && getM10() == m10 && getM11() == m11 && getM12() == m12
-            && getM20() == m20 && getM21() == m21 && getM22() == m22;
+               && getM10() == m10 && getM11() == m11 && getM12() == m12
+               && getM20() == m20 && getM21() == m21 && getM22() == m22;
     }
 
     private static String getFormat() {

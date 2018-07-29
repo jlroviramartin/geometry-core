@@ -19,29 +19,29 @@
 package essence.geometry.core;
 
 /**
- * Simple math utils for int values.
+ * Simple math utils for short values.
  *
  * @author joseluis
  */
-public class IntegerUtils {
+public class ShortUtils {
 
     public static final double EPSILON = 0;
 
     public static final double ZERO_TOLERANCE = 0;
 
-    public static boolean epsilonEquals(int v1, int v2) {
+    public static boolean epsilonEquals(short v1, short v2) {
         return epsilonEquals(v1, v2, EPSILON);
     }
 
-    public static boolean epsilonEquals(int v1, int v2, double epsilon) {
+    public static boolean epsilonEquals(short v1, short v2, double epsilon) {
         return (Math.abs(v2 - v1) <= epsilon);
     }
 
-    public static boolean epsilonZero(int v) {
+    public static boolean epsilonZero(short v) {
         return epsilonZero(v, ZERO_TOLERANCE);
     }
 
-    public static boolean epsilonZero(int v, double epsilon) {
+    public static boolean epsilonZero(short v, double epsilon) {
         return (Math.abs(v) <= epsilon);
     }
 }

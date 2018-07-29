@@ -159,9 +159,9 @@ public class Vector4f extends Tuple4f implements Vector4 {
     @Override
     public double getLengthL1() {
         return Math.abs(getX())
-                + Math.abs(getY())
-                + Math.abs(getZ())
-                + Math.abs(getW());
+               + Math.abs(getY())
+               + Math.abs(getZ())
+               + Math.abs(getW());
     }
 
     @Override
@@ -396,17 +396,17 @@ public class Vector4f extends Tuple4f implements Vector4 {
         Tuple4_Float _other = toTuple(other);
 
         set((float)(alpha * getX() + beta * _other.getX()),
-                (float)(alpha * getY() + beta * _other.getY()),
-                (float)(alpha * getZ() + beta * _other.getZ()),
-                (float)(alpha * getW() + beta * _other.getW()));
+            (float)(alpha * getY() + beta * _other.getY()),
+            (float)(alpha * getZ() + beta * _other.getZ()),
+            (float)(alpha * getW() + beta * _other.getW()));
         return this;
     }
 
     public Vector4f linealAndSet(Vector4f other, double alpha, double beta) {
         set((float)(alpha * getX() + beta * other.getX()),
-                (float)(alpha * getY() + beta * other.getY()),
-                (float)(alpha * getZ() + beta * other.getZ()),
-                (float)(alpha * getW() + beta * other.getW()));
+            (float)(alpha * getY() + beta * other.getY()),
+            (float)(alpha * getZ() + beta * other.getZ()),
+            (float)(alpha * getW() + beta * other.getW()));
         return this;
     }
 
@@ -436,13 +436,9 @@ public class Vector4f extends Tuple4f implements Vector4 {
 //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector4f getUnit(int index) {
         return new Vector4f((float)((index == 0) ? 1 : 0),
-                (float)((index == 1) ? 1 : 0),
-                (float)((index == 2) ? 1 : 0),
-                (float)((index == 3) ? 1 : 0));
+                            (float)((index == 1) ? 1 : 0),
+                            (float)((index == 2) ? 1 : 0),
+                            (float)((index == 3) ? 1 : 0));
     }
 //</editor-fold>
 }
-
-
-
-

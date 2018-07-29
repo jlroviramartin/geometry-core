@@ -98,12 +98,12 @@ public class Point2f extends Tuple2f implements Point2 {
         Tuple2_Float _other = toTuple(other);
 
         return square(_other.getX() - getX())
-                + square(_other.getY() - getY());
+               + square(_other.getY() - getY());
     }
 
     public double getDistanceCuad(Point2f other) {
         return square(other.getX() - getX())
-                + square(other.getY() - getY());
+               + square(other.getY() - getY());
     }
 
     @Override
@@ -111,12 +111,12 @@ public class Point2f extends Tuple2f implements Point2 {
         Tuple2_Float _other = toTuple(other);
 
         return Math.abs(_other.getX() - getX())
-                + Math.abs(_other.getY() - getY());
+               + Math.abs(_other.getY() - getY());
     }
 
     public double getDistanceL1(Point2f other) {
         return Math.abs(other.getX() - getX())
-                + Math.abs(other.getY() - getY());
+               + Math.abs(other.getY() - getY());
     }
 
     @Override
@@ -246,13 +246,13 @@ public class Point2f extends Tuple2f implements Point2 {
         Tuple2_Float _other = toTuple(other);
 
         set((float)(alpha * getX() + beta * _other.getX()),
-                (float)(alpha * getY() + beta * _other.getY()));
+            (float)(alpha * getY() + beta * _other.getY()));
         return this;
     }
 
     public Point2f linealAndSet(Point2f other, double alpha, double beta) {
         set((float)(alpha * getX() + beta * other.getX()),
-                (float)(alpha * getY() + beta * other.getY()));
+            (float)(alpha * getY() + beta * other.getY()));
         return this;
     }
 

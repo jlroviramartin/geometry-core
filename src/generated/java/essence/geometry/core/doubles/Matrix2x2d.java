@@ -57,7 +57,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      */
     public Matrix2x2d() {
         this(0, 0,
-            0, 0);
+             0, 0);
     }
 
     /**
@@ -69,7 +69,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      * @param m11 Value of the property M11.
      */
     public Matrix2x2d(double m00, double m01,
-        double m10, double m11) {
+                      double m10, double m11) {
         this.m00 = m00;
         this.m01 = m01;
         this.m10 = m10;
@@ -79,11 +79,11 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
     /*
      * This method gets an identity matrix.
      *
-     * return Identity matrix. 
+     * return Identity matrix.
      */
     public static Matrix2x2d getIdentity() {
         return new Matrix2x2d(1, 0,
-            0, 1);
+                              0, 1);
     }
 
     protected static Tuple2_Double toTuple(Tuple other) {
@@ -132,20 +132,20 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      */
     public double get(int r, int c) {
         switch(r) {
+        case 0:
+            switch(c) {
             case 0:
-                switch(c) {
-                    case 0:
-                        return m00;
-                    case 1:
-                        return m01;
-                }
+                return m00;
             case 1:
-                switch(c) {
-                    case 0:
-                        return m10;
-                    case 1:
-                        return m11;
-                }
+                return m01;
+            }
+        case 1:
+            switch(c) {
+            case 0:
+                return m10;
+            case 1:
+                return m11;
+            }
         }
         throw new IndexOutOfBoundsException();
     }
@@ -159,24 +159,24 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      */
     public void set(int r, int c, double value) {
         switch(r) {
+        case 0:
+            switch(c) {
             case 0:
-                switch(c) {
-                    case 0:
-                        m00 = value;
-                        return;
-                    case 1:
-                        m01 = value;
-                        return;
-                }
+                m00 = value;
+                return;
             case 1:
-                switch(c) {
-                    case 0:
-                        m10 = value;
-                        return;
-                    case 1:
-                        m11 = value;
-                        return;
-                }
+                m01 = value;
+                return;
+            }
+        case 1:
+            switch(c) {
+            case 0:
+                m10 = value;
+                return;
+            case 1:
+                m11 = value;
+                return;
+            }
         }
         throw new IndexOutOfBoundsException();
     }
@@ -262,7 +262,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      * @param m11 Property [1, 1].
      */
     public Matrix2x2d set(double m00, double m01,
-        double m10, double m11) {
+                          double m10, double m11) {
         this.m00 = m00;
         this.m01 = m01;
         this.m10 = m10;
@@ -294,7 +294,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      */
     public void mul(Vector2d v) {
         v.set(getM00() * v.getX() + getM01() * v.getY(),
-            getM10() * v.getX() + getM11() * v.getY());
+              getM10() * v.getX() + getM11() * v.getY());
     }
 
     /**
@@ -319,7 +319,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      */
     public void premul(Vector2d v) {
         v.set(v.getX() * getM00() + v.getY() * getM10(),
-            v.getX() * getM01() + v.getY() * getM11());
+              v.getX() * getM01() + v.getY() * getM11());
     }
 //</editor-fold>
 
@@ -334,7 +334,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      */
     public final boolean isNaN() {
         return Double.isNaN(getM00()) || Double.isNaN(getM01()) ||
-            Double.isNaN(getM10()) || Double.isNaN(getM11());
+               Double.isNaN(getM10()) || Double.isNaN(getM11());
     }
 
     /**
@@ -344,7 +344,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      */
     public final boolean isInfinity() {
         return Double.isInfinite(getM00()) || Double.isInfinite(getM01()) ||
-            Double.isInfinite(getM10()) || Double.isInfinite(getM11());
+               Double.isInfinite(getM10()) || Double.isInfinite(getM11());
     }
 
     /**
@@ -364,7 +364,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      */
     public final boolean isZero(double epsilon) {
         return epsilonEquals(0, 0,
-            0, 0, epsilon);
+                             0, 0, epsilon);
     }
 
     /**
@@ -384,7 +384,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
      */
     public boolean isIdentity(double epsilon) {
         return epsilonEquals(1, 0,
-            0, 1, epsilon);
+                             0, 1, epsilon);
     }
 
     /**
@@ -651,8 +651,8 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
         return String.format(getFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
-            getM00(),getM01(),
-            getM10(),getM11());
+                             getM00(),getM01(),
+                             getM10(),getM11());
     }
 
     public boolean equals(Matrix2x2d other) {
@@ -664,7 +664,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
         }
 
         return this.equals(getM00(), getM01(),
-            getM10(), getM11());
+                           getM10(), getM11());
     }
 
     @Override
@@ -706,27 +706,27 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
             return false;
         }
         return epsilonEquals(getM00(), getM01(),
-            getM10(), getM11(), epsilon);
+                             getM10(), getM11(), epsilon);
     }
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="private">
     private boolean epsilonEquals(double m00, double m01,
-        double m10, double m11) {
+                                  double m10, double m11) {
         return epsilonEquals(m00, m01,
-            m10, m11, EPSILON);
+                             m10, m11, EPSILON);
     }
 
     private boolean epsilonEquals(double m00, double m01,
-        double m10, double m11, double epsilon) {
+                                  double m10, double m11, double epsilon) {
         return DoubleUtils.epsilonEquals(getM00(), m00, epsilon) && DoubleUtils.epsilonEquals(getM01(), m01, epsilon)
-            && DoubleUtils.epsilonEquals(getM10(), m10, epsilon) && DoubleUtils.epsilonEquals(getM11(), m11, epsilon);
+               && DoubleUtils.epsilonEquals(getM10(), m10, epsilon) && DoubleUtils.epsilonEquals(getM11(), m11, epsilon);
     }
 
     private boolean equals(double m00, double m01,
-        double m10, double m11) {
+                           double m10, double m11) {
         return getM00() == m00 && getM01() == m01
-            && getM10() == m10 && getM11() == m11;
+               && getM10() == m10 && getM11() == m11;
     }
 
     private static String getFormat() {

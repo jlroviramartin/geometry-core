@@ -102,7 +102,7 @@ public class Tuple2d implements Cloneable, Tuple, Tuple2_Double, Tuple2_Number  
      * @param epsilon Error.
      * @return {@code True} if {@code this} tuple is zero. {@code False} otherwise.
      */
-     public final boolean isZero(double epsilon) {
+    public final boolean isZero(double epsilon) {
         return epsilonEquals((double)0, (double)0, epsilon);
     }
 
@@ -120,7 +120,7 @@ public class Tuple2d implements Cloneable, Tuple, Tuple2_Double, Tuple2_Number  
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
         return String.format(getFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
-            getX(),getY());
+                             getX(),getY());
     }
 
     public boolean equals(Tuple2d other) {
@@ -213,10 +213,10 @@ public class Tuple2d implements Cloneable, Tuple, Tuple2_Double, Tuple2_Number  
     @Override
     public double getAt(int index) {
         switch(index) {
-            case 0:
-                return x;
-            case 1:
-                return y;
+        case 0:
+            return x;
+        case 1:
+            return y;
         }
         throw new IndexOutOfBoundsException();
     }
@@ -230,12 +230,12 @@ public class Tuple2d implements Cloneable, Tuple, Tuple2_Double, Tuple2_Number  
     @Override
     public void setAt(int index, double value) {
         switch(index) {
-            case 0:
-                x = value;
-                return;
-            case 1:
-                y = value;
-                return;
+        case 0:
+            x = value;
+            return;
+        case 1:
+            y = value;
+            return;
         }
         throw new IndexOutOfBoundsException();
     }
@@ -393,7 +393,7 @@ public class Tuple2d implements Cloneable, Tuple, Tuple2_Double, Tuple2_Number  
         }
         Tuple2d _other = (Tuple2d)other;
         return epsilonEquals(_other.getX(),
-                _other.getY(), epsilon);
+                             _other.getY(), epsilon);
     }
 //</editor-fold>
 

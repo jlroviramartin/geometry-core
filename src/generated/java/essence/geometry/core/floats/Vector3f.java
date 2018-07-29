@@ -145,8 +145,8 @@ public class Vector3f extends Tuple3f implements Vector3 {
     @Override
     public double getLengthL1() {
         return Math.abs(getX())
-                + Math.abs(getY())
-                + Math.abs(getZ());
+               + Math.abs(getY())
+               + Math.abs(getZ());
     }
 
     @Override
@@ -386,15 +386,15 @@ public class Vector3f extends Tuple3f implements Vector3 {
         Tuple3_Float _other = toTuple(other);
 
         set((float)(alpha * getX() + beta * _other.getX()),
-                (float)(alpha * getY() + beta * _other.getY()),
-                (float)(alpha * getZ() + beta * _other.getZ()));
+            (float)(alpha * getY() + beta * _other.getY()),
+            (float)(alpha * getZ() + beta * _other.getZ()));
         return this;
     }
 
     public Vector3f linealAndSet(Vector3f other, double alpha, double beta) {
         set((float)(alpha * getX() + beta * other.getX()),
-                (float)(alpha * getY() + beta * other.getY()),
-                (float)(alpha * getZ() + beta * other.getZ()));
+            (float)(alpha * getY() + beta * other.getY()),
+            (float)(alpha * getZ() + beta * other.getZ()));
         return this;
     }
 
@@ -403,15 +403,15 @@ public class Vector3f extends Tuple3f implements Vector3 {
         Tuple3_Float _other = toTuple(other);
 
         set((getY() * _other.getZ()) - (getZ() * _other.getY()),
-                (getZ() * _other.getX()) - (getX() * _other.getZ()),
-                (getX() * _other.getY()) - (getY() * _other.getX()));
+            (getZ() * _other.getX()) - (getX() * _other.getZ()),
+            (getX() * _other.getY()) - (getY() * _other.getX()));
         return this;
     }
 
     public Vector3f crossAndSet(Vector3f other) {
         set((getY() * other.getZ()) - (getZ() * other.getY()),
-                (getZ() * other.getX()) - (getX() * other.getZ()),
-                (getX() * other.getY()) - (getY() * other.getX()));
+            (getZ() * other.getX()) - (getX() * other.getZ()),
+            (getX() * other.getY()) - (getY() * other.getX()));
         return this;
     }
 
@@ -441,12 +441,8 @@ public class Vector3f extends Tuple3f implements Vector3 {
 //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector3f getUnit(int index) {
         return new Vector3f((float)((index == 0) ? 1 : 0),
-                (float)((index == 1) ? 1 : 0),
-                (float)((index == 2) ? 1 : 0));
+                            (float)((index == 1) ? 1 : 0),
+                            (float)((index == 2) ? 1 : 0));
     }
 //</editor-fold>
 }
-
-
-
-

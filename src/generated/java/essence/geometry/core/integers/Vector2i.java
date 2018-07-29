@@ -131,7 +131,7 @@ public class Vector2i extends Tuple2i implements Vector2 {
     @Override
     public double getLengthL1() {
         return Math.abs(getX())
-                + Math.abs(getY());
+               + Math.abs(getY());
     }
 
     @Override
@@ -145,7 +145,7 @@ public class Vector2i extends Tuple2i implements Vector2 {
 
         // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
         return Math.atan2(getX() * _other.getY() - getY() * _other.getX(),
-                getX() * _other.getX() + getY() * _other.getY());
+                          getX() * _other.getX() + getY() * _other.getY());
     }
 
     @Override
@@ -328,7 +328,7 @@ public class Vector2i extends Tuple2i implements Vector2 {
         double s = Math.sin(angle);
         double c = Math.cos(angle);
         set((int)(getX() * c - getY() * s),
-                (int)(getX() * s + getY() * c));
+            (int)(getX() * s + getY() * c));
         return this;
     }
 
@@ -337,7 +337,7 @@ public class Vector2i extends Tuple2i implements Vector2 {
         double s = Math.sin(angle);
         double c = Math.cos(angle);
         set((int)(len*(getX() * c - getY() * s)),
-                (int)(len*(getX() * s + getY() * c)));
+            (int)(len*(getX() * s + getY() * c)));
         return this;
     }
 
@@ -433,13 +433,13 @@ public class Vector2i extends Tuple2i implements Vector2 {
         Tuple2_Integer _other = toTuple(other);
 
         set((int)(alpha * getX() + beta * _other.getX()),
-                (int)(alpha * getY() + beta * _other.getY()));
+            (int)(alpha * getY() + beta * _other.getY()));
         return this;
     }
 
     public Vector2i linealAndSet(Vector2i other, double alpha, double beta) {
         set((int)(alpha * getX() + beta * other.getX()),
-                (int)(alpha * getY() + beta * other.getY()));
+            (int)(alpha * getY() + beta * other.getY()));
         return this;
     }
 
@@ -469,11 +469,7 @@ public class Vector2i extends Tuple2i implements Vector2 {
 //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector2i getUnit(int index) {
         return new Vector2i((int)((index == 0) ? 1 : 0),
-                (int)((index == 1) ? 1 : 0));
+                            (int)((index == 1) ? 1 : 0));
     }
 //</editor-fold>
 }
-
-
-
-

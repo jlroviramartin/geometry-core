@@ -34,11 +34,7 @@ public class ByteUtils {
     }
 
     public static boolean epsilonEquals(byte v1, byte v2, double epsilon) {
-        if (v2 > v1) {
-            return v2 <= v1 + epsilon;
-        } else {
-            return v1 <= v2 + epsilon;
-        }
+        return (Math.abs(v2 - v1) <= epsilon);
     }
 
     public static boolean epsilonZero(byte v) {

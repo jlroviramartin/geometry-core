@@ -110,7 +110,7 @@ public class Tuple4b implements Cloneable, Tuple, Tuple4_Byte, Tuple4_Number  {
      * @param epsilon Error.
      * @return {@code True} if {@code this} tuple is zero. {@code False} otherwise.
      */
-     public final boolean isZero(double epsilon) {
+    public final boolean isZero(double epsilon) {
         return epsilonEquals((byte)0, (byte)0, (byte)0, (byte)0, epsilon);
     }
 
@@ -128,7 +128,7 @@ public class Tuple4b implements Cloneable, Tuple, Tuple4_Byte, Tuple4_Number  {
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
         return String.format(getFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
-            getX(),getY(),getZ(),getW());
+                             getX(),getY(),getZ(),getW());
     }
 
     public boolean equals(Tuple4b other) {
@@ -223,14 +223,14 @@ public class Tuple4b implements Cloneable, Tuple, Tuple4_Byte, Tuple4_Number  {
     @Override
     public byte getAt(int index) {
         switch(index) {
-            case 0:
-                return x;
-            case 1:
-                return y;
-            case 2:
-                return z;
-            case 3:
-                return w;
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
+        case 3:
+            return w;
         }
         throw new IndexOutOfBoundsException();
     }
@@ -244,18 +244,18 @@ public class Tuple4b implements Cloneable, Tuple, Tuple4_Byte, Tuple4_Number  {
     @Override
     public void setAt(int index, byte value) {
         switch(index) {
-            case 0:
-                x = value;
-                return;
-            case 1:
-                y = value;
-                return;
-            case 2:
-                z = value;
-                return;
-            case 3:
-                w = value;
-                return;
+        case 0:
+            x = value;
+            return;
+        case 1:
+            y = value;
+            return;
+        case 2:
+            z = value;
+            return;
+        case 3:
+            w = value;
+            return;
         }
         throw new IndexOutOfBoundsException();
     }
@@ -481,9 +481,9 @@ public class Tuple4b implements Cloneable, Tuple, Tuple4_Byte, Tuple4_Number  {
         }
         Tuple4b _other = (Tuple4b)other;
         return epsilonEquals(_other.getX(),
-                _other.getY(),
-                _other.getZ(),
-                _other.getW(), epsilon);
+                             _other.getY(),
+                             _other.getZ(),
+                             _other.getW(), epsilon);
     }
 //</editor-fold>
 

@@ -108,16 +108,16 @@ public class Point4d extends Tuple4d implements Point4 {
         Tuple4_Double _other = toTuple(other);
 
         return square(_other.getX() - getX())
-                + square(_other.getY() - getY())
-                + square(_other.getZ() - getZ())
-                + square(_other.getW() - getW());
+               + square(_other.getY() - getY())
+               + square(_other.getZ() - getZ())
+               + square(_other.getW() - getW());
     }
 
     public double getDistanceCuad(Point4d other) {
         return square(other.getX() - getX())
-                + square(other.getY() - getY())
-                + square(other.getZ() - getZ())
-                + square(other.getW() - getW());
+               + square(other.getY() - getY())
+               + square(other.getZ() - getZ())
+               + square(other.getW() - getW());
     }
 
     @Override
@@ -125,16 +125,16 @@ public class Point4d extends Tuple4d implements Point4 {
         Tuple4_Double _other = toTuple(other);
 
         return Math.abs(_other.getX() - getX())
-                + Math.abs(_other.getY() - getY())
-                + Math.abs(_other.getZ() - getZ())
-                + Math.abs(_other.getW() - getW());
+               + Math.abs(_other.getY() - getY())
+               + Math.abs(_other.getZ() - getZ())
+               + Math.abs(_other.getW() - getW());
     }
 
     public double getDistanceL1(Point4d other) {
         return Math.abs(other.getX() - getX())
-                + Math.abs(other.getY() - getY())
-                + Math.abs(other.getZ() - getZ())
-                + Math.abs(other.getW() - getW());
+               + Math.abs(other.getY() - getY())
+               + Math.abs(other.getZ() - getZ())
+               + Math.abs(other.getW() - getW());
     }
 
     @Override
@@ -272,17 +272,17 @@ public class Point4d extends Tuple4d implements Point4 {
         Tuple4_Double _other = toTuple(other);
 
         set((double)(alpha * getX() + beta * _other.getX()),
-                (double)(alpha * getY() + beta * _other.getY()),
-                (double)(alpha * getZ() + beta * _other.getZ()),
-                (double)(alpha * getW() + beta * _other.getW()));
+            (double)(alpha * getY() + beta * _other.getY()),
+            (double)(alpha * getZ() + beta * _other.getZ()),
+            (double)(alpha * getW() + beta * _other.getW()));
         return this;
     }
 
     public Point4d linealAndSet(Point4d other, double alpha, double beta) {
         set((double)(alpha * getX() + beta * other.getX()),
-                (double)(alpha * getY() + beta * other.getY()),
-                (double)(alpha * getZ() + beta * other.getZ()),
-                (double)(alpha * getW() + beta * other.getW()));
+            (double)(alpha * getY() + beta * other.getY()),
+            (double)(alpha * getZ() + beta * other.getZ()),
+            (double)(alpha * getW() + beta * other.getW()));
         return this;
     }
 

@@ -106,7 +106,7 @@ public class Tuple3f implements Cloneable, Tuple, Tuple3_Float, Tuple3_Number  {
      * @param epsilon Error.
      * @return {@code True} if {@code this} tuple is zero. {@code False} otherwise.
      */
-     public final boolean isZero(double epsilon) {
+    public final boolean isZero(double epsilon) {
         return epsilonEquals((float)0, (float)0, (float)0, epsilon);
     }
 
@@ -124,7 +124,7 @@ public class Tuple3f implements Cloneable, Tuple, Tuple3_Float, Tuple3_Number  {
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
         return String.format(getFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
-            getX(),getY(),getZ());
+                             getX(),getY(),getZ());
     }
 
     public boolean equals(Tuple3f other) {
@@ -218,12 +218,12 @@ public class Tuple3f implements Cloneable, Tuple, Tuple3_Float, Tuple3_Number  {
     @Override
     public float getAt(int index) {
         switch(index) {
-            case 0:
-                return x;
-            case 1:
-                return y;
-            case 2:
-                return z;
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
         }
         throw new IndexOutOfBoundsException();
     }
@@ -237,15 +237,15 @@ public class Tuple3f implements Cloneable, Tuple, Tuple3_Float, Tuple3_Number  {
     @Override
     public void setAt(int index, float value) {
         switch(index) {
-            case 0:
-                x = value;
-                return;
-            case 1:
-                y = value;
-                return;
-            case 2:
-                z = value;
-                return;
+        case 0:
+            x = value;
+            return;
+        case 1:
+            y = value;
+            return;
+        case 2:
+            z = value;
+            return;
         }
         throw new IndexOutOfBoundsException();
     }
@@ -437,8 +437,8 @@ public class Tuple3f implements Cloneable, Tuple, Tuple3_Float, Tuple3_Number  {
         }
         Tuple3f _other = (Tuple3f)other;
         return epsilonEquals(_other.getX(),
-                _other.getY(),
-                _other.getZ(), epsilon);
+                             _other.getY(),
+                             _other.getZ(), epsilon);
     }
 //</editor-fold>
 

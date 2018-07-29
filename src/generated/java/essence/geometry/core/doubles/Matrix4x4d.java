@@ -83,9 +83,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      */
     public Matrix4x4d() {
         this(0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0);
+             0, 0, 0, 0,
+             0, 0, 0, 0,
+             0, 0, 0, 0);
     }
 
     /**
@@ -109,9 +109,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      * @param m33 Value of the property M33.
      */
     public Matrix4x4d(double m00, double m01, double m02, double m03,
-        double m10, double m11, double m12, double m13,
-        double m20, double m21, double m22, double m23,
-        double m30, double m31, double m32, double m33) {
+                      double m10, double m11, double m12, double m13,
+                      double m20, double m21, double m22, double m23,
+                      double m30, double m31, double m32, double m33) {
         this.m00 = m00;
         this.m01 = m01;
         this.m02 = m02;
@@ -133,13 +133,13 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     /*
      * This method gets an identity matrix.
      *
-     * return Identity matrix. 
+     * return Identity matrix.
      */
     public static Matrix4x4d getIdentity() {
         return new Matrix4x4d(1, 0, 0, 0,
-            0, 1, 0, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1);
+                              0, 1, 0, 0,
+                              0, 0, 1, 0,
+                              0, 0, 0, 1);
     }
 
     protected static Tuple4_Double toTuple(Tuple other) {
@@ -188,50 +188,50 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      */
     public double get(int r, int c) {
         switch(r) {
+        case 0:
+            switch(c) {
             case 0:
-                switch(c) {
-                    case 0:
-                        return m00;
-                    case 1:
-                        return m01;
-                    case 2:
-                        return m02;
-                    case 3:
-                        return m03;
-                }
+                return m00;
             case 1:
-                switch(c) {
-                    case 0:
-                        return m10;
-                    case 1:
-                        return m11;
-                    case 2:
-                        return m12;
-                    case 3:
-                        return m13;
-                }
+                return m01;
             case 2:
-                switch(c) {
-                    case 0:
-                        return m20;
-                    case 1:
-                        return m21;
-                    case 2:
-                        return m22;
-                    case 3:
-                        return m23;
-                }
+                return m02;
             case 3:
-                switch(c) {
-                    case 0:
-                        return m30;
-                    case 1:
-                        return m31;
-                    case 2:
-                        return m32;
-                    case 3:
-                        return m33;
-                }
+                return m03;
+            }
+        case 1:
+            switch(c) {
+            case 0:
+                return m10;
+            case 1:
+                return m11;
+            case 2:
+                return m12;
+            case 3:
+                return m13;
+            }
+        case 2:
+            switch(c) {
+            case 0:
+                return m20;
+            case 1:
+                return m21;
+            case 2:
+                return m22;
+            case 3:
+                return m23;
+            }
+        case 3:
+            switch(c) {
+            case 0:
+                return m30;
+            case 1:
+                return m31;
+            case 2:
+                return m32;
+            case 3:
+                return m33;
+            }
         }
         throw new IndexOutOfBoundsException();
     }
@@ -245,66 +245,66 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      */
     public void set(int r, int c, double value) {
         switch(r) {
+        case 0:
+            switch(c) {
             case 0:
-                switch(c) {
-                    case 0:
-                        m00 = value;
-                        return;
-                    case 1:
-                        m01 = value;
-                        return;
-                    case 2:
-                        m02 = value;
-                        return;
-                    case 3:
-                        m03 = value;
-                        return;
-                }
+                m00 = value;
+                return;
             case 1:
-                switch(c) {
-                    case 0:
-                        m10 = value;
-                        return;
-                    case 1:
-                        m11 = value;
-                        return;
-                    case 2:
-                        m12 = value;
-                        return;
-                    case 3:
-                        m13 = value;
-                        return;
-                }
+                m01 = value;
+                return;
             case 2:
-                switch(c) {
-                    case 0:
-                        m20 = value;
-                        return;
-                    case 1:
-                        m21 = value;
-                        return;
-                    case 2:
-                        m22 = value;
-                        return;
-                    case 3:
-                        m23 = value;
-                        return;
-                }
+                m02 = value;
+                return;
             case 3:
-                switch(c) {
-                    case 0:
-                        m30 = value;
-                        return;
-                    case 1:
-                        m31 = value;
-                        return;
-                    case 2:
-                        m32 = value;
-                        return;
-                    case 3:
-                        m33 = value;
-                        return;
-                }
+                m03 = value;
+                return;
+            }
+        case 1:
+            switch(c) {
+            case 0:
+                m10 = value;
+                return;
+            case 1:
+                m11 = value;
+                return;
+            case 2:
+                m12 = value;
+                return;
+            case 3:
+                m13 = value;
+                return;
+            }
+        case 2:
+            switch(c) {
+            case 0:
+                m20 = value;
+                return;
+            case 1:
+                m21 = value;
+                return;
+            case 2:
+                m22 = value;
+                return;
+            case 3:
+                m23 = value;
+                return;
+            }
+        case 3:
+            switch(c) {
+            case 0:
+                m30 = value;
+                return;
+            case 1:
+                m31 = value;
+                return;
+            case 2:
+                m32 = value;
+                return;
+            case 3:
+                m33 = value;
+                return;
+            }
         }
         throw new IndexOutOfBoundsException();
     }
@@ -618,9 +618,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      * @param m33 Property [3, 3].
      */
     public Matrix4x4d set(double m00, double m01, double m02, double m03,
-        double m10, double m11, double m12, double m13,
-        double m20, double m21, double m22, double m23,
-        double m30, double m31, double m32, double m33) {
+                          double m10, double m11, double m12, double m13,
+                          double m20, double m21, double m22, double m23,
+                          double m30, double m31, double m32, double m33) {
         this.m00 = m00;
         this.m01 = m01;
         this.m02 = m02;
@@ -664,9 +664,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      */
     public void mul(Vector4d v) {
         v.set(getM00() * v.getX() + getM01() * v.getY() + getM02() * v.getZ() + getM03() * v.getW(),
-            getM10() * v.getX() + getM11() * v.getY() + getM12() * v.getZ() + getM13() * v.getW(),
-            getM20() * v.getX() + getM21() * v.getY() + getM22() * v.getZ() + getM23() * v.getW(),
-            getM30() * v.getX() + getM31() * v.getY() + getM32() * v.getZ() + getM33() * v.getW());
+              getM10() * v.getX() + getM11() * v.getY() + getM12() * v.getZ() + getM13() * v.getW(),
+              getM20() * v.getX() + getM21() * v.getY() + getM22() * v.getZ() + getM23() * v.getW(),
+              getM30() * v.getX() + getM31() * v.getY() + getM32() * v.getZ() + getM33() * v.getW());
     }
 
     /**
@@ -691,9 +691,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      */
     public void premul(Vector4d v) {
         v.set(v.getX() * getM00() + v.getY() * getM10() + v.getZ() * getM20() + v.getW() * getM30(),
-            v.getX() * getM01() + v.getY() * getM11() + v.getZ() * getM21() + v.getW() * getM31(),
-            v.getX() * getM02() + v.getY() * getM12() + v.getZ() * getM22() + v.getW() * getM32(),
-            v.getX() * getM03() + v.getY() * getM13() + v.getZ() * getM23() + v.getW() * getM33());
+              v.getX() * getM01() + v.getY() * getM11() + v.getZ() * getM21() + v.getW() * getM31(),
+              v.getX() * getM02() + v.getY() * getM12() + v.getZ() * getM22() + v.getW() * getM32(),
+              v.getX() * getM03() + v.getY() * getM13() + v.getZ() * getM23() + v.getW() * getM33());
     }
 
     /**
@@ -818,9 +818,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      */
     public final boolean isNaN() {
         return Double.isNaN(getM00()) || Double.isNaN(getM01()) || Double.isNaN(getM02()) || Double.isNaN(getM03()) ||
-            Double.isNaN(getM10()) || Double.isNaN(getM11()) || Double.isNaN(getM12()) || Double.isNaN(getM13()) ||
-            Double.isNaN(getM20()) || Double.isNaN(getM21()) || Double.isNaN(getM22()) || Double.isNaN(getM23()) ||
-            Double.isNaN(getM30()) || Double.isNaN(getM31()) || Double.isNaN(getM32()) || Double.isNaN(getM33());
+               Double.isNaN(getM10()) || Double.isNaN(getM11()) || Double.isNaN(getM12()) || Double.isNaN(getM13()) ||
+               Double.isNaN(getM20()) || Double.isNaN(getM21()) || Double.isNaN(getM22()) || Double.isNaN(getM23()) ||
+               Double.isNaN(getM30()) || Double.isNaN(getM31()) || Double.isNaN(getM32()) || Double.isNaN(getM33());
     }
 
     /**
@@ -830,9 +830,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      */
     public final boolean isInfinity() {
         return Double.isInfinite(getM00()) || Double.isInfinite(getM01()) || Double.isInfinite(getM02()) || Double.isInfinite(getM03()) ||
-            Double.isInfinite(getM10()) || Double.isInfinite(getM11()) || Double.isInfinite(getM12()) || Double.isInfinite(getM13()) ||
-            Double.isInfinite(getM20()) || Double.isInfinite(getM21()) || Double.isInfinite(getM22()) || Double.isInfinite(getM23()) ||
-            Double.isInfinite(getM30()) || Double.isInfinite(getM31()) || Double.isInfinite(getM32()) || Double.isInfinite(getM33());
+               Double.isInfinite(getM10()) || Double.isInfinite(getM11()) || Double.isInfinite(getM12()) || Double.isInfinite(getM13()) ||
+               Double.isInfinite(getM20()) || Double.isInfinite(getM21()) || Double.isInfinite(getM22()) || Double.isInfinite(getM23()) ||
+               Double.isInfinite(getM30()) || Double.isInfinite(getM31()) || Double.isInfinite(getM32()) || Double.isInfinite(getM33());
     }
 
     /**
@@ -852,9 +852,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      */
     public final boolean isZero(double epsilon) {
         return epsilonEquals(0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0, epsilon);
+                             0, 0, 0, 0,
+                             0, 0, 0, 0,
+                             0, 0, 0, 0, epsilon);
     }
 
     /**
@@ -874,9 +874,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
      */
     public boolean isIdentity(double epsilon) {
         return epsilonEquals(1, 0, 0, 0,
-            0, 1, 0, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1, epsilon);
+                             0, 1, 0, 0,
+                             0, 0, 1, 0,
+                             0, 0, 0, 1, epsilon);
     }
 
     /**
@@ -1168,53 +1168,53 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         s = 1 / s;
         set(
             (double)((getM11() * (getM22() * getM33() - getM23() * getM32())
-                + getM12() * (getM23() * getM31() - getM21() * getM33())
-                + getM13() * (getM21() * getM32() - getM22() * getM31())) * s),
+                      + getM12() * (getM23() * getM31() - getM21() * getM33())
+                      + getM13() * (getM21() * getM32() - getM22() * getM31())) * s),
             (double)((getM21() * (getM02() * getM33() - getM03() * getM32())
-                + getM22() * (getM03() * getM31() - getM01() * getM33())
-                + getM23() * (getM01() * getM32() - getM02() * getM31())) * s),
+                      + getM22() * (getM03() * getM31() - getM01() * getM33())
+                      + getM23() * (getM01() * getM32() - getM02() * getM31())) * s),
             (double)((getM31() * (getM02() * getM13() - getM03() * getM12())
-                + getM32() * (getM03() * getM11() - getM01() * getM13())
-                + getM33() * (getM01() * getM12() - getM02() * getM11())) * s),
+                      + getM32() * (getM03() * getM11() - getM01() * getM13())
+                      + getM33() * (getM01() * getM12() - getM02() * getM11())) * s),
             (double)((getM01() * (getM13() * getM22() - getM12() * getM23())
-                + getM02() * (getM11() * getM23() - getM13() * getM21())
-                + getM03() * (getM12() * getM21() - getM11() * getM22())) * s),
+                      + getM02() * (getM11() * getM23() - getM13() * getM21())
+                      + getM03() * (getM12() * getM21() - getM11() * getM22())) * s),
             (double)((getM12() * (getM20() * getM33() - getM23() * getM30())
-                + getM13() * (getM22() * getM30() - getM20() * getM32())
-                + getM10() * (getM23() * getM32() - getM22() * getM33())) * s),
+                      + getM13() * (getM22() * getM30() - getM20() * getM32())
+                      + getM10() * (getM23() * getM32() - getM22() * getM33())) * s),
             (double)((getM22() * (getM00() * getM33() - getM03() * getM30())
-                + getM23() * (getM02() * getM30() - getM00() * getM32())
-                + getM20() * (getM03() * getM32() - getM02() * getM33())) * s),
+                      + getM23() * (getM02() * getM30() - getM00() * getM32())
+                      + getM20() * (getM03() * getM32() - getM02() * getM33())) * s),
             (double)((getM32() * (getM00() * getM13() - getM03() * getM10())
-                + getM33() * (getM02() * getM10() - getM00() * getM12())
-                + getM30() * (getM03() * getM12() - getM02() * getM13())) * s),
+                      + getM33() * (getM02() * getM10() - getM00() * getM12())
+                      + getM30() * (getM03() * getM12() - getM02() * getM13())) * s),
             (double)((getM02() * (getM13() * getM20() - getM10() * getM23())
-                + getM03() * (getM10() * getM22() - getM12() * getM20())
-                + getM00() * (getM12() * getM23() - getM13() * getM22())) * s),
+                      + getM03() * (getM10() * getM22() - getM12() * getM20())
+                      + getM00() * (getM12() * getM23() - getM13() * getM22())) * s),
             (double)((getM13() * (getM20() * getM31() - getM21() * getM30())
-                + getM10() * (getM21() * getM33() - getM23() * getM31())
-                + getM11() * (getM23() * getM30() - getM20() * getM33())) * s),
+                      + getM10() * (getM21() * getM33() - getM23() * getM31())
+                      + getM11() * (getM23() * getM30() - getM20() * getM33())) * s),
             (double)((getM23() * (getM00() * getM31() - getM01() * getM30())
-                + getM20() * (getM01() * getM33() - getM03() * getM31())
-                + getM21() * (getM03() * getM30() - getM00() * getM33())) * s),
+                      + getM20() * (getM01() * getM33() - getM03() * getM31())
+                      + getM21() * (getM03() * getM30() - getM00() * getM33())) * s),
             (double)((getM33() * (getM00() * getM11() - getM01() * getM10())
-                + getM30() * (getM01() * getM13() - getM03() * getM11())
-                + getM31() * (getM03() * getM10() - getM00() * getM13())) * s),
+                      + getM30() * (getM01() * getM13() - getM03() * getM11())
+                      + getM31() * (getM03() * getM10() - getM00() * getM13())) * s),
             (double)((getM03() * (getM11() * getM20() - getM10() * getM21())
-                + getM00() * (getM13() * getM21() - getM11() * getM23())
-                + getM01() * (getM10() * getM23() - getM13() * getM20())) * s),
+                      + getM00() * (getM13() * getM21() - getM11() * getM23())
+                      + getM01() * (getM10() * getM23() - getM13() * getM20())) * s),
             (double)((getM10() * (getM22() * getM31() - getM21() * getM32())
-                + getM11() * (getM20() * getM32() - getM22() * getM30())
-                + getM12() * (getM21() * getM30() - getM20() * getM31())) * s),
+                      + getM11() * (getM20() * getM32() - getM22() * getM30())
+                      + getM12() * (getM21() * getM30() - getM20() * getM31())) * s),
             (double)((getM20() * (getM02() * getM31() - getM01() * getM32())
-                + getM21() * (getM00() * getM32() - getM02() * getM30())
-                + getM22() * (getM01() * getM30() - getM00() * getM31())) * s),
+                      + getM21() * (getM00() * getM32() - getM02() * getM30())
+                      + getM22() * (getM01() * getM30() - getM00() * getM31())) * s),
             (double)((getM30() * (getM02() * getM11() - getM01() * getM12())
-                + getM31() * (getM00() * getM12() - getM02() * getM10())
-                + getM32() * (getM01() * getM10() - getM00() * getM11())) * s),
+                      + getM31() * (getM00() * getM12() - getM02() * getM10())
+                      + getM32() * (getM01() * getM10() - getM00() * getM11())) * s),
             (double)((getM00() * (getM11() * getM22() - getM12() * getM21())
-                + getM01() * (getM12() * getM20() - getM10() * getM22())
-                + getM02() * (getM10() * getM21() - getM11() * getM20())) * s));
+                      + getM01() * (getM12() * getM20() - getM10() * getM22())
+                      + getM02() * (getM10() * getM21() - getM11() * getM20())) * s));
         return this;
     }
 
@@ -1223,10 +1223,10 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
         return String.format(getFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
-            getM00(),getM01(),getM02(),getM03(),
-            getM10(),getM11(),getM12(),getM13(),
-            getM20(),getM21(),getM22(),getM23(),
-            getM30(),getM31(),getM32(),getM33());
+                             getM00(),getM01(),getM02(),getM03(),
+                             getM10(),getM11(),getM12(),getM13(),
+                             getM20(),getM21(),getM22(),getM23(),
+                             getM30(),getM31(),getM32(),getM33());
     }
 
     public boolean equals(Matrix4x4d other) {
@@ -1238,9 +1238,9 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         }
 
         return this.equals(getM00(), getM01(), getM02(), getM03(),
-            getM10(), getM11(), getM12(), getM13(),
-            getM20(), getM21(), getM22(), getM23(),
-            getM30(), getM31(), getM32(), getM33());
+                           getM10(), getM11(), getM12(), getM13(),
+                           getM20(), getM21(), getM22(), getM23(),
+                           getM30(), getM31(), getM32(), getM33());
     }
 
     @Override
@@ -1294,41 +1294,41 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
             return false;
         }
         return epsilonEquals(getM00(), getM01(), getM02(), getM03(),
-            getM10(), getM11(), getM12(), getM13(),
-            getM20(), getM21(), getM22(), getM23(),
-            getM30(), getM31(), getM32(), getM33(), epsilon);
+                             getM10(), getM11(), getM12(), getM13(),
+                             getM20(), getM21(), getM22(), getM23(),
+                             getM30(), getM31(), getM32(), getM33(), epsilon);
     }
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="private">
     private boolean epsilonEquals(double m00, double m01, double m02, double m03,
-        double m10, double m11, double m12, double m13,
-        double m20, double m21, double m22, double m23,
-        double m30, double m31, double m32, double m33) {
+                                  double m10, double m11, double m12, double m13,
+                                  double m20, double m21, double m22, double m23,
+                                  double m30, double m31, double m32, double m33) {
         return epsilonEquals(m00, m01, m02, m03,
-            m10, m11, m12, m13,
-            m20, m21, m22, m23,
-            m30, m31, m32, m33, EPSILON);
+                             m10, m11, m12, m13,
+                             m20, m21, m22, m23,
+                             m30, m31, m32, m33, EPSILON);
     }
 
     private boolean epsilonEquals(double m00, double m01, double m02, double m03,
-        double m10, double m11, double m12, double m13,
-        double m20, double m21, double m22, double m23,
-        double m30, double m31, double m32, double m33, double epsilon) {
+                                  double m10, double m11, double m12, double m13,
+                                  double m20, double m21, double m22, double m23,
+                                  double m30, double m31, double m32, double m33, double epsilon) {
         return DoubleUtils.epsilonEquals(getM00(), m00, epsilon) && DoubleUtils.epsilonEquals(getM01(), m01, epsilon) && DoubleUtils.epsilonEquals(getM02(), m02, epsilon) && DoubleUtils.epsilonEquals(getM03(), m03, epsilon)
-            && DoubleUtils.epsilonEquals(getM10(), m10, epsilon) && DoubleUtils.epsilonEquals(getM11(), m11, epsilon) && DoubleUtils.epsilonEquals(getM12(), m12, epsilon) && DoubleUtils.epsilonEquals(getM13(), m13, epsilon)
-            && DoubleUtils.epsilonEquals(getM20(), m20, epsilon) && DoubleUtils.epsilonEquals(getM21(), m21, epsilon) && DoubleUtils.epsilonEquals(getM22(), m22, epsilon) && DoubleUtils.epsilonEquals(getM23(), m23, epsilon)
-            && DoubleUtils.epsilonEquals(getM30(), m30, epsilon) && DoubleUtils.epsilonEquals(getM31(), m31, epsilon) && DoubleUtils.epsilonEquals(getM32(), m32, epsilon) && DoubleUtils.epsilonEquals(getM33(), m33, epsilon);
+               && DoubleUtils.epsilonEquals(getM10(), m10, epsilon) && DoubleUtils.epsilonEquals(getM11(), m11, epsilon) && DoubleUtils.epsilonEquals(getM12(), m12, epsilon) && DoubleUtils.epsilonEquals(getM13(), m13, epsilon)
+               && DoubleUtils.epsilonEquals(getM20(), m20, epsilon) && DoubleUtils.epsilonEquals(getM21(), m21, epsilon) && DoubleUtils.epsilonEquals(getM22(), m22, epsilon) && DoubleUtils.epsilonEquals(getM23(), m23, epsilon)
+               && DoubleUtils.epsilonEquals(getM30(), m30, epsilon) && DoubleUtils.epsilonEquals(getM31(), m31, epsilon) && DoubleUtils.epsilonEquals(getM32(), m32, epsilon) && DoubleUtils.epsilonEquals(getM33(), m33, epsilon);
     }
 
     private boolean equals(double m00, double m01, double m02, double m03,
-        double m10, double m11, double m12, double m13,
-        double m20, double m21, double m22, double m23,
-        double m30, double m31, double m32, double m33) {
+                           double m10, double m11, double m12, double m13,
+                           double m20, double m21, double m22, double m23,
+                           double m30, double m31, double m32, double m33) {
         return getM00() == m00 && getM01() == m01 && getM02() == m02 && getM03() == m03
-            && getM10() == m10 && getM11() == m11 && getM12() == m12 && getM13() == m13
-            && getM20() == m20 && getM21() == m21 && getM22() == m22 && getM23() == m23
-            && getM30() == m30 && getM31() == m31 && getM32() == m32 && getM33() == m33;
+               && getM10() == m10 && getM11() == m11 && getM12() == m12 && getM13() == m13
+               && getM20() == m20 && getM21() == m21 && getM22() == m22 && getM23() == m23
+               && getM30() == m30 && getM31() == m31 && getM32() == m32 && getM33() == m33;
     }
 
     private static String getFormat() {

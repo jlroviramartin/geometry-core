@@ -18,6 +18,10 @@
  */
 package templatesforvectors;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.essence.astyle.Astyle;
 import org.essence.pebble.TemplateEngine;
 
 /**
@@ -27,7 +31,7 @@ import org.essence.pebble.TemplateEngine;
 public abstract class BaseTemplate extends TemplateEngine {
 
 //<editor-fold defaultstate="collapsed" desc="fields">
-    //protected final String mainPath = "C:\\Users\\joseluis\\source\\Java\\TemplatesForVectors\\src\\generated\\java";
+    private static final Logger LOGGER = Logger.getLogger(BaseTemplate.class.getName());
     protected final String mainPath = System.getProperty("user.dir") + "\\src\\generated\\java";
 //</editor-fold>
 
@@ -38,5 +42,13 @@ public abstract class BaseTemplate extends TemplateEngine {
 
         template.writeToFile(new MapBuilder<String, Object>().put("desc", desc).build(),
                              fileName);
+
+        if (Astyle.INSTANCE != null) {
+            try {
+                Astyle.INSTANCE.javaBeautify(fileName);
+            } catch (IOException ex) {
+                LOGGER.log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

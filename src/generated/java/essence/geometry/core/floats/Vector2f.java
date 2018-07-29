@@ -131,7 +131,7 @@ public class Vector2f extends Tuple2f implements Vector2 {
     @Override
     public double getLengthL1() {
         return Math.abs(getX())
-                + Math.abs(getY());
+               + Math.abs(getY());
     }
 
     @Override
@@ -145,7 +145,7 @@ public class Vector2f extends Tuple2f implements Vector2 {
 
         // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
         return Math.atan2(getX() * _other.getY() - getY() * _other.getX(),
-                getX() * _other.getX() + getY() * _other.getY());
+                          getX() * _other.getX() + getY() * _other.getY());
     }
 
     @Override
@@ -328,7 +328,7 @@ public class Vector2f extends Tuple2f implements Vector2 {
         double s = Math.sin(angle);
         double c = Math.cos(angle);
         set((float)(getX() * c - getY() * s),
-                (float)(getX() * s + getY() * c));
+            (float)(getX() * s + getY() * c));
         return this;
     }
 
@@ -337,7 +337,7 @@ public class Vector2f extends Tuple2f implements Vector2 {
         double s = Math.sin(angle);
         double c = Math.cos(angle);
         set((float)(len*(getX() * c - getY() * s)),
-                (float)(len*(getX() * s + getY() * c)));
+            (float)(len*(getX() * s + getY() * c)));
         return this;
     }
 
@@ -433,13 +433,13 @@ public class Vector2f extends Tuple2f implements Vector2 {
         Tuple2_Float _other = toTuple(other);
 
         set((float)(alpha * getX() + beta * _other.getX()),
-                (float)(alpha * getY() + beta * _other.getY()));
+            (float)(alpha * getY() + beta * _other.getY()));
         return this;
     }
 
     public Vector2f linealAndSet(Vector2f other, double alpha, double beta) {
         set((float)(alpha * getX() + beta * other.getX()),
-                (float)(alpha * getY() + beta * other.getY()));
+            (float)(alpha * getY() + beta * other.getY()));
         return this;
     }
 
@@ -469,11 +469,7 @@ public class Vector2f extends Tuple2f implements Vector2 {
 //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector2f getUnit(int index) {
         return new Vector2f((float)((index == 0) ? 1 : 0),
-                (float)((index == 1) ? 1 : 0));
+                            (float)((index == 1) ? 1 : 0));
     }
 //</editor-fold>
 }
-
-
-
-

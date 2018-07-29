@@ -145,8 +145,8 @@ public class Vector3d extends Tuple3d implements Vector3 {
     @Override
     public double getLengthL1() {
         return Math.abs(getX())
-                + Math.abs(getY())
-                + Math.abs(getZ());
+               + Math.abs(getY())
+               + Math.abs(getZ());
     }
 
     @Override
@@ -386,15 +386,15 @@ public class Vector3d extends Tuple3d implements Vector3 {
         Tuple3_Double _other = toTuple(other);
 
         set((double)(alpha * getX() + beta * _other.getX()),
-                (double)(alpha * getY() + beta * _other.getY()),
-                (double)(alpha * getZ() + beta * _other.getZ()));
+            (double)(alpha * getY() + beta * _other.getY()),
+            (double)(alpha * getZ() + beta * _other.getZ()));
         return this;
     }
 
     public Vector3d linealAndSet(Vector3d other, double alpha, double beta) {
         set((double)(alpha * getX() + beta * other.getX()),
-                (double)(alpha * getY() + beta * other.getY()),
-                (double)(alpha * getZ() + beta * other.getZ()));
+            (double)(alpha * getY() + beta * other.getY()),
+            (double)(alpha * getZ() + beta * other.getZ()));
         return this;
     }
 
@@ -403,15 +403,15 @@ public class Vector3d extends Tuple3d implements Vector3 {
         Tuple3_Double _other = toTuple(other);
 
         set((getY() * _other.getZ()) - (getZ() * _other.getY()),
-                (getZ() * _other.getX()) - (getX() * _other.getZ()),
-                (getX() * _other.getY()) - (getY() * _other.getX()));
+            (getZ() * _other.getX()) - (getX() * _other.getZ()),
+            (getX() * _other.getY()) - (getY() * _other.getX()));
         return this;
     }
 
     public Vector3d crossAndSet(Vector3d other) {
         set((getY() * other.getZ()) - (getZ() * other.getY()),
-                (getZ() * other.getX()) - (getX() * other.getZ()),
-                (getX() * other.getY()) - (getY() * other.getX()));
+            (getZ() * other.getX()) - (getX() * other.getZ()),
+            (getX() * other.getY()) - (getY() * other.getX()));
         return this;
     }
 
@@ -441,12 +441,8 @@ public class Vector3d extends Tuple3d implements Vector3 {
 //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector3d getUnit(int index) {
         return new Vector3d((double)((index == 0) ? 1 : 0),
-                (double)((index == 1) ? 1 : 0),
-                (double)((index == 2) ? 1 : 0));
+                            (double)((index == 1) ? 1 : 0),
+                            (double)((index == 2) ? 1 : 0));
     }
 //</editor-fold>
 }
-
-
-
-

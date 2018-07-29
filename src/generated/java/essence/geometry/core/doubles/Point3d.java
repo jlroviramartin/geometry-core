@@ -103,14 +103,14 @@ public class Point3d extends Tuple3d implements Point3 {
         Tuple3_Double _other = toTuple(other);
 
         return square(_other.getX() - getX())
-                + square(_other.getY() - getY())
-                + square(_other.getZ() - getZ());
+               + square(_other.getY() - getY())
+               + square(_other.getZ() - getZ());
     }
 
     public double getDistanceCuad(Point3d other) {
         return square(other.getX() - getX())
-                + square(other.getY() - getY())
-                + square(other.getZ() - getZ());
+               + square(other.getY() - getY())
+               + square(other.getZ() - getZ());
     }
 
     @Override
@@ -118,14 +118,14 @@ public class Point3d extends Tuple3d implements Point3 {
         Tuple3_Double _other = toTuple(other);
 
         return Math.abs(_other.getX() - getX())
-                + Math.abs(_other.getY() - getY())
-                + Math.abs(_other.getZ() - getZ());
+               + Math.abs(_other.getY() - getY())
+               + Math.abs(_other.getZ() - getZ());
     }
 
     public double getDistanceL1(Point3d other) {
         return Math.abs(other.getX() - getX())
-                + Math.abs(other.getY() - getY())
-                + Math.abs(other.getZ() - getZ());
+               + Math.abs(other.getY() - getY())
+               + Math.abs(other.getZ() - getZ());
     }
 
     @Override
@@ -259,15 +259,15 @@ public class Point3d extends Tuple3d implements Point3 {
         Tuple3_Double _other = toTuple(other);
 
         set((double)(alpha * getX() + beta * _other.getX()),
-                (double)(alpha * getY() + beta * _other.getY()),
-                (double)(alpha * getZ() + beta * _other.getZ()));
+            (double)(alpha * getY() + beta * _other.getY()),
+            (double)(alpha * getZ() + beta * _other.getZ()));
         return this;
     }
 
     public Point3d linealAndSet(Point3d other, double alpha, double beta) {
         set((double)(alpha * getX() + beta * other.getX()),
-                (double)(alpha * getY() + beta * other.getY()),
-                (double)(alpha * getZ() + beta * other.getZ()));
+            (double)(alpha * getY() + beta * other.getY()),
+            (double)(alpha * getZ() + beta * other.getZ()));
         return this;
     }
 

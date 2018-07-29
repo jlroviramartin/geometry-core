@@ -159,9 +159,9 @@ public class Vector4d extends Tuple4d implements Vector4 {
     @Override
     public double getLengthL1() {
         return Math.abs(getX())
-                + Math.abs(getY())
-                + Math.abs(getZ())
-                + Math.abs(getW());
+               + Math.abs(getY())
+               + Math.abs(getZ())
+               + Math.abs(getW());
     }
 
     @Override
@@ -396,17 +396,17 @@ public class Vector4d extends Tuple4d implements Vector4 {
         Tuple4_Double _other = toTuple(other);
 
         set((double)(alpha * getX() + beta * _other.getX()),
-                (double)(alpha * getY() + beta * _other.getY()),
-                (double)(alpha * getZ() + beta * _other.getZ()),
-                (double)(alpha * getW() + beta * _other.getW()));
+            (double)(alpha * getY() + beta * _other.getY()),
+            (double)(alpha * getZ() + beta * _other.getZ()),
+            (double)(alpha * getW() + beta * _other.getW()));
         return this;
     }
 
     public Vector4d linealAndSet(Vector4d other, double alpha, double beta) {
         set((double)(alpha * getX() + beta * other.getX()),
-                (double)(alpha * getY() + beta * other.getY()),
-                (double)(alpha * getZ() + beta * other.getZ()),
-                (double)(alpha * getW() + beta * other.getW()));
+            (double)(alpha * getY() + beta * other.getY()),
+            (double)(alpha * getZ() + beta * other.getZ()),
+            (double)(alpha * getW() + beta * other.getW()));
         return this;
     }
 
@@ -436,13 +436,9 @@ public class Vector4d extends Tuple4d implements Vector4 {
 //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector4d getUnit(int index) {
         return new Vector4d((double)((index == 0) ? 1 : 0),
-                (double)((index == 1) ? 1 : 0),
-                (double)((index == 2) ? 1 : 0),
-                (double)((index == 3) ? 1 : 0));
+                            (double)((index == 1) ? 1 : 0),
+                            (double)((index == 2) ? 1 : 0),
+                            (double)((index == 3) ? 1 : 0));
     }
 //</editor-fold>
 }
-
-
-
-

@@ -102,7 +102,12 @@
         <dependency>
             <groupId>org.essence</groupId>
             <artifactId>pebble-extensions</artifactId>
-            <version>1.0.4</version>
+            <version>[1.0,)</version>
+        </dependency>
+        <dependency>
+            <groupId>org.essence</groupId>
+            <artifactId>astyle-wrapper</artifactId>
+            <version>[1.0,)</version>
         </dependency>
     </dependencies>
 </project>

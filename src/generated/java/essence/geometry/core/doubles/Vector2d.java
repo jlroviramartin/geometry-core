@@ -131,7 +131,7 @@ public class Vector2d extends Tuple2d implements Vector2 {
     @Override
     public double getLengthL1() {
         return Math.abs(getX())
-                + Math.abs(getY());
+               + Math.abs(getY());
     }
 
     @Override
@@ -145,7 +145,7 @@ public class Vector2d extends Tuple2d implements Vector2 {
 
         // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
         return Math.atan2(getX() * _other.getY() - getY() * _other.getX(),
-                getX() * _other.getX() + getY() * _other.getY());
+                          getX() * _other.getX() + getY() * _other.getY());
     }
 
     @Override
@@ -328,7 +328,7 @@ public class Vector2d extends Tuple2d implements Vector2 {
         double s = Math.sin(angle);
         double c = Math.cos(angle);
         set((double)(getX() * c - getY() * s),
-                (double)(getX() * s + getY() * c));
+            (double)(getX() * s + getY() * c));
         return this;
     }
 
@@ -337,7 +337,7 @@ public class Vector2d extends Tuple2d implements Vector2 {
         double s = Math.sin(angle);
         double c = Math.cos(angle);
         set((double)(len*(getX() * c - getY() * s)),
-                (double)(len*(getX() * s + getY() * c)));
+            (double)(len*(getX() * s + getY() * c)));
         return this;
     }
 
@@ -433,13 +433,13 @@ public class Vector2d extends Tuple2d implements Vector2 {
         Tuple2_Double _other = toTuple(other);
 
         set((double)(alpha * getX() + beta * _other.getX()),
-                (double)(alpha * getY() + beta * _other.getY()));
+            (double)(alpha * getY() + beta * _other.getY()));
         return this;
     }
 
     public Vector2d linealAndSet(Vector2d other, double alpha, double beta) {
         set((double)(alpha * getX() + beta * other.getX()),
-                (double)(alpha * getY() + beta * other.getY()));
+            (double)(alpha * getY() + beta * other.getY()));
         return this;
     }
 
@@ -469,11 +469,7 @@ public class Vector2d extends Tuple2d implements Vector2 {
 //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector2d getUnit(int index) {
         return new Vector2d((double)((index == 0) ? 1 : 0),
-                (double)((index == 1) ? 1 : 0));
+                            (double)((index == 1) ? 1 : 0));
     }
 //</editor-fold>
 }
-
-
-
-

@@ -19,7 +19,7 @@
 package essence.geometry.core;
 
 /**
- * Simple math utils for float values.
+ * Simple math utils for double values.
  *
  * @author joseluis
  */
@@ -34,7 +34,7 @@ public class DoubleUtils {
     }
 
     public static boolean epsilonEquals(double v1, double v2, double epsilon) {
-        //return (System.Math.Abs(v2 - v1) <= epsilon);
+        //return (Math.abs(v2 - v1) <= epsilon);
         // To resolve the PositiveInfinity / NegativeInfinity comparisons:
         if (v2 > v1) {
             return v2 <= v1 + epsilon;
