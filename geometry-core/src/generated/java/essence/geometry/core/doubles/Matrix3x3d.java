@@ -41,7 +41,7 @@ import static essence.geometry.core.DoubleUtils.EPSILON;
  * Basic implementation of a 3x3 matrix.
  */
 public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
-//<editor-fold defaultstate="collapsed" desc="fields">
+    //<editor-fold defaultstate="collapsed" desc="fields">
     /** M00 component. */
     private double m00;
     /** M01 component. */
@@ -65,8 +65,8 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
 //</editor-fold>
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Matrix3x3d() {
         this(0, 0, 0,
              0, 0, 0,
@@ -101,10 +101,10 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
     }
 
     /*
-     * This method gets an identity matrix.
-     *
-     * return Identity matrix.
-     */
+    * This method gets an identity matrix.
+    *
+    * return Identity matrix.
+    */
     public static Matrix3x3d getIdentity() {
         return new Matrix3x3d(1, 0, 0,
                               0, 1, 0,
@@ -120,7 +120,7 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
         return aux;
     }
 
-//<editor-fold defaultstate="collapsed" desc="accessors">
+    //<editor-fold defaultstate="collapsed" desc="accessors">
     /*
      * This method gets the number of rows.
      *
@@ -428,7 +428,7 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Transforms">
+    //<editor-fold defaultstate="collapsed" desc="Transforms">
     /**
      * This method multiplies {@code this} matrix by the {@code v} vector.
      *
@@ -773,10 +773,10 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
     }
 
     /**
-     * This method sets {@code this} matrix to zero.
-     *
-     * @return {@code this = zero}
-     */
+    * This method sets {@code this} matrix to zero.
+    *
+    * @return {@code this = zero}
+    */
     public Matrix3x3d setZero() {
         set(0, 0, 0,
             0, 0, 0,
@@ -937,7 +937,7 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
         return this;
     }
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
@@ -994,7 +994,7 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Matrix3x3d>">
+    //<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Matrix3x3d>">
     @Override
     public boolean epsilonEquals(Matrix3x3d other, double epsilon) {
         if (other == this) {
@@ -1009,7 +1009,7 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="private">
+    //<editor-fold defaultstate="collapsed" desc="private">
     private boolean epsilonEquals(double m00, double m01, double m02,
                                   double m10, double m11, double m12,
                                   double m20, double m21, double m22) {
@@ -1068,11 +1068,3 @@ public class Matrix3x3d implements Cloneable, EpsilonEquatable<Matrix3x3d> {
     }
 //</editor-fold>
 }
-
-
-
-
-
-
-
-

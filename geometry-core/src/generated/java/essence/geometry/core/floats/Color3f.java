@@ -34,8 +34,8 @@ import essence.geometry.core.Color3;
 public class Color3f extends Tuple3f implements Color3 {
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Color3f() {
     }
 
@@ -60,8 +60,8 @@ public class Color3f extends Tuple3f implements Color3 {
     }
 
     /**
-     * Zero color.
-     */
+    * Zero color.
+    */
     public static final Color3f getZero() {
         return new Color3f((float)0, (float)0, (float)0);
     }
@@ -73,7 +73,7 @@ public class Color3f extends Tuple3f implements Color3 {
         return new Color3f((float)1, (float)1, (float)1);
     }
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public Color3f clone() {
         return (Color3f)super.clone();
@@ -81,7 +81,3 @@ public class Color3f extends Tuple3f implements Color3 {
 //</editor-fold>
 
 }
-
-
-
-

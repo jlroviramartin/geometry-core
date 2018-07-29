@@ -37,8 +37,8 @@ import static essence.geometry.core.DoubleUtils.EPSILON;
 public class Vector3d extends Tuple3d implements Vector3 {
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Vector3d() {
     }
 
@@ -63,10 +63,10 @@ public class Vector3d extends Tuple3d implements Vector3 {
     }
 
     /**
-     * Zero vector.
-     *
-     * @return Vector zero.
-     */
+    * Zero vector.
+    *
+    * @return Vector zero.
+    */
     public static final Vector3d getZero() {
         return new Vector3d((double)0, (double)0, (double)0);
     }
@@ -107,7 +107,7 @@ public class Vector3d extends Tuple3d implements Vector3 {
     public static final Vector3d getUZ() {
         return getUnit(2);
     }
-//<editor-fold defaultstate="collapsed" desc="Vector3">
+    //<editor-fold defaultstate="collapsed" desc="Vector3">
     @Override
     public boolean isUnit() {
         return isUnit(EPSILON);
@@ -276,7 +276,7 @@ public class Vector3d extends Tuple3d implements Vector3 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Vector3">
+    //<editor-fold defaultstate="collapsed" desc="Vector3">
     @Override
     public Vector3d setZero() {
         set(0, 0, 0);
@@ -431,14 +431,14 @@ public class Vector3d extends Tuple3d implements Vector3 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public Vector3d clone() {
         return (Vector3d)super.clone();
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="private">
+    //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector3d getUnit(int index) {
         return new Vector3d((double)((index == 0) ? 1 : 0),
                             (double)((index == 1) ? 1 : 0),

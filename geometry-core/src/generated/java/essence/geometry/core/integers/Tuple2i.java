@@ -38,7 +38,7 @@ import static essence.geometry.core.IntegerUtils.EPSILON;
  */
 public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number  {
 
-//<editor-fold defaultstate="collapsed" desc="fields">
+    //<editor-fold defaultstate="collapsed" desc="fields">
     /** X component. */
     private int x;
     /** Y component. */
@@ -48,8 +48,8 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
 //</editor-fold>
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Tuple2i() {
         this((int)0, (int)0);
     }
@@ -115,7 +115,7 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
         return aux;
     }
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
@@ -161,7 +161,7 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Tuple">
+    //<editor-fold defaultstate="collapsed" desc="Tuple">
     @Override
     public int size() {
         return 2;
@@ -203,7 +203,7 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Tuple2_Integer">
+    //<editor-fold defaultstate="collapsed" desc="Tuple2_Integer">
     /**
      * This method gets the component {@code index}.
      *
@@ -293,7 +293,7 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Tuple2_Number">
+    //<editor-fold defaultstate="collapsed" desc="Tuple2_Number">
     /**
      * This method sets the values of {@code this} tuple into {@code buff}.
      *
@@ -305,11 +305,11 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 
     /**
-     * This method sets the value all components as double values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as double values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     @Override
     public void setDouble(double x, double y) {
         this.x = (int)x;
@@ -317,11 +317,11 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 
     /**
-     * This method sets the value all components as float values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as float values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     @Override
     public void setFloat(float x, float y) {
         this.x = (int)x;
@@ -329,11 +329,11 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 
     /**
-     * This method sets the value all components as long values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as long values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     @Override
     public void setLong(long x, long y) {
         this.x = (int)x;
@@ -341,11 +341,11 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 
     /**
-     * This method sets the value all components as int values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as int values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     @Override
     public void setInteger(int x, int y) {
         this.x = (int)x;
@@ -353,11 +353,11 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 
     /**
-     * This method sets the value all components as short values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as short values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     @Override
     public void setShort(short x, short y) {
         this.x = (int)x;
@@ -365,11 +365,11 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 
     /**
-     * This method sets the value all components as byte values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as byte values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     @Override
     public void setByte(byte x, byte y) {
         this.x = (int)x;
@@ -377,7 +377,7 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Tuple>">
+    //<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Tuple>">
     @Override
     public boolean epsilonEquals(Tuple other) {
         return epsilonEquals(other, EPSILON);
@@ -397,7 +397,7 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="private">
+    //<editor-fold defaultstate="collapsed" desc="private">
     private boolean epsilonEquals(int x, int y, double epsilon) {
         return DoubleUtils.epsilonEquals(getX(), x, epsilon) && DoubleUtils.epsilonEquals(getY(), y, epsilon);
     }
@@ -426,13 +426,3 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
     }
 //</editor-fold>
 }
-
-
-
-
-
-
-
-
-
-

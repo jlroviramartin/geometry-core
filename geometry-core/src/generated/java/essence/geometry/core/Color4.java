@@ -25,6 +25,7 @@
  */
 package essence.geometry.core;
 
+
 /**
  * A {@code Color4} is a 4 dimensional collection of values
  * that represents a color.

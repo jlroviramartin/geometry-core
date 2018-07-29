@@ -35,8 +35,8 @@ import essence.geometry.core.Point2;
 public class Point2f extends Tuple2f implements Point2 {
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Point2f() {
     }
 
@@ -60,10 +60,10 @@ public class Point2f extends Tuple2f implements Point2 {
     }
 
     /**
-     * Zero point.
-     *
-     * @return Point zero.
-     */
+    * Zero point.
+    *
+    * @return Point zero.
+    */
     public static final Point2f getZero() {
         return new Point2f((float)0, (float)0);
     }
@@ -77,7 +77,7 @@ public class Point2f extends Tuple2f implements Point2 {
         return new Point2f((float)1, (float)1);
     }
 
-//<editor-fold defaultstate="collapsed" desc="Point2">
+    //<editor-fold defaultstate="collapsed" desc="Point2">
     @Override
     public int getQuadrant() {
         int v = 0;
@@ -205,7 +205,7 @@ public class Point2f extends Tuple2f implements Point2 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Point2">
+    //<editor-fold defaultstate="collapsed" desc="Point2">
     @Override
     public Point2f addAndSet(Vector2 other) {
         Tuple2_Float _other = toTuple(other);
@@ -268,20 +268,16 @@ public class Point2f extends Tuple2f implements Point2 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public Point2f clone() {
         return (Point2f)super.clone();
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="private">
+    //<editor-fold defaultstate="collapsed" desc="private">
     private static float square(float v) {
         return v*v;
     }
 //</editor-fold>
 }
-
-
-
-

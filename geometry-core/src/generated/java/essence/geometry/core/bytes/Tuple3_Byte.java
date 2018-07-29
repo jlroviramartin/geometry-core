@@ -25,6 +25,7 @@
  */
 package essence.geometry.core.bytes;
 
+
 /**
  * A {@code Tuple3_Byte} is a 3 dimensional collection of values of type byte.
  */
@@ -97,4 +98,3 @@ public interface Tuple3_Byte {
      */
     void set(byte x, byte y, byte z);
 }
-

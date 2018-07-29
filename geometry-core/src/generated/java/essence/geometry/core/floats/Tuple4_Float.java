@@ -25,6 +25,7 @@
  */
 package essence.geometry.core.floats;
 
+
 /**
  * A {@code Tuple4_Float} is a 4 dimensional collection of values of type float.
  */
@@ -112,4 +113,3 @@ public interface Tuple4_Float {
      */
     void set(float x, float y, float z, float w);
 }
-

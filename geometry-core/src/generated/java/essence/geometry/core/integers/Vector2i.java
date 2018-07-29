@@ -37,8 +37,8 @@ import static essence.geometry.core.IntegerUtils.EPSILON;
 public class Vector2i extends Tuple2i implements Vector2 {
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Vector2i() {
     }
 
@@ -62,10 +62,10 @@ public class Vector2i extends Tuple2i implements Vector2 {
     }
 
     /**
-     * Zero vector.
-     *
-     * @return Vector zero.
-     */
+    * Zero vector.
+    *
+    * @return Vector zero.
+    */
     public static final Vector2i getZero() {
         return new Vector2i((int)0, (int)0);
     }
@@ -97,7 +97,7 @@ public class Vector2i extends Tuple2i implements Vector2 {
     public static final Vector2i getUY() {
         return getUnit(1);
     }
-//<editor-fold defaultstate="collapsed" desc="Vector2">
+    //<editor-fold defaultstate="collapsed" desc="Vector2">
     @Override
     public boolean isUnit() {
         return isUnit(EPSILON);
@@ -293,7 +293,7 @@ public class Vector2i extends Tuple2i implements Vector2 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Vector2">
+    //<editor-fold defaultstate="collapsed" desc="Vector2">
     @Override
     public Vector2i setZero() {
         set(0, 0);
@@ -459,14 +459,14 @@ public class Vector2i extends Tuple2i implements Vector2 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public Vector2i clone() {
         return (Vector2i)super.clone();
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="private">
+    //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector2i getUnit(int index) {
         return new Vector2i((int)((index == 0) ? 1 : 0),
                             (int)((index == 1) ? 1 : 0));

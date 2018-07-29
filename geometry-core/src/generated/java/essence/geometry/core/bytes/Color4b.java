@@ -34,8 +34,8 @@ import essence.geometry.core.Color4;
 public class Color4b extends Tuple4b implements Color4 {
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Color4b() {
     }
 
@@ -61,8 +61,8 @@ public class Color4b extends Tuple4b implements Color4 {
     }
 
     /**
-     * Zero color.
-     */
+    * Zero color.
+    */
     public static final Color4b getZero() {
         return new Color4b((byte)0, (byte)0, (byte)0, (byte)0);
     }
@@ -74,7 +74,7 @@ public class Color4b extends Tuple4b implements Color4 {
         return new Color4b((byte)1, (byte)1, (byte)1, (byte)1);
     }
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public Color4b clone() {
         return (Color4b)super.clone();
@@ -82,7 +82,3 @@ public class Color4b extends Tuple4b implements Color4 {
 //</editor-fold>
 
 }
-
-
-
-

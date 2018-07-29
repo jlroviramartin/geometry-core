@@ -25,6 +25,7 @@
  */
 package essence.geometry.core.bytes;
 
+
 /**
  * A {@code Tuple4_Byte} is a 4 dimensional collection of values of type byte.
  */
@@ -112,4 +113,3 @@ public interface Tuple4_Byte {
      */
     void set(byte x, byte y, byte z, byte w);
 }
-

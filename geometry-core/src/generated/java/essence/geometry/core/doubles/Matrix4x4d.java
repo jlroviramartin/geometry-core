@@ -41,7 +41,7 @@ import static essence.geometry.core.DoubleUtils.EPSILON;
  * Basic implementation of a 4x4 matrix.
  */
 public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
-//<editor-fold defaultstate="collapsed" desc="fields">
+    //<editor-fold defaultstate="collapsed" desc="fields">
     /** M00 component. */
     private double m00;
     /** M01 component. */
@@ -79,8 +79,8 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
 //</editor-fold>
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Matrix4x4d() {
         this(0, 0, 0, 0,
              0, 0, 0, 0,
@@ -131,10 +131,10 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     }
 
     /*
-     * This method gets an identity matrix.
-     *
-     * return Identity matrix.
-     */
+    * This method gets an identity matrix.
+    *
+    * return Identity matrix.
+    */
     public static Matrix4x4d getIdentity() {
         return new Matrix4x4d(1, 0, 0, 0,
                               0, 1, 0, 0,
@@ -151,7 +151,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return aux;
     }
 
-//<editor-fold defaultstate="collapsed" desc="accessors">
+    //<editor-fold defaultstate="collapsed" desc="accessors">
     /*
      * This method gets the number of rows.
      *
@@ -641,7 +641,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Transforms">
+    //<editor-fold defaultstate="collapsed" desc="Transforms">
     /**
      * This method multiplies {@code this} matrix by the {@code v} vector.
      *
@@ -999,10 +999,10 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     }
 
     /**
-     * This method sets {@code this} matrix to zero.
-     *
-     * @return {@code this = zero}
-     */
+    * This method sets {@code this} matrix to zero.
+    *
+    * @return {@code this = zero}
+    */
     public Matrix4x4d setZero() {
         set(0, 0, 0, 0,
             0, 0, 0, 0,
@@ -1218,7 +1218,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
@@ -1284,7 +1284,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Matrix4x4d>">
+    //<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Matrix4x4d>">
     @Override
     public boolean epsilonEquals(Matrix4x4d other, double epsilon) {
         if (other == this) {
@@ -1300,7 +1300,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="private">
+    //<editor-fold defaultstate="collapsed" desc="private">
     private boolean epsilonEquals(double m00, double m01, double m02, double m03,
                                   double m10, double m11, double m12, double m13,
                                   double m20, double m21, double m22, double m23,
@@ -1379,11 +1379,3 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     }
 //</editor-fold>
 }
-
-
-
-
-
-
-
-

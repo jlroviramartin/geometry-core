@@ -25,6 +25,7 @@
  */
 package essence.geometry.core.doubles;
 
+
 /**
  * A {@code Tuple4_Double} is a 4 dimensional collection of values of type double.
  */
@@ -112,4 +113,3 @@ public interface Tuple4_Double {
      */
     void set(double x, double y, double z, double w);
 }
-

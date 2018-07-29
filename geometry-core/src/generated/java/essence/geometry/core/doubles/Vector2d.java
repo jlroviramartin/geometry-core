@@ -37,8 +37,8 @@ import static essence.geometry.core.DoubleUtils.EPSILON;
 public class Vector2d extends Tuple2d implements Vector2 {
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Vector2d() {
     }
 
@@ -62,10 +62,10 @@ public class Vector2d extends Tuple2d implements Vector2 {
     }
 
     /**
-     * Zero vector.
-     *
-     * @return Vector zero.
-     */
+    * Zero vector.
+    *
+    * @return Vector zero.
+    */
     public static final Vector2d getZero() {
         return new Vector2d((double)0, (double)0);
     }
@@ -97,7 +97,7 @@ public class Vector2d extends Tuple2d implements Vector2 {
     public static final Vector2d getUY() {
         return getUnit(1);
     }
-//<editor-fold defaultstate="collapsed" desc="Vector2">
+    //<editor-fold defaultstate="collapsed" desc="Vector2">
     @Override
     public boolean isUnit() {
         return isUnit(EPSILON);
@@ -293,7 +293,7 @@ public class Vector2d extends Tuple2d implements Vector2 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Vector2">
+    //<editor-fold defaultstate="collapsed" desc="Vector2">
     @Override
     public Vector2d setZero() {
         set(0, 0);
@@ -459,14 +459,14 @@ public class Vector2d extends Tuple2d implements Vector2 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public Vector2d clone() {
         return (Vector2d)super.clone();
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="private">
+    //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector2d getUnit(int index) {
         return new Vector2d((double)((index == 0) ? 1 : 0),
                             (double)((index == 1) ? 1 : 0));

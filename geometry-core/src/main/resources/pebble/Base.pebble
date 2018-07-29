@@ -26,9 +26,7 @@
 package {% block package %} {% endblock %};
 
 {% block import %}
-Default import goes here.
 {% endblock %}
 
 {% block content %}
-Default content goes here.
 {% endblock %}

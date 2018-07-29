@@ -37,8 +37,8 @@ import static essence.geometry.core.DoubleUtils.EPSILON;
 public class Vector4d extends Tuple4d implements Vector4 {
 
     /**
-     * Empty constructor.
-     */
+    * Empty constructor.
+    */
     public Vector4d() {
     }
 
@@ -64,10 +64,10 @@ public class Vector4d extends Tuple4d implements Vector4 {
     }
 
     /**
-     * Zero vector.
-     *
-     * @return Vector zero.
-     */
+    * Zero vector.
+    *
+    * @return Vector zero.
+    */
     public static final Vector4d getZero() {
         return new Vector4d((double)0, (double)0, (double)0, (double)0);
     }
@@ -117,7 +117,7 @@ public class Vector4d extends Tuple4d implements Vector4 {
     public static final Vector4d getUW() {
         return getUnit(3);
     }
-//<editor-fold defaultstate="collapsed" desc="Vector4">
+    //<editor-fold defaultstate="collapsed" desc="Vector4">
     @Override
     public boolean isUnit() {
         return isUnit(EPSILON);
@@ -286,7 +286,7 @@ public class Vector4d extends Tuple4d implements Vector4 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Vector4">
+    //<editor-fold defaultstate="collapsed" desc="Vector4">
     @Override
     public Vector4d setZero() {
         set(0, 0, 0, 0);
@@ -426,14 +426,14 @@ public class Vector4d extends Tuple4d implements Vector4 {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Object">
+    //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public Vector4d clone() {
         return (Vector4d)super.clone();
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="private">
+    //<editor-fold defaultstate="collapsed" desc="private">
     private static Vector4d getUnit(int index) {
         return new Vector4d((double)((index == 0) ? 1 : 0),
                             (double)((index == 1) ? 1 : 0),

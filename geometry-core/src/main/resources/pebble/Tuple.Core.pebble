@@ -84,8 +84,6 @@
 ({{ Properties( desc, ", ", BinaryOperatorScalar_anonymous ) }})
 {%- endmacro %}
 
-
-
 {#
  # This macro renders the function GetQuadrant.
  #}

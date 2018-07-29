@@ -25,6 +25,7 @@
  */
 package essence.geometry.core;
 
+
 /**
  * A {@code Tuple2_Number} is a 2 dimensional collection of values of type numeric.
  */
@@ -38,51 +39,50 @@ public interface Tuple2_Number {
     void getInto(Tuple2_Number buff);
 
     /**
-     * This method sets the value all components as double values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as double values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     void setDouble(double x, double y);
 
     /**
-     * This method sets the value all components as float values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as float values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     void setFloat(float x, float y);
 
     /**
-     * This method sets the value all components as long values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as long values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     void setLong(long x, long y);
 
     /**
-     * This method sets the value all components as int values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as int values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     void setInteger(int x, int y);
 
     /**
-     * This method sets the value all components as short values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as short values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     void setShort(short x, short y);
 
     /**
-     * This method sets the value all components as byte values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     */
+    * This method sets the value all components as byte values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    */
     void setByte(byte x, byte y);
 }
-

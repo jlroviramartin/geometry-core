@@ -25,6 +25,7 @@
  */
 package essence.geometry.core.doubles;
 
+
 /**
  * A {@code Tuple3_Double} is a 3 dimensional collection of values of type double.
  */
@@ -97,4 +98,3 @@ public interface Tuple3_Double {
      */
     void set(double x, double y, double z);
 }
-

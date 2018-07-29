@@ -25,6 +25,7 @@
  */
 package essence.geometry.core;
 
+
 /**
  * A {@code Tuple4_Number} is a 4 dimensional collection of values of type numeric.
  */
@@ -38,63 +39,62 @@ public interface Tuple4_Number {
     void getInto(Tuple4_Number buff);
 
     /**
-     * This method sets the value all components as double values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     * @param z Value of the Z component.
-     * @param w Value of the W component.
-     */
+    * This method sets the value all components as double values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    * @param z Value of the Z component.
+    * @param w Value of the W component.
+    */
     void setDouble(double x, double y, double z, double w);
 
     /**
-     * This method sets the value all components as float values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     * @param z Value of the Z component.
-     * @param w Value of the W component.
-     */
+    * This method sets the value all components as float values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    * @param z Value of the Z component.
+    * @param w Value of the W component.
+    */
     void setFloat(float x, float y, float z, float w);
 
     /**
-     * This method sets the value all components as long values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     * @param z Value of the Z component.
-     * @param w Value of the W component.
-     */
+    * This method sets the value all components as long values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    * @param z Value of the Z component.
+    * @param w Value of the W component.
+    */
     void setLong(long x, long y, long z, long w);
 
     /**
-     * This method sets the value all components as int values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     * @param z Value of the Z component.
-     * @param w Value of the W component.
-     */
+    * This method sets the value all components as int values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    * @param z Value of the Z component.
+    * @param w Value of the W component.
+    */
     void setInteger(int x, int y, int z, int w);
 
     /**
-     * This method sets the value all components as short values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     * @param z Value of the Z component.
-     * @param w Value of the W component.
-     */
+    * This method sets the value all components as short values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    * @param z Value of the Z component.
+    * @param w Value of the W component.
+    */
     void setShort(short x, short y, short z, short w);
 
     /**
-     * This method sets the value all components as byte values.
-     *
-     * @param x Value of the X component.
-     * @param y Value of the Y component.
-     * @param z Value of the Z component.
-     * @param w Value of the W component.
-     */
+    * This method sets the value all components as byte values.
+    *
+    * @param x Value of the X component.
+    * @param y Value of the Y component.
+    * @param z Value of the Z component.
+    * @param w Value of the W component.
+    */
     void setByte(byte x, byte y, byte z, byte w);
 }
-

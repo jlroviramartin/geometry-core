@@ -25,6 +25,7 @@
  */
 package essence.geometry.core;
 
+
 /**
  * A {@code Color3} is a 3 dimensional collection of values
  * that represents a color.

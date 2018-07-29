@@ -25,6 +25,7 @@
  */
 package essence.geometry.core.floats;
 
+
 /**
  * A {@code Tuple3_Float} is a 3 dimensional collection of values of type float.
  */
@@ -97,4 +98,3 @@ public interface Tuple3_Float {
      */
     void set(float x, float y, float z);
 }
-

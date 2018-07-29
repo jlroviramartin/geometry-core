@@ -25,6 +25,7 @@
  */
 package essence.geometry.core.integers;
 
+
 /**
  * A {@code Tuple2_Integer} is a 2 dimensional collection of values of type int.
  */
@@ -82,4 +83,3 @@ public interface Tuple2_Integer {
      */
     void set(int x, int y);
 }
-
