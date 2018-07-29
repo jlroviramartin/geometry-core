@@ -1,7 +1,7 @@
 # geometry-core
 Vectorial algebra.
 
-This project depends on pebble-extensions.
+This project depends on pebble-extensions and astyle-java-wrapper.
 
 This project builds classes for vectorial algebra: tuples, vectors, points and matrix.
 
