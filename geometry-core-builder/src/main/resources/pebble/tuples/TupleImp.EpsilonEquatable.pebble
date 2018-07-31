@@ -1,0 +1,26 @@
+{#
+ # This macro renders the implementation of EpsilonEquatable of the tuple.
+ #}
+{%  macro EpsilonEquatable( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Tuple>">
+    @Override
+    public boolean epsilonEquals(Tuple other) {
+        return epsilonEquals(other, EPSILON);
+    }
+
+    @Override
+    public boolean epsilonEquals(Tuple other, double epsilon) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof {{ desc.tupleImpName }})) {
+            return false;
+        }
+        {{ desc.tupleImpName }} _other = ({{ desc.tupleImpName }})other;
+{%      dynmacro EpsilonEquatable_anonymous1( desc, property ) %}
+_other.get{{ property.upperName }}()
+{%-     enddynmacro %}
+        return epsilonEquals({{ Properties( desc, ",%n", EpsilonEquatable_anonymous1 ) | indent(4) }}, epsilon);
+    }
+//</editor-fold>
+{%  endmacro %}

@@ -1,0 +1,46 @@
+{#
+ # This macro renders the private items of the matrix.
+ #}
+{%  macro Private( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="private">
+    private boolean epsilonEquals({{ TypeNameCommaSeparated( desc ) | indent(2) }}, double epsilon) {
+{%      dynmacro Private_epsilonEquals( desc, property ) %}
+DoubleUtils.epsilonEquals(get{{ property.upperName }}(), {{ property.name }}, epsilon)
+{%-     enddynmacro %}
+        return {{ Properties( desc, " && ", Private_epsilonEquals ) | indent(3) }};
+    }
+
+    private boolean equals({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      dynmacro Private_equals( desc, property ) %}
+get{{ property.upperName }}() == {{ property.name }}
+{%-     enddynmacro %}
+        return {{ Properties( desc, " && ", Private_equals ) | indent(3) }};
+    }
+
+    private static String getFormat() {
+        if (format == null) {
+{%      if desc.integral %}
+            String f = "d";    // Integer
+{%      else %}
+            String f = ".3f";  // Floating point number with 3 decimal places
+{%      endif %}
+            String b = "%1$s"; // Begin      [
+            String s = "%2$s"; // Separation ,
+            String e = "%3$s"; // End        ]
+
+            StringBuilder buff = new StringBuilder();
+            int k = 4;
+            buff.append(b);
+{%      dynmacro Private_getFormat( desc, property ) %}
+buff.append("%").append(k++).append("$").append(f);
+{%-     enddynmacro %}
+            {{ Properties( desc, "%nbuff.append(s);%n", Private_getFormat ) | indent(3) }}
+
+            buff.append(e);
+            format = buff.toString();
+        }
+        return format;
+    }
+//</editor-fold>
+{%  endmacro %}
+

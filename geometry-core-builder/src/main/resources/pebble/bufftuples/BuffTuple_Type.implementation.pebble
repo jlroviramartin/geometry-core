@@ -1,0 +1,50 @@
+{#
+ # This macro renders the implementation of Tuple_Type of the tuple.
+ #}
+{%  macro BuffTuple_Type( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="{{ desc.buffTupleTypeName }}">
+    /**
+     * This method sets the component {@code index}.
+     *
+     * @param index Index of the component.
+     * @param value Value of the component.
+     */
+    @Override
+    public void setAt(int index, {{ desc.type }} value) {
+        switch(index) {
+{%      for property in desc.properties %}
+            case {{ property.index }}:
+                {{ property.name }} = value;
+                return;
+{%      endfor %}
+        }
+        throw new IndexOutOfBoundsException();
+    }
+{%      for property in desc.properties %}
+
+    /**
+     * This method sets the {{ property.upperName }} component.
+     *
+     * @param value Value of the {{ property.upperName }} component.
+     */
+    @Override
+    public void set{{ property.upperName }}({{ property.type }} value) {
+        {{ property.name }} = value;
+    }
+{%      endfor %}
+
+    /**
+     * This method sets all the components.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the {{ property.upperName }} component.
+{%      endfor %}
+     */
+    @Override
+    public void set({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      for property in desc.properties %}
+        this.{{ property.name }} = {{ property.name }};
+{%      endfor %}
+    }
+//</editor-fold>
+{%  endmacro %}

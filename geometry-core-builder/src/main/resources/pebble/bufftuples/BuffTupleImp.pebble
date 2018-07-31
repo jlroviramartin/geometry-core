@@ -1,0 +1,80 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/Tuple.Core.pebble" %}
+
+{%  import "pebble/tuples/TupleImp.constructors.pebble" %}
+{%  import "pebble/tuples/TupleImp.public.pebble" %}
+{%  import "pebble/tuples/TupleImp.private.pebble" %}
+{%  import "pebble/tuples/TupleImp.Object.pebble" %}
+{%  import "pebble/tuples/TupleImp.EpsilonEquatable.pebble" %}
+
+{%  import "pebble/tuples/Tuple_Number.implementation.pebble" %}
+{%  import "pebble/tuples/Tuple_Type.implementation.pebble" %}
+{%  import "pebble/tuples/Tuple.implementation.pebble" %}
+
+{%  import "pebble/bufftuples/BuffTuple_Number.implementation.pebble" %}
+{%  import "pebble/bufftuples/BuffTuple_Type.implementation.pebble" %}
+{%  import "pebble/bufftuples/BuffTuple.implementation.pebble" %}
+
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import java.util.logging.Logger;
+import essence.geometry.core.DoubleUtils;
+import essence.geometry.core.Tuple;
+import essence.geometry.core.VectorFormatInfo;
+import essence.geometry.core.{{ desc.tupleNumberName }};
+
+import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension tuple.
+ */
+public class {{ desc.buffTupleImpName }} implements Cloneable, BuffTuple, {{ desc.buffTupleTypeName }}, {{ desc.buffTupleNumberName }}  {
+
+    {{ Fields( desc ) }}
+
+    {{ Constructors( desc ) }}
+
+    {{ Public( desc ) }}
+
+    {{ Object( desc ) }}
+
+    {{ BuffTuple( desc ) }}
+
+    {{ Tuple( desc ) }}
+
+    {{ BuffTuple_Type( desc ) }}
+
+    {{ Tuple_Type( desc ) }}
+
+    {{ BuffTuple_Number( desc ) }}
+
+    {{ Tuple_Number( desc ) }}
+
+    {{ EpsilonEquatable( desc ) }}
+
+    {{ Private( desc ) }}
+}
+{%  endblock %}
+
+{#
+ # This macro renders the fields of the tuple.
+ #}
+{%  macro Fields( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="fields">
+{%      for property in desc.properties %}
+    /** {{ property.upperName }} component. */
+    private {{ property.type }} {{ property.name }};
+{%      endfor %}
+    private static final Logger LOG = Logger.getLogger({{ desc.buffTupleImpName }}.class.getName());
+    private static String format;
+//</editor-fold>
+{%  endmacro %}

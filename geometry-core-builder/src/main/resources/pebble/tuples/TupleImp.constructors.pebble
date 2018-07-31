@@ -1,0 +1,28 @@
+{#
+ # This macro renders the constructors of the tuple.
+ #}
+{%  macro Constructors( desc ) %}
+    /**
+     * Empty constructor.
+     */
+    public {{ desc.tupleImpName }}() {
+{%      dynmacro Constructors_anonymous1( desc, property ) %}
+({{ desc.type }})0
+{%-     enddynmacro %}
+        this({{ Properties( desc, ", ", Constructors_anonymous1 ) | indent(3) }});
+    }
+
+    /**
+     * This constructor sets the components of this tuple.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the component {{ property.upperName }}.
+{%      endfor %}
+     */
+    public {{ desc.tupleImpName }}({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      for property in desc.properties %}
+        this.{{ property.name }} = {{ property.name }};
+{%      endfor %}
+    }
+{% endmacro %}
+

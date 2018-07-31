@@ -1,0 +1,40 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/Tuple.Core.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.buffTupleNumberName }}} is a {{ desc.dim }} dimensional collection of values of type numeric.
+ */
+public interface {{ desc.buffTupleNumberName }} extends {{ desc.tupleNumberName }} {
+
+    {{ Setter( desc, "double", "Double" ) }}
+
+    {{ Setter( desc, "float", "Float" ) }}
+
+    {{ Setter( desc, "long", "Long" ) }}
+
+    {{ Setter( desc, "int", "Integer" ) }}
+
+    {{ Setter( desc, "short", "Short" ) }}
+
+    {{ Setter( desc, "byte", "Byte" ) }}
+}
+{%  endblock %}
+
+{%  macro Setter( desc, type, ctype ) %}
+    /**
+     * This method sets the value all components as {{ type }} values.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the {{ property.upperName }} component.
+{%      endfor %}
+     */
+    void set{{ ctype }}({{ FixedTypeNameCommaSeparated(desc, type) }});
+{%  endmacro %}
