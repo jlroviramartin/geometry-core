@@ -14,5 +14,6 @@ public class Run {
         //new MatrixTemplates().execute();
 
         new TupleTemplates2().execute();
+        new VectorTemplates2().execute();
     }
 }

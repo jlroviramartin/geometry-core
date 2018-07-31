@@ -21,6 +21,15 @@ public interface {{ desc.tupleTypeName }} {
      * @return Value of the component.
      */
     {{ desc.type }} getAt(int index);
+{%      for property in desc.properties %}
+
+    /**
+     * This method gets the {{property.upperName}} component.
+     *
+     * @return Value of the {{property.upperName}} component.
+     */
+    {{property.type}} get{{property.upperName}}();
+{%      endfor %}
 }
 {%  endblock %}
 

@@ -1,0 +1,632 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a matrix.
+ #}
+
+{%  import "pebble/Matrix.Core.pebble" %}
+{%  import "pebble/MatrixImp.Math.pebble" %}
+{%  import "pebble/MatrixImp.MathAndSet.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import java.util.logging.Logger;
+import essence.util.math.EpsilonEquatable;
+import essence.geometry.core.DoubleUtils;
+import essence.geometry.core.SingularMatrixException;
+import essence.geometry.core.Tuple;
+import essence.geometry.core.{{ desc.vector.vectorName }};
+{%  if not desc.vector.lowerDimension is empty %}
+import essence.geometry.core.{{ desc.vector.lowerDimension.vectorName }};
+import essence.geometry.core.{{ desc.vector.lowerDimension.pointName }};
+{%  endif %}
+import essence.geometry.core.VectorFormatInfo;
+
+import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dimRows }}x{{ desc.dimCols }} matrix.
+ */
+public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ desc.matrixImpName }}> {
+    {{ Fields( desc ) }}
+
+    {{ Constructors( desc ) }}
+
+    {{ Public( desc ) }}
+
+    {{ Accessors( desc ) }}
+
+    {{ Transform( desc ) }}
+
+    {{ Math( desc ) }}
+
+    {{ MathAndSet( desc ) }}
+
+    {{ Object( desc ) }}
+
+    {{ EpsilonEquatable( desc ) }}
+
+    {{ Private( desc ) }}
+}
+{%  endblock %}
+
+{#
+ # This macro renders the fields of the matrix.
+ #}
+{%  macro Fields(desc) %}
+//<editor-fold defaultstate="collapsed" desc="fields">
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+    /** {{property.upperName}} component. */
+    private {{property.type}} {{property.name}};
+{%          endfor %}
+{%      endfor %}
+    private static final Logger LOG = Logger.getLogger({{ desc.matrixImpName }}.class.getName());
+    private static String format;
+//</editor-fold>
+{%  endmacro %}
+
+{#
+ # This macro renders the public items of the matrix.
+ #}
+{%  macro Public( desc ) %}
+{%      if desc.dimRows == desc.dimCols %}
+    /*
+     * This method gets an identity matrix.
+     *
+     * return Identity matrix. 
+     */
+    public static {{ desc.matrixImpName }} getIdentity() {
+{%          dynmacro Public_getIdentity( desc, property ) %}
+{%              if property.r == property.c %}1{% else %}0{% endif %}
+{%-         enddynmacro %}
+        return new {{ desc.matrixImpName }}({{ RowsAndColumns( desc, ",%n", ", ", Public_getIdentity ) | indent(3) }});
+    }
+{%      endif %}
+
+    protected static {{ desc.vector.tupleTypeName }} toTuple(Tuple other) {
+        if (other instanceof {{ desc.vector.tupleTypeName }}) {
+            return ({{ desc.vector.tupleTypeName }})other;
+        }
+        {{ desc.vector.tupleImpName }} aux = new {{ desc.vector.tupleImpName }}();
+        other.getInto(aux);
+        return aux;
+    }
+{%  endmacro %}
+
+{#
+ # This macro renders the private items of the matrix.
+ #}
+{%  macro Private( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="private">
+    private boolean epsilonEquals({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      dynmacro Private_anonymous3( desc, property ) %}
+{{ property.name }}
+{%-     enddynmacro %}
+        return epsilonEquals({{ RowsAndColumns( desc, ",%n", ", ", Private_anonymous3 ) | indent(3) }}, EPSILON);
+    }
+
+    private boolean epsilonEquals({{ TypeNameCommaSeparated( desc ) | indent(2) }}, double epsilon) {
+{%      dynmacro Private_anonymous1( desc, property ) %}
+DoubleUtils.epsilonEquals(get{{ property.upperName }}(), {{ property.name }}, epsilon)
+{%-     enddynmacro %}
+        return {{ RowsAndColumns( desc, "%n&& ", " && ", Private_anonymous1 ) | indent(3) }};
+    }
+
+    private boolean equals({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      dynmacro Private_anonymous2( desc, property ) %}
+get{{ property.upperName }}() == {{ property.name }}
+{%-     enddynmacro %}
+        return {{ RowsAndColumns( desc, "%n&& ", " && ", Private_anonymous2 ) | indent(3) }};
+    }
+
+    private static String getFormat() {
+        if (format == null) {
+            String f = ".3f"; // Floating point number with 2 decimal places
+
+            StringBuilder buff = new StringBuilder();
+            String b = "%1$s"; // Begin      [
+            String s = "%2$s"; // Separation ,
+            String e = "%3$s"; // End        ]
+            int k = 4;
+            buff.append(b);
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+            buff.append("%").append(k++).append("$").append(f);
+{%              if not( loop.last ) %}
+            buff.append(s);
+{%              endif %}
+{%          endfor %}
+{%          if not( loop.last ) %}
+            buff.append(s);
+{%          endif %}
+{%      endfor %}
+            buff.append(e);
+            format = buff.toString();
+        }
+        return format;
+    }
+//</editor-fold>
+{%  endmacro %}
+
+{#
+ # This macro renders the constructors of the matrix.
+ #}
+{%  macro Constructors( desc ) %}
+    /**
+     * Empty constructor.
+     */
+    public {{ desc.matrixImpName }}() {
+{%      dynmacro Constructors_anonymous1( desc, property ) %}
+0
+{%-     enddynmacro %}
+        this({{ RowsAndColumns( desc, ",%n", ", ", Constructors_anonymous1 ) | indent(3) }});
+    }
+
+    /**
+     * This constructor sets the properties of this matrix.
+     *
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+     * @param {{ property.name }} Value of the property {{ property.upperName }}.
+{%          endfor %}
+{%      endfor %}
+     */
+    public {{ desc.matrixImpName }}({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+        this.{{ property.name }} = {{ property.name }};
+{%          endfor %}
+{%      endfor %}
+    }
+{% endmacro %}
+
+{#
+ # This macro renders the accessors of the matrix.
+ #}
+{%  macro Accessors( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="accessors">
+    /*
+     * This method gets the number of rows.
+     *
+     * @return Number of rows.
+     */
+    public int sizeRows() {
+        return {{ desc.dimRows }};
+    }
+
+    /*
+     * This method gets the number of columns.
+     *
+     * @return Number of columns.
+     */
+    public int sizeCols() {
+        return {{ desc.dimCols }};
+    }
+
+    /*
+     * This method evaluates is {@code this} matrix is squared.
+     *
+     * @return {@code True} if {@code this} matrix is squared. {@code False} otherwise.
+     */
+    public boolean isSquared() {
+        return {{ desc.dimRows == desc.dimCols }};
+    }
+
+    /**
+     * This methods gets the property [r, c].
+     *
+     * @param r Number of the row.
+     * @param c Number of the column.
+     * @return Property [r, c].
+     */
+    public {{ desc.type }} get(int r, int c) {
+        switch(r) {
+{%      for row in desc.rows %}
+            case {{ row.r }}:
+                switch(c) {
+{%          for property in row.cols %}
+                    case {{ property.c }}:
+                        return {{ property.name }};
+{%          endfor %}
+                }
+{%      endfor %}
+        }
+        throw new IndexOutOfBoundsException();
+    }
+
+    /**
+     * This methods sets the property [r, c].
+     *
+     * @param r Number of the row.
+     * @param c Number of the column.
+     * @param value Property [r, c].
+     */
+    public void set(int r, int c, {{ desc.type }} value) {
+        switch(r) {
+{%      for row in desc.rows %}
+            case {{ row.r }}:
+                switch(c) {
+{%          for property in row.cols %}
+                    case {{ property.c }}:
+                        {{ property.name }} = value;
+                        return;
+{%          endfor %}
+                }
+{%      endfor %}
+        }
+        throw new IndexOutOfBoundsException();
+    }
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+
+    /**
+     * This methods gets the property [{{ property.r }}, {{ property.c }}].
+     *
+     * @return Property [{{ property.r }}, {{ property.c }}].
+     */
+    public {{ property.type }} get{{ property.upperName }}() {
+        return {{ property.name }};
+    }
+
+    /**
+     * This methods sets the property [{{ property.r }}, {{ property.c }}].
+     *
+     * @param value Property [{{ property.r }}, {{ property.c }}].
+     */
+    public void set{{ property.upperName }}({{ property.type }} value) {
+        {{ property.name }} = value;
+    }
+{%          endfor %}
+{%      endfor %}
+
+    /**
+     * This methods sets all the properties.
+     *
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+     * @param {{ property.name }} Property [{{ property.r }}, {{ property.c }}].
+{%          endfor %}
+{%      endfor %}
+     */
+    public {{ desc.matrixImpName }} set({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+        this.{{ property.name }} = {{ property.name }};
+{%          endfor %}
+{%      endfor %}
+        return this;
+    }
+//</editor-fold>
+{%  endmacro %}
+
+{#
+ # This macro renders the overwriting of Object methods of the matrix.
+ #}
+{%  macro Object( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="Object">
+    @Override
+    public String toString() {
+        VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
+{%      dynmacro Object_anonymous1( desc, property ) %}
+get{{ property.upperName }}()
+{%-     enddynmacro %}
+        return String.format(getFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
+            {{ RowsAndColumns( desc, ",%n", ",", Object_anonymous1 ) | indent(3)  }});
+    }
+
+    public boolean equals({{ desc.matrixImpName }} other) {
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+
+{%      dynmacro Object_anonymous2( desc, property ) %}
+other.get{{ property.upperName }}()
+{%-     enddynmacro %}
+        return this.equals({{ RowsAndColumns( desc, ",%n", ", ", Object_anonymous1 ) | indent(3)  }});
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return ((other instanceof {{ desc.matrixImpName }}) && this.equals(({{ desc.matrixImpName }}) other));
+    }
+
+    @Override
+    public int hashCode() {
+        // https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method
+        // http://www.jarvana.com/jarvana/view/org/apache/lucene/lucene-spatial/2.9.3/lucene-spatial-2.9.3-sources.jar!/org/apache/lucene/spatial/geometry/shape/Vector2D.java
+        final int prime = 31;
+        int hash = 1;
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+        hash = prime * hash + {{ desc.ctype }}.hashCode(get{{ property.upperName }}());
+{%          endfor %}
+{%      endfor %}
+        return hash;
+    }
+
+    @Override
+    public {{ desc.matrixImpName }} clone() {
+        try {
+            {{ desc.matrixImpName }} copy = ({{ desc.matrixImpName }})super.clone();
+            return copy;
+        } catch (CloneNotSupportedException ex) {
+            throw new Error(ex);
+        }
+    }
+//</editor-fold>
+{%  endmacro %}
+
+{#
+ # This macro renders the implementation of EpsilonEquatable of the matrix.
+ #}
+{%  macro EpsilonEquatable( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<{{ desc.matrixImpName }}>">
+    @Override
+    public boolean epsilonEquals({{ desc.matrixImpName }} other, double epsilon) {
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+{%      dynmacro EpsilonEquatable_anonymous1( desc, property ) %}
+get{{ property.upperName }}()
+{%-     enddynmacro %}
+        return epsilonEquals({{ RowsAndColumns( desc, ",%n", ", ", EpsilonEquatable_anonymous1 ) | indent(3) }}, epsilon);
+    }
+//</editor-fold>
+{%  endmacro %}
+
+{#
+ # This macro renders the implementation of vector transformations of the matrix.
+ #}
+{%  macro Transform( desc ) %}
+{%      set vdesc = desc.vector %}
+{%      set vldesc = desc.vector.lowerDimension %}
+//<editor-fold defaultstate="collapsed" desc="Transforms">
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public void mul({{ vdesc.vectorName }} v) {
+{#
+{%      dynmacro Transform_mul( desc, property ) %}
+({{ p().vdesc.type }})(get{{ property.upperName }}() * _v.get{{ p().vdesc.properties[property.c].upperName }}())
+{%-     enddynmacro %}
+#}
+        if (v instanceof {{ vdesc.vectorImpName }}) {
+            mul(({{ vdesc.vectorImpName }})v);
+{#
+        } else if (v instanceof {{ vdesc.tupleTypeName }}) {
+            {{ vdesc.tupleTypeName }} _v = toTuple(v);
+            (({{ vdesc.tupleTypeName }})v).set({{ RowsAndColumns( desc, ",%n", " + ", Transform_mul ) | indent(5) }});
+        } else if (v instanceof {{ vdesc.tupleNumberName }}) {
+            {{ vdesc.tupleTypeName }} _v = toTuple(v);
+            (({{ vdesc.tupleNumberName }})v).set{{ vdesc.ctype }}({{ RowsAndColumns( desc, ",%n", " + ", Transform_mul ) | indent(5) }});
+#}
+        } else {
+            {{ vdesc.vectorImpName }} aux = new {{ vdesc.vectorImpName }}(v);
+            premul(aux);
+            v.set(aux);
+        }
+    }
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public void mul({{ vdesc.vectorImpName }} v) {
+{%      dynmacro Transform_mul2( desc, property ) %}
+get{{ property.upperName }}() * v.get{{ p().vdesc.properties[property.c].upperName }}()
+{%-     enddynmacro %}
+        v.set({{ RowsAndColumns( desc, ",%n", " + ", Transform_mul2 ) | indent(3) }});
+    }
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public void premul({{ vdesc.vectorName }} v) {
+{#
+{%      dynmacro Transform_premul( desc, property ) %}
+({{ p().vdesc.type }})(_v.get{{ p().vdesc.properties[property.r].upperName }}() * get{{ property.upperName }}())
+{%-     enddynmacro %}
+#}
+        if (v instanceof {{ vdesc.vectorImpName }}) {
+            premul(({{ vdesc.vectorImpName }})v);
+{#
+        } else if (v instanceof {{ vdesc.tupleTypeName }}) {
+            {{ vdesc.tupleTypeName }} _v = toTuple(v);
+            (({{ vdesc.tupleTypeName }})v).set({{ ColumnsAndRows( desc, ",%n", " + ", Transform_premul ) | indent(5) }});
+        } else if (v instanceof {{ vdesc.tupleNumberName }}) {
+            {{ vdesc.tupleTypeName }} _v = toTuple(v);
+            (({{ vdesc.tupleNumberName }})v).set{{ vdesc.ctype }}({{ ColumnsAndRows( desc, ",%n", " + ", Transform_premul ) | indent(5) }});
+#}
+        } else {
+            {{ vdesc.vectorImpName }} aux = new {{ vdesc.vectorImpName }}(v);
+            premul(aux);
+            v.set(aux);
+        }
+    }
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public void premul({{ vdesc.vectorImpName }} v) {
+{%      dynmacro Transform_premul2( desc, property ) %}
+v.get{{ p().vdesc.properties[property.r].upperName }}() * get{{ property.upperName }}() 
+{%-     enddynmacro %}
+        v.set({{ ColumnsAndRows( desc, ",%n", " + ", Transform_premul2 ) | indent(3) }});
+    }
+{%      if not desc.vector.lowerDimension is empty %}
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public void mul({{ vldesc.vectorName }} v) {
+        if (v instanceof {{ vldesc.vectorImpName }}) {
+            mul(({{ vldesc.vectorImpName }})v);
+        } else {
+            {{ vldesc.vectorImpName }} aux = new {{ vldesc.vectorImpName }}(v);
+            mul(aux);
+            v.set(aux);
+        }
+    }
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public void mul({{ vldesc.vectorImpName }} v) {
+{%      for row in desc.rows %}
+{%          if row.r < desc.dimRows-1 %}
+        {{ vdesc.type }} {{ vdesc.properties[row.r].name }} = 
+{%-             for property in row.cols %}
+{%-                 if property.c < desc.dimCols-1 %}
+{%-                     if not (loop.first) %} +{% endif %}
+ get{{ property.upperName }}() * v.get{{ vdesc.properties[property.c].upperName }}()
+{%-                 endif %}
+{%-             endfor %};
+{%          endif %}
+{%      endfor %}
+        v.set(
+{%-     for i in range(0, vdesc.dim - 2) %}
+{%          if not (loop.first) %}, {% endif %}
+{{ vdesc.properties[i].name }}
+{%-     endfor %});
+    }
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    public void mul({{ vldesc.pointName }} p) {
+        if (p instanceof {{ vldesc.pointImpName }}) {
+            mul(({{ vldesc.pointImpName }})p);
+        } else {
+            {{ vldesc.pointImpName }} aux = new {{ vldesc.pointImpName }}(p);
+            mul(aux);
+            p.set(aux);
+        }
+    }
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    public void mul({{ vldesc.pointImpName }} p) {
+{%      for row in desc.rows %}
+        {{ vdesc.type }} {{ vdesc.properties[row.r].name }} = 
+{%-         for property in row.cols %}
+{%-             if not (loop.first) %} +{% endif %}
+{%-             if property.c < desc.dimCols-1 %}
+ get{{ property.upperName }}() * p.get{{ vdesc.properties[property.c].upperName }}()
+{%-             else %}
+ get{{ property.upperName }}()
+{%-             endif %}
+{%-         endfor %};
+{%      endfor %}
+        p.set(
+{%-     for i in range(0, vdesc.dim - 2) %}
+{%          if not (loop.first) %}, {% endif %}
+{{ vdesc.properties[i].name }} / {{ vdesc.properties[vdesc.dim - 1].name }}
+{%-     endfor %});
+    }
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public void premul({{ vldesc.vectorName }} v) {
+        if (v instanceof {{ vldesc.vectorImpName }}) {
+            premul(({{ vldesc.vectorImpName }})v);
+        } else {
+            {{ vldesc.vectorImpName }} aux = new {{ vldesc.vectorImpName }}(v);
+            premul(aux);
+            v.set(aux);
+        }
+    }
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public void premul({{ vldesc.vectorImpName }} v) {
+{%      for col in desc.cols %}
+{%          if col.c < desc.dimCols - 1 %}
+        {{ vdesc.type }} {{ vdesc.properties[col.c].name }} = 
+{%-             for property in col.rows %}
+{%-                 if property.r < desc.dimRows - 1 %}
+{%-                     if not (loop.first) %} +{% endif %}
+ v.get{{ vdesc.properties[property.r].upperName }}() * get{{ property.upperName }}()
+{%-                 endif %}
+{%-             endfor %};
+{%          endif %}
+{%      endfor %}
+        v.set(
+{%-     for i in range(0, vdesc.dim - 2) %}
+{%          if not (loop.first) %}, {% endif %}
+{{ vdesc.properties[i].name }}
+{%-     endfor %});
+    }
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    public void premul({{ vldesc.pointName }} p) {
+        if (p instanceof {{ vldesc.pointImpName }}) {
+            premul(({{ vldesc.pointImpName }})p);
+        } else {
+            {{ vldesc.pointImpName }} aux = new {{ vldesc.pointImpName }}(p);
+            premul(aux);
+            p.set(aux);
+        }
+    }
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    public void premul({{ vldesc.pointImpName }} p) {
+{%      for col in desc.cols %}
+        {{ vdesc.type }} {{ vdesc.properties[col.c].name }} = 
+{%-         for property in col.rows %}
+{%-             if not (loop.first) %} +{% endif %}
+{%-             if property.r < desc.dimRows - 1 %}
+ p.get{{ vdesc.properties[property.r].upperName }}() * get{{ property.upperName }}()
+{%-             else %}
+ get{{ property.upperName }}()
+{%-             endif %}
+{%-         endfor %};
+{%      endfor %}
+        p.set(
+{%-     for i in range(0, vdesc.dim - 2) %}
+{%          if not (loop.first) %}, {% endif %}
+{{ vdesc.properties[i].name }} / {{ vdesc.properties[vdesc.dim - 1].name }}
+{%-     endfor %});
+    }
+{%      endif %}
+//</editor-fold>
+{%  endmacro %}

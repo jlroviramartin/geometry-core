@@ -144,8 +144,16 @@ public class VectorDescription {
         return "Vector" + dim;
     }
 
+    public String getBuffVectorName() {
+        return "BuffVector" + dim;
+    }
+
     public String getVectorImpName() {
         return "Vector" + dim + suffix;
+    }
+
+    public String getBuffVectorImpName() {
+        return "BuffVector" + dim + suffix;
     }
 
     public String getPointName() {

@@ -1,0 +1,55 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/Tuple.Core.pebble" %}
+
+{%  import "pebble/vectors/VectorImp.Math.pebble" %}
+{%  import "pebble/vectors/VectorImp.constructors.pebble" %}
+{%  import "pebble/vectors/VectorImp.Object.pebble" %}
+{%  import "pebble/vectors/VectorImp.public.pebble" %}
+{%  import "pebble/vectors/VectorImp.private.pebble" %}
+
+{%  import "pebble/buffvectors/BuffVectorImp.MathAndSet.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.{{ desc.vectorName }};
+import essence.geometry.core.{{ desc.buffVectorName }};
+import essence.geometry.core.DoubleUtils;
+import essence.util.math.ArithmeticError;
+
+import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public class {{ desc.buffVectorImpName }} extends {{ desc.buffTupleImpName }} implements {{ desc.buffVectorName }} {
+
+{{ Constructors( desc, desc.buffVectorImpName ) }}
+
+{{ Public( desc, desc.buffVectorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.vectorName }}">
+{{ Math( desc, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.vectorName }}">
+{{ MathAndSet( desc, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc, desc.buffVectorImpName ) }}
+//</editor-fold>
+}
+{%  endblock %}

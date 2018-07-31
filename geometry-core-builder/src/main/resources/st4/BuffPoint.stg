@@ -1,0 +1,12 @@
+delimiters "$", "$"
+
+BuffPoint(desc) ::= <<
+package $desc._package$;
+
+/**
+ * A {@code BuffPoint$desc.dim$\} is a read/write $desc.dim$ dimensional collection of values
+ * that represents a point.
+ */
+public interface BuffPoint$desc.dim$ extends BuffTuple$desc.dim$, Point$desc.dim$ {
+}
+>>

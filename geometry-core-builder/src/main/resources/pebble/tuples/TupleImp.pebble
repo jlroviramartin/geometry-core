@@ -24,6 +24,7 @@ import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
 import essence.geometry.core.VectorFormatInfo;
 import essence.geometry.core.{{ desc.tupleNumberName }};
+import essence.geometry.core.{{ desc.buffTupleNumberName }};
 
 import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
 {%  endblock %}
@@ -34,23 +35,37 @@ import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
  */
 public class {{ desc.tupleImpName }} implements Cloneable, Tuple, {{ desc.tupleTypeName }}, {{ desc.tupleNumberName }}  {
 
-    {{ Fields( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="fields">
+{{ Fields( desc ) }}
+//</editor-fold>
 
-    {{ Constructors( desc ) }}
+{{ Constructors( desc, desc.tupleImpName ) }}
 
-    {{ Public( desc ) }}
+{{ Public( desc ) }}
 
-    {{ Object( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.tupleImpName ) }}
+//</editor-fold>
 
-    {{ Tuple( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="Tuple">
+{{ Tuple( desc ) }}
+//</editor-fold>
 
-    {{ Tuple_Type( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="{{ desc.tupleTypeName }}">
+{{ Tuple_Type( desc ) }}
+//</editor-fold>
 
-    {{ Tuple_Number( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="{{ desc.tupleNumberName }}">
+{{ Tuple_Number( desc ) }}
+//</editor-fold>
 
-    {{ EpsilonEquatable( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Tuple>">
+{{ EpsilonEquatable( desc, desc.tupleImpName ) }}
+//</editor-fold>
 
-    {{ Private( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc ) }}
+//</editor-fold>
 }
 {%  endblock %}
 
@@ -58,12 +73,10 @@ public class {{ desc.tupleImpName }} implements Cloneable, Tuple, {{ desc.tupleT
  # This macro renders the fields of the tuple.
  #}
 {%  macro Fields( desc ) %}
-//<editor-fold defaultstate="collapsed" desc="fields">
 {%      for property in desc.properties %}
     /** {{ property.upperName }} component. */
     private final {{ property.type }} {{ property.name }};
 {%      endfor %}
     private static final Logger LOG = Logger.getLogger({{ desc.tupleImpName }}.class.getName());
     private static String format;
-//</editor-fold>
 {%  endmacro %}

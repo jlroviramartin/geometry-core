@@ -2,7 +2,6 @@
  # This macro renders the implementation of Tuple_Number of the tuple.
  #}
 {%  macro BuffTuple_Number( desc ) %}
-//<editor-fold defaultstate="collapsed" desc="{{ desc.buffTupleNumberName }}">
     {{ SetterImp( desc, "double", "Double" ) }}
 
     {{ SetterImp( desc, "float", "Float" ) }}
@@ -14,7 +13,6 @@
     {{ SetterImp( desc, "short", "Short" ) }}
 
     {{ SetterImp( desc, "byte", "Byte" ) }}
-//</editor-fold>
 {%  endmacro %}
 
 {%  macro SetterImp( desc, type, ctype ) %}
@@ -26,7 +24,7 @@
 {%      endfor %}
      */
     @Override
-    public void set{{ ctype }}({{ FixedTypeNameCommaSeparated(desc, type) }}) {
+    public final void set{{ ctype }}({{ FixedTypeNameCommaSeparated(desc, type) }}) {
 {%      for property in desc.properties %}
         this.{{ property.name }} = ({{ property.type }}){{ property.name }};
 {%      endfor %}

@@ -2,34 +2,33 @@
  # This macro renders the implementation of Tuple of the tuple.
  #}
 {%  macro Tuple( desc ) %}
-//<editor-fold defaultstate="collapsed" desc="Tuple">
     @Override
     public int size() {
         return {{ desc.dim }};
     }
-
+{#
     @Override
     public void getInto(BuffTuple other) {
 {%      dynmacro Public_getInto( desc, property ) %}
 get{{ property.upperName }}()
 {%-     enddynmacro %}
-        if (other instanceof {{ desc.tupleImpName }}) {
-            {{ desc.tupleImpName }} _other = ({{ desc.tupleImpName }})other;
+        if (other instanceof {{ desc.buffTupleImpName }}) {
+            {{ desc.buffTupleImpName }} _other = ({{ desc.buffTupleImpName }})other;
             _other.set({{ Properties( desc, ", ", Public_getInto ) | indent(5) }});
             return;
         }
-        if (other instanceof {{ desc.tupleTypeName }}) {
-            {{ desc.tupleTypeName }} _other = ({{ desc.tupleTypeName }})other;
+        if (other instanceof {{ desc.buffTupleTypeName }}) {
+            {{ desc.buffTupleTypeName }} _other = ({{ desc.buffTupleTypeName }})other;
             _other.set({{ Properties( desc, ", ", Public_getInto ) | indent(5) }});
             return;
         }
-        if (other instanceof {{ desc.tupleNumberName }}) {
-            {{ desc.tupleNumberName }} _other = ({{ desc.tupleNumberName }})other;
+        if (other instanceof {{ desc.buffTupleNumberName }}) {
+            {{ desc.buffTupleNumberName }} _other = ({{ desc.buffTupleNumberName }})other;
             _other.set{{ desc.ctype }}({{ Properties( desc, ", ", Public_getInto ) | indent(5) }});
             return;
         }
         throw new UnsupportedOperationException();
     }
-//</editor-fold>
+#}
 {%  endmacro %}
 

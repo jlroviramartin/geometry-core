@@ -1,0 +1,204 @@
+delimiters "$", "$"
+
+MatrixImp(desc) ::= <<
+
+import java.util.logging.Logger;
+import essence.util.math.$desc.type$s.MathUtils;
+import essence.geometry.core.VectorFormatInfo;
+
+/**
+ * Basic implementation of {@code Matrix$desc.dimRows$$desc.dimCols$\}.
+ */
+public class Matrix$desc.dimRows$$desc.dimCols$$desc.suffix$ {
+    $MatrixImp_Fields(desc)$
+
+    $MatrixImp_Private(desc)$
+
+    $MatrixImp_Accesors(desc)$
+
+    $MatrixImp_Object(desc)$
+}
+>>
+
+MatrixImp_Fields(desc) ::= <<
+//<editor-fold defaultstate="collapsed" desc="fields">
+$desc.rows :{ row |$row.cols :{ property |
+/** $property.upperName$ component. */
+private $property.type$ $property.name$;
+}$}$
+private static final Logger LOG = Logger.getLogger(Matrix$desc.dimRows$$desc.dimCols$$desc.suffix$.class.getName());
+private static String format;
+//</editor-fold>
+>>
+
+MatrixImp_Private(desc) ::= <<
+//<editor-fold defaultstate="collapsed" desc="private">
+private boolean epsilonEquals($desc.properties :{ property | $property.type$ $property.name$}; separator=", "$) {
+    return this.epsilonEquals($desc.properties :{ property | $property.name$}; separator=", "$, EPSILON);
+}
+
+private boolean epsilonEquals($desc.rows :{ row |$row.cols :{ property |$property.type$ $property.name$}; separator=", "$}; separator=",\n                       "$, double epsilon) {
+    return $desc.rows :{ row |$row.cols :{ property |MathUtils.epsilonEquals(get$property.upperName$(), $property.name$, epsilon)}; separator=" && "$}; separator="\n           && "$;
+\}
+
+private boolean equals($desc.rows :{ row |$row.cols :{ property |$property.type$ $property.name$}; separator=", "$}; separator=",\n                       "$) {
+    return $desc.rows :{ row |$row.cols :{ property |get$property.upperName$() == $property.name$}; separator=" && "$}; separator="\n           && "$;
+\}
+
+private static String getFormat() {
+    if (format == null) {
+        String f = ".3f"; // Floating point number with 2 decimal places
+
+        StringBuilder buff = new StringBuilder();
+        String b = "%1\$s"; // Begin      [
+        String s = "%2\$s"; // Separation ,
+        String e = "%3\$s"; // End        ]
+        int k = 4;
+        buff.append(b);
+
+$desc.rows :{ row
+    |$row.cols :{ property
+        |        buff.append("%").append(k++).append("\$").append(f);
+}; separator="        buff.append(s); "$}; separator="        buff.append(s); "$
+        buff.append(e);
+        format = buff.toString();
+    }
+    return format;
+}
+//</editor-fold>
+>>
+
+MatrixImp_Accesors(desc) ::= <<
+//<editor-fold defaultstate="collapsed" desc="accesors">
+public int sizeRows() {
+    return $desc.dimRows$;
+}
+
+public int sizeCols() {
+    return $desc.dimCols$;
+}
+
+/**
+ * This methods gets the property [r, c].
+ *
+ * @param r Number of the row.
+ * @param c Number of the column.
+ * @return Property [r, c].
+ */
+public $desc.type$ get$property.upperName$(int r, int c) {
+    switch(r) {
+$desc.rows :{ row |
+        case $row.r$: {
+            switch(c) {
+$row.cols :{ property |
+                case $property.c$: return $property.name$;
+}$            \}
+        \}
+}$    \}
+    throw new IndexOutOfBoundsException();
+\}
+
+/**
+ * This methods sets the property [r, c].
+ *
+ * @param r Number of the row.
+ * @param c Number of the column.
+ * @param value Property [r, c].
+ */
+public void set$property.upperName$(int r, int c, $desc.type$ value) {
+    switch(r) {
+$desc.rows :{ row |
+        case $row.r$: {
+            switch(c) {
+$row.cols :{ property |
+                case $property.c$: $property.name$ = value;
+                return;
+}$            \}
+        \}
+}$    \}
+    throw new IndexOutOfBoundsException();
+\}
+
+$desc.rows :{ row |
+$row.cols :{ property |
+/**
+ * This methods gets the property [$property.r$, $property.c$].
+ *
+ * @return Property [$property.r$, $property.c$].
+ */
+public $property.type$ get$property.upperName$() {
+    return $property.name$;
+\}
+
+/**
+ * This methods sets the property [$property.r$, $property.c$].
+ *
+ * @param value Property [$property.r$, $property.c$].
+ */
+public void set$property.upperName$($property.type$ value) {
+    $property.name$ = value;
+\}
+}; separator="\n"$
+}$
+
+/**
+ * This methods sets all the properties.
+ *
+ $desc.rows :{ row |$row.cols :{ property |* @param $property.name$ Property [$property.r$, $property.c$].}; separator="\n"$}; separator="\n"$
+ */
+public void set($desc.rows :{ row |$row.cols :{ property |$property.type$ $property.name$}; separator=", "$}; separator=",\n                "$) {
+$desc.rows :{ row |
+$row.cols :{ property |
+    this.$property.name$ = $property.name$;
+}$
+}$\}
+//</editor-fold>
+>>
+
+MatrixImp_Object(desc) ::= <<
+//<editor-fold defaultstate="collapsed" desc="object">
+@Override
+public String toString() {
+    VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
+    return String.format(getFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
+                         $desc.rows :{ row
+                             |$row.cols :{ property
+        |get$property.upperName$()}; separator=", "$}; separator=",\n"$);
+}
+
+public boolean equals(Matrix$desc.dimRows$$desc.dimCols$$desc.suffix$ other) {
+    if (other == this) {
+        return true;
+    }
+    if (other == null) {
+        return false;
+    }
+    return this.equals($desc.rows :{ row
+        |$row.cols :{ property
+            |other.get$property.upperName$()}; separator=", "$}; separator=",\n                       "$);
+}
+
+@Override
+public boolean equals(Object other) {
+    return ((other instanceof Matrix$desc.dimRows$$desc.dimCols$$desc.suffix$) && this.equals((Matrix$desc.dimRows$$desc.dimCols$$desc.suffix$) other));
+}
+
+@Override
+public int hashCode() {
+    // https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method
+    // http://www.jarvana.com/jarvana/view/org/apache/lucene/lucene-spatial/2.9.3/lucene-spatial-2.9.3-sources.jar!/org/apache/lucene/spatial/geometry/shape/Vector2D.java
+    final int prime = 31;
+    int hash = 1;
+$desc.properties :{ property |
+    hash = prime * hash + $desc.ctype$.hashCode(get$property.upperName$());}
+$
+    return hash;
+}
+
+@Override
+public Matrix$desc.dimRows$$desc.dimCols$$desc.suffix$ clone() throws CloneNotSupportedException {
+    Matrix$desc.dimRows$$desc.dimCols$$desc.suffix$ copy = (Matrix$desc.dimRows$$desc.dimCols$$desc.suffix$) super.clone();
+    return copy;
+}
+//</editor-fold>
+>>

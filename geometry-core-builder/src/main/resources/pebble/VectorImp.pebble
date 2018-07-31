@@ -1,0 +1,138 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/Tuple.Core.pebble" %}
+{%  import "pebble/VectorImp.Math.pebble" %}
+{%  import "pebble/VectorImp.MathAndSet.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.{{ desc.vectorName }};
+import essence.geometry.core.DoubleUtils;
+
+import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public class {{ desc.vectorImpName }} extends {{ desc.tupleImpName }} implements {{ desc.vectorName }} {
+
+    {{ Constructors( desc ) }}
+
+    {{ Public( desc ) }}
+
+    {{ Math( desc ) }}
+
+    {{ MathAndSet( desc ) }}
+
+    {{ Object( desc ) }}
+
+    {{ Private( desc ) }}
+}
+{%  endblock %}
+
+{#
+ # This macro renders the constructors of the vector.
+ #}
+{%  macro Constructors( desc ) %}
+    /**
+     * Empty constructor.
+     */
+    public {{ desc.vectorImpName }}() {
+    }
+
+    /**
+     * This constructor sets the components of this vector.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the component {{ property.upperName }}.
+{%      endfor %}
+     */
+    public {{ desc.vectorImpName }}({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+        super({{ NameCommaSeparated( desc ) | indent(2) }});
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ desc.vectorImpName }}(Tuple tuple) {
+        tuple.getInto(this);
+    }
+{%  endmacro %}
+
+{#
+ # This macro renders the private items of the vector.
+ #}
+{%  macro Private( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="private">
+    private static {{ desc.vectorImpName }} getUnit(int index) {
+{%      dynmacro Private_getUnit( desc, property ) %}
+({{ desc.type }})((index == {{ property.index }}) ? 1 : 0)
+{%-     enddynmacro %}
+        return new {{ desc.vectorImpName }}({{ Properties( desc, ",%n", Private_getUnit ) | indent(4) }});
+    }
+//</editor-fold>
+{%  endmacro %}
+
+{#
+ # This macro renders the public items of the vector.
+ #}
+{%  macro Public( desc ) %}
+    /**
+     * Zero vector.
+     *
+     * @return Vector zero.
+     */
+    public static final {{ desc.vectorImpName }} getZero() {
+{%      dynmacro Public_getZero( desc, property ) %}
+({{ desc.type }})0
+{%-     enddynmacro %}
+        return new {{ desc.vectorImpName }}({{ Properties( desc, ", ", Public_getZero ) }});
+    }
+
+    /**
+     * One vector.
+     *
+     * @return Vector one.
+     */
+    public static final {{ desc.vectorImpName }} getOne() {
+{%      dynmacro Public_getOne( desc, property ) %}
+({{ desc.type }})1
+{%-     enddynmacro %}
+        return new {{ desc.vectorImpName }}({{ Properties( desc, ", ", Public_getOne ) }});
+    }
+
+{%      dynmacro Public_getU( desc, property ) %}
+
+    /**
+     * Unit vector: {{ property.upperName }}.
+     *
+     * @return Vector unit.
+     */
+    public static final {{ desc.vectorImpName }} getU{{ property.upperName }}() {
+        return getUnit({{ property.index }});
+    }
+{%-     enddynmacro %}
+{{ Properties( desc, "%n", Public_getU ) }}
+{%  endmacro %}
+
+{#
+ # This macro renders the overwriting of Object methods of the tuple.
+ #}
+{%  macro Object( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="Object">
+    @Override
+    public {{ desc.vectorImpName }} clone() {
+        return ({{ desc.vectorImpName }})super.clone();
+    }
+//</editor-fold>
+{%  endmacro %}

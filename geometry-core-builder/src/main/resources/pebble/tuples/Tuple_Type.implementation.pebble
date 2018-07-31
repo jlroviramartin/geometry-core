@@ -2,7 +2,6 @@
  # This macro renders the implementation of Tuple_Type of the tuple.
  #}
 {%  macro Tuple_Type( desc ) %}
-//<editor-fold defaultstate="collapsed" desc="{{ desc.tupleTypeName }}">
     /**
      * This method gets the component {@code index}.
      *
@@ -10,7 +9,7 @@
      * @return Value of the component.
      */
     @Override
-    public {{ desc.type }} getAt(int index) {
+    public final {{ desc.type }} getAt(int index) {
         switch(index) {
 {%      for property in desc.properties %}
             case {{ property.index }}:
@@ -27,9 +26,8 @@
      * @return Value of the {{ property.upperName }} component.
      */
     @Override
-    public {{ property.type }} get{{ property.upperName }}() {
+    public final {{ property.type }} get{{ property.upperName }}() {
         return {{ property.name }};
     }
 {%      endfor %}
-//</editor-fold>
 {%  endmacro %}

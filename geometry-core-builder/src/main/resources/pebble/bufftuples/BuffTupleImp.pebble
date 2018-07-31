@@ -27,8 +27,9 @@
 import java.util.logging.Logger;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
+import essence.geometry.core.BuffTuple;
 import essence.geometry.core.VectorFormatInfo;
-import essence.geometry.core.{{ desc.tupleNumberName }};
+import essence.geometry.core.{{ desc.buffTupleNumberName }};
 
 import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
 {%  endblock %}
@@ -39,29 +40,49 @@ import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
  */
 public class {{ desc.buffTupleImpName }} implements Cloneable, BuffTuple, {{ desc.buffTupleTypeName }}, {{ desc.buffTupleNumberName }}  {
 
-    {{ Fields( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="fields">
+{{ Fields( desc ) }}
+//</editor-fold>
 
-    {{ Constructors( desc ) }}
+{{ Constructors( desc, desc.buffTupleImpName ) }}
 
-    {{ Public( desc ) }}
+{{ Public( desc ) }}
 
-    {{ Object( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.buffTupleImpName ) }}
+//</editor-fold>
 
-    {{ BuffTuple( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="BuffTuple">
+{{ BuffTuple( desc ) }}
+//</editor-fold>
 
-    {{ Tuple( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="Tuple">
+{{ Tuple( desc ) }}
+//</editor-fold>
 
-    {{ BuffTuple_Type( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="{{ desc.buffTupleTypeName }}">
+{{ BuffTuple_Type( desc ) }}
+//</editor-fold>
 
-    {{ Tuple_Type( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="{{ desc.tupleTypeName }}">
+{{ Tuple_Type( desc ) }}
+//</editor-fold>
 
-    {{ BuffTuple_Number( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="{{ desc.buffTupleNumberName }}">
+{{ BuffTuple_Number( desc ) }}
+//</editor-fold>
 
-    {{ Tuple_Number( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="{{ desc.tupleNumberName }}">
+{{ Tuple_Number( desc ) }}
+//</editor-fold>
 
-    {{ EpsilonEquatable( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Tuple>">
+{{ EpsilonEquatable( desc, desc.buffTupleImpName ) }}
+//</editor-fold>
 
-    {{ Private( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc ) }}
+//</editor-fold>
 }
 {%  endblock %}
 
@@ -69,12 +90,10 @@ public class {{ desc.buffTupleImpName }} implements Cloneable, BuffTuple, {{ des
  # This macro renders the fields of the tuple.
  #}
 {%  macro Fields( desc ) %}
-//<editor-fold defaultstate="collapsed" desc="fields">
 {%      for property in desc.properties %}
     /** {{ property.upperName }} component. */
     private {{ property.type }} {{ property.name }};
 {%      endfor %}
     private static final Logger LOG = Logger.getLogger({{ desc.buffTupleImpName }}.class.getName());
     private static String format;
-//</editor-fold>
 {%  endmacro %}

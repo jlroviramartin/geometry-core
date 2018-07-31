@@ -1,0 +1,104 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a color.
+ #}
+
+{%  import "pebble/Tuple.Core.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.{{ desc.colorName }};
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public class {{ desc.colorImpName }} extends {{ desc.tupleImpName }} implements {{ desc.colorName }} {
+
+    {{ Constructors( desc ) }}
+
+    {{ Public( desc ) }}
+
+    {{ Object( desc ) }}
+
+    {{ Private( desc ) }}
+}
+{%  endblock %}
+
+{#
+ # This macro renders the constructors of the color.
+ #}
+{%  macro Constructors( desc ) %}
+    /**
+     * Empty constructor.
+     */
+    public {{ desc.colorImpName }}() {
+    }
+
+    /**
+     * This constructor sets the components of this color.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the component {{ property.upperName }}.
+{%      endfor %}
+     */
+    public {{ desc.colorImpName }}({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+        super({{ NameCommaSeparated( desc ) | indent(2) }});
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ desc.colorImpName }}(Tuple tuple) {
+        tuple.getInto(this);
+    }
+{%  endmacro %}
+
+{#
+ # This macro renders the private items of the color.
+ #}
+{%  macro Private( desc ) %}
+{%  endmacro %}
+
+{#
+ # This macro renders the public items of the color.
+ #}
+{%  macro Public( desc ) %}
+    /**
+     * Zero color.
+     */
+    public static final {{ desc.colorImpName }} getZero() {
+{%      dynmacro Public_anonymous1( desc, property ) %}
+({{ desc.type }})0
+{%-     enddynmacro %}
+        return new {{ desc.colorImpName }}({{ Properties( desc, ", ", Public_anonymous1 ) }});
+    }
+
+    /**
+     * One color.
+     */
+    public static final {{ desc.colorImpName }} getOne() {
+{%      dynmacro Public_anonymous2( desc, property ) %}
+({{ desc.type }})1
+{%-     enddynmacro %}
+        return new {{ desc.colorImpName }}({{ Properties( desc, ", ", Public_anonymous2 ) }});
+    }
+{%  endmacro %}
+
+{#
+ # This macro renders the overwriting of Object methods of the tuple.
+ #}
+{%  macro Object( desc ) %}
+//<editor-fold defaultstate="collapsed" desc="Object">
+    @Override
+    public {{ desc.colorImpName }} clone() {
+        return ({{ desc.colorImpName }})super.clone();
+    }
+//</editor-fold>
+{%  endmacro %}

@@ -1,0 +1,59 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/Tuple.Core.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.tupleTypeName }}} is a {{ desc.dim }} dimensional collection of values of type {{ desc.type }}.
+ */
+public interface {{ desc.tupleTypeName }} {
+
+    /**
+     * This method gets the component {@code index}.
+     *
+     * @param index Index of the component.
+     * @return Value of the component.
+     */
+    {{ desc.type }} getAt(int index);
+
+    /**
+     * This method sets the component {@code index}.
+     *
+     * @param index Index of the component.
+     * @param value Value of the component.
+     */
+    void setAt(int index, {{ desc.type }} value);
+{%      for property in desc.properties %}
+
+    /**
+     * This method gets the {{property.upperName}} component.
+     *
+     * @return Value of the {{property.upperName}} component.
+     */
+    {{property.type}} get{{property.upperName}}();
+
+    /**
+     * This method sets the {{property.upperName}} component.
+     *
+     * @param value Value of the {{property.upperName}} component.
+     */
+    void set{{property.upperName}}({{property.type}} value);
+{%      endfor %}
+
+    /**
+     * This method sets all the components.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the {{ property.upperName }} component.
+{%      endfor %}
+     */
+    void set({{ TypeNameCommaSeparated( desc ) }});
+}
+{%  endblock %}
+

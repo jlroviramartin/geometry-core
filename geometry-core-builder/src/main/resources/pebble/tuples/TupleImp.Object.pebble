@@ -1,35 +1,37 @@
 {#
  # This macro renders the overwriting of Object methods of the tuple.
  #}
-{%  macro Object( desc ) %}
-//<editor-fold defaultstate="collapsed" desc="Object">
+{%  macro Object( desc, className ) %}
     @Override
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
 {%      dynmacro Object_toString( desc, property ) %}
-get{{ property.upperName }}()
+{{ property.name }}
 {%-     enddynmacro %}
         return String.format(getFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
-            {{ Properties( desc, ",", Object_toString ) | indent(3)  }});
-    }
-
-    public boolean equals({{ desc.tupleImpName }} other) {
-        if (other == this) {
-            return true;
-        }
-        if (other == null) {
-            return false;
-        }
-
-{%      dynmacro Object_equals( desc, property ) %}
-other.get{{ property.upperName }}()
-{%-     enddynmacro %}
-        return this.equals({{ Properties( desc, ", ", Object_equals ) | indent(3)  }});
+            {{ Properties( desc, ", ", Object_toString ) | indent(3)  }});
     }
 
     @Override
     public boolean equals(Object other) {
-        return ((other instanceof {{ desc.tupleImpName }}) && this.equals(({{ desc.tupleImpName }}) other));
+        if (other == this) {
+            return true;
+        }
+        if (other instanceof {{ className }}) {
+            {{ className }} _other = ({{ className }})other;
+{%      dynmacro Object_equals1( desc, property ) %}
+_other.{{ property.name }}
+{%-     enddynmacro %}
+            return equals({{ Properties( desc, ",%n", Object_equals1 ) | indent(4) }});
+        }
+        if (other instanceof Tuple) {
+            {{ desc.tupleTypeName }} _other = toTuple((Tuple)other);
+{%      dynmacro Object_equals2( desc, property ) %}
+_other.get{{ property.upperName }}()
+{%-     enddynmacro %}
+            return equals({{ Properties( desc, ",%n", Object_equals2 ) | indent(4) }});
+        }
+        return false;
     }
 
     @Override
@@ -39,20 +41,15 @@ other.get{{ property.upperName }}()
         final int prime = 31;
         int hash = 1;
 {%      for property in desc.properties %}
-        hash = prime * hash + {{ desc.ctype }}.hashCode(get{{ property.upperName }}());
+        hash = prime * hash + {{ desc.ctype }}.hashCode({{ property.name }});
 {%      endfor %}
         return hash;
     }
 
     @Override
-    public {{ desc.tupleImpName }} clone() {
-        try {
-            {{ desc.tupleImpName }} copy = ({{ desc.tupleImpName }})super.clone();
-            return copy;
-        } catch (CloneNotSupportedException ex) {
-            throw new Error(ex);
-        }
+    public {{ className }} clone() throws CloneNotSupportedException {
+        {{ className }} copy = ({{ className }})super.clone();
+        return copy;
     }
-//</editor-fold>
 {%  endmacro %}
 

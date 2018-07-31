@@ -1,0 +1,16 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a color.
+ #}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.colorName }}} is a {{ desc.dim }} dimensional collection of values
+ * that represents a color.
+ */
+public interface {{ desc.colorName }} extends Tuple {
+}
+{%  endblock %}

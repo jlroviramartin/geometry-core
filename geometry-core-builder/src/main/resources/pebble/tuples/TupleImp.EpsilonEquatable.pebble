@@ -1,8 +1,7 @@
 {#
  # This macro renders the implementation of EpsilonEquatable of the tuple.
  #}
-{%  macro EpsilonEquatable( desc ) %}
-//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Tuple>">
+{%  macro EpsilonEquatable( desc, className ) %}
     @Override
     public boolean epsilonEquals(Tuple other) {
         return epsilonEquals(other, EPSILON);
@@ -13,14 +12,20 @@
         if (other == this) {
             return true;
         }
-        if (!(other instanceof {{ desc.tupleImpName }})) {
-            return false;
+        if (other instanceof {{ className }}) {
+            {{ className }} _other = ({{ className }})other;
+{%      dynmacro EpsilonEquatable_epsilonEquals1( desc, property ) %}
+_other.{{ property.name }}
+{%-     enddynmacro %}
+            return epsilonEquals({{ Properties( desc, ",%n", EpsilonEquatable_epsilonEquals1 ) | indent(4) }}, epsilon);
         }
-        {{ desc.tupleImpName }} _other = ({{ desc.tupleImpName }})other;
-{%      dynmacro EpsilonEquatable_anonymous1( desc, property ) %}
+        if (other instanceof Tuple) {
+            {{ desc.tupleTypeName }} _other = toTuple((Tuple)other);
+{%      dynmacro EpsilonEquatable_epsilonEquals2( desc, property ) %}
 _other.get{{ property.upperName }}()
 {%-     enddynmacro %}
-        return epsilonEquals({{ Properties( desc, ",%n", EpsilonEquatable_anonymous1 ) | indent(4) }}, epsilon);
+            return epsilonEquals({{ Properties( desc, ",%n", EpsilonEquatable_epsilonEquals2 ) | indent(4) }}, epsilon);
+        }
+        return false;
     }
-//</editor-fold>
 {%  endmacro %}

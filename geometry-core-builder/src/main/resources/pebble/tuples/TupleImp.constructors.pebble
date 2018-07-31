@@ -1,15 +1,15 @@
 {#
  # This macro renders the constructors of the tuple.
  #}
-{%  macro Constructors( desc ) %}
+{%  macro Constructors( desc, className ) %}
     /**
      * Empty constructor.
      */
-    public {{ desc.tupleImpName }}() {
-{%      dynmacro Constructors_anonymous1( desc, property ) %}
+    public {{ className }}() {
+{%      dynmacro Constructors_constructor( desc, property ) %}
 ({{ desc.type }})0
 {%-     enddynmacro %}
-        this({{ Properties( desc, ", ", Constructors_anonymous1 ) | indent(3) }});
+        this({{ Properties( desc, ", ", Constructors_constructor ) | indent(3) }});
     }
 
     /**
@@ -19,10 +19,23 @@
      * @param {{ property.name }} Value of the component {{ property.upperName }}.
 {%      endfor %}
      */
-    public {{ desc.tupleImpName }}({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+    public {{ className }}({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
 {%      for property in desc.properties %}
         this.{{ property.name }} = {{ property.name }};
 {%      endfor %}
     }
-{% endmacro %}
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ className }}(Tuple tuple) {
+        {{ desc.tupleTypeName }} _tuple = toTuple(tuple);
+
+{%      for property in desc.properties %}
+        this.{{ property.name }} = _tuple.get{{ property.upperName }}();
+{%      endfor %}
+    }
+{%  endmacro %}
 

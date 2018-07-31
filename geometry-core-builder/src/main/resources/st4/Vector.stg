@@ -1,0 +1,189 @@
+delimiters "$", "$"
+
+Vector(desc) ::= <<
+package $desc._package$;
+
+/**
+ * A {@code Vector$desc.dim$\} is a $desc.dim$ dimensional collection of values
+ * that represents a vector.
+ */
+public interface Vector$desc.dim$ extends Tuple$desc.dim$ {
+
+    /**
+     * This method tests if {@code this} is an unit vector (the length is 1).
+     *
+     * @return True if the length is 1. False otherwise.
+     */
+    boolean isUnit();
+
+    /**
+     * This method gets the quadrant/octant of {@code this} vector.
+     *
+     * @return Quadrant of this vector.
+     */
+    int getQuadrant();
+
+    /**
+     * This method gets the length of {@code this} vector.
+     *
+     * @return Length of this vector.
+     */
+    default double getLength() {
+        return Math.sqrt(getLengthCuad());
+    }
+
+    /**
+     * This method gets the squared length of {@code this} vector.
+     *
+     * @return Squared length of this vector.
+     */
+    default double getLengthCuad() {
+        return dot(this);
+    }
+
+    /**
+     * This method gets the L1 (Manhattan) length of {@code this} vector.
+     *
+     * @return L1 (Manhattan) length of this vector.
+     */
+    double getLengthL1();
+
+    /**
+     * This method adds {@code this} vector to {@code other} vector.
+     *
+     * @param other Other vector.
+     * @return {@code result = this + other}
+     */
+    Vector$desc.dim$ add(Vector$desc.dim$ other);
+
+    /**
+     * This method subs {@code this} vector to {@code other} vector.
+     *
+     * @param other Other vector.
+     * @return {@code result = this - other}
+     */
+    Vector$desc.dim$ sub(Vector$desc.dim$ other);
+
+    /**
+     * This method multiplies {@code this} vector to {@code other} vector (coordinate by coordenate).
+     *
+     * @param other Other vector.
+     * @return result.
+     */
+    Vector$desc.dim$ simpleMul(Vector$desc.dim$ other);
+
+    /**
+     * This method divides {@code this} vector by {@code other} vector (coordinate by coordenate).
+     *
+     * @param other Other vector.
+     * @return result.
+     */
+    Vector$desc.dim$ simpleDiv(Vector$desc.dim$ other);
+
+    /**
+     * This method multiplies {@code this} vector to {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code result = this * v}
+     */
+    Vector$desc.dim$ mul(double v);
+
+    /**
+     * This method divides {@code this} vector by {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code result = this / v}
+     */
+    Vector$desc.dim$ div(double v);
+
+    /**
+     * This method evaluates the negation of {@code this} vector.
+     *
+     * @return {@code result = -this}
+     */
+    Vector$desc.dim$ neg();
+
+    /**
+     * This method evaluates the absolute value of {@code this} vector.
+     *
+     * @return {@code result = abs( this )}
+     */
+    Vector$desc.dim$ abs();
+
+    /**
+     * This method evaluates the linear interpolation of {@code this} vector and {@code other} vector at {@code alpha}.
+     *
+     * @param other Other vector.
+     * @param alpha Interpolation.
+     * @return {@code this * alpha + other * (1 - alpha)}
+     */
+    default Vector$desc.dim$ lerp(Vector$desc.dim$ other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    /**
+     * This method evaluates the inverse of the linear interpolation of {@code this} vector and {@code other} vector at {@code vLerp}.
+     *
+     * @param other Other vector.
+     * @param vLerp Interpolated vector.
+     * @return {@code vLerp = this * result + other * (1 - result)}
+     */
+    double invLerp(Vector$desc.dim$ other, Vector$desc.dim$ vLerp);
+
+    /**
+     * This method evaluates the linear combination of {@code this} vector and {@code other} vector at {@code alpha} and {@code beta}.
+     *
+     * @param other Other vector.
+     * @param alpha Interpolation for {@code this}.
+     * @param beta Interpolation for {@code other}.
+     * @return {@code this * alpha + other * beta}
+     */
+    Vector$desc.dim$ lineal(Vector$desc.dim$ other, double alpha, double beta);
+
+    /**
+     * This method evaluates the unit vector of {@code this} vector.
+     *
+     * @return {@code this.unit.length == 1}
+     */
+    Vector$desc.dim$ getUnit();
+
+    /**
+     * This method evaluates the dot product of {@code this} vector and {@code other} vector.
+     *
+     * @param other Other vector.
+     * @return {@code this . other}
+     */
+    double dot(Vector$desc.dim$ other);
+
+    /**
+     * This method evaluates the cross product of {@code this} vector and {@code other} vector.
+     *
+     * @param other Other vector.
+     * @return {@code this x other}
+     */
+    double cross(Vector$desc.dim$ other);
+
+    /**
+     * This method evaluates the scalar projection of {@code this} vector over {@code where} vector.
+     * https://en.wikipedia.org/wiki/Vector_projection
+     *
+     * @param where Where to project.
+     * @return {@code this . where.getUnit()}
+     */
+    default double scalarProjection(Vector$desc.dim$ where) {
+        return dot(where) / where.getLength();
+    }
+
+    /**
+     * This method evaluates the vector projection of {@code this} vector over {@code where} vector.
+     * https://en.wikipedia.org/wiki/Vector_projection
+     *
+     * @param where Where to project.
+     * @return {@code this.scalarProjection(where) . where.getUnit()}
+     */
+    default Vector$desc.dim$ vectorProjection(Vector$desc.dim$ where) {
+        Vector$desc.dim$ u = where.getUnit();
+        return u.mul(dot(u));
+    }
+}
+>>

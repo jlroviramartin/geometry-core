@@ -64,12 +64,18 @@
         return epsilonEquals({{ Properties( desc, ", ", Public_isZero ) | indent(3) }}, epsilon);
     }
 
+    /**
+     * This method converts a Tuple into a {{ desc.tupleTypeName }}. It is a helper method to ease the operations.
+     *
+     * @param other Tuple.
+     * @return {{ desc.tupleTypeName }}.
+     */
     protected static {{ desc.tupleTypeName }} toTuple(Tuple other) {
         if (other instanceof {{ desc.tupleTypeName }}) {
             return ({{ desc.tupleTypeName }})other;
         }
-        {{ desc.tupleImpName }} aux = new {{ desc.tupleImpName }}();
-        other.getInto(aux);
+        {{ desc.buffTupleImpName }} aux = new {{ desc.buffTupleImpName }}();
+        aux.set(other);
         return aux;
     }
 {%  endmacro %}

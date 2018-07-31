@@ -1,0 +1,274 @@
+{#
+ # This macro renders the math operations of the matrix.
+ #}
+{%  import "pebble/Matrix.Core.pebble" %}
+{%  macro MathAndSet( desc ) %}
+    /**
+     * This method sets {@code this} matrix to zero.
+     *
+     * @return {@code this = zero}
+     */
+    public {{ desc.matrixImpName }} setZero() {
+{%      dynmacro Accessors_setZero( desc, property ) %}
+0
+{%-     enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Accessors_setZero ) | indent(3) }});
+        return this;
+    }
+{%      if desc.dimRows == desc.dimCols %}
+
+    /**
+     * This method sets {@code this} matrix to the identity.
+     *
+     * @return {@code this = identity}
+     */
+    public {{ desc.matrixImpName }} setIdentity() {
+{%          dynmacro Accessors_setIdentity( desc, property ) %}
+{%              if property.r == property.c %}1{% else %}0{% endif %}
+{%-         enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Accessors_setIdentity ) | indent(3) }});
+        return this;
+    }
+{%      endif %}
+
+    /**
+     * This method adds {@code this} matrix and {@code other} matrix and sets the result
+     * into {@code this}.
+     *
+     * @param other Other matrix.
+     * @return {@code this = this + other}
+     */
+    public {{ desc.matrixImpName }} addAndSet({{ desc.matrixImpName }} other) {
+{%      dynmacro Math_add( desc, property ) %}
+get{{ property.upperName }}() + other.get{{ property.upperName }}()
+{%-     enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Math_add ) | indent(3) }});
+        return this;
+    }
+
+    /**
+     * This method subs {@code this} matrix and {@code other} matrix and sets the result
+     * into {@code this}.
+     *
+     * @param other Other matrix.
+     * @return {@code this = this - other}
+     */
+    public {{ desc.matrixImpName }} subAndSet({{ desc.matrixImpName }} other) {
+{%      dynmacro Math_sub( desc, property ) %}
+get{{ property.upperName }}() - other.get{{ property.upperName }}()
+{%-     enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Math_sub ) | indent(3) }});
+        return this;
+    }
+
+    /**
+     * This method multiplies {@code this} matrix by {@code v} and sets the result
+     * into {@code this}.
+     *
+     * @param v Scalar.
+     * @return {@code this = this * v}
+     */
+    public {{ desc.matrixImpName }} mulAndSet(double v) {
+{%      dynmacro Math_mulScalar( desc, property ) %}
+({{ property.type }})(get{{ property.upperName }}() * v)
+{%-     enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Math_mulScalar ) | indent(3) }});
+        return this;
+    }
+
+    /**
+     * This method divides {@code this} matrix by {@code v} and sets the result
+     * into {@code this}.
+     *
+     * @param v Scalar.
+     * @return {@code this = this / v}
+     */
+    public {{ desc.matrixImpName }} divAndSet(double v) {
+{%      dynmacro Math_divScalar( desc, property ) %}
+({{ property.type }})(get{{ property.upperName }}() / v)
+{%-     enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Math_divScalar ) | indent(3) }});
+        return this;
+    }
+
+    /**
+     * This method multiplies {@code this} matrix by {@code other} matrix and sets the result
+     * into {@code this}.
+     *
+     * @param other Other matrix.
+     * @return {@code this = this * other}
+     */
+    public {{ desc.matrixImpName }} mulAndSet({{ desc.matrixImpName }} other) {
+        set(
+{%-     for row in desc.rows %}
+{%          if not (loop.first) %},
+            {% endif %}
+{%          for property in row.cols %}
+{%              if not (loop.first) %},
+            {% endif %}
+{%              for k in range( 0, desc.dimRows - 1 ) %}
+{%                  if not (loop.first) %} + {% endif %}
+get{{ reflection( desc, "getProperty", [ row.r, k ] ).upperName }}() * other.get{{ reflection( desc, "getProperty", [ k, property.c ] ).upperName }}()
+{%-             endfor %}
+{%          endfor %}
+{%      endfor %});
+        return this;
+    }
+
+    /**
+     * This method changes the sign of {@code this} matrix and sets the result
+     * into {@code this}.
+     *
+     * @return {@code this = -this}
+     */
+    public {{ desc.matrixImpName }} negAndSet() {
+{%      dynmacro Math_neg( desc, property ) %}
+-get{{ property.upperName }}()
+{%-     enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Math_neg ) | indent(3) }});
+        return this;
+    }
+
+    /**
+     * This method calculates the absolute value of {@code this} matrix and sets the result
+     * into {@code this}.
+     *
+     * @return {@code this = abs(this)}
+     */
+    public {{ desc.matrixImpName }} absAndSet() {
+{%      dynmacro Math_transpose( desc, property ) %}
+Math.abs(get{{ property.upperName }}())
+{%-     enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Math_transpose ) | indent(3) }});
+        return this;
+    }
+
+    /**
+     * This method calculates the transpose of {@code this} matrix and sets the result
+     * into {@code this}.
+     *
+     * @return {@code this = transpose(this)}
+     */
+    public {{ desc.matrixImpName }} transposeAndSet() {
+{%      dynmacro Math_abs( desc, property ) %}
+get{{ reflection( desc, "getProperty", [ property.c, property.r ] ).upperName }}()
+{%-     enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Math_abs ) | indent(3) }});
+        return this;
+    }
+{%      if desc.dimRows == 2 %}
+
+    /**
+     * This method evaluates the inverse of {@code this} matrix and sets the result
+     * into {@code this}.
+     *
+     * @return {@code this = this^-1}
+     */
+    public {{ desc.matrixImpName }} inverseAndSet() throws SingularMatrixException {
+        double s = getDeterminant();
+        if (DoubleUtils.epsilonZero(s, EPSILON)) {
+            throw new SingularMatrixException();
+        }
+
+        s = 1 / s;
+        set(
+            ({{ desc.type }})(getM11() * s), ({{ desc.type }})(-getM01() * s),
+            ({{ desc.type }})(-getM10() * s), ({{ desc.type }})(getM00() * s));
+        return this;
+    }
+{%      elseif desc.dimRows == 3 %}
+
+    /**
+     * This method evaluates the inverse of {@code this} matrix and sets the result
+     * into {@code this}.
+     *
+     * @return {@code this = this^-1}
+     */
+    public {{ desc.matrixImpName }} inverseAndSet() throws SingularMatrixException {
+        double s = getDeterminant();
+        if (DoubleUtils.epsilonZero(s, EPSILON)) {
+            throw new SingularMatrixException();
+        }
+
+        s = 1 / s;
+        set(
+            ({{ desc.type }})((getM11() * getM22() - getM12() * getM21()) * s),
+            ({{ desc.type }})((getM02() * getM21() - getM01() * getM22()) * s),
+            ({{ desc.type }})((getM01() * getM12() - getM02() * getM11()) * s),
+            ({{ desc.type }})((getM12() * getM20() - getM10() * getM22()) * s),
+            ({{ desc.type }})((getM00() * getM22() - getM02() * getM20()) * s),
+            ({{ desc.type }})((getM02() * getM10() - getM00() * getM12()) * s),
+            ({{ desc.type }})((getM10() * getM21() - getM11() * getM20()) * s),
+            ({{ desc.type }})((getM01() * getM20() - getM00() * getM21()) * s),
+            ({{ desc.type }})((getM00() * getM11() - getM01() * getM10()) * s));
+        return this;
+    }
+{%      elseif desc.dimRows == 4 %}
+
+    /**
+     * This method evaluates the inverse of {@code this} matrix and sets the result
+     * into {@code this}.
+     *
+     * @return {@code this = this^-1}
+     */
+    public {{ desc.matrixImpName }} inverseAndSet() throws SingularMatrixException {
+        double s = getDeterminant();
+        if (DoubleUtils.epsilonZero(s, EPSILON)) {
+            throw new SingularMatrixException();
+        }
+
+        s = 1 / s;
+        set(
+            ({{ desc.type }})((getM11() * (getM22() * getM33() - getM23() * getM32())
+                + getM12() * (getM23() * getM31() - getM21() * getM33())
+                + getM13() * (getM21() * getM32() - getM22() * getM31())) * s),
+            ({{ desc.type }})((getM21() * (getM02() * getM33() - getM03() * getM32())
+                + getM22() * (getM03() * getM31() - getM01() * getM33())
+                + getM23() * (getM01() * getM32() - getM02() * getM31())) * s),
+            ({{ desc.type }})((getM31() * (getM02() * getM13() - getM03() * getM12())
+                + getM32() * (getM03() * getM11() - getM01() * getM13())
+                + getM33() * (getM01() * getM12() - getM02() * getM11())) * s),
+            ({{ desc.type }})((getM01() * (getM13() * getM22() - getM12() * getM23())
+                + getM02() * (getM11() * getM23() - getM13() * getM21())
+                + getM03() * (getM12() * getM21() - getM11() * getM22())) * s),
+            ({{ desc.type }})((getM12() * (getM20() * getM33() - getM23() * getM30())
+                + getM13() * (getM22() * getM30() - getM20() * getM32())
+                + getM10() * (getM23() * getM32() - getM22() * getM33())) * s),
+            ({{ desc.type }})((getM22() * (getM00() * getM33() - getM03() * getM30())
+                + getM23() * (getM02() * getM30() - getM00() * getM32())
+                + getM20() * (getM03() * getM32() - getM02() * getM33())) * s),
+            ({{ desc.type }})((getM32() * (getM00() * getM13() - getM03() * getM10())
+                + getM33() * (getM02() * getM10() - getM00() * getM12())
+                + getM30() * (getM03() * getM12() - getM02() * getM13())) * s),
+            ({{ desc.type }})((getM02() * (getM13() * getM20() - getM10() * getM23())
+                + getM03() * (getM10() * getM22() - getM12() * getM20())
+                + getM00() * (getM12() * getM23() - getM13() * getM22())) * s),
+            ({{ desc.type }})((getM13() * (getM20() * getM31() - getM21() * getM30())
+                + getM10() * (getM21() * getM33() - getM23() * getM31())
+                + getM11() * (getM23() * getM30() - getM20() * getM33())) * s),
+            ({{ desc.type }})((getM23() * (getM00() * getM31() - getM01() * getM30())
+                + getM20() * (getM01() * getM33() - getM03() * getM31())
+                + getM21() * (getM03() * getM30() - getM00() * getM33())) * s),
+            ({{ desc.type }})((getM33() * (getM00() * getM11() - getM01() * getM10())
+                + getM30() * (getM01() * getM13() - getM03() * getM11())
+                + getM31() * (getM03() * getM10() - getM00() * getM13())) * s),
+            ({{ desc.type }})((getM03() * (getM11() * getM20() - getM10() * getM21())
+                + getM00() * (getM13() * getM21() - getM11() * getM23())
+                + getM01() * (getM10() * getM23() - getM13() * getM20())) * s),
+            ({{ desc.type }})((getM10() * (getM22() * getM31() - getM21() * getM32())
+                + getM11() * (getM20() * getM32() - getM22() * getM30())
+                + getM12() * (getM21() * getM30() - getM20() * getM31())) * s),
+            ({{ desc.type }})((getM20() * (getM02() * getM31() - getM01() * getM32())
+                + getM21() * (getM00() * getM32() - getM02() * getM30())
+                + getM22() * (getM01() * getM30() - getM00() * getM31())) * s),
+            ({{ desc.type }})((getM30() * (getM02() * getM11() - getM01() * getM12())
+                + getM31() * (getM00() * getM12() - getM02() * getM10())
+                + getM32() * (getM01() * getM10() - getM00() * getM11())) * s),
+            ({{ desc.type }})((getM00() * (getM11() * getM22() - getM12() * getM21())
+                + getM01() * (getM12() * getM20() - getM10() * getM22())
+                + getM02() * (getM10() * getM21() - getM11() * getM20())) * s));
+        return this;
+    }
+{%      endif %}
+{%  endmacro %}
+

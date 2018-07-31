@@ -1,0 +1,107 @@
+delimiters "$", "$"
+
+import "Tuple.stg"
+
+BuffTuple(desc) ::= <<
+package $desc._package$;
+
+/**
+ * A {@code BuffTuple$desc.dim$\} is a read/write $desc.dim$ dimensional collection of values.
+ */
+public interface BuffTuple$desc.dim$ extends Tuple$desc.dim$ {
+
+    /**
+     * Sets the value of {@code this} tuple from the {@code other} tuple.
+     *
+     * @param other Where to get the values.
+     * @return This tuple.
+     */
+    BuffTuple$desc.dim$$desc.suffix$ set(Tuple$desc.dim$ other);
+
+    /**
+     * Sets the value of {@code this} tuple to zero.
+     *
+     * @return This tuple.
+     */
+    BuffTuple$desc.dim$$desc.suffix$ setZero();
+}
+>>
+
+BuffTuple_Number(desc) ::= <<
+package $desc._package$;
+
+/**
+ * A {@code BuffTuple$desc.dim$_Number\} is a $desc.dim$ dimensional collection of values of type numeric.
+ */
+public interface BuffTuple$desc.dim$_Number extends BuffTuple$desc.dim$ {
+    /**
+     * This method sets the value of the ( $desc.properties :{ property | $property.upperName$}; separator=", "$ ) coordinates as double values.
+     *
+     $desc.properties :{ property | * @param $property.name$ Value of the property $property.UpperName$. }; separator="\n"$
+     */
+    void setDouble($desc.properties :{ property | double $property.name$}; separator=", "$);
+
+    /**
+     * This method sets the value of the ( $desc.properties :{ property | $property.upperName$}; separator=", "$ ) coordinates as float values.
+     *
+     $desc.properties :{ property | * @param $property.name$ Value of the property $property.UpperName$. }; separator="\n"$
+     */
+    void setFloat($desc.properties :{ property | float $property.name$}; separator=", "$);
+
+    /**
+     * This method sets the value of the ( $desc.properties :{ property | $property.upperName$}; separator=", "$ ) coordinates as long values.
+     *
+     $desc.properties :{ property | * @param $property.name$ Value of the property $property.UpperName$. }; separator="\n"$
+     */
+    void setLong($desc.properties :{ property | long $property.name$}; separator=", "$);
+
+    /**
+     * This method sets the value of the ( $desc.properties :{ property | $property.upperName$}; separator=", "$ ) coordinates as int values.
+     *
+     $desc.properties :{ property | * @param $property.name$ Value of the property $property.UpperName$. }; separator="\n"$
+     */
+    void setInt($desc.properties :{ property | int $property.name$}; separator=", "$);
+
+    /**
+     * This method sets the value of the ( $desc.properties :{ property | $property.upperName$}; separator=", "$ ) coordinates as short values.
+     *
+     $desc.properties :{ property | * @param $property.name$ Value of the property $property.UpperName$. }; separator="\n"$
+     */
+    void setShort($desc.properties :{ property | short $property.name$}; separator=", "$);
+
+    /**
+     * This method sets the value of the ( $desc.properties :{ property | $property.upperName$}; separator=", "$ ) coordinates as byte values.
+     *
+     $desc.properties :{ property | * @param $property.name$ Value of the property $property.UpperName$. }; separator="\n"$
+     */
+    void setByte($desc.properties :{ property | byte $property.name$}; separator=", "$);
+}
+>>
+
+BuffTuple_Type(desc) ::= <<
+package $desc._package$;
+
+import $desc.corePackage$.BuffTuple$desc.dim$_Number;
+
+/**
+ * A {@code BuffTuple$desc.dim$_$desc.ctype$\} is a read/write $desc.dim$ dimensional collection of values of type $desc.type$.
+ */
+public interface BuffTuple$desc.dim$_$desc.ctype$ extends Tuple$desc.dim$_$desc.ctype$, BuffTuple$desc.dim$_Number {
+
+$desc.properties :{ property |
+    /**
+     * This method sets the value of the $property.upperName$ coordinate to {@code value\}.
+     *
+     * @param value Value.
+     */
+    void set$property.upperName$($property.type$ value);
+}; separator="\n"$
+
+    /**
+     * This method sets the value of the ( $desc.properties :{ property | $property.upperName$}; separator=", "$ ) coordinates.
+     *
+     $desc.properties :{ property | * @param $property.name$ Value of the property $property.UpperName$. }; separator="\n"$
+     */
+    void set($desc.properties :{ property | $property.type$ $property.name$}; separator=", "$);
+}
+>>

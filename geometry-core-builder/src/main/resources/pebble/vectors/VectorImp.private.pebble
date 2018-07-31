@@ -1,0 +1,12 @@
+{#
+ # This macro renders the private items of the vector.
+ #}
+{%  macro Private( desc, className ) %}
+    private static {{ className }} getUnit(int index) {
+{%      dynmacro Private_getUnit( desc, property ) %}
+({{ desc.type }})((index == {{ property.index }}) ? 1 : 0)
+{%-     enddynmacro %}
+        return new {{ className }}({{ Properties( desc, ",%n", Private_getUnit ) | indent(4) }});
+    }
+{%  endmacro %}
+

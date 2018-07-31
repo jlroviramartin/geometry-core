@@ -24,13 +24,6 @@ public interface {{ desc.buffTupleTypeName }} extends {{ desc.tupleTypeName }} {
 {%      for property in desc.properties %}
 
     /**
-     * This method gets the {{property.upperName}} component.
-     *
-     * @return Value of the {{property.upperName}} component.
-     */
-    {{property.type}} get{{property.upperName}}();
-
-    /**
      * This method sets the {{property.upperName}} component.
      *
      * @param value Value of the {{property.upperName}} component.

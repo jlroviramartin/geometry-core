@@ -2,17 +2,16 @@
  # This macro renders the private items of the matrix.
  #}
 {%  macro Private( desc ) %}
-//<editor-fold defaultstate="collapsed" desc="private">
     private boolean epsilonEquals({{ TypeNameCommaSeparated( desc ) | indent(2) }}, double epsilon) {
 {%      dynmacro Private_epsilonEquals( desc, property ) %}
-DoubleUtils.epsilonEquals(get{{ property.upperName }}(), {{ property.name }}, epsilon)
+DoubleUtils.epsilonEquals(this.{{ property.name }}, {{ property.name }}, epsilon)
 {%-     enddynmacro %}
         return {{ Properties( desc, " && ", Private_epsilonEquals ) | indent(3) }};
     }
 
     private boolean equals({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
 {%      dynmacro Private_equals( desc, property ) %}
-get{{ property.upperName }}() == {{ property.name }}
+this.{{ property.name }} == {{ property.name }}
 {%-     enddynmacro %}
         return {{ Properties( desc, " && ", Private_equals ) | indent(3) }};
     }
@@ -41,6 +40,5 @@ buff.append("%").append(k++).append("$").append(f);
         }
         return format;
     }
-//</editor-fold>
 {%  endmacro %}
 

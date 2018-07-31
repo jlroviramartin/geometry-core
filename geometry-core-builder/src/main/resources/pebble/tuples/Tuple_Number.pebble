@@ -19,6 +19,6 @@ public interface {{ desc.tupleNumberName }} {
      *
      * @param buff Where to put the values.
      */
-    void getInto({{ desc.tupleNumberName }} buff);
+    void getInto({{ desc.buffTupleNumberName }} buff);
 }
 {%  endblock %}
