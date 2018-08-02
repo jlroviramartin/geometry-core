@@ -1,0 +1,61 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/java/Tuple.Core.pebble" %}
+
+{%  import "pebble/java/points/PointImp.constructors.pebble" %}
+{%  import "pebble/java/points/PointImp.Object.pebble" %}
+{%  import "pebble/java/points/PointImp.public.pebble" %}
+{%  import "pebble/java/points/PointImp.private.pebble" %}
+
+{%  import "pebble/java/points/Point.common.pebble" %}
+{%  import "pebble/java/points/Point.implementation.pebble" %}
+{%  import "pebble/java/points/Point.implementation_nonvirtual.pebble" %}
+
+{%  import "pebble/java/buffpoints/BuffPoint.implementation.pebble" %}
+{%  import "pebble/java/buffpoints/BuffPoint.implementation_nonvirtual.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
+import essence.geometry.core.{{ desc.vectorName }};
+import essence.geometry.core.{{ desc.pointName }};
+import essence.geometry.core.{{ desc.buffPointName }};
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public class {{ desc.buffPointImpName }} extends {{ desc.buffTupleImpName }} implements {{ desc.buffPointName }} {
+
+{{ Constructors( desc, desc.buffPointImpName ) }}
+
+{{ Public( desc, desc.buffPointImpName ) }}
+
+{{ MathAndSetNonVirtual( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
+
+{{ MathNonVirtual( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.buffPointName }}">
+{{ MathAndSet( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.pointName }}">
+{{ Math( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.buffPointImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc ) }}
+//</editor-fold>
+}
+{%  endblock %}

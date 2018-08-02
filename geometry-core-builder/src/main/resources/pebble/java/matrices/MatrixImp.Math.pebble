@@ -1,0 +1,226 @@
+{#
+ # This macro renders the math operations of the matrix.
+ #}
+{%  macro Math( desc, className ) %}
+    public final boolean isValid() {
+        return !isNaN() && !isInfinity();
+    }
+
+    /**
+     * This method evaluates is {@code this} matrix contains any NaN component.
+     *
+     * @return {@code True} if {@code this} matrix contains any NaN component. {@code False} otherwise.
+     */
+    public final boolean isNaN() {
+{%      dynmacro Math_isNaN( desc, property ) %}
+{{ desc.ctype }}.isNaN(get{{ property.upperName }}())
+{%-     enddynmacro %}
+        return {{ RowsAndColumns( desc, " ||%n", " || ", Math_isNaN ) | indent(3) }};
+    }
+
+    /**
+     * This method evaluates is {@code this} matrix contains any infinity component.
+     *
+     * @return {@code True} if {@code this} matrix contains any infinity component. {@code False} otherwise.
+     */
+    public final boolean isInfinity() {
+{%      dynmacro Math_isInfinity( desc, property ) %}
+{{ desc.ctype }}.isInfinite(get{{ property.upperName }}())
+{%-     enddynmacro %}
+        return {{ RowsAndColumns( desc, " ||%n", " || ", Math_isInfinity ) | indent(3) }};
+    }
+
+    /**
+     * This method evaluates is {@code this} matrix is zero.
+     *
+     * @return {@code True} if {@code this} matrix is zero. {@code False} otherwise.
+     */
+    public final boolean isZero() {
+        return isZero(EPSILON);
+    }
+
+    /**
+     * This method evaluates is {@code this} matrix is zero.
+     *
+     * @param epsilon Error.
+     * @return {@code True} if {@code this} matrix is zero. {@code False} otherwise.
+     */
+    public final boolean isZero(double epsilon) {
+{%      dynmacro Math_isZero( desc, property ) %}
+0
+{%-     enddynmacro %}
+        return epsilonEquals({{ RowsAndColumns( desc, ",%n", ", ", Math_isZero ) | indent(3) }}, epsilon);
+    }
+
+    /**
+     * This method evaluates is {@code this} matrix is the identity.
+     *
+     * @return {@code True} if {@code this} matrix is the identity. {@code False} otherwise.
+     */
+    public boolean isIdentity() {
+        return isIdentity(EPSILON);
+    }
+
+    /**
+     * This method evaluates is {@code this} matrix is the identity.
+     *
+     * @param epsilon Error.
+     * @return {@code True} if {@code this} matrix is the identity. {@code False} otherwise.
+     */
+    public boolean isIdentity(double epsilon) {
+{%      if desc.dimRows == desc.dimCols %}
+{%          dynmacro Math_isIdentity( desc, property ) %}
+{%              if property.r == property.c %}1{% else %}0{% endif %}
+{%-         enddynmacro %}
+        return epsilonEquals({{ RowsAndColumns( desc, ",%n", ", ", Math_isIdentity ) | indent(3) }}, epsilon);
+{%      else %}
+        return false;
+{%      endif %}
+    }
+
+    /**
+     * This method evaluates is {@code this} matrix is the invertible.
+     *
+     * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.
+     */
+    public boolean isInvertible() {
+        return isInvertible(EPSILON);
+    }
+
+    /**
+     * This method evaluates is {@code this} matrix is the invertible.
+     *
+     * @param epsilon Error.
+     * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.
+     */
+    public boolean isInvertible(double epsilon) {
+        return !DoubleUtils.epsilonEquals(getDeterminant(), epsilon);
+    }
+{%      if desc.dimRows == 2 %}
+
+    /**
+     * This method evaluates the determinant of {@code this} matrix
+     *
+     * @return Determinant.
+     */
+    public double getDeterminant() {
+        return (getM00() * getM11()
+                - getM01() * getM10());
+    }
+{%      elseif desc.dimRows == 3 %}
+
+    /**
+     * This method evaluates the determinant of {@code this} matrix
+     *
+     * @return Determinant.
+     */
+    public double getDeterminant() {
+        return (getM00() * (getM11() * getM22() - getM21() * getM12())
+                - getM01() * (getM10() * getM22() - getM20() * getM12())
+                + getM02() * (getM10() * getM21() - getM20() * getM11()));
+    }
+{%      elseif desc.dimRows == 4 %}
+
+    /**
+     * This method evaluates the determinant of {@code this} matrix
+     *
+     * @return Determinant.
+     */
+    public double getDeterminant() {
+        return ((getM00() * getM11() - getM01() * getM10()) * (getM22() * getM33() - getM23() * getM32())
+                - (getM00() * getM12() - getM02() * getM10()) * (getM21() * getM33() - getM23() * getM31())
+                + (getM00() * getM13() - getM03() * getM10()) * (getM21() * getM32() - getM22() * getM31())
+                + (getM01() * getM12() - getM02() * getM11()) * (getM20() * getM33() - getM23() * getM30())
+                - (getM01() * getM13() - getM03() * getM11()) * (getM20() * getM32() - getM22() * getM30())
+                + (getM02() * getM13() - getM03() * getM12()) * (getM20() * getM31() - getM21() * getM30()));
+    }
+{%      endif %}
+
+    /**
+     * This method adds {@code this} matrix and {@code other} matrix.
+     *
+     * @param other Other matrix.
+     * @return {@code this + other}
+     */
+    public {{ className }} add({{ className }} other) {
+        return new {{ className }}{{ MatrixBinaryOperator(desc, "+", "", "other.") | indent(4) }};
+    }
+
+    /**
+     * This method subs {@code this} matrix and {@code other} matrix.
+     *
+     * @param other Other matrix.
+     * @return {@code this - other}
+     */
+    public {{ className }} sub({{ className }} other) {
+        return new {{ className }}{{ MatrixBinaryOperator(desc, "-", "", "other.") | indent(4) }};
+    }
+
+    /**
+     * This method multiplies {@code this} matrix by {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code this * v}
+     */
+    public {{ className }} mul(double v) {
+        return new {{ className }}{{ MatrixBinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+    }
+
+    /**
+     * This method divides {@code this} matrix by {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code this / v}
+     */
+    public {{ className }} div(double v) {
+        return new {{ className }}{{ MatrixBinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+    }
+
+    /**
+     * This method multiplies {@code this} matrix by {@code other} matrix.
+     *
+     * @param other Other matrix.
+     * @return {@code this * other}
+     */
+    public {{ className }} mul({{ className }} other) {
+        return new {{ className }}{{ MatrixMul( desc, "", "other."  ) }};
+    }
+
+    /**
+     * This method changes the sign of {@code this} matrix.
+     *
+     * @return {@code -this}
+     */
+    public {{ className }} neg() {
+        return new {{ className }}{{ MatrixUnaryOperator(desc, "-", "") | indent(4) }};
+    }
+
+    /**
+     * This method calculates the absolute value of {@code this} matrix.
+     *
+     * @return {@code abs(this)}
+     */
+    public {{ className }} abs() {
+        return new {{ className }}{{ MatrixUnaryFunction(desc, "Math.abs", "") | indent(4) }};
+    }
+
+    /**
+     * This method calculates the transpose of {@code this} matrix.
+     *
+     * @return {@code transpose(this)}
+     */
+    public {{ className }} transpose() {
+        return new {{ className }}{{ MatrixTranspose( desc, "" ) | indent(3) }};
+    }
+{%      if (desc.dimRows >= 2) and (desc.dimRows <= 4) %}
+
+    /**
+     * This method evaluates the inverse of {@code this} matrix.
+     *
+     * @return {@code inverse(this)}
+     */
+    public {{ className }} inverse() throws SingularMatrixException {
+        {{ MatrixInverse234( desc, "", "return new " ~ className ) | indent(3) }}
+    }
+{%      endif %}
+{%  endmacro %}

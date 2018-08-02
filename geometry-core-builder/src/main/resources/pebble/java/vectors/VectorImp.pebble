@@ -1,0 +1,54 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/java/Tuple.Core.pebble" %}
+
+{%  import "pebble/java/vectors/VectorImp.constructors.pebble" %}
+{%  import "pebble/java/vectors/VectorImp.Object.pebble" %}
+{%  import "pebble/java/vectors/VectorImp.public.pebble" %}
+{%  import "pebble/java/vectors/VectorImp.private.pebble" %}
+
+{%  import "pebble/java/vectors/Vector.common.pebble" %}
+{%  import "pebble/java/vectors/Vector.implementation.pebble" %}
+{%  import "pebble/java/vectors/Vector.implementation_nonvirtual.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
+import essence.geometry.core.{{ desc.vectorName }};
+import essence.geometry.core.DoubleUtils;
+import essence.util.math.ArithmeticError;
+
+import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public class {{ desc.vectorImpName }} extends {{ desc.tupleImpName }} implements {{ desc.vectorName }} {
+
+{{ Constructors( desc, desc.vectorImpName ) }}
+
+{{ Public( desc, desc.vectorImpName ) }}
+
+{{ MathNonVirtual( desc, desc.vectorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.vectorName }}">
+{{ Math( desc, desc.vectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.vectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc, desc.vectorImpName ) }}
+//</editor-fold>
+}
+{%  endblock %}

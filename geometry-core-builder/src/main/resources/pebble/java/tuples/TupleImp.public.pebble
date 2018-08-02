@@ -1,0 +1,67 @@
+{#
+ # This macro renders the public items of the tuple.
+ #}
+{%  macro Public( desc ) %}
+    public final boolean isValid() {
+{%      if desc.integral %}
+        return true;
+{%      else %}
+        return !isNaN() && !isInfinity();
+{%      endif %}
+    }
+
+    /**
+     * This method evaluates if {@code this} tuple contains any NaN component.
+     *
+     * @return {@code True} if {@code this} tuple contains any NaN component. {@code False} otherwise.
+     */
+    public final boolean isNaN() {
+{%      if desc.integral %}
+        return false;
+{%      else %}
+{%          dynmacro Public_isNaN( desc, property ) %}
+{{ desc.ctype }}.isNaN({{ property.name }})
+{%-         enddynmacro %}
+        return {{ Properties( desc, " || ", Public_isNaN ) | indent(3) }};
+{%      endif %}
+    }
+
+    /**
+     * This method evaluates if {@code this} tuple contains any infinity component.
+     *
+     * @return {@code True} if {@code this} tuple contains any infinity component. {@code False} otherwise.
+     */
+    public final boolean isInfinity() {
+{%      if desc.integral %}
+        return false;
+{%      else  %}
+{%          dynmacro Public_isInfinity( desc, property ) %}
+{{ desc.ctype }}.isInfinite({{ property.name }})
+{%-         enddynmacro %}
+        return {{ Properties( desc, " || ", Public_isInfinity ) | indent(3) }};
+{%      endif  %}
+    }
+
+    /**
+     * This method evaluates if {@code this} tuple is zero.
+     *
+     * @return {@code True} if {@code this} tuple is zero. {@code False} otherwise.
+     */
+    public final boolean isZero() {
+        return isZero(EPSILON);
+    }
+
+    /**
+     * This method evaluates if {@code this} tuple is zero.
+     *
+     * @param epsilon Error.
+     * @return {@code True} if {@code this} tuple is zero. {@code False} otherwise.
+     */
+     public final boolean isZero(double epsilon) {
+{%      dynmacro Public_isZero( desc, property ) %}
+({{ desc.type }})0
+{%-     enddynmacro %}
+        return epsilonEquals({{ Properties( desc, ", ", Public_isZero ) | indent(3) }}, epsilon);
+    }
+{%  endmacro %}
+

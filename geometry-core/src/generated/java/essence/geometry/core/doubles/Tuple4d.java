@@ -28,6 +28,7 @@ package essence.geometry.core.doubles;
 import java.util.logging.Logger;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.VectorFormatInfo;
 import essence.geometry.core.Tuple4_Number;
 import essence.geometry.core.BuffTuple4_Number;
@@ -80,7 +81,7 @@ public class Tuple4d implements Cloneable, Tuple, Tuple4_Double, Tuple4_Number  
      * @param tuple Tuple.
      */
     public Tuple4d(Tuple tuple) {
-        Tuple4_Double _tuple = toTuple(tuple);
+        Tuple4_Double _tuple = TupleUtils.toTuple4_Double(tuple);
 
         this.x = _tuple.getX();
         this.y = _tuple.getY();
@@ -129,21 +130,6 @@ public class Tuple4d implements Cloneable, Tuple, Tuple4_Double, Tuple4_Number  
         return epsilonEquals((double)0, (double)0, (double)0, (double)0, epsilon);
     }
 
-    /**
-     * This method converts a Tuple into a Tuple4_Double. It is a helper method to ease the operations.
-     *
-     * @param other Tuple.
-     * @return Tuple4_Double.
-     */
-    protected static Tuple4_Double toTuple(Tuple other) {
-        if (other instanceof Tuple4_Double) {
-            return (Tuple4_Double)other;
-        }
-        BuffTuple4d aux = new BuffTuple4d();
-        aux.set(other);
-        return aux;
-    }
-
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
@@ -165,7 +151,7 @@ public class Tuple4d implements Cloneable, Tuple, Tuple4_Double, Tuple4_Number  
                           _other.w);
         }
         if (other instanceof Tuple) {
-            Tuple4_Double _other = toTuple((Tuple)other);
+            Tuple4_Double _other = TupleUtils.toTuple4_Double((Tuple)other);
             return equals(_other.getX(),
                           _other.getY(),
                           _other.getZ(),
@@ -295,7 +281,7 @@ public class Tuple4d implements Cloneable, Tuple, Tuple4_Double, Tuple4_Number  
                                  _other.w, epsilon);
         }
         if (other instanceof Tuple) {
-            Tuple4_Double _other = toTuple((Tuple)other);
+            Tuple4_Double _other = TupleUtils.toTuple4_Double((Tuple)other);
             return epsilonEquals(_other.getX(),
                                  _other.getY(),
                                  _other.getZ(),

@@ -28,6 +28,7 @@ package essence.geometry.core.bytes;
 import java.util.logging.Logger;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.VectorFormatInfo;
 import essence.geometry.core.Tuple4_Number;
 import essence.geometry.core.BuffTuple4_Number;
@@ -80,7 +81,7 @@ public class Tuple4b implements Cloneable, Tuple, Tuple4_Byte, Tuple4_Number  {
      * @param tuple Tuple.
      */
     public Tuple4b(Tuple tuple) {
-        Tuple4_Byte _tuple = toTuple(tuple);
+        Tuple4_Byte _tuple = TupleUtils.toTuple4_Byte(tuple);
 
         this.x = _tuple.getX();
         this.y = _tuple.getY();
@@ -129,21 +130,6 @@ public class Tuple4b implements Cloneable, Tuple, Tuple4_Byte, Tuple4_Number  {
         return epsilonEquals((byte)0, (byte)0, (byte)0, (byte)0, epsilon);
     }
 
-    /**
-     * This method converts a Tuple into a Tuple4_Byte. It is a helper method to ease the operations.
-     *
-     * @param other Tuple.
-     * @return Tuple4_Byte.
-     */
-    protected static Tuple4_Byte toTuple(Tuple other) {
-        if (other instanceof Tuple4_Byte) {
-            return (Tuple4_Byte)other;
-        }
-        BuffTuple4b aux = new BuffTuple4b();
-        aux.set(other);
-        return aux;
-    }
-
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
@@ -165,7 +151,7 @@ public class Tuple4b implements Cloneable, Tuple, Tuple4_Byte, Tuple4_Number  {
                           _other.w);
         }
         if (other instanceof Tuple) {
-            Tuple4_Byte _other = toTuple((Tuple)other);
+            Tuple4_Byte _other = TupleUtils.toTuple4_Byte((Tuple)other);
             return equals(_other.getX(),
                           _other.getY(),
                           _other.getZ(),
@@ -295,7 +281,7 @@ public class Tuple4b implements Cloneable, Tuple, Tuple4_Byte, Tuple4_Number  {
                                  _other.w, epsilon);
         }
         if (other instanceof Tuple) {
-            Tuple4_Byte _other = toTuple((Tuple)other);
+            Tuple4_Byte _other = TupleUtils.toTuple4_Byte((Tuple)other);
             return epsilonEquals(_other.getX(),
                                  _other.getY(),
                                  _other.getZ(),

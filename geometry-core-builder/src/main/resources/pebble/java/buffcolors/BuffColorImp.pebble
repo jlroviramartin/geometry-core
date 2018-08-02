@@ -1,0 +1,39 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a color.
+ #}
+
+{%  import "pebble/java/Tuple.Core.pebble" %}
+
+{%  import "pebble/java/colors/ColorImp.constructors.pebble" %}
+{%  import "pebble/java/colors/ColorImp.Object.pebble" %}
+{%  import "pebble/java/colors/ColorImp.public.pebble" %}
+{%  import "pebble/java/colors/ColorImp.private.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.{{ desc.buffColorName }};
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension color.
+ */
+public class {{ desc.buffColorImpName }} extends {{ desc.buffTupleImpName }} implements {{ desc.buffColorName }} {
+
+{{ Constructors( desc, desc.buffColorImpName ) }}
+
+{{ Public( desc, desc.buffColorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.buffColorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc, desc.buffColorImpName ) }}
+//</editor-fold>
+}
+{%  endblock %}

@@ -25,11 +25,13 @@
  */
 package essence.geometry.core.doubles;
 
+import essence.geometry.core.Tuple;
+import essence.geometry.core.BuffTuple;
 
 /**
  * A {@code BuffTuple3_Double} is a 3 dimensional collection of values of type double.
  */
-public interface BuffTuple3_Double extends Tuple3_Double {
+public interface BuffTuple3_Double extends BuffTuple, Tuple3_Double {
 
     /**
      * This method sets the component {@code index}.

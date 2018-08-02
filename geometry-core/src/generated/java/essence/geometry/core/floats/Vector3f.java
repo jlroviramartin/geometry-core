@@ -26,6 +26,7 @@
 package essence.geometry.core.floats;
 
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector3;
 import essence.geometry.core.DoubleUtils;
 import essence.util.math.ArithmeticError;
@@ -108,6 +109,57 @@ public class Vector3f extends Tuple3f implements Vector3 {
         return getUnit(2);
     }
 
+    public Vector3f add(Vector3f other) {
+        return new Vector3f(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+    }
+
+    public Vector3f sub(Vector3f other) {
+        return new Vector3f(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+    }
+
+    public Vector3f simpleMul(Vector3f other) {
+        return new Vector3f(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
+    }
+
+    public Vector3f simpleDiv(Vector3f other) {
+        return new Vector3f(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
+    }
+
+    public Vector3f lerp(Vector3f other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public double invLerp(Vector3f other, Vector3f vLerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double x2 = vLerp.getX() - getX();
+        double y2 = vLerp.getY() - getY();
+        double z2 = vLerp.getZ() - getZ();
+        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+    }
+
+    public Vector3f lineal(Vector3f other, double alpha, double beta) {
+        return new Vector3f((float)(alpha * getX() + beta * other.getX()),
+                            (float)(alpha * getY() + beta * other.getY()),
+                            (float)(alpha * getZ() + beta * other.getZ()));
+    }
+
+    public double dot(Vector3f other) {
+        return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ();
+    }
+
+    public Vector3f cross(Vector3f other) {
+        return new Vector3f((getY() * other.getZ()) - (getZ() * other.getY()),
+                            (getZ() * other.getX()) - (getX() * other.getZ()),
+                            (getX() * other.getY()) - (getY() * other.getX()));
+    }
+
+    public Vector3f vectorProjection(Vector3f where) {
+        double r = dot(where) / where.getLengthCuad();
+        return where.mul(r);
+    }
+
 //<editor-fold defaultstate="collapsed" desc="Vector3">
     @Override
     public boolean isUnit() {
@@ -153,46 +205,30 @@ public class Vector3f extends Tuple3f implements Vector3 {
 
     @Override
     public Vector3f add(Vector3 other) {
-        Tuple3_Float _other = toTuple(other);
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
         return new Vector3f(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
     }
 
-    public Vector3f add(Vector3f other) {
-        return new Vector3f(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
-    }
-
     @Override
     public Vector3f sub(Vector3 other) {
-        Tuple3_Float _other = toTuple(other);
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
         return new Vector3f(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
     }
 
-    public Vector3f sub(Vector3f other) {
-        return new Vector3f(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
-    }
-
     @Override
     public Vector3f simpleMul(Vector3 other) {
-        Tuple3_Float _other = toTuple(other);
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
         return new Vector3f(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ());
     }
 
-    public Vector3f simpleMul(Vector3f other) {
-        return new Vector3f(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
-    }
-
     @Override
     public Vector3f simpleDiv(Vector3 other) {
-        Tuple3_Float _other = toTuple(other);
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
         return new Vector3f(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ());
-    }
-
-    public Vector3f simpleDiv(Vector3f other) {
-        return new Vector3f(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
     }
 
     @Override
@@ -223,14 +259,10 @@ public class Vector3f extends Tuple3f implements Vector3 {
         return lineal(other, 1 - alpha, alpha);
     }
 
-    public Vector3f lerp(Vector3f other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
     @Override
     public double invLerp(Vector3 other, Vector3 vLerp) {
-        Tuple3_Float _other = toTuple(other);
-        Tuple3_Float _vLerp = toTuple(vLerp);
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+        Tuple3_Float _vLerp = TupleUtils.toTuple3_Float(vLerp);
 
         double x1 = _other.getX() - getX();
         double y1 = _other.getY() - getY();
@@ -241,64 +273,33 @@ public class Vector3f extends Tuple3f implements Vector3 {
         return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
     }
 
-    public double invLerp(Vector3f other, Vector3f vLerp) {
-        double x1 = other.getX() - getX();
-        double y1 = other.getY() - getY();
-        double z1 = other.getZ() - getZ();
-        double x2 = vLerp.getX() - getX();
-        double y2 = vLerp.getY() - getY();
-        double z2 = vLerp.getZ() - getZ();
-        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
-    }
-
     @Override
     public Vector3f lineal(Vector3 other, double alpha, double beta) {
-        Tuple3_Float _other = toTuple(other);
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
         return new Vector3f((float)(alpha * getX() + beta * _other.getX()),
                             (float)(alpha * getY() + beta * _other.getY()),
                             (float)(alpha * getZ() + beta * _other.getZ()));
     }
 
-    public Vector3f lineal(Vector3f other, double alpha, double beta) {
-        return new Vector3f((float)(alpha * getX() + beta * other.getX()),
-                            (float)(alpha * getY() + beta * other.getY()),
-                            (float)(alpha * getZ() + beta * other.getZ()));
-    }
-
     @Override
     public double dot(Vector3 other) {
-        Tuple3_Float _other = toTuple(other);
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
         return getX() * _other.getX() + getY() * _other.getY() + getZ() * _other.getZ();
     }
 
-    public double dot(Vector3f other) {
-        return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ();
-    }
-
     @Override
     public Vector3f cross(Vector3 other) {
-        Tuple3_Float _other = toTuple(other);
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
         return new Vector3f((getY() * _other.getZ()) - (getZ() * _other.getY()),
                             (getZ() * _other.getX()) - (getX() * _other.getZ()),
                             (getX() * _other.getY()) - (getY() * _other.getX()));
     }
 
-    public Vector3f cross(Vector3f other) {
-        return new Vector3f((getY() * other.getZ()) - (getZ() * other.getY()),
-                            (getZ() * other.getX()) - (getX() * other.getZ()),
-                            (getX() * other.getY()) - (getY() * other.getX()));
-    }
-
     @Override
     public Vector3 vectorProjection(Vector3 where) {
-        double r = dot(where) / where.getLengthCuad();
-        return where.mul(r);
-    }
-
-    public Vector3f vectorProjection(Vector3f where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }

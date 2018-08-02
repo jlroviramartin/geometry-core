@@ -28,6 +28,7 @@ package essence.geometry.core.doubles;
 import java.util.logging.Logger;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.VectorFormatInfo;
 import essence.geometry.core.Tuple2_Number;
 import essence.geometry.core.BuffTuple2_Number;
@@ -72,7 +73,7 @@ public class Tuple2d implements Cloneable, Tuple, Tuple2_Double, Tuple2_Number  
      * @param tuple Tuple.
      */
     public Tuple2d(Tuple tuple) {
-        Tuple2_Double _tuple = toTuple(tuple);
+        Tuple2_Double _tuple = TupleUtils.toTuple2_Double(tuple);
 
         this.x = _tuple.getX();
         this.y = _tuple.getY();
@@ -119,21 +120,6 @@ public class Tuple2d implements Cloneable, Tuple, Tuple2_Double, Tuple2_Number  
         return epsilonEquals((double)0, (double)0, epsilon);
     }
 
-    /**
-     * This method converts a Tuple into a Tuple2_Double. It is a helper method to ease the operations.
-     *
-     * @param other Tuple.
-     * @return Tuple2_Double.
-     */
-    protected static Tuple2_Double toTuple(Tuple other) {
-        if (other instanceof Tuple2_Double) {
-            return (Tuple2_Double)other;
-        }
-        BuffTuple2d aux = new BuffTuple2d();
-        aux.set(other);
-        return aux;
-    }
-
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
@@ -153,7 +139,7 @@ public class Tuple2d implements Cloneable, Tuple, Tuple2_Double, Tuple2_Number  
                           _other.y);
         }
         if (other instanceof Tuple) {
-            Tuple2_Double _other = toTuple((Tuple)other);
+            Tuple2_Double _other = TupleUtils.toTuple2_Double((Tuple)other);
             return equals(_other.getX(),
                           _other.getY());
         }
@@ -253,7 +239,7 @@ public class Tuple2d implements Cloneable, Tuple, Tuple2_Double, Tuple2_Number  
                                  _other.y, epsilon);
         }
         if (other instanceof Tuple) {
-            Tuple2_Double _other = toTuple((Tuple)other);
+            Tuple2_Double _other = TupleUtils.toTuple2_Double((Tuple)other);
             return epsilonEquals(_other.getX(),
                                  _other.getY(), epsilon);
         }

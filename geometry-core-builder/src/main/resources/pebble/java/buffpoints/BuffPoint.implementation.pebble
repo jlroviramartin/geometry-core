@@ -1,0 +1,41 @@
+{%  macro MathAndSet( desc, className, vectorClassName ) %}
+    @Override
+    public {{ className }} addAndSet({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "+", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} subAndSet({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "-", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} lerpAndSet({{ desc.pointName }} other, double alpha) {
+        return linealAndSet(other, 1 - alpha, alpha);
+    }
+
+    @Override
+    public {{ className }} linealAndSet({{ desc.pointName }} other, double alpha, double beta) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ Lineal(desc, "", "_other.", "Vector") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} vectorProjectionAndSet({{ desc.vectorName }} where) {
+        {{ desc.tupleTypeName }} _where = TupleUtils.to{{ desc.tupleTypeName }}(where);
+
+        {{ VectorProjection(desc, "", "_where.", "set") | indent(4) }}
+        return this;
+
+        //set(new {{ vectorClassName }}(this).vectorProjectionAndSet(where));
+        //return this;
+    }
+{%  endmacro %}

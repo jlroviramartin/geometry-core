@@ -1,0 +1,64 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/java/Tuple.Core.pebble" %}
+
+{%  import "pebble/java/vectors/VectorImp.constructors.pebble" %}
+{%  import "pebble/java/vectors/VectorImp.Object.pebble" %}
+{%  import "pebble/java/vectors/VectorImp.public.pebble" %}
+{%  import "pebble/java/vectors/VectorImp.private.pebble" %}
+
+{%  import "pebble/java/vectors/Vector.common.pebble" %}
+{%  import "pebble/java/vectors/Vector.implementation.pebble" %}
+{%  import "pebble/java/vectors/Vector.implementation_nonvirtual.pebble" %}
+
+{%  import "pebble/java/buffvectors/BuffVector.implementation.pebble" %}
+{%  import "pebble/java/buffvectors/BuffVector.implementation_nonvirtual.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
+import essence.geometry.core.{{ desc.vectorName }};
+import essence.geometry.core.{{ desc.buffVectorName }};
+import essence.geometry.core.DoubleUtils;
+import essence.util.math.ArithmeticError;
+
+import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public class {{ desc.buffVectorImpName }} extends {{ desc.buffTupleImpName }} implements {{ desc.buffVectorName }} {
+
+{{ Constructors( desc, desc.buffVectorImpName ) }}
+
+{{ Public( desc, desc.buffVectorImpName ) }}
+
+{{ MathAndSetNonVirtual( desc, desc.buffVectorImpName ) }}
+
+{{ MathNonVirtual( desc, desc.buffVectorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.buffVectorName }}">
+{{ MathAndSet( desc, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.vectorName }}">
+{{ Math( desc, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc, desc.buffVectorImpName ) }}
+//</editor-fold>
+}
+{%  endblock %}

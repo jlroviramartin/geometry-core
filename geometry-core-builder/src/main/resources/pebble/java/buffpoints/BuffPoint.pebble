@@ -1,0 +1,68 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a point.
+ #}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.buffPointName }}} is a {{ desc.dim }} dimensional collection of values
+ * that represents a point.
+ */
+public interface {{ desc.buffPointName }} extends {{ desc.pointName }}, BuffTuple {
+
+    /**
+     * This method adds {@code this} point to {@code other} vector and sets the result
+     * into {@code this}.
+     *
+     * @param other Other vector.
+     * @return {@code this = this + other}
+     */
+    {{ desc.buffPointName }} addAndSet({{ desc.vectorName }} other);
+
+    /**
+     * This method subs {@code this} point to {@code other} vector and sets the result
+     * into {@code this}.
+     *
+     * @param other Other vector.
+     * @return {@code this = this - other}
+     */
+    {{ desc.buffPointName }} subAndSet({{ desc.vectorName }} other);
+
+    /**
+     * This method evaluates the linear interpolation of {@code this} point and
+     * {@code other} point at {@code alpha} and sets the result
+     * into {@code this}.
+     *
+     * @param other Other point.
+     * @param alpha Interpolation.
+     * @return {@code this = this * alpha + other * (1 - alpha)}
+     */
+    {{ desc.buffPointName }} lerpAndSet({{ desc.pointName }} other, double alpha);
+
+    /**
+     * This method evaluates the linear combination of {@code this} point and
+     * {@code other} point at {@code alpha} and {@code beta} and sets the result
+     * into {@code this}.
+     *
+     * @param other Other point.
+     * @param alpha Interpolation for {@code this}.
+     * @param beta Interpolation for {@code other}.
+     * @return {@code this = this * alpha + other * beta}
+     */
+    {{ desc.buffPointName }} linealAndSet({{ desc.pointName }} other, double alpha, double beta);
+
+    /**
+     * This method evaluates the vector projection of {@code this} point over
+     * {@code where} vector and sets the result
+     * into {@code this}.
+     * https://en.wikipedia.org/wiki/Vector_projection
+     *
+     * @param where Where to project.
+     * @return {@code this = this.scalarProjection(where) . where.getUnit()}
+     */
+    {{ desc.buffPointName }} vectorProjectionAndSet({{ desc.vectorName }} where);
+}
+{%  endblock %}

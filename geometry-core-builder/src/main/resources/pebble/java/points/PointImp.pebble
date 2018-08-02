@@ -1,0 +1,51 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/java/Tuple.Core.pebble" %}
+
+{%  import "pebble/java/points/PointImp.constructors.pebble" %}
+{%  import "pebble/java/points/PointImp.Object.pebble" %}
+{%  import "pebble/java/points/PointImp.public.pebble" %}
+{%  import "pebble/java/points/PointImp.private.pebble" %}
+
+{%  import "pebble/java/points/Point.common.pebble" %}
+{%  import "pebble/java/points/Point.implementation.pebble" %}
+{%  import "pebble/java/points/Point.implementation_nonvirtual.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
+import essence.geometry.core.{{ desc.vectorName }};
+import essence.geometry.core.{{ desc.pointName }};
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public class {{ desc.pointImpName }} extends {{ desc.tupleImpName }} implements {{ desc.pointName }} {
+
+{{ Constructors( desc, desc.pointImpName ) }}
+
+{{ Public( desc, desc.pointImpName ) }}
+
+{{ MathNonVirtual( desc, desc.pointImpName, desc.vectorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.pointName }}">
+{{ Math( desc, desc.pointImpName, desc.vectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.pointImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc ) }}
+//</editor-fold>
+}
+{%  endblock %}

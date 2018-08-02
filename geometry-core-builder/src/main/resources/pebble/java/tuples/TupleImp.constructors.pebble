@@ -1,0 +1,41 @@
+{#
+ # This macro renders the constructors of the tuple.
+ #}
+{%  macro Constructors( desc, className ) %}
+    /**
+     * Empty constructor.
+     */
+    public {{ className }}() {
+{%      dynmacro Constructors_constructor( desc, property ) %}
+({{ desc.type }})0
+{%-     enddynmacro %}
+        this({{ Properties( desc, ", ", Constructors_constructor ) | indent(3) }});
+    }
+
+    /**
+     * This constructor sets the components of this tuple.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the component {{ property.upperName }}.
+{%      endfor %}
+     */
+    public {{ className }}({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      for property in desc.properties %}
+        this.{{ property.name }} = {{ property.name }};
+{%      endfor %}
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ className }}(Tuple tuple) {
+        {{ desc.tupleTypeName }} _tuple = TupleUtils.to{{ desc.tupleTypeName }}(tuple);
+
+{%      for property in desc.properties %}
+        this.{{ property.name }} = _tuple.get{{ property.upperName }}();
+{%      endfor %}
+    }
+{%  endmacro %}
+

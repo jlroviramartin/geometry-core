@@ -1,0 +1,80 @@
+{%  macro Math( desc, className, vectorClassName ) %}
+    @Override
+    public int getQuadrant() {
+        {{ GetQuadrant(desc) | indent(2) }}
+    }
+
+    @Override
+    public double getDistance({{ desc.pointName }} other) {
+        return Math.sqrt(getDistanceCuad(other));
+    }
+
+    @Override
+    public double getDistanceCuad({{ desc.pointName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return {{ GetDistanceCuad(desc, "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public double getDistanceL1({{ desc.pointName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return {{ GetDistanceL1(desc, "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} add({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "+", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} sub({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "-", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ vectorClassName }} vectorTo({{ desc.pointName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ vectorClassName }}{{ BinaryOperator(desc, "-", "_other.", "") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} lerp({{ desc.pointName }} other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    @Override
+    public double invLerp({{ desc.pointName }} other, {{ desc.pointName }} pLerp) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+        {{ desc.tupleTypeName }} _pLerp = TupleUtils.to{{ desc.tupleTypeName }}(pLerp);
+
+        {{ InvLerp(desc, "", "_other.", "_pLerp.") | indent(2) }}
+    }
+
+    @Override
+    public {{ className }} lineal({{ desc.pointName }} other, double alpha, double beta) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ Lineal(desc, "", "_other.", "Vector") | indent(4) }};
+    }
+
+    @Override
+    public double scalarProjection({{ desc.vectorName }} where) {
+        return new {{ vectorClassName }}(this).dot(where) / where.getLength();
+    }
+
+    @Override
+    public {{ className }} vectorProjection({{ desc.vectorName }} where) {
+        {{ desc.tupleTypeName }} _where = TupleUtils.to{{ desc.tupleTypeName }}(where);
+
+        {{ VectorProjection(desc, "", "_where.", "return new " ~ className ) | indent(4) }}
+
+        //return new {{ className }}(new {{ vectorClassName }}(this).vectorProjection(where));
+    }
+{%  endmacro %}

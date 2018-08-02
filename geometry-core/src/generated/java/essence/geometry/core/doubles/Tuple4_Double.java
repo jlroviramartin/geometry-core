@@ -25,11 +25,12 @@
  */
 package essence.geometry.core.doubles;
 
+import essence.geometry.core.Tuple;
 
 /**
  * A {@code Tuple4_Double} is a 4 dimensional collection of values of type double.
  */
-public interface Tuple4_Double {
+public interface Tuple4_Double extends Tuple {
 
     /**
      * This method gets the component {@code index}.

@@ -1,0 +1,30 @@
+{#
+ # This macro renders the constructors of the point.
+ #}
+{%  macro Constructors( desc, className ) %}
+    /**
+     * Empty constructor.
+     */
+    public {{ className }}() {
+    }
+
+    /**
+     * This constructor sets the components of this point.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the component {{ property.upperName }}.
+{%      endfor %}
+     */
+    public {{ className }}({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+        super({{ NameCommaSeparated( desc ) | indent(2) }});
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ className }}(Tuple tuple) {
+        super(tuple);
+    }
+{%  endmacro %}

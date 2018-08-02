@@ -26,6 +26,7 @@
 package essence.geometry.core.doubles;
 
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector4;
 import essence.geometry.core.BuffVector4;
 import essence.geometry.core.DoubleUtils;
@@ -119,6 +120,204 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
         return getUnit(3);
     }
 
+    public BuffVector4d addAndSet(BuffVector4d other) {
+        set(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        return this;
+    }
+
+    public BuffVector4d subAndSet(BuffVector4d other) {
+        set(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        return this;
+    }
+
+    public BuffVector4d simpleMulAndSet(BuffVector4d other) {
+        set(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ(), getW() * other.getW());
+        return this;
+    }
+
+    public BuffVector4d simpleDivAndSet(BuffVector4d other) {
+        set(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ(), getW() / other.getW());
+        return this;
+    }
+
+    public BuffVector4d lerpAndSet(BuffVector4d other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    public BuffVector4d linealAndSet(BuffVector4d other, double alpha, double beta) {
+        set((double)(alpha * getX() + beta * other.getX()),
+            (double)(alpha * getY() + beta * other.getY()),
+            (double)(alpha * getZ() + beta * other.getZ()),
+            (double)(alpha * getW() + beta * other.getW()));
+        return this;
+    }
+
+    public BuffVector4d vectorProjectionAndSet(BuffVector4d where) {
+        double r = dot(where) / where.getLengthCuad();
+        set((double)(where.getX() * r), (double)(where.getY() * r), (double)(where.getZ() * r), (double)(where.getW() * r));
+        return this;
+
+        //double r = dot(where) / where.getLengthCuad();
+        //set(where);
+        //mulAndSet(r);
+        //return this;
+    }
+
+    public BuffVector4d add(BuffVector4d other) {
+        return new BuffVector4d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+    }
+
+    public BuffVector4d sub(BuffVector4d other) {
+        return new BuffVector4d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+    }
+
+    public BuffVector4d simpleMul(BuffVector4d other) {
+        return new BuffVector4d(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ(), getW() * other.getW());
+    }
+
+    public BuffVector4d simpleDiv(BuffVector4d other) {
+        return new BuffVector4d(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ(), getW() / other.getW());
+    }
+
+    public BuffVector4d lerp(BuffVector4d other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public double invLerp(BuffVector4d other, BuffVector4d vLerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double w1 = other.getW() - getW();
+        double x2 = vLerp.getX() - getX();
+        double y2 = vLerp.getY() - getY();
+        double z2 = vLerp.getZ() - getZ();
+        double w2 = vLerp.getW() - getW();
+        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
+    }
+
+    public BuffVector4d lineal(BuffVector4d other, double alpha, double beta) {
+        return new BuffVector4d((double)(alpha * getX() + beta * other.getX()),
+                                (double)(alpha * getY() + beta * other.getY()),
+                                (double)(alpha * getZ() + beta * other.getZ()),
+                                (double)(alpha * getW() + beta * other.getW()));
+    }
+
+    public double dot(BuffVector4d other) {
+        return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ() + getW() * other.getW();
+    }
+
+    public BuffVector4d vectorProjection(BuffVector4d where) {
+        double r = dot(where) / where.getLengthCuad();
+        return where.mul(r);
+    }
+
+//<editor-fold defaultstate="collapsed" desc="BuffVector4">
+    @Override
+    public BuffVector4d setZero() {
+        set(0, 0, 0, 0);
+        return this;
+    }
+
+    @Override
+    public BuffVector4d setUnit() {
+        double len = getLength();
+        if (DoubleUtils.epsilonZero(len)) {
+            setZero();
+        } else {
+            divAndSet(len);
+        }
+        return this;
+    }
+
+    @Override
+    public BuffVector4d addAndSet(Vector4 other) {
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
+
+        set(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        return this;
+    }
+
+    @Override
+    public BuffVector4d subAndSet(Vector4 other) {
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
+
+        set(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        return this;
+    }
+
+    @Override
+    public BuffVector4d simpleMulAndSet(Vector4 other) {
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
+
+        set(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ(), getW() * _other.getW());
+        return this;
+    }
+
+    @Override
+    public BuffVector4d simpleDivAndSet(Vector4 other) {
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
+
+        set(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ(), getW() / _other.getW());
+        return this;
+    }
+
+    @Override
+    public BuffVector4d mulAndSet(double v) {
+        set((double)(getX() * v), (double)(getY() * v), (double)(getZ() * v), (double)(getW() * v));
+        return this;
+    }
+
+    @Override
+    public BuffVector4d divAndSet(double v) {
+        set((double)(getX() / v), (double)(getY() / v), (double)(getZ() / v), (double)(getW() / v));
+        return this;
+    }
+
+    @Override
+    public BuffVector4d negAndSet() {
+        set(- getX(), - getY(), - getZ(), - getW());
+        return this;
+    }
+
+    @Override
+    public BuffVector4d absAndSet() {
+        set(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()), Math.abs(getW()));
+        return this;
+    }
+
+    @Override
+    public BuffVector4d lerpAndSet(Vector4 other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    @Override
+    public BuffVector4d linealAndSet(Vector4 other, double alpha, double beta) {
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
+
+        set((double)(alpha * getX() + beta * _other.getX()),
+            (double)(alpha * getY() + beta * _other.getY()),
+            (double)(alpha * getZ() + beta * _other.getZ()),
+            (double)(alpha * getW() + beta * _other.getW()));
+        return this;
+    }
+
+    @Override
+    public BuffVector4d vectorProjectionAndSet(Vector4 where) {
+        Tuple4_Double _where = TupleUtils.toTuple4_Double(where);
+
+        double r = dot(where) / where.getLengthCuad();
+        set((double)(_where.getX() * r), (double)(_where.getY() * r), (double)(_where.getZ() * r), (double)(_where.getW() * r));
+        return this;
+
+        //double r = dot(where) / where.getLengthCuad();
+        //set(where);
+        //mulAndSet(r);
+        //return this;
+    }
+//</editor-fold>
+
 //<editor-fold defaultstate="collapsed" desc="Vector4">
     @Override
     public boolean isUnit() {
@@ -169,46 +368,30 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
 
     @Override
     public BuffVector4d add(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new BuffVector4d(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
     }
 
-    public BuffVector4d add(BuffVector4d other) {
-        return new BuffVector4d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
-    }
-
     @Override
     public BuffVector4d sub(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new BuffVector4d(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
     }
 
-    public BuffVector4d sub(BuffVector4d other) {
-        return new BuffVector4d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
-    }
-
     @Override
     public BuffVector4d simpleMul(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new BuffVector4d(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ(), getW() * _other.getW());
     }
 
-    public BuffVector4d simpleMul(BuffVector4d other) {
-        return new BuffVector4d(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ(), getW() * other.getW());
-    }
-
     @Override
     public BuffVector4d simpleDiv(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new BuffVector4d(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ(), getW() / _other.getW());
-    }
-
-    public BuffVector4d simpleDiv(BuffVector4d other) {
-        return new BuffVector4d(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ(), getW() / other.getW());
     }
 
     @Override
@@ -239,14 +422,10 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
         return lineal(other, 1 - alpha, alpha);
     }
 
-    public BuffVector4d lerp(BuffVector4d other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
     @Override
     public double invLerp(Vector4 other, Vector4 vLerp) {
-        Tuple4_Double _other = toTuple(other);
-        Tuple4_Double _vLerp = toTuple(vLerp);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
+        Tuple4_Double _vLerp = TupleUtils.toTuple4_Double(vLerp);
 
         double x1 = _other.getX() - getX();
         double y1 = _other.getY() - getY();
@@ -259,21 +438,9 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
         return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
     }
 
-    public double invLerp(BuffVector4d other, BuffVector4d vLerp) {
-        double x1 = other.getX() - getX();
-        double y1 = other.getY() - getY();
-        double z1 = other.getZ() - getZ();
-        double w1 = other.getW() - getW();
-        double x2 = vLerp.getX() - getX();
-        double y2 = vLerp.getY() - getY();
-        double z2 = vLerp.getZ() - getZ();
-        double w2 = vLerp.getW() - getW();
-        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
-    }
-
     @Override
     public BuffVector4d lineal(Vector4 other, double alpha, double beta) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new BuffVector4d((double)(alpha * getX() + beta * _other.getX()),
                                 (double)(alpha * getY() + beta * _other.getY()),
@@ -281,173 +448,17 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
                                 (double)(alpha * getW() + beta * _other.getW()));
     }
 
-    public BuffVector4d lineal(BuffVector4d other, double alpha, double beta) {
-        return new BuffVector4d((double)(alpha * getX() + beta * other.getX()),
-                                (double)(alpha * getY() + beta * other.getY()),
-                                (double)(alpha * getZ() + beta * other.getZ()),
-                                (double)(alpha * getW() + beta * other.getW()));
-    }
-
     @Override
     public double dot(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return getX() * _other.getX() + getY() * _other.getY() + getZ() * _other.getZ() + getW() * _other.getW();
-    }
-
-    public double dot(BuffVector4d other) {
-        return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ() + getW() * other.getW();
     }
 
     @Override
     public Vector4 vectorProjection(Vector4 where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
-    }
-
-    public BuffVector4d vectorProjection(BuffVector4d where) {
-        double r = dot(where) / where.getLengthCuad();
-        return where.mul(r);
-    }
-//</editor-fold>
-
-//<editor-fold defaultstate="collapsed" desc="Vector4">
-    @Override
-    public BuffVector4d setZero() {
-        set(0, 0, 0, 0);
-        return this;
-    }
-
-    @Override
-    public BuffVector4d setUnit() {
-        double len = getLength();
-        if (DoubleUtils.epsilonZero(len)) {
-            setZero();
-        } else {
-            divAndSet(len);
-        }
-        return this;
-    }
-
-    @Override
-    public BuffVector4d addAndSet(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
-
-        set(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
-        return this;
-    }
-
-    public BuffVector4d addAndSet(BuffVector4d other) {
-        set(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
-        return this;
-    }
-
-    @Override
-    public BuffVector4d subAndSet(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
-
-        set(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
-        return this;
-    }
-
-    public BuffVector4d subAndSet(BuffVector4d other) {
-        set(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
-        return this;
-    }
-
-    @Override
-    public BuffVector4d simpleMulAndSet(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
-
-        set(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ(), getW() * _other.getW());
-        return this;
-    }
-
-    public BuffVector4d simpleMulAndSet(BuffVector4d other) {
-        set(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ(), getW() * other.getW());
-        return this;
-    }
-
-    @Override
-    public BuffVector4d simpleDivAndSet(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
-
-        set(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ(), getW() / _other.getW());
-        return this;
-    }
-
-    public BuffVector4d simpleDivAndSet(BuffVector4d other) {
-        set(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ(), getW() / other.getW());
-        return this;
-    }
-
-    @Override
-    public BuffVector4d mulAndSet(double v) {
-        set((double)(getX() * v), (double)(getY() * v), (double)(getZ() * v), (double)(getW() * v));
-        return this;
-    }
-
-    @Override
-    public BuffVector4d divAndSet(double v) {
-        set((double)(getX() / v), (double)(getY() / v), (double)(getZ() / v), (double)(getW() / v));
-        return this;
-    }
-
-    @Override
-    public BuffVector4d negAndSet() {
-        set(- getX(), - getY(), - getZ(), - getW());
-        return this;
-    }
-
-    @Override
-    public BuffVector4d absAndSet() {
-        set(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()), Math.abs(getW()));
-        return this;
-    }
-
-    @Override
-    public BuffVector4d lerpAndSet(Vector4 other, double alpha) {
-        linealAndSet(other, 1 - alpha, alpha);
-        return this;
-    }
-
-    public BuffVector4d lerpAndSet(BuffVector4d other, double alpha) {
-        linealAndSet(other, 1 - alpha, alpha);
-        return this;
-    }
-
-    @Override
-    public BuffVector4d linealAndSet(Vector4 other, double alpha, double beta) {
-        Tuple4_Double _other = toTuple(other);
-
-        set((double)(alpha * getX() + beta * _other.getX()),
-            (double)(alpha * getY() + beta * _other.getY()),
-            (double)(alpha * getZ() + beta * _other.getZ()),
-            (double)(alpha * getW() + beta * _other.getW()));
-        return this;
-    }
-
-    public BuffVector4d linealAndSet(BuffVector4d other, double alpha, double beta) {
-        set((double)(alpha * getX() + beta * other.getX()),
-            (double)(alpha * getY() + beta * other.getY()),
-            (double)(alpha * getZ() + beta * other.getZ()),
-            (double)(alpha * getW() + beta * other.getW()));
-        return this;
-    }
-
-    @Override
-    public BuffVector4d vectorProjectionAndSet(Vector4 where) {
-        double r = dot(where) / where.getLengthCuad();
-        set(where);
-        mulAndSet(r);
-        return this;
-    }
-
-    public BuffVector4d vectorProjectionAndSet(BuffVector4d where) {
-        double r = dot(where) / where.getLengthCuad();
-        set(where);
-        mulAndSet(r);
-        return this;
     }
 //</editor-fold>
 

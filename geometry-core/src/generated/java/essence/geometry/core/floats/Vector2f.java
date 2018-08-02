@@ -26,6 +26,7 @@
 package essence.geometry.core.floats;
 
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector2;
 import essence.geometry.core.DoubleUtils;
 import essence.util.math.ArithmeticError;
@@ -98,6 +99,52 @@ public class Vector2f extends Tuple2f implements Vector2 {
         return getUnit(1);
     }
 
+    public Vector2f add(Vector2f other) {
+        return new Vector2f(getX() + other.getX(), getY() + other.getY());
+    }
+
+    public Vector2f sub(Vector2f other) {
+        return new Vector2f(getX() - other.getX(), getY() - other.getY());
+    }
+
+    public Vector2f simpleMul(Vector2f other) {
+        return new Vector2f(getX() * other.getX(), getY() * other.getY());
+    }
+
+    public Vector2f simpleDiv(Vector2f other) {
+        return new Vector2f(getX() / other.getX(), getY() / other.getY());
+    }
+
+    public Vector2f lerp(Vector2f other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public double invLerp(Vector2f other, Vector2f vLerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double x2 = vLerp.getX() - getX();
+        double y2 = vLerp.getY() - getY();
+        return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
+    }
+
+    public Vector2f lineal(Vector2f other, double alpha, double beta) {
+        return new Vector2f((float)(alpha * getX() + beta * other.getX()),
+                            (float)(alpha * getY() + beta * other.getY()));
+    }
+
+    public double dot(Vector2f other) {
+        return getX() * other.getX() + getY() * other.getY();
+    }
+
+    public double cross(Vector2f other) {
+        return getX() * other.getY() - getY() * other.getX();
+    }
+
+    public Vector2f vectorProjection(Vector2f where) {
+        double r = dot(where) / where.getLengthCuad();
+        return where.mul(r);
+    }
+
 //<editor-fold defaultstate="collapsed" desc="Vector2">
     @Override
     public boolean isUnit() {
@@ -143,7 +190,7 @@ public class Vector2f extends Tuple2f implements Vector2 {
 
     @Override
     public double angleTo(Vector2 other) {
-        Tuple2_Float _other = toTuple(other);
+        Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
         // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
         return Math.atan2(getX() * _other.getY() - getY() * _other.getX(),
@@ -178,46 +225,30 @@ public class Vector2f extends Tuple2f implements Vector2 {
 
     @Override
     public Vector2f add(Vector2 other) {
-        Tuple2_Float _other = toTuple(other);
+        Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
         return new Vector2f(getX() + _other.getX(), getY() + _other.getY());
     }
 
-    public Vector2f add(Vector2f other) {
-        return new Vector2f(getX() + other.getX(), getY() + other.getY());
-    }
-
     @Override
     public Vector2f sub(Vector2 other) {
-        Tuple2_Float _other = toTuple(other);
+        Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
         return new Vector2f(getX() - _other.getX(), getY() - _other.getY());
     }
 
-    public Vector2f sub(Vector2f other) {
-        return new Vector2f(getX() - other.getX(), getY() - other.getY());
-    }
-
     @Override
     public Vector2f simpleMul(Vector2 other) {
-        Tuple2_Float _other = toTuple(other);
+        Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
         return new Vector2f(getX() * _other.getX(), getY() * _other.getY());
     }
 
-    public Vector2f simpleMul(Vector2f other) {
-        return new Vector2f(getX() * other.getX(), getY() * other.getY());
-    }
-
     @Override
     public Vector2f simpleDiv(Vector2 other) {
-        Tuple2_Float _other = toTuple(other);
+        Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
         return new Vector2f(getX() / _other.getX(), getY() / _other.getY());
-    }
-
-    public Vector2f simpleDiv(Vector2f other) {
-        return new Vector2f(getX() / other.getX(), getY() / other.getY());
     }
 
     @Override
@@ -248,14 +279,10 @@ public class Vector2f extends Tuple2f implements Vector2 {
         return lineal(other, 1 - alpha, alpha);
     }
 
-    public Vector2f lerp(Vector2f other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
     @Override
     public double invLerp(Vector2 other, Vector2 vLerp) {
-        Tuple2_Float _other = toTuple(other);
-        Tuple2_Float _vLerp = toTuple(vLerp);
+        Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
+        Tuple2_Float _vLerp = TupleUtils.toTuple2_Float(vLerp);
 
         double x1 = _other.getX() - getX();
         double y1 = _other.getY() - getY();
@@ -264,56 +291,30 @@ public class Vector2f extends Tuple2f implements Vector2 {
         return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
     }
 
-    public double invLerp(Vector2f other, Vector2f vLerp) {
-        double x1 = other.getX() - getX();
-        double y1 = other.getY() - getY();
-        double x2 = vLerp.getX() - getX();
-        double y2 = vLerp.getY() - getY();
-        return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
-    }
-
     @Override
     public Vector2f lineal(Vector2 other, double alpha, double beta) {
-        Tuple2_Float _other = toTuple(other);
+        Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
         return new Vector2f((float)(alpha * getX() + beta * _other.getX()),
                             (float)(alpha * getY() + beta * _other.getY()));
     }
 
-    public Vector2f lineal(Vector2f other, double alpha, double beta) {
-        return new Vector2f((float)(alpha * getX() + beta * other.getX()),
-                            (float)(alpha * getY() + beta * other.getY()));
-    }
-
     @Override
     public double dot(Vector2 other) {
-        Tuple2_Float _other = toTuple(other);
+        Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
         return getX() * _other.getX() + getY() * _other.getY();
     }
 
-    public double dot(Vector2f other) {
-        return getX() * other.getX() + getY() * other.getY();
-    }
-
     @Override
     public double cross(Vector2 other) {
-        Tuple2_Float _other = toTuple(other);
+        Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
         return getX() * _other.getY() - getY() * _other.getX();
     }
 
-    public double cross(Vector2f other) {
-        return getX() * other.getY() - getY() * other.getX();
-    }
-
     @Override
     public Vector2 vectorProjection(Vector2 where) {
-        double r = dot(where) / where.getLengthCuad();
-        return where.mul(r);
-    }
-
-    public Vector2f vectorProjection(Vector2f where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }
