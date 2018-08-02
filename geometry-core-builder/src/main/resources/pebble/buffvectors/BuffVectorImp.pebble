@@ -6,18 +6,23 @@
 
 {%  import "pebble/Tuple.Core.pebble" %}
 
-{%  import "pebble/vectors/VectorImp.Math.pebble" %}
 {%  import "pebble/vectors/VectorImp.constructors.pebble" %}
 {%  import "pebble/vectors/VectorImp.Object.pebble" %}
 {%  import "pebble/vectors/VectorImp.public.pebble" %}
 {%  import "pebble/vectors/VectorImp.private.pebble" %}
 
-{%  import "pebble/buffvectors/BuffVectorImp.MathAndSet.pebble" %}
+{%  import "pebble/vectors/Vector.common.pebble" %}
+{%  import "pebble/vectors/Vector.implementation.pebble" %}
+{%  import "pebble/vectors/Vector.implementation_nonvirtual.pebble" %}
+
+{%  import "pebble/buffvectors/BuffVector.implementation.pebble" %}
+{%  import "pebble/buffvectors/BuffVector.implementation_nonvirtual.pebble" %}
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
 {%  block import %}
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.{{ desc.vectorName }};
 import essence.geometry.core.{{ desc.buffVectorName }};
 import essence.geometry.core.DoubleUtils;
@@ -36,12 +41,16 @@ public class {{ desc.buffVectorImpName }} extends {{ desc.buffTupleImpName }} im
 
 {{ Public( desc, desc.buffVectorImpName ) }}
 
-//<editor-fold defaultstate="collapsed" desc="{{ desc.vectorName }}">
-{{ Math( desc, desc.buffVectorImpName ) }}
+{{ MathAndSetNonVirtual( desc, desc.buffVectorImpName ) }}
+
+{{ MathNonVirtual( desc, desc.buffVectorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.buffVectorName }}">
+{{ MathAndSet( desc, desc.buffVectorImpName ) }}
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="{{ desc.vectorName }}">
-{{ MathAndSet( desc, desc.buffVectorImpName ) }}
+{{ Math( desc, desc.buffVectorImpName ) }}
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Object">

@@ -12,7 +12,7 @@ _other.{{ property.name }}
             set({{ Properties( desc, ", ", Public_set1 ) | indent(5) }});
             return;
         }
-        {{ desc.tupleTypeName }} _other = toTuple(other);
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
 {%      dynmacro Public_set2( desc, property ) %}
 _other.get{{ property.upperName }}()
 {%-     enddynmacro %}

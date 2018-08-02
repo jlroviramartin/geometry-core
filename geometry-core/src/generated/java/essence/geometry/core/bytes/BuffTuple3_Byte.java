@@ -25,11 +25,13 @@
  */
 package essence.geometry.core.bytes;
 
+import essence.geometry.core.Tuple;
+import essence.geometry.core.BuffTuple;
 
 /**
  * A {@code BuffTuple3_Byte} is a 3 dimensional collection of values of type byte.
  */
-public interface BuffTuple3_Byte extends Tuple3_Byte {
+public interface BuffTuple3_Byte extends BuffTuple, Tuple3_Byte {
 
     /**
      * This method sets the component {@code index}.

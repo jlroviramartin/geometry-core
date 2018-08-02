@@ -54,7 +54,7 @@
 
     @Override
     public {{ className }} addAndSet({{ desc.vectorName }} other) {
-        {{ desc.tupleTypeName }} _other = toTuple(other);
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
 
         set{{ BinaryOperator(desc, "+", "", "_other.") | indent(4) }};
         return this;
@@ -67,7 +67,7 @@
 
     @Override
     public {{ className }} subAndSet({{ desc.vectorName }} other) {
-        {{ desc.tupleTypeName }} _other = toTuple(other);
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
 
         set{{ BinaryOperator(desc, "-", "", "_other.") | indent(4) }};
         return this;
@@ -80,7 +80,7 @@
 
     @Override
     public {{ className }} simpleMulAndSet({{ desc.vectorName }} other) {
-        {{ desc.tupleTypeName }} _other = toTuple(other);
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
 
         set{{ BinaryOperator(desc, "*", "", "_other.") | indent(4) }};
         return this;
@@ -93,7 +93,7 @@
 
     @Override
     public {{ className }} simpleDivAndSet({{ desc.vectorName }} other) {
-        {{ desc.tupleTypeName }} _other = toTuple(other);
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
 
         set{{ BinaryOperator(desc, "/", "", "_other.") | indent(4) }};
         return this;
@@ -141,7 +141,7 @@
 
     @Override
     public {{ className }} linealAndSet({{ desc.vectorName }} other, double alpha, double beta) {
-        {{ desc.tupleTypeName }} _other = toTuple(other);
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
 
         set{{ Lineal(desc, "", "_other.", "Vector") | indent(4) }};
         return this;
@@ -156,7 +156,7 @@
 
     @Override
     public {{ className }} crossAndSet({{ desc.vectorName }} other) {
-        {{ desc.tupleTypeName }} _other = toTuple(other);
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
 
         set((getY() * _other.getZ()) - (getZ() * _other.getY()),
                 (getZ() * _other.getX()) - (getX() * _other.getZ()),

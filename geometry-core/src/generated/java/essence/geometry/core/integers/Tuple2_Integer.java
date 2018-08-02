@@ -25,11 +25,12 @@
  */
 package essence.geometry.core.integers;
 
+import essence.geometry.core.Tuple;
 
 /**
  * A {@code Tuple2_Integer} is a 2 dimensional collection of values of type int.
  */
-public interface Tuple2_Integer {
+public interface Tuple2_Integer extends Tuple {
 
     /**
      * This method gets the component {@code index}.

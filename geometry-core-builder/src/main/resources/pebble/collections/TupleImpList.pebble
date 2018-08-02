@@ -177,21 +177,6 @@ array[i++]
         }
         return constructor.invoke({{ NameCommaSeparated( desc ) }});
     }
-
-    /**
-     * This method converts a tuple into another one compatible with this class.
-     *
-     * @param tuple Tuple to convert.
-     * @return Converted tuple.
-     */
-    protected static {{ desc.tupleTypeName }} toTuple(Tuple tuple) {
-        if (tuple instanceof {{ desc.tupleTypeName }}) {
-            return ({{ desc.tupleTypeName }})tuple;
-        }
-        {{ desc.tupleImpName }} aux = new {{ desc.tupleImpName }}();
-        tuple.getInto(aux);
-        return aux;
-    }
 {%  endmacro %}
 
 {#

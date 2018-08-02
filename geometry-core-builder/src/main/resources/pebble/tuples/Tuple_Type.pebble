@@ -8,11 +8,15 @@
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
+{%  block import %}
+import essence.geometry.core.Tuple;
+{%  endblock %}
+
 {%  block content %}
 /**
  * A {@code {{ desc.tupleTypeName }}} is a {{ desc.dim }} dimensional collection of values of type {{ desc.type }}.
  */
-public interface {{ desc.tupleTypeName }} {
+public interface {{ desc.tupleTypeName }} extends Tuple {
 
     /**
      * This method gets the component {@code index}.

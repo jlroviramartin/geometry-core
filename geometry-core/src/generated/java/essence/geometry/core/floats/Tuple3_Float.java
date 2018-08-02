@@ -25,11 +25,12 @@
  */
 package essence.geometry.core.floats;
 
+import essence.geometry.core.Tuple;
 
 /**
  * A {@code Tuple3_Float} is a 3 dimensional collection of values of type float.
  */
-public interface Tuple3_Float {
+public interface Tuple3_Float extends Tuple {
 
     /**
      * This method gets the component {@code index}.

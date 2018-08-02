@@ -25,11 +25,12 @@
  */
 package essence.geometry.core;
 
+import essence.geometry.core.Tuple;
 
 /**
  * A {@code Tuple4_Number} is a 4 dimensional collection of values of type numeric.
  */
-public interface Tuple4_Number {
+public interface Tuple4_Number extends Tuple {
 
     /**
      * This method sets the values of {@code this} tuple into {@code buff}.

@@ -25,11 +25,12 @@
  */
 package essence.geometry.core;
 
+import essence.geometry.core.BuffTuple;
 
 /**
  * A {@code BuffTuple4_Number} is a 4 dimensional collection of values of type numeric.
  */
-public interface BuffTuple4_Number extends Tuple4_Number {
+public interface BuffTuple4_Number extends BuffTuple, Tuple4_Number {
 
     /**
     * This method sets the value all components as double values.

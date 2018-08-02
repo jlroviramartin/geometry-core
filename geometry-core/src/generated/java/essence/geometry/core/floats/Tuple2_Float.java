@@ -25,11 +25,12 @@
  */
 package essence.geometry.core.floats;
 
+import essence.geometry.core.Tuple;
 
 /**
  * A {@code Tuple2_Float} is a 2 dimensional collection of values of type float.
  */
-public interface Tuple2_Float {
+public interface Tuple2_Float extends Tuple {
 
     /**
      * This method gets the component {@code index}.

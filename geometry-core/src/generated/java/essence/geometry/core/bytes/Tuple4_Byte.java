@@ -25,11 +25,12 @@
  */
 package essence.geometry.core.bytes;
 
+import essence.geometry.core.Tuple;
 
 /**
  * A {@code Tuple4_Byte} is a 4 dimensional collection of values of type byte.
  */
-public interface Tuple4_Byte {
+public interface Tuple4_Byte extends Tuple {
 
     /**
      * This method gets the component {@code index}.

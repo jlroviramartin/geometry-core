@@ -25,11 +25,13 @@
  */
 package essence.geometry.core.integers;
 
+import essence.geometry.core.Tuple;
+import essence.geometry.core.BuffTuple;
 
 /**
  * A {@code BuffTuple2_Integer} is a 2 dimensional collection of values of type int.
  */
-public interface BuffTuple2_Integer extends Tuple2_Integer {
+public interface BuffTuple2_Integer extends BuffTuple, Tuple2_Integer {
 
     /**
      * This method sets the component {@code index}.

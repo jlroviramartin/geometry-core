@@ -1,0 +1,8 @@
+{#
+ # This macro renders the private items of the point.
+ #}
+{%  macro Private( desc ) %}
+    private static {{ desc.type }} square({{ desc.type }} v) {
+        return v*v;
+    }
+{%  endmacro %}

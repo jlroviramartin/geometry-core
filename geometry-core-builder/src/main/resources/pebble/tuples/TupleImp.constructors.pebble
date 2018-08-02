@@ -31,7 +31,7 @@
      * @param tuple Tuple.
      */
     public {{ className }}(Tuple tuple) {
-        {{ desc.tupleTypeName }} _tuple = toTuple(tuple);
+        {{ desc.tupleTypeName }} _tuple = TupleUtils.to{{ desc.tupleTypeName }}(tuple);
 
 {%      for property in desc.properties %}
         this.{{ property.name }} = _tuple.get{{ property.upperName }}();

@@ -28,6 +28,7 @@ package essence.geometry.core.bytes;
 import java.util.logging.Logger;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.VectorFormatInfo;
 import essence.geometry.core.Tuple3_Number;
 import essence.geometry.core.BuffTuple3_Number;
@@ -76,7 +77,7 @@ public class Tuple3b implements Cloneable, Tuple, Tuple3_Byte, Tuple3_Number  {
      * @param tuple Tuple.
      */
     public Tuple3b(Tuple tuple) {
-        Tuple3_Byte _tuple = toTuple(tuple);
+        Tuple3_Byte _tuple = TupleUtils.toTuple3_Byte(tuple);
 
         this.x = _tuple.getX();
         this.y = _tuple.getY();
@@ -124,21 +125,6 @@ public class Tuple3b implements Cloneable, Tuple, Tuple3_Byte, Tuple3_Number  {
         return epsilonEquals((byte)0, (byte)0, (byte)0, epsilon);
     }
 
-    /**
-     * This method converts a Tuple into a Tuple3_Byte. It is a helper method to ease the operations.
-     *
-     * @param other Tuple.
-     * @return Tuple3_Byte.
-     */
-    protected static Tuple3_Byte toTuple(Tuple other) {
-        if (other instanceof Tuple3_Byte) {
-            return (Tuple3_Byte)other;
-        }
-        BuffTuple3b aux = new BuffTuple3b();
-        aux.set(other);
-        return aux;
-    }
-
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
@@ -159,7 +145,7 @@ public class Tuple3b implements Cloneable, Tuple, Tuple3_Byte, Tuple3_Number  {
                           _other.z);
         }
         if (other instanceof Tuple) {
-            Tuple3_Byte _other = toTuple((Tuple)other);
+            Tuple3_Byte _other = TupleUtils.toTuple3_Byte((Tuple)other);
             return equals(_other.getX(),
                           _other.getY(),
                           _other.getZ());
@@ -274,7 +260,7 @@ public class Tuple3b implements Cloneable, Tuple, Tuple3_Byte, Tuple3_Number  {
                                  _other.z, epsilon);
         }
         if (other instanceof Tuple) {
-            Tuple3_Byte _other = toTuple((Tuple)other);
+            Tuple3_Byte _other = TupleUtils.toTuple3_Byte((Tuple)other);
             return epsilonEquals(_other.getX(),
                                  _other.getY(),
                                  _other.getZ(), epsilon);

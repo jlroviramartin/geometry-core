@@ -25,11 +25,13 @@
  */
 package essence.geometry.core.floats;
 
+import essence.geometry.core.Tuple;
+import essence.geometry.core.BuffTuple;
 
 /**
  * A {@code BuffTuple2_Float} is a 2 dimensional collection of values of type float.
  */
-public interface BuffTuple2_Float extends Tuple2_Float {
+public interface BuffTuple2_Float extends BuffTuple, Tuple2_Float {
 
     /**
      * This method sets the component {@code index}.

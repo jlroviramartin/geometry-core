@@ -1,0 +1,53 @@
+{%  macro MathAndSetNonVirtual( desc, className ) %}
+    public {{ className }} addAndSet({{ className }} other) {
+        set{{ BinaryOperator(desc, "+", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} subAndSet({{ className }} other) {
+        set{{ BinaryOperator(desc, "-", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} simpleMulAndSet({{ className }} other) {
+        set{{ BinaryOperator(desc, "*", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} simpleDivAndSet({{ className }} other) {
+        set{{ BinaryOperator(desc, "/", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} lerpAndSet({{ className }} other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    public {{ className }} linealAndSet({{ className }} other, double alpha, double beta) {
+        set{{ Lineal(desc, "", "other.", "Vector") | indent(4) }};
+        return this;
+    }
+{%      if desc.dim == 2 %}
+{%      elseif desc.dim == 3 %}
+
+    public {{ className }} crossAndSet({{ className }} other) {
+        set((getY() * other.getZ()) - (getZ() * other.getY()),
+                (getZ() * other.getX()) - (getX() * other.getZ()),
+                (getX() * other.getY()) - (getY() * other.getX()));
+        return this;
+    }
+{%      endif %}
+
+    public {{ className }} vectorProjectionAndSet({{ className }} where) {
+        double r = dot(where) / where.getLengthCuad();
+        set{{ BinaryOperatorScalar(desc, "*", "where.", "r") | indent(4) }};
+        return this;
+
+        //double r = dot(where) / where.getLengthCuad();
+        //set(where);
+        //mulAndSet(r);
+        //return this;
+    }
+{%  endmacro %}
+

@@ -18,6 +18,9 @@
  */
 package templatesforvectors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author joseluis
@@ -32,6 +35,8 @@ public class TupleTemplates2 extends BaseTemplate {
     private final Template tuple_Type = load("pebble/tuples/Tuple_Type.pebble");
     private final Template tupleImp = load("pebble/tuples/TupleImp.pebble");
     private final Template tupleImpList = load("pebble/collections/TupleImpList.pebble");
+
+    private final Template tupleUtils = load("pebble/TupleUtils.pebble");
 
     @Override
     public void execute() {
@@ -48,6 +53,8 @@ public class TupleTemplates2 extends BaseTemplate {
         buildInteger(2);
         buildByte(3);
         buildByte(4);
+
+        buildTupleUtils();
     }
 
     private void buildSimple(int dim) {
@@ -94,5 +101,22 @@ public class TupleTemplates2 extends BaseTemplate {
 
         writeToFile(bufftuple_Type, desc, desc.getBuffTupleTypeName(), desc._package);
         writeToFile(bufftupleImp, desc, desc.getBuffTupleImpName(), desc._package);
+    }
+
+    private void buildTupleUtils() {
+        TupleUtilsDescription desc = new TupleUtilsDescription();
+        List<VectorDescription> aux = new ArrayList<>();
+        for (int i = 2; i <= 4; i++) {
+            aux.add(VectorDescription.getFloat(i));
+            aux.add(VectorDescription.getDouble(i));
+        }
+        aux.add(VectorDescription.getInteger(2));
+        aux.add(VectorDescription.getByte(3));
+        aux.add(VectorDescription.getByte(4));
+
+        desc._package = VectorDescription.CORE_PACKAGE;
+        desc.descriptors = aux.toArray(new VectorDescription[aux.size()]);
+
+        writeToFile(tupleUtils, desc, "TupleUtils", desc._package);
     }
 }

@@ -8,11 +8,16 @@
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.BuffTuple;
+{%  endblock %}
+
 {%  block content %}
 /**
  * A {@code {{ desc.buffTupleTypeName }}} is a {{ desc.dim }} dimensional collection of values of type {{ desc.type }}.
  */
-public interface {{ desc.buffTupleTypeName }} extends {{ desc.tupleTypeName }} {
+public interface {{ desc.buffTupleTypeName }} extends BuffTuple, {{ desc.tupleTypeName }} {
 
     /**
      * This method sets the component {@code index}.

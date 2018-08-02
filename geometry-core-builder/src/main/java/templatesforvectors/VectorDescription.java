@@ -23,11 +23,13 @@ package templatesforvectors;
  */
 public class VectorDescription {
 
+    public static final String CORE_PACKAGE = "essence.geometry.core";
+
     public static VectorDescription getDefault(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
         VectorDescription desc = new VectorDescription();
-        desc._package = "essence.geometry.core";
-        desc.corePackage = "essence.geometry.core";
+        desc._package = CORE_PACKAGE;
+        desc.corePackage = CORE_PACKAGE;
         desc.dim = dim;
         desc.suffix = "";
         desc.type = "";
@@ -43,8 +45,8 @@ public class VectorDescription {
     public static VectorDescription getFloat(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
         VectorDescription desc = new VectorDescription();
-        desc._package = "essence.geometry.core.floats";
-        desc.corePackage = "essence.geometry.core";
+        desc._package = CORE_PACKAGE + ".floats";
+        desc.corePackage = CORE_PACKAGE;
         desc.dim = dim;
         desc.suffix = "f";
         desc.type = "float";
@@ -60,8 +62,8 @@ public class VectorDescription {
     public static VectorDescription getDouble(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
         VectorDescription desc = new VectorDescription();
-        desc._package = "essence.geometry.core.doubles";
-        desc.corePackage = "essence.geometry.core";
+        desc._package = CORE_PACKAGE + ".doubles";
+        desc.corePackage = CORE_PACKAGE;
         desc.dim = dim;
         desc.suffix = "d";
         desc.type = "double";
@@ -77,8 +79,8 @@ public class VectorDescription {
     public static VectorDescription getInteger(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
         VectorDescription desc = new VectorDescription();
-        desc._package = "essence.geometry.core.integers";
-        desc.corePackage = "essence.geometry.core";
+        desc._package = CORE_PACKAGE + ".integers";
+        desc.corePackage = CORE_PACKAGE;
         desc.dim = dim;
         desc.suffix = "i";
         desc.type = "int";
@@ -94,8 +96,8 @@ public class VectorDescription {
     public static VectorDescription getByte(int dim) {
         final String[] names = new String[]{"x", "y", "z", "w"};
         VectorDescription desc = new VectorDescription();
-        desc._package = "essence.geometry.core.bytes";
-        desc.corePackage = "essence.geometry.core";
+        desc._package = CORE_PACKAGE + ".bytes";
+        desc.corePackage = CORE_PACKAGE;
         desc.dim = dim;
         desc.suffix = "b";
         desc.type = "byte";
@@ -160,16 +162,32 @@ public class VectorDescription {
         return "Point" + dim;
     }
 
+    public String getBuffPointName() {
+        return "BuffPoint" + dim;
+    }
+
     public String getPointImpName() {
         return "Point" + dim + suffix;
+    }
+
+    public String getBuffPointImpName() {
+        return "BuffPoint" + dim + suffix;
     }
 
     public String getColorName() {
         return "Color" + dim;
     }
 
+    public String getBuffColorName() {
+        return "BuffColor" + dim;
+    }
+
     public String getColorImpName() {
         return "Color" + dim + suffix;
+    }
+
+    public String getBuffColorImpName() {
+        return "BuffColor" + dim + suffix;
     }
 
     public String getTupleImpListName() {

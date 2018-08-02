@@ -22,6 +22,7 @@
 import java.util.logging.Logger;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.VectorFormatInfo;
 import essence.geometry.core.{{ desc.tupleNumberName }};
 import essence.geometry.core.{{ desc.buffTupleNumberName }};

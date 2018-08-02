@@ -25,7 +25,7 @@ _other.{{ property.name }}
             return equals({{ Properties( desc, ",%n", Object_equals1 ) | indent(4) }});
         }
         if (other instanceof Tuple) {
-            {{ desc.tupleTypeName }} _other = toTuple((Tuple)other);
+            {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}((Tuple)other);
 {%      dynmacro Object_equals2( desc, property ) %}
 _other.get{{ property.upperName }}()
 {%-     enddynmacro %}

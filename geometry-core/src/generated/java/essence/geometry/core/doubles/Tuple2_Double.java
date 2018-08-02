@@ -25,11 +25,12 @@
  */
 package essence.geometry.core.doubles;
 
+import essence.geometry.core.Tuple;
 
 /**
  * A {@code Tuple2_Double} is a 2 dimensional collection of values of type double.
  */
-public interface Tuple2_Double {
+public interface Tuple2_Double extends Tuple {
 
     /**
      * This method gets the component {@code index}.

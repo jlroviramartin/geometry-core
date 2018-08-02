@@ -28,6 +28,7 @@ package essence.geometry.core.floats;
 import java.util.logging.Logger;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.BuffTuple;
 import essence.geometry.core.VectorFormatInfo;
 import essence.geometry.core.BuffTuple4_Number;
@@ -80,7 +81,7 @@ public class BuffTuple4f implements Cloneable, BuffTuple, BuffTuple4_Float, Buff
      * @param tuple Tuple.
      */
     public BuffTuple4f(Tuple tuple) {
-        Tuple4_Float _tuple = toTuple(tuple);
+        Tuple4_Float _tuple = TupleUtils.toTuple4_Float(tuple);
 
         this.x = _tuple.getX();
         this.y = _tuple.getY();
@@ -129,21 +130,6 @@ public class BuffTuple4f implements Cloneable, BuffTuple, BuffTuple4_Float, Buff
         return epsilonEquals((float)0, (float)0, (float)0, (float)0, epsilon);
     }
 
-    /**
-     * This method converts a Tuple into a Tuple4_Float. It is a helper method to ease the operations.
-     *
-     * @param other Tuple.
-     * @return Tuple4_Float.
-     */
-    protected static Tuple4_Float toTuple(Tuple other) {
-        if (other instanceof Tuple4_Float) {
-            return (Tuple4_Float)other;
-        }
-        BuffTuple4f aux = new BuffTuple4f();
-        aux.set(other);
-        return aux;
-    }
-
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
@@ -165,7 +151,7 @@ public class BuffTuple4f implements Cloneable, BuffTuple, BuffTuple4_Float, Buff
                           _other.w);
         }
         if (other instanceof Tuple) {
-            Tuple4_Float _other = toTuple((Tuple)other);
+            Tuple4_Float _other = TupleUtils.toTuple4_Float((Tuple)other);
             return equals(_other.getX(),
                           _other.getY(),
                           _other.getZ(),
@@ -202,7 +188,7 @@ public class BuffTuple4f implements Cloneable, BuffTuple, BuffTuple4_Float, Buff
             set(_other.x, _other.y, _other.z, _other.w);
             return;
         }
-        Tuple4_Float _other = toTuple(other);
+        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
         set(_other.getX(), _other.getY(), _other.getZ(), _other.getW());
     }
 //</editor-fold>
@@ -489,7 +475,7 @@ public class BuffTuple4f implements Cloneable, BuffTuple, BuffTuple4_Float, Buff
                                  _other.w, epsilon);
         }
         if (other instanceof Tuple) {
-            Tuple4_Float _other = toTuple((Tuple)other);
+            Tuple4_Float _other = TupleUtils.toTuple4_Float((Tuple)other);
             return epsilonEquals(_other.getX(),
                                  _other.getY(),
                                  _other.getZ(),

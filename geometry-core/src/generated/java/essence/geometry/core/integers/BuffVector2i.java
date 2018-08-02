@@ -26,6 +26,7 @@
 package essence.geometry.core.integers;
 
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector2;
 import essence.geometry.core.BuffVector2;
 import essence.geometry.core.DoubleUtils;
@@ -99,170 +100,66 @@ public class BuffVector2i extends BuffTuple2i implements BuffVector2 {
         return getUnit(1);
     }
 
-//<editor-fold defaultstate="collapsed" desc="Vector2">
-    @Override
-    public boolean isUnit() {
-        return isUnit(EPSILON);
+    public BuffVector2i addAndSet(BuffVector2i other) {
+        set(getX() + other.getX(), getY() + other.getY());
+        return this;
     }
 
-    @Override
-    public boolean isUnit(double epsilon) {
-        return DoubleUtils.epsilonEquals(getLength(), 1, epsilon);
+    public BuffVector2i subAndSet(BuffVector2i other) {
+        set(getX() - other.getX(), getY() - other.getY());
+        return this;
     }
 
-    @Override
-    public BuffVector2i getUnit() {
-        double len = getLength();
-        return div(len);
+    public BuffVector2i simpleMulAndSet(BuffVector2i other) {
+        set(getX() * other.getX(), getY() * other.getY());
+        return this;
     }
 
-    @Override
-    public int getQuadrant() {
-        int v = 0;
-        int p = 1;
-        if (getX() < 0) {
-            v |= p;
-            p <<= 1;
-        }
-        if (getY() < 0) {
-            v |= p;
-            p <<= 1;
-        }
-        return v;
+    public BuffVector2i simpleDivAndSet(BuffVector2i other) {
+        set(getX() / other.getX(), getY() / other.getY());
+        return this;
     }
 
-    @Override
-    public double getLengthL1() {
-        return Math.abs(getX())
-               + Math.abs(getY());
+    public BuffVector2i lerpAndSet(BuffVector2i other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
     }
 
-    @Override
-    public double getAngle() {
-        return (double) Math.atan2(getY(), getX());
+    public BuffVector2i linealAndSet(BuffVector2i other, double alpha, double beta) {
+        set((int)(alpha * getX() + beta * other.getX()),
+            (int)(alpha * getY() + beta * other.getY()));
+        return this;
     }
 
-    @Override
-    public double angleTo(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
+    public BuffVector2i vectorProjectionAndSet(BuffVector2i where) {
+        double r = dot(where) / where.getLengthCuad();
+        set((int)(where.getX() * r), (int)(where.getY() * r));
+        return this;
 
-        // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
-        return Math.atan2(getX() * _other.getY() - getY() * _other.getX(),
-                          getX() * _other.getX() + getY() * _other.getY());
-    }
-
-    @Override
-    public BuffVector2i getPerpLeft() {
-        return new BuffVector2i(-getY(), getX());
-    }
-
-    @Override
-    public BuffVector2i getPerpRight() {
-        return new BuffVector2i(getY(), -getX());
-    }
-
-    @Override
-    public BuffVector2i rotate(double angle) {
-        double s = Math.sin(angle);
-        double c = Math.cos(angle);
-        return new BuffVector2i((int)(getX() * c - getY() * s),
-                                (int)(getX() * s + getY() * c));
-    }
-
-    @Override
-    public BuffVector2i rotateAndScale(double angle, double len) {
-        double s = Math.sin(angle);
-        double c = Math.cos(angle);
-        return new BuffVector2i((int)(len*(getX() * c - getY() * s)),
-                                (int)(len*(getX() * s + getY() * c)));
-    }
-
-    @Override
-    public BuffVector2i add(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
-
-        return new BuffVector2i(getX() + _other.getX(), getY() + _other.getY());
+        //double r = dot(where) / where.getLengthCuad();
+        //set(where);
+        //mulAndSet(r);
+        //return this;
     }
 
     public BuffVector2i add(BuffVector2i other) {
         return new BuffVector2i(getX() + other.getX(), getY() + other.getY());
     }
 
-    @Override
-    public BuffVector2i sub(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
-
-        return new BuffVector2i(getX() - _other.getX(), getY() - _other.getY());
-    }
-
     public BuffVector2i sub(BuffVector2i other) {
         return new BuffVector2i(getX() - other.getX(), getY() - other.getY());
-    }
-
-    @Override
-    public BuffVector2i simpleMul(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
-
-        return new BuffVector2i(getX() * _other.getX(), getY() * _other.getY());
     }
 
     public BuffVector2i simpleMul(BuffVector2i other) {
         return new BuffVector2i(getX() * other.getX(), getY() * other.getY());
     }
 
-    @Override
-    public BuffVector2i simpleDiv(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
-
-        return new BuffVector2i(getX() / _other.getX(), getY() / _other.getY());
-    }
-
     public BuffVector2i simpleDiv(BuffVector2i other) {
         return new BuffVector2i(getX() / other.getX(), getY() / other.getY());
     }
 
-    @Override
-    public BuffVector2i mul(double v) {
-        return new BuffVector2i((int)(getX() * v), (int)(getY() * v));
-    }
-
-    @Override
-    public BuffVector2i div(double v) {
-        if (DoubleUtils.epsilonZero(v)) {
-            throw new ArithmeticError("divided by zero");
-        }
-        return new BuffVector2i((int)(getX() / v), (int)(getY() / v));
-    }
-
-    @Override
-    public BuffVector2i neg() {
-        return new BuffVector2i(- getX(), - getY());
-    }
-
-    @Override
-    public BuffVector2i abs() {
-        return new BuffVector2i(Math.abs(getX()), Math.abs(getY()));
-    }
-
-    @Override
-    public BuffVector2i lerp(Vector2 other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
     public BuffVector2i lerp(BuffVector2i other, double alpha) {
         return lineal(other, 1 - alpha, alpha);
-    }
-
-    @Override
-    public double invLerp(Vector2 other, Vector2 vLerp) {
-        Tuple2_Integer _other = toTuple(other);
-        Tuple2_Integer _vLerp = toTuple(vLerp);
-
-        double x1 = _other.getX() - getX();
-        double y1 = _other.getY() - getY();
-        double x2 = _vLerp.getX() - getX();
-        double y2 = _vLerp.getY() - getY();
-        return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
     }
 
     public double invLerp(BuffVector2i other, BuffVector2i vLerp) {
@@ -273,54 +170,25 @@ public class BuffVector2i extends BuffTuple2i implements BuffVector2 {
         return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
     }
 
-    @Override
-    public BuffVector2i lineal(Vector2 other, double alpha, double beta) {
-        Tuple2_Integer _other = toTuple(other);
-
-        return new BuffVector2i((int)(alpha * getX() + beta * _other.getX()),
-                                (int)(alpha * getY() + beta * _other.getY()));
-    }
-
     public BuffVector2i lineal(BuffVector2i other, double alpha, double beta) {
         return new BuffVector2i((int)(alpha * getX() + beta * other.getX()),
                                 (int)(alpha * getY() + beta * other.getY()));
-    }
-
-    @Override
-    public double dot(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
-
-        return getX() * _other.getX() + getY() * _other.getY();
     }
 
     public double dot(BuffVector2i other) {
         return getX() * other.getX() + getY() * other.getY();
     }
 
-    @Override
-    public double cross(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
-
-        return getX() * _other.getY() - getY() * _other.getX();
-    }
-
     public double cross(BuffVector2i other) {
         return getX() * other.getY() - getY() * other.getX();
-    }
-
-    @Override
-    public Vector2 vectorProjection(Vector2 where) {
-        double r = dot(where) / where.getLengthCuad();
-        return where.mul(r);
     }
 
     public BuffVector2i vectorProjection(BuffVector2i where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }
-//</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Vector2">
+//<editor-fold defaultstate="collapsed" desc="BuffVector2">
     @Override
     public BuffVector2i setZero() {
         set(0, 0);
@@ -370,53 +238,33 @@ public class BuffVector2i extends BuffTuple2i implements BuffVector2 {
 
     @Override
     public BuffVector2i addAndSet(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
         set(getX() + _other.getX(), getY() + _other.getY());
         return this;
     }
 
-    public BuffVector2i addAndSet(BuffVector2i other) {
-        set(getX() + other.getX(), getY() + other.getY());
-        return this;
-    }
-
     @Override
     public BuffVector2i subAndSet(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
         set(getX() - _other.getX(), getY() - _other.getY());
         return this;
     }
 
-    public BuffVector2i subAndSet(BuffVector2i other) {
-        set(getX() - other.getX(), getY() - other.getY());
-        return this;
-    }
-
     @Override
     public BuffVector2i simpleMulAndSet(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
         set(getX() * _other.getX(), getY() * _other.getY());
         return this;
     }
 
-    public BuffVector2i simpleMulAndSet(BuffVector2i other) {
-        set(getX() * other.getX(), getY() * other.getY());
-        return this;
-    }
-
     @Override
     public BuffVector2i simpleDivAndSet(Vector2 other) {
-        Tuple2_Integer _other = toTuple(other);
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
         set(getX() / _other.getX(), getY() / _other.getY());
-        return this;
-    }
-
-    public BuffVector2i simpleDivAndSet(BuffVector2i other) {
-        set(getX() / other.getX(), getY() / other.getY());
         return this;
     }
 
@@ -450,39 +298,202 @@ public class BuffVector2i extends BuffTuple2i implements BuffVector2 {
         return this;
     }
 
-    public BuffVector2i lerpAndSet(BuffVector2i other, double alpha) {
-        linealAndSet(other, 1 - alpha, alpha);
-        return this;
-    }
-
     @Override
     public BuffVector2i linealAndSet(Vector2 other, double alpha, double beta) {
-        Tuple2_Integer _other = toTuple(other);
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
         set((int)(alpha * getX() + beta * _other.getX()),
             (int)(alpha * getY() + beta * _other.getY()));
         return this;
     }
 
-    public BuffVector2i linealAndSet(BuffVector2i other, double alpha, double beta) {
-        set((int)(alpha * getX() + beta * other.getX()),
-            (int)(alpha * getY() + beta * other.getY()));
+    @Override
+    public BuffVector2i vectorProjectionAndSet(Vector2 where) {
+        Tuple2_Integer _where = TupleUtils.toTuple2_Integer(where);
+
+        double r = dot(where) / where.getLengthCuad();
+        set((int)(_where.getX() * r), (int)(_where.getY() * r));
         return this;
+
+        //double r = dot(where) / where.getLengthCuad();
+        //set(where);
+        //mulAndSet(r);
+        //return this;
+    }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Vector2">
+    @Override
+    public boolean isUnit() {
+        return isUnit(EPSILON);
     }
 
     @Override
-    public BuffVector2i vectorProjectionAndSet(Vector2 where) {
-        double r = dot(where) / where.getLengthCuad();
-        set(where);
-        mulAndSet(r);
-        return this;
+    public boolean isUnit(double epsilon) {
+        return DoubleUtils.epsilonEquals(getLength(), 1, epsilon);
     }
 
-    public BuffVector2i vectorProjectionAndSet(BuffVector2i where) {
+    @Override
+    public BuffVector2i getUnit() {
+        double len = getLength();
+        return div(len);
+    }
+
+    @Override
+    public int getQuadrant() {
+        int v = 0;
+        int p = 1;
+        if (getX() < 0) {
+            v |= p;
+            p <<= 1;
+        }
+        if (getY() < 0) {
+            v |= p;
+            p <<= 1;
+        }
+        return v;
+    }
+
+    @Override
+    public double getLengthL1() {
+        return Math.abs(getX())
+               + Math.abs(getY());
+    }
+
+    @Override
+    public double getAngle() {
+        return (double) Math.atan2(getY(), getX());
+    }
+
+    @Override
+    public double angleTo(Vector2 other) {
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
+
+        // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
+        return Math.atan2(getX() * _other.getY() - getY() * _other.getX(),
+                          getX() * _other.getX() + getY() * _other.getY());
+    }
+
+    @Override
+    public BuffVector2i getPerpLeft() {
+        return new BuffVector2i(-getY(), getX());
+    }
+
+    @Override
+    public BuffVector2i getPerpRight() {
+        return new BuffVector2i(getY(), -getX());
+    }
+
+    @Override
+    public BuffVector2i rotate(double angle) {
+        double s = Math.sin(angle);
+        double c = Math.cos(angle);
+        return new BuffVector2i((int)(getX() * c - getY() * s),
+                                (int)(getX() * s + getY() * c));
+    }
+
+    @Override
+    public BuffVector2i rotateAndScale(double angle, double len) {
+        double s = Math.sin(angle);
+        double c = Math.cos(angle);
+        return new BuffVector2i((int)(len*(getX() * c - getY() * s)),
+                                (int)(len*(getX() * s + getY() * c)));
+    }
+
+    @Override
+    public BuffVector2i add(Vector2 other) {
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
+
+        return new BuffVector2i(getX() + _other.getX(), getY() + _other.getY());
+    }
+
+    @Override
+    public BuffVector2i sub(Vector2 other) {
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
+
+        return new BuffVector2i(getX() - _other.getX(), getY() - _other.getY());
+    }
+
+    @Override
+    public BuffVector2i simpleMul(Vector2 other) {
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
+
+        return new BuffVector2i(getX() * _other.getX(), getY() * _other.getY());
+    }
+
+    @Override
+    public BuffVector2i simpleDiv(Vector2 other) {
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
+
+        return new BuffVector2i(getX() / _other.getX(), getY() / _other.getY());
+    }
+
+    @Override
+    public BuffVector2i mul(double v) {
+        return new BuffVector2i((int)(getX() * v), (int)(getY() * v));
+    }
+
+    @Override
+    public BuffVector2i div(double v) {
+        if (DoubleUtils.epsilonZero(v)) {
+            throw new ArithmeticError("divided by zero");
+        }
+        return new BuffVector2i((int)(getX() / v), (int)(getY() / v));
+    }
+
+    @Override
+    public BuffVector2i neg() {
+        return new BuffVector2i(- getX(), - getY());
+    }
+
+    @Override
+    public BuffVector2i abs() {
+        return new BuffVector2i(Math.abs(getX()), Math.abs(getY()));
+    }
+
+    @Override
+    public BuffVector2i lerp(Vector2 other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    @Override
+    public double invLerp(Vector2 other, Vector2 vLerp) {
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
+        Tuple2_Integer _vLerp = TupleUtils.toTuple2_Integer(vLerp);
+
+        double x1 = _other.getX() - getX();
+        double y1 = _other.getY() - getY();
+        double x2 = _vLerp.getX() - getX();
+        double y2 = _vLerp.getY() - getY();
+        return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
+    }
+
+    @Override
+    public BuffVector2i lineal(Vector2 other, double alpha, double beta) {
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
+
+        return new BuffVector2i((int)(alpha * getX() + beta * _other.getX()),
+                                (int)(alpha * getY() + beta * _other.getY()));
+    }
+
+    @Override
+    public double dot(Vector2 other) {
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
+
+        return getX() * _other.getX() + getY() * _other.getY();
+    }
+
+    @Override
+    public double cross(Vector2 other) {
+        Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
+
+        return getX() * _other.getY() - getY() * _other.getX();
+    }
+
+    @Override
+    public Vector2 vectorProjection(Vector2 where) {
         double r = dot(where) / where.getLengthCuad();
-        set(where);
-        mulAndSet(r);
-        return this;
+        return where.mul(r);
     }
 //</editor-fold>
 

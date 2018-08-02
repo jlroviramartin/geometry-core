@@ -8,11 +8,15 @@
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
+{%  block import %}
+import essence.geometry.core.BuffTuple;
+{%  endblock %}
+
 {%  block content %}
 /**
  * A {@code {{ desc.buffTupleNumberName }}} is a {{ desc.dim }} dimensional collection of values of type numeric.
  */
-public interface {{ desc.buffTupleNumberName }} extends {{ desc.tupleNumberName }} {
+public interface {{ desc.buffTupleNumberName }} extends BuffTuple, {{ desc.tupleNumberName }} {
 
     {{ Setter( desc, "double", "Double" ) }}
 

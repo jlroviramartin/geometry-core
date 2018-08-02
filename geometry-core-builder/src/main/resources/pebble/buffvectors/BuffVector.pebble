@@ -11,7 +11,7 @@
  * A {@code {{ desc.buffVectorName }}} is a {{ desc.dim }} dimensional collection of values
  * that represents a vector.
  */
-public interface {{ desc.buffVectorName }} extends Tuple, {{ desc.vectorName }} {
+public interface {{ desc.buffVectorName }} extends {{ desc.vectorName }}, BuffTuple {
 
     /**
      * This method sets the vector to zero.

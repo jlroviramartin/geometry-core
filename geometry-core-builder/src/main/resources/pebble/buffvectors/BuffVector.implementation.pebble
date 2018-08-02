@@ -1,0 +1,155 @@
+{%  macro MathAndSet( desc, className ) %}
+    @Override
+    public {{ className }} setZero() {
+{% dynmacro MathAndSet_setZero( desc, property ) %}
+0
+{%-     enddynmacro %}
+        set({{ Properties( desc, ", ", MathAndSet_setZero ) | indent(4) }});
+        return this;
+    }
+
+    @Override
+    public {{ className }} setUnit() {
+        double len = getLength();
+        if (DoubleUtils.epsilonZero(len)) {
+            setZero();
+        } else {
+            divAndSet(len);
+        }
+        return this;
+    }
+{%      if desc.dim == 2 %}
+
+    @Override
+    public {{ className }} setPerpLeft() {
+        set(-getY(), getX());
+        return this;
+    }
+
+    @Override
+    public {{ className }} setPerpRight() {
+        set(getY(), -getX());
+        return this;
+    }
+
+    @Override
+    public {{ className }} setRotate(double angle) {
+        double s = Math.sin(angle);
+        double c = Math.cos(angle);
+        set(({{ desc.type }})(getX() * c - getY() * s),
+                ({{ desc.type }})(getX() * s + getY() * c));
+        return this;
+    }
+
+    @Override
+    public {{ className }} setRotateAndScale(double angle, double len) {
+        double s = Math.sin(angle);
+        double c = Math.cos(angle);
+        set(({{ desc.type }})(len*(getX() * c - getY() * s)),
+                ({{ desc.type }})(len*(getX() * s + getY() * c)));
+        return this;
+    }
+{%      endif %}
+
+    @Override
+    public {{ className }} addAndSet({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "+", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} subAndSet({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "-", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} simpleMulAndSet({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "*", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} simpleDivAndSet({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "/", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} mulAndSet(double v) {
+        set{{ BinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} divAndSet(double v) {
+        set{{ BinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} negAndSet() {
+        set{{ UnaryOperator(desc, "-", "") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} absAndSet() {
+        set{{ UnaryFunction(desc, "Math.abs", "") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} lerpAndSet({{ desc.vectorName }} other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    @Override
+    public {{ className }} linealAndSet({{ desc.vectorName }} other, double alpha, double beta) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ Lineal(desc, "", "_other.", "Vector") | indent(4) }};
+        return this;
+    }
+{%      if desc.dim == 2 %}
+{%      elseif desc.dim == 3 %}
+
+    @Override
+    public {{ className }} crossAndSet({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set((getY() * _other.getZ()) - (getZ() * _other.getY()),
+                (getZ() * _other.getX()) - (getX() * _other.getZ()),
+                (getX() * _other.getY()) - (getY() * _other.getX()));
+        return this;
+    }
+{%      endif %}
+
+    @Override
+    public {{ className }} vectorProjectionAndSet({{ desc.vectorName }} where) {
+{#
+ #  where.getUnit().mul( this.dot( where.getUnit() ) )
+ #  =
+ #  where.mul( this.dot( where ) / where.getLengthCuad() )
+ #}
+        {{ desc.tupleTypeName }} _where = TupleUtils.to{{ desc.tupleTypeName }}(where);
+
+        double r = dot(where) / where.getLengthCuad();
+        set{{ BinaryOperatorScalar(desc, "*", "_where.", "r") | indent(4) }};
+        return this;
+
+        //double r = dot(where) / where.getLengthCuad();
+        //set(where);
+        //mulAndSet(r);
+        //return this;
+    }
+{%  endmacro %}

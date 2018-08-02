@@ -28,6 +28,7 @@ package essence.geometry.core.integers;
 import java.util.logging.Logger;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.VectorFormatInfo;
 import essence.geometry.core.Tuple2_Number;
 import essence.geometry.core.BuffTuple2_Number;
@@ -72,7 +73,7 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
      * @param tuple Tuple.
      */
     public Tuple2i(Tuple tuple) {
-        Tuple2_Integer _tuple = toTuple(tuple);
+        Tuple2_Integer _tuple = TupleUtils.toTuple2_Integer(tuple);
 
         this.x = _tuple.getX();
         this.y = _tuple.getY();
@@ -119,21 +120,6 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
         return epsilonEquals((int)0, (int)0, epsilon);
     }
 
-    /**
-     * This method converts a Tuple into a Tuple2_Integer. It is a helper method to ease the operations.
-     *
-     * @param other Tuple.
-     * @return Tuple2_Integer.
-     */
-    protected static Tuple2_Integer toTuple(Tuple other) {
-        if (other instanceof Tuple2_Integer) {
-            return (Tuple2_Integer)other;
-        }
-        BuffTuple2i aux = new BuffTuple2i();
-        aux.set(other);
-        return aux;
-    }
-
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
@@ -153,7 +139,7 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
                           _other.y);
         }
         if (other instanceof Tuple) {
-            Tuple2_Integer _other = toTuple((Tuple)other);
+            Tuple2_Integer _other = TupleUtils.toTuple2_Integer((Tuple)other);
             return equals(_other.getX(),
                           _other.getY());
         }
@@ -253,7 +239,7 @@ public class Tuple2i implements Cloneable, Tuple, Tuple2_Integer, Tuple2_Number 
                                  _other.y, epsilon);
         }
         if (other instanceof Tuple) {
-            Tuple2_Integer _other = toTuple((Tuple)other);
+            Tuple2_Integer _other = TupleUtils.toTuple2_Integer((Tuple)other);
             return epsilonEquals(_other.getX(),
                                  _other.getY(), epsilon);
         }

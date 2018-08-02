@@ -26,6 +26,7 @@
 package essence.geometry.core.doubles;
 
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector3;
 import essence.geometry.core.BuffVector3;
 import essence.geometry.core.DoubleUtils;
@@ -109,6 +110,222 @@ public class BuffVector3d extends BuffTuple3d implements BuffVector3 {
         return getUnit(2);
     }
 
+    public BuffVector3d addAndSet(BuffVector3d other) {
+        set(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+        return this;
+    }
+
+    public BuffVector3d subAndSet(BuffVector3d other) {
+        set(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+        return this;
+    }
+
+    public BuffVector3d simpleMulAndSet(BuffVector3d other) {
+        set(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
+        return this;
+    }
+
+    public BuffVector3d simpleDivAndSet(BuffVector3d other) {
+        set(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
+        return this;
+    }
+
+    public BuffVector3d lerpAndSet(BuffVector3d other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    public BuffVector3d linealAndSet(BuffVector3d other, double alpha, double beta) {
+        set((double)(alpha * getX() + beta * other.getX()),
+            (double)(alpha * getY() + beta * other.getY()),
+            (double)(alpha * getZ() + beta * other.getZ()));
+        return this;
+    }
+
+    public BuffVector3d crossAndSet(BuffVector3d other) {
+        set((getY() * other.getZ()) - (getZ() * other.getY()),
+            (getZ() * other.getX()) - (getX() * other.getZ()),
+            (getX() * other.getY()) - (getY() * other.getX()));
+        return this;
+    }
+
+    public BuffVector3d vectorProjectionAndSet(BuffVector3d where) {
+        double r = dot(where) / where.getLengthCuad();
+        set((double)(where.getX() * r), (double)(where.getY() * r), (double)(where.getZ() * r));
+        return this;
+
+        //double r = dot(where) / where.getLengthCuad();
+        //set(where);
+        //mulAndSet(r);
+        //return this;
+    }
+
+    public BuffVector3d add(BuffVector3d other) {
+        return new BuffVector3d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+    }
+
+    public BuffVector3d sub(BuffVector3d other) {
+        return new BuffVector3d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+    }
+
+    public BuffVector3d simpleMul(BuffVector3d other) {
+        return new BuffVector3d(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
+    }
+
+    public BuffVector3d simpleDiv(BuffVector3d other) {
+        return new BuffVector3d(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
+    }
+
+    public BuffVector3d lerp(BuffVector3d other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public double invLerp(BuffVector3d other, BuffVector3d vLerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double x2 = vLerp.getX() - getX();
+        double y2 = vLerp.getY() - getY();
+        double z2 = vLerp.getZ() - getZ();
+        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+    }
+
+    public BuffVector3d lineal(BuffVector3d other, double alpha, double beta) {
+        return new BuffVector3d((double)(alpha * getX() + beta * other.getX()),
+                                (double)(alpha * getY() + beta * other.getY()),
+                                (double)(alpha * getZ() + beta * other.getZ()));
+    }
+
+    public double dot(BuffVector3d other) {
+        return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ();
+    }
+
+    public BuffVector3d cross(BuffVector3d other) {
+        return new BuffVector3d((getY() * other.getZ()) - (getZ() * other.getY()),
+                                (getZ() * other.getX()) - (getX() * other.getZ()),
+                                (getX() * other.getY()) - (getY() * other.getX()));
+    }
+
+    public BuffVector3d vectorProjection(BuffVector3d where) {
+        double r = dot(where) / where.getLengthCuad();
+        return where.mul(r);
+    }
+
+//<editor-fold defaultstate="collapsed" desc="BuffVector3">
+    @Override
+    public BuffVector3d setZero() {
+        set(0, 0, 0);
+        return this;
+    }
+
+    @Override
+    public BuffVector3d setUnit() {
+        double len = getLength();
+        if (DoubleUtils.epsilonZero(len)) {
+            setZero();
+        } else {
+            divAndSet(len);
+        }
+        return this;
+    }
+
+    @Override
+    public BuffVector3d addAndSet(Vector3 other) {
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
+
+        set(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
+        return this;
+    }
+
+    @Override
+    public BuffVector3d subAndSet(Vector3 other) {
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
+
+        set(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
+        return this;
+    }
+
+    @Override
+    public BuffVector3d simpleMulAndSet(Vector3 other) {
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
+
+        set(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ());
+        return this;
+    }
+
+    @Override
+    public BuffVector3d simpleDivAndSet(Vector3 other) {
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
+
+        set(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ());
+        return this;
+    }
+
+    @Override
+    public BuffVector3d mulAndSet(double v) {
+        set((double)(getX() * v), (double)(getY() * v), (double)(getZ() * v));
+        return this;
+    }
+
+    @Override
+    public BuffVector3d divAndSet(double v) {
+        set((double)(getX() / v), (double)(getY() / v), (double)(getZ() / v));
+        return this;
+    }
+
+    @Override
+    public BuffVector3d negAndSet() {
+        set(- getX(), - getY(), - getZ());
+        return this;
+    }
+
+    @Override
+    public BuffVector3d absAndSet() {
+        set(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()));
+        return this;
+    }
+
+    @Override
+    public BuffVector3d lerpAndSet(Vector3 other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    @Override
+    public BuffVector3d linealAndSet(Vector3 other, double alpha, double beta) {
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
+
+        set((double)(alpha * getX() + beta * _other.getX()),
+            (double)(alpha * getY() + beta * _other.getY()),
+            (double)(alpha * getZ() + beta * _other.getZ()));
+        return this;
+    }
+
+    @Override
+    public BuffVector3d crossAndSet(Vector3 other) {
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
+
+        set((getY() * _other.getZ()) - (getZ() * _other.getY()),
+            (getZ() * _other.getX()) - (getX() * _other.getZ()),
+            (getX() * _other.getY()) - (getY() * _other.getX()));
+        return this;
+    }
+
+    @Override
+    public BuffVector3d vectorProjectionAndSet(Vector3 where) {
+        Tuple3_Double _where = TupleUtils.toTuple3_Double(where);
+
+        double r = dot(where) / where.getLengthCuad();
+        set((double)(_where.getX() * r), (double)(_where.getY() * r), (double)(_where.getZ() * r));
+        return this;
+
+        //double r = dot(where) / where.getLengthCuad();
+        //set(where);
+        //mulAndSet(r);
+        //return this;
+    }
+//</editor-fold>
+
 //<editor-fold defaultstate="collapsed" desc="Vector3">
     @Override
     public boolean isUnit() {
@@ -154,46 +371,30 @@ public class BuffVector3d extends BuffTuple3d implements BuffVector3 {
 
     @Override
     public BuffVector3d add(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
         return new BuffVector3d(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
     }
 
-    public BuffVector3d add(BuffVector3d other) {
-        return new BuffVector3d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
-    }
-
     @Override
     public BuffVector3d sub(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
         return new BuffVector3d(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
     }
 
-    public BuffVector3d sub(BuffVector3d other) {
-        return new BuffVector3d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
-    }
-
     @Override
     public BuffVector3d simpleMul(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
         return new BuffVector3d(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ());
     }
 
-    public BuffVector3d simpleMul(BuffVector3d other) {
-        return new BuffVector3d(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
-    }
-
     @Override
     public BuffVector3d simpleDiv(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
         return new BuffVector3d(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ());
-    }
-
-    public BuffVector3d simpleDiv(BuffVector3d other) {
-        return new BuffVector3d(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
     }
 
     @Override
@@ -224,14 +425,10 @@ public class BuffVector3d extends BuffTuple3d implements BuffVector3 {
         return lineal(other, 1 - alpha, alpha);
     }
 
-    public BuffVector3d lerp(BuffVector3d other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
     @Override
     public double invLerp(Vector3 other, Vector3 vLerp) {
-        Tuple3_Double _other = toTuple(other);
-        Tuple3_Double _vLerp = toTuple(vLerp);
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
+        Tuple3_Double _vLerp = TupleUtils.toTuple3_Double(vLerp);
 
         double x1 = _other.getX() - getX();
         double y1 = _other.getY() - getY();
@@ -242,221 +439,35 @@ public class BuffVector3d extends BuffTuple3d implements BuffVector3 {
         return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
     }
 
-    public double invLerp(BuffVector3d other, BuffVector3d vLerp) {
-        double x1 = other.getX() - getX();
-        double y1 = other.getY() - getY();
-        double z1 = other.getZ() - getZ();
-        double x2 = vLerp.getX() - getX();
-        double y2 = vLerp.getY() - getY();
-        double z2 = vLerp.getZ() - getZ();
-        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
-    }
-
     @Override
     public BuffVector3d lineal(Vector3 other, double alpha, double beta) {
-        Tuple3_Double _other = toTuple(other);
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
         return new BuffVector3d((double)(alpha * getX() + beta * _other.getX()),
                                 (double)(alpha * getY() + beta * _other.getY()),
                                 (double)(alpha * getZ() + beta * _other.getZ()));
     }
 
-    public BuffVector3d lineal(BuffVector3d other, double alpha, double beta) {
-        return new BuffVector3d((double)(alpha * getX() + beta * other.getX()),
-                                (double)(alpha * getY() + beta * other.getY()),
-                                (double)(alpha * getZ() + beta * other.getZ()));
-    }
-
     @Override
     public double dot(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
         return getX() * _other.getX() + getY() * _other.getY() + getZ() * _other.getZ();
     }
 
-    public double dot(BuffVector3d other) {
-        return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ();
-    }
-
     @Override
     public BuffVector3d cross(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
+        Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
         return new BuffVector3d((getY() * _other.getZ()) - (getZ() * _other.getY()),
                                 (getZ() * _other.getX()) - (getX() * _other.getZ()),
                                 (getX() * _other.getY()) - (getY() * _other.getX()));
     }
 
-    public BuffVector3d cross(BuffVector3d other) {
-        return new BuffVector3d((getY() * other.getZ()) - (getZ() * other.getY()),
-                                (getZ() * other.getX()) - (getX() * other.getZ()),
-                                (getX() * other.getY()) - (getY() * other.getX()));
-    }
-
     @Override
     public Vector3 vectorProjection(Vector3 where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
-    }
-
-    public BuffVector3d vectorProjection(BuffVector3d where) {
-        double r = dot(where) / where.getLengthCuad();
-        return where.mul(r);
-    }
-//</editor-fold>
-
-//<editor-fold defaultstate="collapsed" desc="Vector3">
-    @Override
-    public BuffVector3d setZero() {
-        set(0, 0, 0);
-        return this;
-    }
-
-    @Override
-    public BuffVector3d setUnit() {
-        double len = getLength();
-        if (DoubleUtils.epsilonZero(len)) {
-            setZero();
-        } else {
-            divAndSet(len);
-        }
-        return this;
-    }
-
-    @Override
-    public BuffVector3d addAndSet(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
-
-        set(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
-        return this;
-    }
-
-    public BuffVector3d addAndSet(BuffVector3d other) {
-        set(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
-        return this;
-    }
-
-    @Override
-    public BuffVector3d subAndSet(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
-
-        set(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
-        return this;
-    }
-
-    public BuffVector3d subAndSet(BuffVector3d other) {
-        set(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
-        return this;
-    }
-
-    @Override
-    public BuffVector3d simpleMulAndSet(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
-
-        set(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ());
-        return this;
-    }
-
-    public BuffVector3d simpleMulAndSet(BuffVector3d other) {
-        set(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
-        return this;
-    }
-
-    @Override
-    public BuffVector3d simpleDivAndSet(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
-
-        set(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ());
-        return this;
-    }
-
-    public BuffVector3d simpleDivAndSet(BuffVector3d other) {
-        set(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
-        return this;
-    }
-
-    @Override
-    public BuffVector3d mulAndSet(double v) {
-        set((double)(getX() * v), (double)(getY() * v), (double)(getZ() * v));
-        return this;
-    }
-
-    @Override
-    public BuffVector3d divAndSet(double v) {
-        set((double)(getX() / v), (double)(getY() / v), (double)(getZ() / v));
-        return this;
-    }
-
-    @Override
-    public BuffVector3d negAndSet() {
-        set(- getX(), - getY(), - getZ());
-        return this;
-    }
-
-    @Override
-    public BuffVector3d absAndSet() {
-        set(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()));
-        return this;
-    }
-
-    @Override
-    public BuffVector3d lerpAndSet(Vector3 other, double alpha) {
-        linealAndSet(other, 1 - alpha, alpha);
-        return this;
-    }
-
-    public BuffVector3d lerpAndSet(BuffVector3d other, double alpha) {
-        linealAndSet(other, 1 - alpha, alpha);
-        return this;
-    }
-
-    @Override
-    public BuffVector3d linealAndSet(Vector3 other, double alpha, double beta) {
-        Tuple3_Double _other = toTuple(other);
-
-        set((double)(alpha * getX() + beta * _other.getX()),
-            (double)(alpha * getY() + beta * _other.getY()),
-            (double)(alpha * getZ() + beta * _other.getZ()));
-        return this;
-    }
-
-    public BuffVector3d linealAndSet(BuffVector3d other, double alpha, double beta) {
-        set((double)(alpha * getX() + beta * other.getX()),
-            (double)(alpha * getY() + beta * other.getY()),
-            (double)(alpha * getZ() + beta * other.getZ()));
-        return this;
-    }
-
-    @Override
-    public BuffVector3d crossAndSet(Vector3 other) {
-        Tuple3_Double _other = toTuple(other);
-
-        set((getY() * _other.getZ()) - (getZ() * _other.getY()),
-            (getZ() * _other.getX()) - (getX() * _other.getZ()),
-            (getX() * _other.getY()) - (getY() * _other.getX()));
-        return this;
-    }
-
-    public BuffVector3d crossAndSet(BuffVector3d other) {
-        set((getY() * other.getZ()) - (getZ() * other.getY()),
-            (getZ() * other.getX()) - (getX() * other.getZ()),
-            (getX() * other.getY()) - (getY() * other.getX()));
-        return this;
-    }
-
-    @Override
-    public BuffVector3d vectorProjectionAndSet(Vector3 where) {
-        double r = dot(where) / where.getLengthCuad();
-        set(where);
-        mulAndSet(r);
-        return this;
-    }
-
-    public BuffVector3d vectorProjectionAndSet(BuffVector3d where) {
-        double r = dot(where) / where.getLengthCuad();
-        set(where);
-        mulAndSet(r);
-        return this;
     }
 //</editor-fold>
 

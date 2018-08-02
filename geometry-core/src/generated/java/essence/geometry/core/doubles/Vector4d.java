@@ -26,6 +26,7 @@
 package essence.geometry.core.doubles;
 
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector4;
 import essence.geometry.core.DoubleUtils;
 import essence.util.math.ArithmeticError;
@@ -118,6 +119,54 @@ public class Vector4d extends Tuple4d implements Vector4 {
         return getUnit(3);
     }
 
+    public Vector4d add(Vector4d other) {
+        return new Vector4d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+    }
+
+    public Vector4d sub(Vector4d other) {
+        return new Vector4d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+    }
+
+    public Vector4d simpleMul(Vector4d other) {
+        return new Vector4d(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ(), getW() * other.getW());
+    }
+
+    public Vector4d simpleDiv(Vector4d other) {
+        return new Vector4d(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ(), getW() / other.getW());
+    }
+
+    public Vector4d lerp(Vector4d other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public double invLerp(Vector4d other, Vector4d vLerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double w1 = other.getW() - getW();
+        double x2 = vLerp.getX() - getX();
+        double y2 = vLerp.getY() - getY();
+        double z2 = vLerp.getZ() - getZ();
+        double w2 = vLerp.getW() - getW();
+        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
+    }
+
+    public Vector4d lineal(Vector4d other, double alpha, double beta) {
+        return new Vector4d((double)(alpha * getX() + beta * other.getX()),
+                            (double)(alpha * getY() + beta * other.getY()),
+                            (double)(alpha * getZ() + beta * other.getZ()),
+                            (double)(alpha * getW() + beta * other.getW()));
+    }
+
+    public double dot(Vector4d other) {
+        return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ() + getW() * other.getW();
+    }
+
+    public Vector4d vectorProjection(Vector4d where) {
+        double r = dot(where) / where.getLengthCuad();
+        return where.mul(r);
+    }
+
 //<editor-fold defaultstate="collapsed" desc="Vector4">
     @Override
     public boolean isUnit() {
@@ -168,46 +217,30 @@ public class Vector4d extends Tuple4d implements Vector4 {
 
     @Override
     public Vector4d add(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new Vector4d(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
     }
 
-    public Vector4d add(Vector4d other) {
-        return new Vector4d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
-    }
-
     @Override
     public Vector4d sub(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new Vector4d(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
     }
 
-    public Vector4d sub(Vector4d other) {
-        return new Vector4d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
-    }
-
     @Override
     public Vector4d simpleMul(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new Vector4d(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ(), getW() * _other.getW());
     }
 
-    public Vector4d simpleMul(Vector4d other) {
-        return new Vector4d(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ(), getW() * other.getW());
-    }
-
     @Override
     public Vector4d simpleDiv(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new Vector4d(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ(), getW() / _other.getW());
-    }
-
-    public Vector4d simpleDiv(Vector4d other) {
-        return new Vector4d(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ(), getW() / other.getW());
     }
 
     @Override
@@ -238,14 +271,10 @@ public class Vector4d extends Tuple4d implements Vector4 {
         return lineal(other, 1 - alpha, alpha);
     }
 
-    public Vector4d lerp(Vector4d other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
     @Override
     public double invLerp(Vector4 other, Vector4 vLerp) {
-        Tuple4_Double _other = toTuple(other);
-        Tuple4_Double _vLerp = toTuple(vLerp);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
+        Tuple4_Double _vLerp = TupleUtils.toTuple4_Double(vLerp);
 
         double x1 = _other.getX() - getX();
         double y1 = _other.getY() - getY();
@@ -258,21 +287,9 @@ public class Vector4d extends Tuple4d implements Vector4 {
         return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
     }
 
-    public double invLerp(Vector4d other, Vector4d vLerp) {
-        double x1 = other.getX() - getX();
-        double y1 = other.getY() - getY();
-        double z1 = other.getZ() - getZ();
-        double w1 = other.getW() - getW();
-        double x2 = vLerp.getX() - getX();
-        double y2 = vLerp.getY() - getY();
-        double z2 = vLerp.getZ() - getZ();
-        double w2 = vLerp.getW() - getW();
-        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
-    }
-
     @Override
     public Vector4d lineal(Vector4 other, double alpha, double beta) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return new Vector4d((double)(alpha * getX() + beta * _other.getX()),
                             (double)(alpha * getY() + beta * _other.getY()),
@@ -280,31 +297,15 @@ public class Vector4d extends Tuple4d implements Vector4 {
                             (double)(alpha * getW() + beta * _other.getW()));
     }
 
-    public Vector4d lineal(Vector4d other, double alpha, double beta) {
-        return new Vector4d((double)(alpha * getX() + beta * other.getX()),
-                            (double)(alpha * getY() + beta * other.getY()),
-                            (double)(alpha * getZ() + beta * other.getZ()),
-                            (double)(alpha * getW() + beta * other.getW()));
-    }
-
     @Override
     public double dot(Vector4 other) {
-        Tuple4_Double _other = toTuple(other);
+        Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
         return getX() * _other.getX() + getY() * _other.getY() + getZ() * _other.getZ() + getW() * _other.getW();
     }
 
-    public double dot(Vector4d other) {
-        return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ() + getW() * other.getW();
-    }
-
     @Override
     public Vector4 vectorProjection(Vector4 where) {
-        double r = dot(where) / where.getLengthCuad();
-        return where.mul(r);
-    }
-
-    public Vector4d vectorProjection(Vector4d where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }
