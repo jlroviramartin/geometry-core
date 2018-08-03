@@ -1,0 +1,61 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/Tuple.Core.pebble" %}
+
+{%  import "pebble/points/PointImp.constructors.pebble" %}
+{%  import "pebble/points/PointImp.Object.pebble" %}
+{%  import "pebble/points/PointImp.public.pebble" %}
+{%  import "pebble/points/PointImp.private.pebble" %}
+
+{%  import "pebble/points/Point.common.pebble" %}
+{%  import "pebble/points/Point.implementation.pebble" %}
+{%  import "pebble/points/Point.implementation_nonvirtual.pebble" %}
+
+{%  import "pebble/buffpoints/BuffPoint.implementation.pebble" %}
+{%  import "pebble/buffpoints/BuffPoint.implementation_nonvirtual.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
+import essence.geometry.core.{{ desc.vectorName }};
+import essence.geometry.core.{{ desc.pointName }};
+import essence.geometry.core.{{ desc.buffPointName }};
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public class {{ desc.buffPointImpName }} extends {{ desc.buffTupleImpName }} implements {{ desc.buffPointName }} {
+
+{{ Constructors( desc, desc.buffPointImpName ) }}
+
+{{ Public( desc, desc.buffPointImpName ) }}
+
+{{ MathAndSetNonVirtual( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
+
+{{ MathNonVirtual( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.buffPointName }}">
+{{ MathAndSet( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.pointName }}">
+{{ Math( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.buffPointImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc ) }}
+//</editor-fold>
+}
+{%  endblock %}

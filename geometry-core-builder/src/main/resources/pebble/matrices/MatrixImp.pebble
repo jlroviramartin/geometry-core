@@ -1,0 +1,96 @@
+{%  extends "pebble/Base.pebble" %}
+
+{#
+ # This template renders a matrix.
+ #}
+
+{%  import "pebble/matrices/Matrix.Core.pebble" %}
+
+{%  import "pebble/matrices/MatrixImp.constructors.pebble" %}
+{%  import "pebble/matrices/MatrixImp.public.pebble" %}
+{%  import "pebble/matrices/MatrixImp.Accessors.pebble" %}
+{%  import "pebble/matrices/MatrixImp.private.pebble" %}
+{%  import "pebble/matrices/MatrixImp.Object.pebble" %}
+{%  import "pebble/matrices/MatrixImp.Transform.pebble" %}
+{%  import "pebble/matrices/MatrixImp.BuffTransform.pebble" %}
+{%  import "pebble/matrices/MatrixImp.EpsilonEquatable.pebble" %}
+
+{%  import "pebble/matrices/MatrixImp.Math.pebble" %}
+{%  import "pebble/matrices/MatrixImp.MathAndSet.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import java.util.logging.Logger;
+import essence.util.math.EpsilonEquatable;
+import essence.geometry.core.DoubleUtils;
+import essence.geometry.core.SingularMatrixException;
+import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
+import essence.geometry.core.{{ desc.vector.vectorName }};
+import essence.geometry.core.{{ desc.vector.buffVectorName }};
+{%  if not desc.vector.lowerDimension is empty %}
+import essence.geometry.core.{{ desc.vector.lowerDimension.vectorName }};
+import essence.geometry.core.{{ desc.vector.lowerDimension.pointName }};
+import essence.geometry.core.{{ desc.vector.lowerDimension.buffVectorName }};
+import essence.geometry.core.{{ desc.vector.lowerDimension.buffPointName }};
+{%  endif %}
+import essence.geometry.core.VectorFormatInfo;
+
+import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dimRows }}x{{ desc.dimCols }} matrix.
+ */
+public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ desc.matrixImpName }}> {
+//<editor-fold defaultstate="collapsed" desc="fields">
+{{ Fields( desc ) }}
+//</editor-fold>
+
+{{ Constructors( desc, desc.matrixImpName ) }}
+
+{{ Public( desc, desc.matrixImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="accessors">
+{{ Accessors( desc, desc.matrixImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Transforms">
+{{ Transform( desc, desc.matrixImpName ) }}
+
+{{ BuffTransform( desc, desc.matrixImpName ) }}
+//</editor-fold>
+
+{{ Math( desc, desc.matrixImpName ) }}
+
+{{ MathAndSet( desc, desc.matrixImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.matrixImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<{{ desc.matrixImpName }}>">
+{{ EpsilonEquatable( desc, desc.matrixImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc, desc.matrixImpName ) }}
+//</editor-fold>
+}
+{%  endblock %}
+
+{#
+ # This macro renders the fields of the matrix.
+ #}
+{%  macro Fields(desc) %}
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+    /** {{property.upperName}} component. */
+    private {{property.type}} {{property.name}};
+{%          endfor %}
+{%      endfor %}
+    private static final Logger LOG = Logger.getLogger({{ desc.matrixImpName }}.class.getName());
+    private static String format;
+{%  endmacro %}

@@ -1,0 +1,10 @@
+{#
+ # This macro renders the overwriting of Object methods of the tuple.
+ #}
+{%  macro Object( desc, className ) %}
+    @Override
+    public {{ className }} clone() throws CloneNotSupportedException {
+        return ({{ className }})super.clone();
+    }
+{%  endmacro %}
+

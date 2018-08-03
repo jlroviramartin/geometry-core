@@ -1,0 +1,180 @@
+{%  macro Math( desc, className ) %}
+    @Override
+    public boolean isUnit() {
+        return isUnit(EPSILON);
+    }
+
+    @Override
+    public boolean isUnit(double epsilon) {
+        return DoubleUtils.epsilonEquals(getLength(), 1, epsilon);
+    }
+
+    @Override
+    public {{ className }} getUnit() {
+        double len = getLength();
+        return div(len);
+    }
+
+    @Override
+    public int getQuadrant() {
+        {{ GetQuadrant(desc) | indent(2) }}
+    }
+
+    @Override
+    public double getLengthL1() {
+        return {{ GetLengthL1(desc) | indent(4) }};
+    }
+{%      if desc.dim == 2 %}
+
+    @Override
+    public double getAngle() {
+        return (double) Math.atan2(getY(), getX());
+    }
+
+    @Override
+    public double angleTo({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
+        return Math.atan2(getX() * _other.getY() - getY() * _other.getX(),
+                getX() * _other.getX() + getY() * _other.getY());
+    }
+
+    @Override
+    public {{ className }} getPerpLeft() {
+        return new {{ className }}(-getY(), getX());
+    }
+
+    @Override
+    public {{ className }} getPerpRight() {
+        return new {{ className }}(getY(), -getX());
+    }
+
+    @Override
+    public {{ className }} rotate(double angle) {
+        double s = Math.sin(angle);
+        double c = Math.cos(angle);
+        return new {{ className }}(({{ desc.type }})(getX() * c - getY() * s),
+                ({{ desc.type }})(getX() * s + getY() * c));
+    }
+
+    @Override
+    public {{ className }} rotateAndScale(double angle, double len) {
+        double s = Math.sin(angle);
+        double c = Math.cos(angle);
+        return new {{ className }}(({{ desc.type }})(len*(getX() * c - getY() * s)),
+                ({{ desc.type }})(len*(getX() * s + getY() * c)));
+    }
+{%      endif %}
+
+    @Override
+    public {{ className }} add({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "+", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} sub({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "-", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} simpleMul({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "*", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} simpleDiv({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "/", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} mul(double v) {
+        return new {{ className }}{{ BinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} div(double v) {
+        if (DoubleUtils.epsilonZero(v)) {
+            throw new ArithmeticError("divided by zero");
+        }
+        return new {{ className }}{{ BinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} neg() {
+        return new {{ className }}{{ UnaryOperator(desc, "-", "") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} abs() {
+        return new {{ className }}{{ UnaryFunction(desc, "Math.abs", "") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} lerp({{ desc.vectorName }} other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    @Override
+    public double invLerp({{ desc.vectorName }} other, {{ desc.vectorName }} vLerp) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+        {{ desc.tupleTypeName }} _vLerp = TupleUtils.to{{ desc.tupleTypeName }}(vLerp);
+
+        {{ InvLerp(desc, "", "_other.", "_vLerp.") | indent(2) }}
+    }
+
+    @Override
+    public {{ className }} lineal({{ desc.vectorName }} other, double alpha, double beta) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ Lineal(desc, "", "_other.", "Vector") | indent(4) }};
+    }
+
+    @Override
+    public double dot({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+{%      dynmacro Math_dot1( desc, property ) %}
+get{{ property.upperName }}() * _other.get{{ property.upperName }}()
+{%-     enddynmacro %}
+        return {{ Properties( desc, " + ", Math_dot1 ) }};
+    }
+{%      if desc.dim == 2 %}
+
+    @Override
+    public double cross({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return getX() * _other.getY() - getY() * _other.getX();
+    }
+{%      elseif desc.dim == 3 %}
+
+    @Override
+    public {{ className }} cross({{ desc.vectorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}((getY() * _other.getZ()) - (getZ() * _other.getY()),
+                (getZ() * _other.getX()) - (getX() * _other.getZ()),
+                (getX() * _other.getY()) - (getY() * _other.getX()));
+    }
+{%      endif %}
+
+    @Override
+    public {{ desc.vectorName }} vectorProjection({{ desc.vectorName }} where) {
+{#
+ #  where.getUnit().mul( this.dot( where.getUnit() ) )
+ #  =
+ #  where.mul( this.dot( where ) / where.getLengthCuad() )
+ #}
+        double r = dot(where) / where.getLengthCuad();
+        return where.mul(r);
+    }
+{%  endmacro %}

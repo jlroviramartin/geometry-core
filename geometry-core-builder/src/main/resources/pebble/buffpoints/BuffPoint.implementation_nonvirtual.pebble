@@ -1,0 +1,28 @@
+{%  macro MathAndSetNonVirtual( desc, className, vectorClassName ) %}
+    public {{ className }} addAndSet({{ vectorClassName }} other) {
+        set{{ BinaryOperator(desc, "+", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} subAndSet({{ vectorClassName }} other) {
+        set{{ BinaryOperator(desc, "-", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} lerpAndSet({{ className }} other, double alpha) {
+        return linealAndSet(other, 1 - alpha, alpha);
+    }
+
+    public {{ className }} linealAndSet({{ className }} other, double alpha, double beta) {
+        set{{ Lineal(desc, "", "other.", "Vector") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} vectorProjectionAndSet({{ vectorClassName }} where) {
+        {{ VectorProjection(desc, "", "where.", "set") | indent(4) }}
+        return this;
+
+        //set(new {{ vectorClassName }}(this).vectorProjectionAndSet(where));
+        //return this;
+    }
+{%  endmacro %}

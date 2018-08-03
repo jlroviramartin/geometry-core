@@ -1,0 +1,34 @@
+{%  import "pebble/Tuple.Core.pebble" %}
+
+{#
+ # This macro renders the function GetDistanceCuad of the point.
+ #}
+{%  macro GetDistanceCuad( desc, this="", other="other." ) %}
+{%      dynmacro GetDistanceCuad_anonymous1( desc, property ) %}
+square({{ p().other }}get{{ property.upperName }}() - {{ p().this }}get{{ property.upperName }}())
+{%-     enddynmacro %}
+{{ Properties( desc, "%n+ ", GetDistanceCuad_anonymous1 ) }}
+{%- endmacro %}
+
+{#
+ # This macro renders the function GetDistanceL1 of the point.
+ #}
+{%  macro GetDistanceL1( desc, this="", other="other." ) %}
+{%      dynmacro GetDistanceL1_anonymous1( desc, property ) %}
+Math.abs({{ p().other }}get{{ property.upperName }}() - {{ p().this }}get{{ property.upperName }}())
+{%-     enddynmacro %}
+{{ Properties( desc, "%n+ ", GetDistanceL1_anonymous1 ) }}
+{%- endmacro %}
+
+{#
+ # This macro renders the method projection over a vector of the point.
+ #}
+{%  macro VectorProjection( desc, this="", other="other.", ret = "return ..." ) %}
+{%      dynmacro Math_VectorProjection( desc, property ) %}
+{{ p().this }}get{{ property.upperName }}() * {{ p().other }}get{{ property.upperName }}()
+{%-     enddynmacro %}
+    double dot = {{ Properties( desc, " + ", Math_VectorProjection ) }};
+    double r = dot / where.getLengthCuad();
+
+    {{ret}}{{ BinaryOperatorScalar(desc, "*", "", "r") | indent(4) }};
+{%  endmacro %}
