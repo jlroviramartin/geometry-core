@@ -26,7 +26,11 @@
 package essence.geometry.core.bytes;
 
 import essence.geometry.core.Tuple;
+import essence.geometry.core.TupleUtils;
+import essence.geometry.core.Color3;
 import essence.geometry.core.BuffColor3;
+import essence.geometry.core.DoubleUtils;
+import essence.util.math.ArithmeticError;
 
 /**
  * Basic implementation of a 3 dimension color.
@@ -72,6 +76,259 @@ public class BuffColor3b extends BuffTuple3b implements BuffColor3 {
     public static final BuffColor3b getOne() {
         return new BuffColor3b((byte)1, (byte)1, (byte)1);
     }
+
+    public BuffColor3b addAndSet(BuffColor3b other) {
+        set((byte)(getX() + other.getX()), (byte)(getY() + other.getY()), (byte)(getZ() + other.getZ()));
+        return this;
+    }
+
+    public BuffColor3b subAndSet(BuffColor3b other) {
+        set((byte)(getX() - other.getX()), (byte)(getY() - other.getY()), (byte)(getZ() - other.getZ()));
+        return this;
+    }
+
+    public BuffColor3b simpleMulAndSet(BuffColor3b other) {
+        set((byte)(getX() * other.getX()), (byte)(getY() * other.getY()), (byte)(getZ() * other.getZ()));
+        return this;
+    }
+
+    public BuffColor3b simpleDivAndSet(BuffColor3b other) {
+        set((byte)(getX() / other.getX()), (byte)(getY() / other.getY()), (byte)(getZ() / other.getZ()));
+        return this;
+    }
+
+    public BuffColor3b lerpAndSet(BuffColor3b other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    public BuffColor3b linealAndSet(BuffColor3b other, double alpha, double beta) {
+        set((byte)(alpha * getX() + beta * other.getX()),
+            (byte)(alpha * getY() + beta * other.getY()),
+            (byte)(alpha * getZ() + beta * other.getZ()));
+        return this;
+    }
+
+    public BuffColor3b add(BuffColor3b other) {
+        return new BuffColor3b((byte)(getX() + other.getX()), (byte)(getY() + other.getY()), (byte)(getZ() + other.getZ()));
+    }
+
+    public BuffColor3b sub(BuffColor3b other) {
+        return new BuffColor3b((byte)(getX() - other.getX()), (byte)(getY() - other.getY()), (byte)(getZ() - other.getZ()));
+    }
+
+    public BuffColor3b simpleMul(BuffColor3b other) {
+        return new BuffColor3b((byte)(getX() * other.getX()), (byte)(getY() * other.getY()), (byte)(getZ() * other.getZ()));
+    }
+
+    public BuffColor3b simpleDiv(BuffColor3b other) {
+        return new BuffColor3b((byte)(getX() / other.getX()), (byte)(getY() / other.getY()), (byte)(getZ() / other.getZ()));
+    }
+
+    public BuffColor3b lerp(BuffColor3b other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public double invLerp(BuffColor3b other, BuffColor3b cLerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double x2 = cLerp.getX() - getX();
+        double y2 = cLerp.getY() - getY();
+        double z2 = cLerp.getZ() - getZ();
+        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+    }
+
+    public BuffColor3b lineal(BuffColor3b other, double alpha, double beta) {
+        return new BuffColor3b((byte)(alpha * getX() + beta * other.getX()),
+                               (byte)(alpha * getY() + beta * other.getY()),
+                               (byte)(alpha * getZ() + beta * other.getZ()));
+    }
+
+//<editor-fold defaultstate="collapsed" desc="BuffColor3">
+    @Override
+    public BuffColor3b normalize() {
+        set(clamp(getX(), (byte)0, (byte)255), clamp(getY(), (byte)0, (byte)255), clamp(getZ(), (byte)0, (byte)255));
+        return this;
+    }
+
+    @Override
+    public BuffColor3b setZero() {
+        set((byte)0, (byte)0, (byte)0);
+        return this;
+    }
+
+    @Override
+    public BuffColor3b addAndSet(Color3 other) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        set((byte)(getX() + _other.getX()), (byte)(getY() + _other.getY()), (byte)(getZ() + _other.getZ()));
+        return this;
+    }
+
+    @Override
+    public BuffColor3b subAndSet(Color3 other) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        set((byte)(getX() - _other.getX()), (byte)(getY() - _other.getY()), (byte)(getZ() - _other.getZ()));
+        return this;
+    }
+
+    @Override
+    public BuffColor3b simpleMulAndSet(Color3 other) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        set((byte)(getX() * _other.getX()), (byte)(getY() * _other.getY()), (byte)(getZ() * _other.getZ()));
+        return this;
+    }
+
+    @Override
+    public BuffColor3b simpleDivAndSet(Color3 other) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        set((byte)(getX() / _other.getX()), (byte)(getY() / _other.getY()), (byte)(getZ() / _other.getZ()));
+        return this;
+    }
+
+    @Override
+    public BuffColor3b mulAndSet(double v) {
+        set((byte)(getX() * v), (byte)(getY() * v), (byte)(getZ() * v));
+        return this;
+    }
+
+    @Override
+    public BuffColor3b divAndSet(double v) {
+        set((byte)(getX() / v), (byte)(getY() / v), (byte)(getZ() / v));
+        return this;
+    }
+
+    @Override
+    public BuffColor3b negAndSet() {
+        set((byte)(- getX()), (byte)(- getY()), (byte)(- getZ()));
+        return this;
+    }
+
+    @Override
+    public BuffColor3b absAndSet() {
+        set((byte)Math.abs(getX()), (byte)Math.abs(getY()), (byte)Math.abs(getZ()));
+        return this;
+    }
+
+    @Override
+    public BuffColor3b lerpAndSet(Color3 other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    @Override
+    public BuffColor3b linealAndSet(Color3 other, double alpha, double beta) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        set((byte)(alpha * getX() + beta * _other.getX()),
+            (byte)(alpha * getY() + beta * _other.getY()),
+            (byte)(alpha * getZ() + beta * _other.getZ()));
+        return this;
+    }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Color3">
+    @Override
+    public boolean isNormalized() {
+        return isNormal(getX(), (byte)0, (byte)255) && isNormal(getY(), (byte)0, (byte)255) && isNormal(getZ(), (byte)0, (byte)255);
+    }
+
+    @Override
+    public BuffColor3b getNormalized() {
+        return new BuffColor3b(clamp(getX(), (byte)0, (byte)255), clamp(getY(), (byte)0, (byte)255), clamp(getZ(), (byte)0, (byte)255));
+    }
+
+    @Override
+    public BuffColor3b add(Color3 other) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        return new BuffColor3b((byte)(getX() + _other.getX()), (byte)(getY() + _other.getY()), (byte)(getZ() + _other.getZ()));
+    }
+
+    @Override
+    public BuffColor3b sub(Color3 other) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        return new BuffColor3b((byte)(getX() - _other.getX()), (byte)(getY() - _other.getY()), (byte)(getZ() - _other.getZ()));
+    }
+
+    @Override
+    public BuffColor3b simpleMul(Color3 other) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        return new BuffColor3b((byte)(getX() * _other.getX()), (byte)(getY() * _other.getY()), (byte)(getZ() * _other.getZ()));
+    }
+
+    @Override
+    public BuffColor3b simpleDiv(Color3 other) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        return new BuffColor3b((byte)(getX() / _other.getX()), (byte)(getY() / _other.getY()), (byte)(getZ() / _other.getZ()));
+    }
+
+    @Override
+    public BuffColor3b mul(double v) {
+        return new BuffColor3b((byte)(getX() * v), (byte)(getY() * v), (byte)(getZ() * v));
+    }
+
+    @Override
+    public BuffColor3b div(double v) {
+        if (DoubleUtils.epsilonZero(v)) {
+            throw new ArithmeticError("divided by zero");
+        }
+        return new BuffColor3b((byte)(getX() / v), (byte)(getY() / v), (byte)(getZ() / v));
+    }
+
+    @Override
+    public BuffColor3b neg() {
+        return new BuffColor3b((byte)(- getX()), (byte)(- getY()), (byte)(- getZ()));
+    }
+
+    @Override
+    public BuffColor3b abs() {
+        return new BuffColor3b((byte)Math.abs(getX()), (byte)Math.abs(getY()), (byte)Math.abs(getZ()));
+    }
+
+    @Override
+    public BuffColor3b lerp(Color3 other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    @Override
+    public double invLerp(Color3 other, Color3 cLerp) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+        Tuple3_Byte _cLerp = TupleUtils.toTuple3_Byte(cLerp);
+
+        double x1 = _other.getX() - getX();
+        double y1 = _other.getY() - getY();
+        double z1 = _other.getZ() - getZ();
+        double x2 = _cLerp.getX() - getX();
+        double y2 = _cLerp.getY() - getY();
+        double z2 = _cLerp.getZ() - getZ();
+        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+    }
+
+    @Override
+    public BuffColor3b lineal(Color3 other, double alpha, double beta) {
+        Tuple3_Byte _other = TupleUtils.toTuple3_Byte(other);
+
+        return new BuffColor3b((byte)(alpha * getX() + beta * _other.getX()),
+                               (byte)(alpha * getY() + beta * _other.getY()),
+                               (byte)(alpha * getZ() + beta * _other.getZ()));
+    }
+
+    private static boolean isNormal(byte v, byte min, byte max) {
+        return v >= min && v <= max;
+    }
+
+    private static byte clamp(byte v, byte min, byte max) {
+        return v < min ? min : v > max ? max : v;
+    }
+//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override

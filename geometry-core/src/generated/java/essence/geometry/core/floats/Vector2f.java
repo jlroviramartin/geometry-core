@@ -100,19 +100,19 @@ public class Vector2f extends Tuple2f implements Vector2 {
     }
 
     public Vector2f add(Vector2f other) {
-        return new Vector2f(getX() + other.getX(), getY() + other.getY());
+        return new Vector2f((float)(getX() + other.getX()), (float)(getY() + other.getY()));
     }
 
     public Vector2f sub(Vector2f other) {
-        return new Vector2f(getX() - other.getX(), getY() - other.getY());
+        return new Vector2f((float)(getX() - other.getX()), (float)(getY() - other.getY()));
     }
 
     public Vector2f simpleMul(Vector2f other) {
-        return new Vector2f(getX() * other.getX(), getY() * other.getY());
+        return new Vector2f((float)(getX() * other.getX()), (float)(getY() * other.getY()));
     }
 
     public Vector2f simpleDiv(Vector2f other) {
-        return new Vector2f(getX() / other.getX(), getY() / other.getY());
+        return new Vector2f((float)(getX() / other.getX()), (float)(getY() / other.getY()));
     }
 
     public Vector2f lerp(Vector2f other, double alpha) {
@@ -227,28 +227,28 @@ public class Vector2f extends Tuple2f implements Vector2 {
     public Vector2f add(Vector2 other) {
         Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
-        return new Vector2f(getX() + _other.getX(), getY() + _other.getY());
+        return new Vector2f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()));
     }
 
     @Override
     public Vector2f sub(Vector2 other) {
         Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
-        return new Vector2f(getX() - _other.getX(), getY() - _other.getY());
+        return new Vector2f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()));
     }
 
     @Override
     public Vector2f simpleMul(Vector2 other) {
         Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
-        return new Vector2f(getX() * _other.getX(), getY() * _other.getY());
+        return new Vector2f((float)(getX() * _other.getX()), (float)(getY() * _other.getY()));
     }
 
     @Override
     public Vector2f simpleDiv(Vector2 other) {
         Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
-        return new Vector2f(getX() / _other.getX(), getY() / _other.getY());
+        return new Vector2f((float)(getX() / _other.getX()), (float)(getY() / _other.getY()));
     }
 
     @Override
@@ -266,12 +266,12 @@ public class Vector2f extends Tuple2f implements Vector2 {
 
     @Override
     public Vector2f neg() {
-        return new Vector2f(- getX(), - getY());
+        return new Vector2f((float)(- getX()), (float)(- getY()));
     }
 
     @Override
     public Vector2f abs() {
-        return new Vector2f(Math.abs(getX()), Math.abs(getY()));
+        return new Vector2f((float)Math.abs(getX()), (float)Math.abs(getY()));
     }
 
     @Override

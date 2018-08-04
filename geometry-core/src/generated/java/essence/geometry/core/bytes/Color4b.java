@@ -28,6 +28,8 @@ package essence.geometry.core.bytes;
 import essence.geometry.core.Tuple;
 import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Color4;
+import essence.geometry.core.DoubleUtils;
+import essence.util.math.ArithmeticError;
 
 /**
  * Basic implementation of a 4 dimension color.
@@ -74,6 +76,147 @@ public class Color4b extends Tuple4b implements Color4 {
     public static final Color4b getOne() {
         return new Color4b((byte)1, (byte)1, (byte)1, (byte)1);
     }
+
+    public Color4b add(Color4b other) {
+        return new Color4b((byte)(getX() + other.getX()), (byte)(getY() + other.getY()), (byte)(getZ() + other.getZ()), (byte)(getW() + other.getW()));
+    }
+
+    public Color4b sub(Color4b other) {
+        return new Color4b((byte)(getX() - other.getX()), (byte)(getY() - other.getY()), (byte)(getZ() - other.getZ()), (byte)(getW() - other.getW()));
+    }
+
+    public Color4b simpleMul(Color4b other) {
+        return new Color4b((byte)(getX() * other.getX()), (byte)(getY() * other.getY()), (byte)(getZ() * other.getZ()), (byte)(getW() * other.getW()));
+    }
+
+    public Color4b simpleDiv(Color4b other) {
+        return new Color4b((byte)(getX() / other.getX()), (byte)(getY() / other.getY()), (byte)(getZ() / other.getZ()), (byte)(getW() / other.getW()));
+    }
+
+    public Color4b lerp(Color4b other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public double invLerp(Color4b other, Color4b cLerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double w1 = other.getW() - getW();
+        double x2 = cLerp.getX() - getX();
+        double y2 = cLerp.getY() - getY();
+        double z2 = cLerp.getZ() - getZ();
+        double w2 = cLerp.getW() - getW();
+        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
+    }
+
+    public Color4b lineal(Color4b other, double alpha, double beta) {
+        return new Color4b((byte)(alpha * getX() + beta * other.getX()),
+                           (byte)(alpha * getY() + beta * other.getY()),
+                           (byte)(alpha * getZ() + beta * other.getZ()),
+                           (byte)(alpha * getW() + beta * other.getW()));
+    }
+
+//<editor-fold defaultstate="collapsed" desc="Color4">
+    @Override
+    public boolean isNormalized() {
+        return isNormal(getX(), (byte)0, (byte)255) && isNormal(getY(), (byte)0, (byte)255) && isNormal(getZ(), (byte)0, (byte)255) && isNormal(getW(), (byte)0, (byte)255);
+    }
+
+    @Override
+    public Color4b getNormalized() {
+        return new Color4b(clamp(getX(), (byte)0, (byte)255), clamp(getY(), (byte)0, (byte)255), clamp(getZ(), (byte)0, (byte)255), clamp(getW(), (byte)0, (byte)255));
+    }
+
+    @Override
+    public Color4b add(Color4 other) {
+        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+
+        return new Color4b((byte)(getX() + _other.getX()), (byte)(getY() + _other.getY()), (byte)(getZ() + _other.getZ()), (byte)(getW() + _other.getW()));
+    }
+
+    @Override
+    public Color4b sub(Color4 other) {
+        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+
+        return new Color4b((byte)(getX() - _other.getX()), (byte)(getY() - _other.getY()), (byte)(getZ() - _other.getZ()), (byte)(getW() - _other.getW()));
+    }
+
+    @Override
+    public Color4b simpleMul(Color4 other) {
+        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+
+        return new Color4b((byte)(getX() * _other.getX()), (byte)(getY() * _other.getY()), (byte)(getZ() * _other.getZ()), (byte)(getW() * _other.getW()));
+    }
+
+    @Override
+    public Color4b simpleDiv(Color4 other) {
+        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+
+        return new Color4b((byte)(getX() / _other.getX()), (byte)(getY() / _other.getY()), (byte)(getZ() / _other.getZ()), (byte)(getW() / _other.getW()));
+    }
+
+    @Override
+    public Color4b mul(double v) {
+        return new Color4b((byte)(getX() * v), (byte)(getY() * v), (byte)(getZ() * v), (byte)(getW() * v));
+    }
+
+    @Override
+    public Color4b div(double v) {
+        if (DoubleUtils.epsilonZero(v)) {
+            throw new ArithmeticError("divided by zero");
+        }
+        return new Color4b((byte)(getX() / v), (byte)(getY() / v), (byte)(getZ() / v), (byte)(getW() / v));
+    }
+
+    @Override
+    public Color4b neg() {
+        return new Color4b((byte)(- getX()), (byte)(- getY()), (byte)(- getZ()), (byte)(- getW()));
+    }
+
+    @Override
+    public Color4b abs() {
+        return new Color4b((byte)Math.abs(getX()), (byte)Math.abs(getY()), (byte)Math.abs(getZ()), (byte)Math.abs(getW()));
+    }
+
+    @Override
+    public Color4b lerp(Color4 other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    @Override
+    public double invLerp(Color4 other, Color4 cLerp) {
+        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        Tuple4_Byte _cLerp = TupleUtils.toTuple4_Byte(cLerp);
+
+        double x1 = _other.getX() - getX();
+        double y1 = _other.getY() - getY();
+        double z1 = _other.getZ() - getZ();
+        double w1 = _other.getW() - getW();
+        double x2 = _cLerp.getX() - getX();
+        double y2 = _cLerp.getY() - getY();
+        double z2 = _cLerp.getZ() - getZ();
+        double w2 = _cLerp.getW() - getW();
+        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
+    }
+
+    @Override
+    public Color4b lineal(Color4 other, double alpha, double beta) {
+        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+
+        return new Color4b((byte)(alpha * getX() + beta * _other.getX()),
+                           (byte)(alpha * getY() + beta * _other.getY()),
+                           (byte)(alpha * getZ() + beta * _other.getZ()),
+                           (byte)(alpha * getW() + beta * _other.getW()));
+    }
+
+    private static boolean isNormal(byte v, byte min, byte max) {
+        return v >= min && v <= max;
+    }
+
+    private static byte clamp(byte v, byte min, byte max) {
+        return v < min ? min : v > max ? max : v;
+    }
+//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override

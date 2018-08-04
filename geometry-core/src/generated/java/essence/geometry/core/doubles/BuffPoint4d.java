@@ -82,12 +82,12 @@ public class BuffPoint4d extends BuffTuple4d implements BuffPoint4 {
     }
 
     public BuffPoint4d addAndSet(BuffVector4d other) {
-        set(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        set((double)(getX() + other.getX()), (double)(getY() + other.getY()), (double)(getZ() + other.getZ()), (double)(getW() + other.getW()));
         return this;
     }
 
     public BuffPoint4d subAndSet(BuffVector4d other) {
-        set(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        set((double)(getX() - other.getX()), (double)(getY() - other.getY()), (double)(getZ() - other.getZ()), (double)(getW() - other.getW()));
         return this;
     }
 
@@ -133,15 +133,15 @@ public class BuffPoint4d extends BuffTuple4d implements BuffPoint4 {
     }
 
     public BuffPoint4d add(BuffVector4d other) {
-        return new BuffPoint4d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        return new BuffPoint4d((double)(getX() + other.getX()), (double)(getY() + other.getY()), (double)(getZ() + other.getZ()), (double)(getW() + other.getW()));
     }
 
     public BuffPoint4d sub(BuffVector4d other) {
-        return new BuffPoint4d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        return new BuffPoint4d((double)(getX() - other.getX()), (double)(getY() - other.getY()), (double)(getZ() - other.getZ()), (double)(getW() - other.getW()));
     }
 
     public BuffVector4d vectorTo(BuffPoint4d other) {
-        return new BuffVector4d(other.getX() - getX(), other.getY() - getY(), other.getZ() - getZ(), other.getW() - getW());
+        return new BuffVector4d((double)(other.getX() - getX()), (double)(other.getY() - getY()), (double)(other.getZ() - getZ()), (double)(other.getW() - getW()));
     }
 
     public BuffPoint4d lerp(BuffPoint4d other, double alpha) {
@@ -185,7 +185,7 @@ public class BuffPoint4d extends BuffTuple4d implements BuffPoint4 {
     public BuffPoint4d addAndSet(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        set(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        set((double)(getX() + _other.getX()), (double)(getY() + _other.getY()), (double)(getZ() + _other.getZ()), (double)(getW() + _other.getW()));
         return this;
     }
 
@@ -193,7 +193,7 @@ public class BuffPoint4d extends BuffTuple4d implements BuffPoint4 {
     public BuffPoint4d subAndSet(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        set(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        set((double)(getX() - _other.getX()), (double)(getY() - _other.getY()), (double)(getZ() - _other.getZ()), (double)(getW() - _other.getW()));
         return this;
     }
 
@@ -281,21 +281,21 @@ public class BuffPoint4d extends BuffTuple4d implements BuffPoint4 {
     public BuffPoint4d add(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new BuffPoint4d(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        return new BuffPoint4d((double)(getX() + _other.getX()), (double)(getY() + _other.getY()), (double)(getZ() + _other.getZ()), (double)(getW() + _other.getW()));
     }
 
     @Override
     public BuffPoint4d sub(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new BuffPoint4d(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        return new BuffPoint4d((double)(getX() - _other.getX()), (double)(getY() - _other.getY()), (double)(getZ() - _other.getZ()), (double)(getW() - _other.getW()));
     }
 
     @Override
     public BuffVector4d vectorTo(Point4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new BuffVector4d(_other.getX() - getX(), _other.getY() - getY(), _other.getZ() - getZ(), _other.getW() - getW());
+        return new BuffVector4d((double)(_other.getX() - getX()), (double)(_other.getY() - getY()), (double)(_other.getZ() - getZ()), (double)(_other.getW() - getW()));
     }
 
     @Override

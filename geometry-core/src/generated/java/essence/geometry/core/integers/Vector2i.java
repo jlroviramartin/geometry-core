@@ -100,19 +100,19 @@ public class Vector2i extends Tuple2i implements Vector2 {
     }
 
     public Vector2i add(Vector2i other) {
-        return new Vector2i(getX() + other.getX(), getY() + other.getY());
+        return new Vector2i((int)(getX() + other.getX()), (int)(getY() + other.getY()));
     }
 
     public Vector2i sub(Vector2i other) {
-        return new Vector2i(getX() - other.getX(), getY() - other.getY());
+        return new Vector2i((int)(getX() - other.getX()), (int)(getY() - other.getY()));
     }
 
     public Vector2i simpleMul(Vector2i other) {
-        return new Vector2i(getX() * other.getX(), getY() * other.getY());
+        return new Vector2i((int)(getX() * other.getX()), (int)(getY() * other.getY()));
     }
 
     public Vector2i simpleDiv(Vector2i other) {
-        return new Vector2i(getX() / other.getX(), getY() / other.getY());
+        return new Vector2i((int)(getX() / other.getX()), (int)(getY() / other.getY()));
     }
 
     public Vector2i lerp(Vector2i other, double alpha) {
@@ -227,28 +227,28 @@ public class Vector2i extends Tuple2i implements Vector2 {
     public Vector2i add(Vector2 other) {
         Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
-        return new Vector2i(getX() + _other.getX(), getY() + _other.getY());
+        return new Vector2i((int)(getX() + _other.getX()), (int)(getY() + _other.getY()));
     }
 
     @Override
     public Vector2i sub(Vector2 other) {
         Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
-        return new Vector2i(getX() - _other.getX(), getY() - _other.getY());
+        return new Vector2i((int)(getX() - _other.getX()), (int)(getY() - _other.getY()));
     }
 
     @Override
     public Vector2i simpleMul(Vector2 other) {
         Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
-        return new Vector2i(getX() * _other.getX(), getY() * _other.getY());
+        return new Vector2i((int)(getX() * _other.getX()), (int)(getY() * _other.getY()));
     }
 
     @Override
     public Vector2i simpleDiv(Vector2 other) {
         Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
-        return new Vector2i(getX() / _other.getX(), getY() / _other.getY());
+        return new Vector2i((int)(getX() / _other.getX()), (int)(getY() / _other.getY()));
     }
 
     @Override
@@ -266,12 +266,12 @@ public class Vector2i extends Tuple2i implements Vector2 {
 
     @Override
     public Vector2i neg() {
-        return new Vector2i(- getX(), - getY());
+        return new Vector2i((int)(- getX()), (int)(- getY()));
     }
 
     @Override
     public Vector2i abs() {
-        return new Vector2i(Math.abs(getX()), Math.abs(getY()));
+        return new Vector2i((int)Math.abs(getX()), (int)Math.abs(getY()));
     }
 
     @Override

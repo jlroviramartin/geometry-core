@@ -81,12 +81,12 @@ public class BuffPoint3f extends BuffTuple3f implements BuffPoint3 {
     }
 
     public BuffPoint3f addAndSet(BuffVector3f other) {
-        set(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+        set((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
         return this;
     }
 
     public BuffPoint3f subAndSet(BuffVector3f other) {
-        set(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+        set((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
         return this;
     }
 
@@ -129,15 +129,15 @@ public class BuffPoint3f extends BuffTuple3f implements BuffPoint3 {
     }
 
     public BuffPoint3f add(BuffVector3f other) {
-        return new BuffPoint3f(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+        return new BuffPoint3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
     }
 
     public BuffPoint3f sub(BuffVector3f other) {
-        return new BuffPoint3f(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+        return new BuffPoint3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
     }
 
     public BuffVector3f vectorTo(BuffPoint3f other) {
-        return new BuffVector3f(other.getX() - getX(), other.getY() - getY(), other.getZ() - getZ());
+        return new BuffVector3f((float)(other.getX() - getX()), (float)(other.getY() - getY()), (float)(other.getZ() - getZ()));
     }
 
     public BuffPoint3f lerp(BuffPoint3f other, double alpha) {
@@ -178,7 +178,7 @@ public class BuffPoint3f extends BuffTuple3f implements BuffPoint3 {
     public BuffPoint3f addAndSet(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        set(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
+        set((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()));
         return this;
     }
 
@@ -186,7 +186,7 @@ public class BuffPoint3f extends BuffTuple3f implements BuffPoint3 {
     public BuffPoint3f subAndSet(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        set(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
+        set((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()));
         return this;
     }
 
@@ -267,21 +267,21 @@ public class BuffPoint3f extends BuffTuple3f implements BuffPoint3 {
     public BuffPoint3f add(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new BuffPoint3f(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
+        return new BuffPoint3f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()));
     }
 
     @Override
     public BuffPoint3f sub(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new BuffPoint3f(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
+        return new BuffPoint3f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()));
     }
 
     @Override
     public BuffVector3f vectorTo(Point3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new BuffVector3f(_other.getX() - getX(), _other.getY() - getY(), _other.getZ() - getZ());
+        return new BuffVector3f((float)(_other.getX() - getX()), (float)(_other.getY() - getY()), (float)(_other.getZ() - getZ()));
     }
 
     @Override

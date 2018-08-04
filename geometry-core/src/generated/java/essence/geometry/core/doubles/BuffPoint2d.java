@@ -80,12 +80,12 @@ public class BuffPoint2d extends BuffTuple2d implements BuffPoint2 {
     }
 
     public BuffPoint2d addAndSet(BuffVector2d other) {
-        set(getX() + other.getX(), getY() + other.getY());
+        set((double)(getX() + other.getX()), (double)(getY() + other.getY()));
         return this;
     }
 
     public BuffPoint2d subAndSet(BuffVector2d other) {
-        set(getX() - other.getX(), getY() - other.getY());
+        set((double)(getX() - other.getX()), (double)(getY() - other.getY()));
         return this;
     }
 
@@ -125,15 +125,15 @@ public class BuffPoint2d extends BuffTuple2d implements BuffPoint2 {
     }
 
     public BuffPoint2d add(BuffVector2d other) {
-        return new BuffPoint2d(getX() + other.getX(), getY() + other.getY());
+        return new BuffPoint2d((double)(getX() + other.getX()), (double)(getY() + other.getY()));
     }
 
     public BuffPoint2d sub(BuffVector2d other) {
-        return new BuffPoint2d(getX() - other.getX(), getY() - other.getY());
+        return new BuffPoint2d((double)(getX() - other.getX()), (double)(getY() - other.getY()));
     }
 
     public BuffVector2d vectorTo(BuffPoint2d other) {
-        return new BuffVector2d(other.getX() - getX(), other.getY() - getY());
+        return new BuffVector2d((double)(other.getX() - getX()), (double)(other.getY() - getY()));
     }
 
     public BuffPoint2d lerp(BuffPoint2d other, double alpha) {
@@ -171,7 +171,7 @@ public class BuffPoint2d extends BuffTuple2d implements BuffPoint2 {
     public BuffPoint2d addAndSet(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        set(getX() + _other.getX(), getY() + _other.getY());
+        set((double)(getX() + _other.getX()), (double)(getY() + _other.getY()));
         return this;
     }
 
@@ -179,7 +179,7 @@ public class BuffPoint2d extends BuffTuple2d implements BuffPoint2 {
     public BuffPoint2d subAndSet(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        set(getX() - _other.getX(), getY() - _other.getY());
+        set((double)(getX() - _other.getX()), (double)(getY() - _other.getY()));
         return this;
     }
 
@@ -253,21 +253,21 @@ public class BuffPoint2d extends BuffTuple2d implements BuffPoint2 {
     public BuffPoint2d add(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new BuffPoint2d(getX() + _other.getX(), getY() + _other.getY());
+        return new BuffPoint2d((double)(getX() + _other.getX()), (double)(getY() + _other.getY()));
     }
 
     @Override
     public BuffPoint2d sub(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new BuffPoint2d(getX() - _other.getX(), getY() - _other.getY());
+        return new BuffPoint2d((double)(getX() - _other.getX()), (double)(getY() - _other.getY()));
     }
 
     @Override
     public BuffVector2d vectorTo(Point2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new BuffVector2d(_other.getX() - getX(), _other.getY() - getY());
+        return new BuffVector2d((double)(_other.getX() - getX()), (double)(_other.getY() - getY()));
     }
 
     @Override

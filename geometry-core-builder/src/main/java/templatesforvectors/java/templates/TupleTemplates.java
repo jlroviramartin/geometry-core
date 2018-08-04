@@ -18,14 +18,11 @@
  */
 package templatesforvectors.java.templates;
 
-import templatesforvectors.model.TupleUtilsDescription;
-import templatesforvectors.model.VectorDescription;
 import java.util.ArrayList;
 import java.util.List;
 import templatesforvectors.BaseTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
+import templatesforvectors.model.TupleUtilsDescription;
+import templatesforvectors.model.VectorDescription;
 
 /**
  *
@@ -43,8 +40,6 @@ public class TupleTemplates extends BaseTemplate {
     private final Template tupleImpList = load("pebble/java/collections/TupleImpList.pebble");
 
     private final Template tupleUtils = load("pebble/java/TupleUtils.pebble");
-
-    private final Template tupleUtils = load("pebble/TupleUtils.pebble");
 
     @Override
     public void execute() {

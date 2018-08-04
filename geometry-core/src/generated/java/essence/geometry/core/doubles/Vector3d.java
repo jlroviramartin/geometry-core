@@ -110,19 +110,19 @@ public class Vector3d extends Tuple3d implements Vector3 {
     }
 
     public Vector3d add(Vector3d other) {
-        return new Vector3d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+        return new Vector3d((double)(getX() + other.getX()), (double)(getY() + other.getY()), (double)(getZ() + other.getZ()));
     }
 
     public Vector3d sub(Vector3d other) {
-        return new Vector3d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+        return new Vector3d((double)(getX() - other.getX()), (double)(getY() - other.getY()), (double)(getZ() - other.getZ()));
     }
 
     public Vector3d simpleMul(Vector3d other) {
-        return new Vector3d(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
+        return new Vector3d((double)(getX() * other.getX()), (double)(getY() * other.getY()), (double)(getZ() * other.getZ()));
     }
 
     public Vector3d simpleDiv(Vector3d other) {
-        return new Vector3d(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
+        return new Vector3d((double)(getX() / other.getX()), (double)(getY() / other.getY()), (double)(getZ() / other.getZ()));
     }
 
     public Vector3d lerp(Vector3d other, double alpha) {
@@ -207,28 +207,28 @@ public class Vector3d extends Tuple3d implements Vector3 {
     public Vector3d add(Vector3 other) {
         Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
-        return new Vector3d(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
+        return new Vector3d((double)(getX() + _other.getX()), (double)(getY() + _other.getY()), (double)(getZ() + _other.getZ()));
     }
 
     @Override
     public Vector3d sub(Vector3 other) {
         Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
-        return new Vector3d(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
+        return new Vector3d((double)(getX() - _other.getX()), (double)(getY() - _other.getY()), (double)(getZ() - _other.getZ()));
     }
 
     @Override
     public Vector3d simpleMul(Vector3 other) {
         Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
-        return new Vector3d(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ());
+        return new Vector3d((double)(getX() * _other.getX()), (double)(getY() * _other.getY()), (double)(getZ() * _other.getZ()));
     }
 
     @Override
     public Vector3d simpleDiv(Vector3 other) {
         Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
-        return new Vector3d(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ());
+        return new Vector3d((double)(getX() / _other.getX()), (double)(getY() / _other.getY()), (double)(getZ() / _other.getZ()));
     }
 
     @Override
@@ -246,12 +246,12 @@ public class Vector3d extends Tuple3d implements Vector3 {
 
     @Override
     public Vector3d neg() {
-        return new Vector3d(- getX(), - getY(), - getZ());
+        return new Vector3d((double)(- getX()), (double)(- getY()), (double)(- getZ()));
     }
 
     @Override
     public Vector3d abs() {
-        return new Vector3d(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()));
+        return new Vector3d((double)Math.abs(getX()), (double)Math.abs(getY()), (double)Math.abs(getZ()));
     }
 
     @Override

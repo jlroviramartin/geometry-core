@@ -1,19 +1,23 @@
+{%  extends "pebble/java/Base.pebble" %}
+
 {#
- # This macro renders the math operations of the matrix.
+ # This template renders a matrix.
  #}
-{%  macro MathAndSet( desc, className ) %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.buffMatrixName }}} is a collection of values that represents a matrix.
+ */
+interface {{ desc.buffMatrixName }} extends {{ desc.matrixName }} {
+
     /**
      * This method sets {@code this} matrix to zero.
      *
      * @return {@code this = zero}
      */
-    public {{ className }} setZero() {
-{%      dynmacro Accessors_setZero( desc, property ) %}
-0
-{%-     enddynmacro %}
-        set({{ RowsAndColumns( desc, ",%n", ", ", Accessors_setZero ) | indent(3) }});
-        return this;
-    }
+    {{ desc.buffMatrixName }} setZero();
 {%      if desc.dimRows == desc.dimCols %}
 
     /**
@@ -21,13 +25,7 @@
      *
      * @return {@code this = identity}
      */
-    public {{ className }} setIdentity() {
-{%          dynmacro Accessors_setIdentity( desc, property ) %}
-{%              if property.r == property.c %}1{% else %}0{% endif %}
-{%-         enddynmacro %}
-        set({{ RowsAndColumns( desc, ",%n", ", ", Accessors_setIdentity ) | indent(3) }});
-        return this;
-    }
+    {{ desc.buffMatrixName }} setIdentity();
 {%      endif %}
 
     /**
@@ -37,10 +35,7 @@
      * @param other Other matrix.
      * @return {@code this = this + other}
      */
-    public {{ className }} addAndSet({{ className }} other) {
-        set{{ MatrixBinaryOperator(desc, "+", "", "other.") | indent(4) }};
-        return this;
-    }
+    {{ desc.buffMatrixName }} addAndSet({{ desc.matrixName }} other);
 
     /**
      * This method subs {@code this} matrix and {@code other} matrix and sets the result
@@ -49,10 +44,7 @@
      * @param other Other matrix.
      * @return {@code this = this - other}
      */
-    public {{ className }} subAndSet({{ className }} other) {
-        set{{ MatrixBinaryOperator(desc, "-", "", "other.") | indent(4) }};
-        return this;
-    }
+    {{ desc.buffMatrixName }} subAndSet({{ desc.matrixName }} other);
 
     /**
      * This method multiplies {@code this} matrix by {@code v} and sets the result
@@ -61,10 +53,7 @@
      * @param v Scalar.
      * @return {@code this = this * v}
      */
-    public {{ className }} mulAndSet(double v) {
-        set{{ MatrixBinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
-        return this;
-    }
+    {{ desc.buffMatrixName }} mulAndSet(double v);
 
     /**
      * This method divides {@code this} matrix by {@code v} and sets the result
@@ -73,10 +62,7 @@
      * @param v Scalar.
      * @return {@code this = this / v}
      */
-    public {{ className }} divAndSet(double v) {
-        set{{ MatrixBinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
-        return this;
-    }
+    {{ desc.buffMatrixName }} divAndSet(double v);
 
     /**
      * This method multiplies {@code this} matrix by {@code other} matrix and sets the result
@@ -85,10 +71,7 @@
      * @param other Other matrix.
      * @return {@code this = this * other}
      */
-    public {{ className }} mulAndSet({{ className }} other) {
-        set{{ MatrixMul( desc, "", "other."  ) }};
-        return this;
-    }
+    {{ desc.buffMatrixName }} mulAndSet({{ desc.matrixName }} other);
 
     /**
      * This method changes the sign of {@code this} matrix and sets the result
@@ -96,10 +79,7 @@
      *
      * @return {@code this = -this}
      */
-    public {{ className }} negAndSet() {
-        set{{ MatrixUnaryOperator(desc, "-", "") | indent(4) }};
-        return this;
-    }
+    {{ desc.buffMatrixName }} negAndSet();
 
     /**
      * This method calculates the absolute value of {@code this} matrix and sets the result
@@ -107,10 +87,7 @@
      *
      * @return {@code this = abs(this)}
      */
-    public {{ className }} absAndSet() {
-        set{{ MatrixUnaryFunction(desc, "Math.abs", "") | indent(4) }};
-        return this;
-    }
+    {{ desc.buffMatrixName }} absAndSet();
 
     /**
      * This method calculates the transpose of {@code this} matrix and sets the result
@@ -118,10 +95,7 @@
      *
      * @return {@code this = transpose(this)}
      */
-    public {{ className }} transposeAndSet() {
-        set{{ MatrixTranspose( desc, "" ) | indent(3) }};
-        return this;
-    }
+    {{ desc.buffMatrixName }} transposeAndSet();
 {%      if (desc.dimRows >= 2) and (desc.dimRows <= 4) %}
 
     /**
@@ -130,9 +104,7 @@
      *
      * @return {@code this = this^-1}
      */
-    public {{ className }} inverseAndSet() throws SingularMatrixException {
-        {{ MatrixInverse234( desc, "", "set" ) }}
-        return this;
-    }
+    {{ desc.buffMatrixName }} inverseAndSet() throws SingularMatrixException;
 {%      endif %}
-{%  endmacro %}
+}
+{%  endblock %}

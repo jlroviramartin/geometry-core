@@ -82,12 +82,12 @@ public class BuffPoint4f extends BuffTuple4f implements BuffPoint4 {
     }
 
     public BuffPoint4f addAndSet(BuffVector4f other) {
-        set(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        set((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
         return this;
     }
 
     public BuffPoint4f subAndSet(BuffVector4f other) {
-        set(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        set((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
         return this;
     }
 
@@ -133,15 +133,15 @@ public class BuffPoint4f extends BuffTuple4f implements BuffPoint4 {
     }
 
     public BuffPoint4f add(BuffVector4f other) {
-        return new BuffPoint4f(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        return new BuffPoint4f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
     }
 
     public BuffPoint4f sub(BuffVector4f other) {
-        return new BuffPoint4f(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        return new BuffPoint4f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
     }
 
     public BuffVector4f vectorTo(BuffPoint4f other) {
-        return new BuffVector4f(other.getX() - getX(), other.getY() - getY(), other.getZ() - getZ(), other.getW() - getW());
+        return new BuffVector4f((float)(other.getX() - getX()), (float)(other.getY() - getY()), (float)(other.getZ() - getZ()), (float)(other.getW() - getW()));
     }
 
     public BuffPoint4f lerp(BuffPoint4f other, double alpha) {
@@ -185,7 +185,7 @@ public class BuffPoint4f extends BuffTuple4f implements BuffPoint4 {
     public BuffPoint4f addAndSet(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        set(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        set((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()), (float)(getW() + _other.getW()));
         return this;
     }
 
@@ -193,7 +193,7 @@ public class BuffPoint4f extends BuffTuple4f implements BuffPoint4 {
     public BuffPoint4f subAndSet(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        set(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        set((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()), (float)(getW() - _other.getW()));
         return this;
     }
 
@@ -281,21 +281,21 @@ public class BuffPoint4f extends BuffTuple4f implements BuffPoint4 {
     public BuffPoint4f add(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new BuffPoint4f(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        return new BuffPoint4f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()), (float)(getW() + _other.getW()));
     }
 
     @Override
     public BuffPoint4f sub(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new BuffPoint4f(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        return new BuffPoint4f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()), (float)(getW() - _other.getW()));
     }
 
     @Override
     public BuffVector4f vectorTo(Point4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new BuffVector4f(_other.getX() - getX(), _other.getY() - getY(), _other.getZ() - getZ(), _other.getW() - getW());
+        return new BuffVector4f((float)(_other.getX() - getX()), (float)(_other.getY() - getY()), (float)(_other.getZ() - getZ()), (float)(_other.getW() - getW()));
     }
 
     @Override

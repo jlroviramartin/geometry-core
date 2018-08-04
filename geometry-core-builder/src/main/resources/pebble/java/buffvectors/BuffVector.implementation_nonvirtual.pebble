@@ -25,7 +25,7 @@
     }
 
     public {{ className }} linealAndSet({{ className }} other, double alpha, double beta) {
-        set{{ Lineal(desc, "", "other.", "Vector") | indent(4) }};
+        set{{ Lineal(desc, "", "other.") | indent(4) }};
         return this;
     }
 {%      if desc.dim == 2 %}

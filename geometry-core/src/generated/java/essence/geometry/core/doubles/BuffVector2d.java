@@ -101,22 +101,22 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
     }
 
     public BuffVector2d addAndSet(BuffVector2d other) {
-        set(getX() + other.getX(), getY() + other.getY());
+        set((double)(getX() + other.getX()), (double)(getY() + other.getY()));
         return this;
     }
 
     public BuffVector2d subAndSet(BuffVector2d other) {
-        set(getX() - other.getX(), getY() - other.getY());
+        set((double)(getX() - other.getX()), (double)(getY() - other.getY()));
         return this;
     }
 
     public BuffVector2d simpleMulAndSet(BuffVector2d other) {
-        set(getX() * other.getX(), getY() * other.getY());
+        set((double)(getX() * other.getX()), (double)(getY() * other.getY()));
         return this;
     }
 
     public BuffVector2d simpleDivAndSet(BuffVector2d other) {
-        set(getX() / other.getX(), getY() / other.getY());
+        set((double)(getX() / other.getX()), (double)(getY() / other.getY()));
         return this;
     }
 
@@ -143,19 +143,19 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
     }
 
     public BuffVector2d add(BuffVector2d other) {
-        return new BuffVector2d(getX() + other.getX(), getY() + other.getY());
+        return new BuffVector2d((double)(getX() + other.getX()), (double)(getY() + other.getY()));
     }
 
     public BuffVector2d sub(BuffVector2d other) {
-        return new BuffVector2d(getX() - other.getX(), getY() - other.getY());
+        return new BuffVector2d((double)(getX() - other.getX()), (double)(getY() - other.getY()));
     }
 
     public BuffVector2d simpleMul(BuffVector2d other) {
-        return new BuffVector2d(getX() * other.getX(), getY() * other.getY());
+        return new BuffVector2d((double)(getX() * other.getX()), (double)(getY() * other.getY()));
     }
 
     public BuffVector2d simpleDiv(BuffVector2d other) {
-        return new BuffVector2d(getX() / other.getX(), getY() / other.getY());
+        return new BuffVector2d((double)(getX() / other.getX()), (double)(getY() / other.getY()));
     }
 
     public BuffVector2d lerp(BuffVector2d other, double alpha) {
@@ -240,7 +240,7 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
     public BuffVector2d addAndSet(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        set(getX() + _other.getX(), getY() + _other.getY());
+        set((double)(getX() + _other.getX()), (double)(getY() + _other.getY()));
         return this;
     }
 
@@ -248,7 +248,7 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
     public BuffVector2d subAndSet(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        set(getX() - _other.getX(), getY() - _other.getY());
+        set((double)(getX() - _other.getX()), (double)(getY() - _other.getY()));
         return this;
     }
 
@@ -256,7 +256,7 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
     public BuffVector2d simpleMulAndSet(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        set(getX() * _other.getX(), getY() * _other.getY());
+        set((double)(getX() * _other.getX()), (double)(getY() * _other.getY()));
         return this;
     }
 
@@ -264,7 +264,7 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
     public BuffVector2d simpleDivAndSet(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        set(getX() / _other.getX(), getY() / _other.getY());
+        set((double)(getX() / _other.getX()), (double)(getY() / _other.getY()));
         return this;
     }
 
@@ -282,13 +282,13 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
 
     @Override
     public BuffVector2d negAndSet() {
-        set(- getX(), - getY());
+        set((double)(- getX()), (double)(- getY()));
         return this;
     }
 
     @Override
     public BuffVector2d absAndSet() {
-        set(Math.abs(getX()), Math.abs(getY()));
+        set((double)Math.abs(getX()), (double)Math.abs(getY()));
         return this;
     }
 
@@ -404,28 +404,28 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
     public BuffVector2d add(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new BuffVector2d(getX() + _other.getX(), getY() + _other.getY());
+        return new BuffVector2d((double)(getX() + _other.getX()), (double)(getY() + _other.getY()));
     }
 
     @Override
     public BuffVector2d sub(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new BuffVector2d(getX() - _other.getX(), getY() - _other.getY());
+        return new BuffVector2d((double)(getX() - _other.getX()), (double)(getY() - _other.getY()));
     }
 
     @Override
     public BuffVector2d simpleMul(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new BuffVector2d(getX() * _other.getX(), getY() * _other.getY());
+        return new BuffVector2d((double)(getX() * _other.getX()), (double)(getY() * _other.getY()));
     }
 
     @Override
     public BuffVector2d simpleDiv(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new BuffVector2d(getX() / _other.getX(), getY() / _other.getY());
+        return new BuffVector2d((double)(getX() / _other.getX()), (double)(getY() / _other.getY()));
     }
 
     @Override
@@ -443,12 +443,12 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
 
     @Override
     public BuffVector2d neg() {
-        return new BuffVector2d(- getX(), - getY());
+        return new BuffVector2d((double)(- getX()), (double)(- getY()));
     }
 
     @Override
     public BuffVector2d abs() {
-        return new BuffVector2d(Math.abs(getX()), Math.abs(getY()));
+        return new BuffVector2d((double)Math.abs(getX()), (double)Math.abs(getY()));
     }
 
     @Override

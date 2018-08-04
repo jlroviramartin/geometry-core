@@ -71,9 +71,19 @@ public class MatrixDescrition {
         return mdesc;
     }
 
+//<editor-fold defaultstate="collapsed" desc="Names">
     public String getMatrixImpName() {
         return "Matrix" + dimRows + "x" + dimCols + suffix;
     }
+
+    public String getMatrixGetterName() {
+        return "MatrixGetter";
+    }
+
+    public String getMatrixSetterName() {
+        return "MatrixSetter";
+    }
+//</editor-fold>
 
     public String _package;
     public String corePackage;

@@ -1,0 +1,160 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a matrix.
+ #}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.matrixName }}} is a collection of values that represents a matrix.
+ */
+public interface {{ desc.matrixName }} {
+
+    /**
+     * This method evaluates is {@code this} matrix contains only valid values.
+     *
+     * @return {@code True} if {@code this} matrix contains only valid components. {@code False} otherwise.
+     */
+    boolean isValid();
+
+    /**
+     * This method evaluates is {@code this} matrix contains any NaN component.
+     *
+     * @return {@code True} if {@code this} matrix contains any NaN component. {@code False} otherwise.
+     */
+    boolean isNaN();
+
+    /**
+     * This method evaluates is {@code this} matrix contains any infinity component.
+     *
+     * @return {@code True} if {@code this} matrix contains any infinity component. {@code False} otherwise.
+     */
+    boolean isInfinity();
+
+    /**
+     * This method evaluates is {@code this} matrix is zero.
+     *
+     * @return {@code True} if {@code this} matrix is zero. {@code False} otherwise.
+     */
+    boolean isZero();
+
+    /**
+     * This method evaluates is {@code this} matrix is zero.
+     *
+     * @param epsilon Error.
+     * @return {@code True} if {@code this} matrix is zero. {@code False} otherwise.
+     */
+    boolean isZero(double epsilon);
+
+    /**
+     * This method evaluates is {@code this} matrix is the identity.
+     *
+     * @return {@code True} if {@code this} matrix is the identity. {@code False} otherwise.
+     */
+    boolean isIdentity();
+
+    /**
+     * This method evaluates is {@code this} matrix is the identity.
+     *
+     * @param epsilon Error.
+     * @return {@code True} if {@code this} matrix is the identity. {@code False} otherwise.
+     */
+    boolean isIdentity(double epsilon);
+
+    /**
+     * This method evaluates is {@code this} matrix is the invertible.
+     *
+     * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.
+     */
+    boolean isInvertible();
+
+    /**
+     * This method evaluates is {@code this} matrix is the invertible.
+     *
+     * @param epsilon Error.
+     * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.
+     */
+    boolean isInvertible(double epsilon);
+{%      if (desc.dimRows >= 2) and (desc.dimRows <= 4) %}
+
+    /**
+     * This method evaluates the determinant of {@code this} matrix.
+     *
+     * @return Determinant.
+     */
+    double getDeterminant();
+{%      endif %}
+
+    /**
+     * This method adds {@code this} matrix and {@code other} matrix.
+     *
+     * @param other Other matrix.
+     * @return {@code this + other}
+     */
+    {{ desc.matrixName }} add({{ desc.matrixName }} other);
+
+    /**
+     * This method subs {@code this} matrix and {@code other} matrix.
+     *
+     * @param other Other matrix.
+     * @return {@code this - other}
+     */
+    {{ desc.matrixName }} sub({{ desc.matrixName }} other);
+
+    /**
+     * This method multiplies {@code this} matrix by {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code this * v}
+     */
+    {{ desc.matrixName }} mul(double v);
+
+    /**
+     * This method divides {@code this} matrix by {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code this / v}
+     */
+    {{ desc.matrixName }} div(double v);
+
+    /**
+     * This method multiplies {@code this} matrix by {@code other} matrix.
+     *
+     * @param other Other matrix.
+     * @return {@code this * other}
+     */
+    {{ desc.matrixName }} mul({{ desc.matrixName }} other);
+
+    /**
+     * This method changes the sign of {@code this} matrix.
+     *
+     * @return {@code -this}
+     */
+    {{ desc.matrixName }} neg();
+
+    /**
+     * This method calculates the absolute value of {@code this} matrix.
+     *
+     * @return {@code abs(this)}
+     */
+    {{ desc.matrixName }} abs();
+
+    /**
+     * This method calculates the transpose of {@code this} matrix.
+     *
+     * @return {@code transpose(this)}
+     */
+    {{ desc.matrixName }} transpose();
+{%      if (desc.dimRows >= 2) and (desc.dimRows <= 4) %}
+
+    /**
+     * This method evaluates the inverse of {@code this} matrix.
+     *
+     * @return {@code inverse(this)}
+     */
+    {{ desc.matrixName }} inverse() throws SingularMatrixException;
+{%      endif %}
+}
+{%  endblock %}

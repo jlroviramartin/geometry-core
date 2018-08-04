@@ -32,7 +32,7 @@
     }
 
     public {{ className }} lineal({{ className }} other, double alpha, double beta) {
-        return new {{ className }}{{ Lineal(desc, "", "other.", "Vector") | indent(4) }};
+        return new {{ className }}{{ Lineal(desc, "", "other.") | indent(4) }};
     }
 
     public double scalarProjection({{ vectorClassName }} where) {

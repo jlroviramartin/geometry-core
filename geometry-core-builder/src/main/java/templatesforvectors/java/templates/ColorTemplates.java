@@ -54,12 +54,16 @@ public class ColorTemplates extends BaseTemplate {
 
     private void buildFloat(int dim) {
         VectorDescription desc = VectorDescription.getFloat(dim);
+        desc.minValue = 0;
+        desc.maxValue = 1;
         writeToFile(colorImp, desc, desc.getColorImpName(), desc._package);
         writeToFile(buffcolorImp, desc, desc.getBuffColorImpName(), desc._package);
     }
 
     private void buildByte(int dim) {
         VectorDescription desc = VectorDescription.getByte(dim);
+        desc.minValue = 0;
+        desc.maxValue = 255;
         writeToFile(colorImp, desc, desc.getColorImpName(), desc._package);
         writeToFile(buffcolorImp, desc, desc.getBuffColorImpName(), desc._package);
     }

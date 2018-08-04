@@ -93,15 +93,15 @@ public class Point2i extends Tuple2i implements Point2 {
     }
 
     public Point2i add(Vector2i other) {
-        return new Point2i(getX() + other.getX(), getY() + other.getY());
+        return new Point2i((int)(getX() + other.getX()), (int)(getY() + other.getY()));
     }
 
     public Point2i sub(Vector2i other) {
-        return new Point2i(getX() - other.getX(), getY() - other.getY());
+        return new Point2i((int)(getX() - other.getX()), (int)(getY() - other.getY()));
     }
 
     public Vector2i vectorTo(Point2i other) {
-        return new Vector2i(other.getX() - getX(), other.getY() - getY());
+        return new Vector2i((int)(other.getX() - getX()), (int)(other.getY() - getY()));
     }
 
     public Point2i lerp(Point2i other, double alpha) {
@@ -175,21 +175,21 @@ public class Point2i extends Tuple2i implements Point2 {
     public Point2i add(Vector2 other) {
         Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
-        return new Point2i(getX() + _other.getX(), getY() + _other.getY());
+        return new Point2i((int)(getX() + _other.getX()), (int)(getY() + _other.getY()));
     }
 
     @Override
     public Point2i sub(Vector2 other) {
         Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
-        return new Point2i(getX() - _other.getX(), getY() - _other.getY());
+        return new Point2i((int)(getX() - _other.getX()), (int)(getY() - _other.getY()));
     }
 
     @Override
     public Vector2i vectorTo(Point2 other) {
         Tuple2_Integer _other = TupleUtils.toTuple2_Integer(other);
 
-        return new Vector2i(_other.getX() - getX(), _other.getY() - getY());
+        return new Vector2i((int)(_other.getX() - getX()), (int)(_other.getY() - getY()));
     }
 
     @Override

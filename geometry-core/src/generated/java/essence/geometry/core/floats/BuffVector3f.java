@@ -111,22 +111,22 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
     }
 
     public BuffVector3f addAndSet(BuffVector3f other) {
-        set(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+        set((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
         return this;
     }
 
     public BuffVector3f subAndSet(BuffVector3f other) {
-        set(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+        set((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
         return this;
     }
 
     public BuffVector3f simpleMulAndSet(BuffVector3f other) {
-        set(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
+        set((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()));
         return this;
     }
 
     public BuffVector3f simpleDivAndSet(BuffVector3f other) {
-        set(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
+        set((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()));
         return this;
     }
 
@@ -161,19 +161,19 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
     }
 
     public BuffVector3f add(BuffVector3f other) {
-        return new BuffVector3f(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+        return new BuffVector3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
     }
 
     public BuffVector3f sub(BuffVector3f other) {
-        return new BuffVector3f(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+        return new BuffVector3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
     }
 
     public BuffVector3f simpleMul(BuffVector3f other) {
-        return new BuffVector3f(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
+        return new BuffVector3f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()));
     }
 
     public BuffVector3f simpleDiv(BuffVector3f other) {
-        return new BuffVector3f(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
+        return new BuffVector3f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()));
     }
 
     public BuffVector3f lerp(BuffVector3f other, double alpha) {
@@ -233,7 +233,7 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
     public BuffVector3f addAndSet(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        set(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
+        set((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()));
         return this;
     }
 
@@ -241,7 +241,7 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
     public BuffVector3f subAndSet(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        set(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
+        set((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()));
         return this;
     }
 
@@ -249,7 +249,7 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
     public BuffVector3f simpleMulAndSet(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        set(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ());
+        set((float)(getX() * _other.getX()), (float)(getY() * _other.getY()), (float)(getZ() * _other.getZ()));
         return this;
     }
 
@@ -257,7 +257,7 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
     public BuffVector3f simpleDivAndSet(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        set(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ());
+        set((float)(getX() / _other.getX()), (float)(getY() / _other.getY()), (float)(getZ() / _other.getZ()));
         return this;
     }
 
@@ -275,13 +275,13 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
 
     @Override
     public BuffVector3f negAndSet() {
-        set(- getX(), - getY(), - getZ());
+        set((float)(- getX()), (float)(- getY()), (float)(- getZ()));
         return this;
     }
 
     @Override
     public BuffVector3f absAndSet() {
-        set(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()));
+        set((float)Math.abs(getX()), (float)Math.abs(getY()), (float)Math.abs(getZ()));
         return this;
     }
 
@@ -373,28 +373,28 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
     public BuffVector3f add(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new BuffVector3f(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
+        return new BuffVector3f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()));
     }
 
     @Override
     public BuffVector3f sub(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new BuffVector3f(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
+        return new BuffVector3f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()));
     }
 
     @Override
     public BuffVector3f simpleMul(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new BuffVector3f(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ());
+        return new BuffVector3f((float)(getX() * _other.getX()), (float)(getY() * _other.getY()), (float)(getZ() * _other.getZ()));
     }
 
     @Override
     public BuffVector3f simpleDiv(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new BuffVector3f(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ());
+        return new BuffVector3f((float)(getX() / _other.getX()), (float)(getY() / _other.getY()), (float)(getZ() / _other.getZ()));
     }
 
     @Override
@@ -412,12 +412,12 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
 
     @Override
     public BuffVector3f neg() {
-        return new BuffVector3f(- getX(), - getY(), - getZ());
+        return new BuffVector3f((float)(- getX()), (float)(- getY()), (float)(- getZ()));
     }
 
     @Override
     public BuffVector3f abs() {
-        return new BuffVector3f(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()));
+        return new BuffVector3f((float)Math.abs(getX()), (float)Math.abs(getY()), (float)Math.abs(getZ()));
     }
 
     @Override

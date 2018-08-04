@@ -1,0 +1,89 @@
+{%  macro BuffColorImplementation( desc, className ) %}
+    @Override
+    public {{ className }} normalize() {
+{%      dynmacro setNormal_anonymous( desc, property ) %}
+clamp(get{{ property.upperName }}(), ({{ desc.type }}){{ p().desc.minValue }}, ({{ desc.type }}){{ p().desc.maxValue }})
+{%-     enddynmacro %}
+        set({{ Properties( desc, ", ", setNormal_anonymous ) }});
+        return this;
+    }
+
+    @Override
+    public {{ className }} setZero() {
+{% dynmacro MathAndSet_setZero( desc, property ) %}
+({{ property.type }})0
+{%-     enddynmacro %}
+        set({{ Properties( desc, ", ", MathAndSet_setZero ) | indent(4) }});
+        return this;
+    }
+
+    @Override
+    public {{ className }} addAndSet({{ desc.colorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "+", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} subAndSet({{ desc.colorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "-", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} simpleMulAndSet({{ desc.colorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "*", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} simpleDivAndSet({{ desc.colorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ BinaryOperator(desc, "/", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} mulAndSet(double v) {
+        set{{ BinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} divAndSet(double v) {
+        set{{ BinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} negAndSet() {
+        set{{ UnaryOperator(desc, "-", "") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} absAndSet() {
+        set{{ UnaryFunction(desc, "Math.abs", "") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} lerpAndSet({{ desc.colorName }} other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    @Override
+    public {{ className }} linealAndSet({{ desc.colorName }} other, double alpha, double beta) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        set{{ Lineal(desc, "", "_other.") | indent(4) }};
+        return this;
+    }
+{%  endmacro %}

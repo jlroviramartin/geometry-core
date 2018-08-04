@@ -99,15 +99,15 @@ public class Point4f extends Tuple4f implements Point4 {
     }
 
     public Point4f add(Vector4f other) {
-        return new Point4f(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        return new Point4f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
     }
 
     public Point4f sub(Vector4f other) {
-        return new Point4f(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        return new Point4f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
     }
 
     public Vector4f vectorTo(Point4f other) {
-        return new Vector4f(other.getX() - getX(), other.getY() - getY(), other.getZ() - getZ(), other.getW() - getW());
+        return new Vector4f((float)(other.getX() - getX()), (float)(other.getY() - getY()), (float)(other.getZ() - getZ()), (float)(other.getW() - getW()));
     }
 
     public Point4f lerp(Point4f other, double alpha) {
@@ -199,21 +199,21 @@ public class Point4f extends Tuple4f implements Point4 {
     public Point4f add(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new Point4f(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        return new Point4f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()), (float)(getW() + _other.getW()));
     }
 
     @Override
     public Point4f sub(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new Point4f(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        return new Point4f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()), (float)(getW() - _other.getW()));
     }
 
     @Override
     public Vector4f vectorTo(Point4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new Vector4f(_other.getX() - getX(), _other.getY() - getY(), _other.getZ() - getZ(), _other.getW() - getW());
+        return new Vector4f((float)(_other.getX() - getX()), (float)(_other.getY() - getY()), (float)(_other.getZ() - getZ()), (float)(_other.getW() - getW()));
     }
 
     @Override

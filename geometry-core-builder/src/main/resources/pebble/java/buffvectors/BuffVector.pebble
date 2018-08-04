@@ -18,14 +18,14 @@ public interface {{ desc.buffVectorName }} extends {{ desc.vectorName }}, BuffTu
      *
      * @return This vector.
      */
-    {{ desc.vectorName }} setZero();
+    {{ desc.buffVectorName }} setZero();
 
     /**
      * This method sets the vector to the unit.
      *
      * @return {@code this.unit.length == 1}
      */
-    {{ desc.vectorName }} setUnit();
+    {{ desc.buffVectorName }} setUnit();
 
     /**
      * This method adds {@code this} vector to {@code other} vector.

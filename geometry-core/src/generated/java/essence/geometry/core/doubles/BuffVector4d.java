@@ -121,22 +121,22 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
     }
 
     public BuffVector4d addAndSet(BuffVector4d other) {
-        set(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        set((double)(getX() + other.getX()), (double)(getY() + other.getY()), (double)(getZ() + other.getZ()), (double)(getW() + other.getW()));
         return this;
     }
 
     public BuffVector4d subAndSet(BuffVector4d other) {
-        set(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        set((double)(getX() - other.getX()), (double)(getY() - other.getY()), (double)(getZ() - other.getZ()), (double)(getW() - other.getW()));
         return this;
     }
 
     public BuffVector4d simpleMulAndSet(BuffVector4d other) {
-        set(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ(), getW() * other.getW());
+        set((double)(getX() * other.getX()), (double)(getY() * other.getY()), (double)(getZ() * other.getZ()), (double)(getW() * other.getW()));
         return this;
     }
 
     public BuffVector4d simpleDivAndSet(BuffVector4d other) {
-        set(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ(), getW() / other.getW());
+        set((double)(getX() / other.getX()), (double)(getY() / other.getY()), (double)(getZ() / other.getZ()), (double)(getW() / other.getW()));
         return this;
     }
 
@@ -165,19 +165,19 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
     }
 
     public BuffVector4d add(BuffVector4d other) {
-        return new BuffVector4d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        return new BuffVector4d((double)(getX() + other.getX()), (double)(getY() + other.getY()), (double)(getZ() + other.getZ()), (double)(getW() + other.getW()));
     }
 
     public BuffVector4d sub(BuffVector4d other) {
-        return new BuffVector4d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        return new BuffVector4d((double)(getX() - other.getX()), (double)(getY() - other.getY()), (double)(getZ() - other.getZ()), (double)(getW() - other.getW()));
     }
 
     public BuffVector4d simpleMul(BuffVector4d other) {
-        return new BuffVector4d(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ(), getW() * other.getW());
+        return new BuffVector4d((double)(getX() * other.getX()), (double)(getY() * other.getY()), (double)(getZ() * other.getZ()), (double)(getW() * other.getW()));
     }
 
     public BuffVector4d simpleDiv(BuffVector4d other) {
-        return new BuffVector4d(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ(), getW() / other.getW());
+        return new BuffVector4d((double)(getX() / other.getX()), (double)(getY() / other.getY()), (double)(getZ() / other.getZ()), (double)(getW() / other.getW()));
     }
 
     public BuffVector4d lerp(BuffVector4d other, double alpha) {
@@ -234,7 +234,7 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
     public BuffVector4d addAndSet(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        set(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        set((double)(getX() + _other.getX()), (double)(getY() + _other.getY()), (double)(getZ() + _other.getZ()), (double)(getW() + _other.getW()));
         return this;
     }
 
@@ -242,7 +242,7 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
     public BuffVector4d subAndSet(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        set(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        set((double)(getX() - _other.getX()), (double)(getY() - _other.getY()), (double)(getZ() - _other.getZ()), (double)(getW() - _other.getW()));
         return this;
     }
 
@@ -250,7 +250,7 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
     public BuffVector4d simpleMulAndSet(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        set(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ(), getW() * _other.getW());
+        set((double)(getX() * _other.getX()), (double)(getY() * _other.getY()), (double)(getZ() * _other.getZ()), (double)(getW() * _other.getW()));
         return this;
     }
 
@@ -258,7 +258,7 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
     public BuffVector4d simpleDivAndSet(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        set(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ(), getW() / _other.getW());
+        set((double)(getX() / _other.getX()), (double)(getY() / _other.getY()), (double)(getZ() / _other.getZ()), (double)(getW() / _other.getW()));
         return this;
     }
 
@@ -276,13 +276,13 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
 
     @Override
     public BuffVector4d negAndSet() {
-        set(- getX(), - getY(), - getZ(), - getW());
+        set((double)(- getX()), (double)(- getY()), (double)(- getZ()), (double)(- getW()));
         return this;
     }
 
     @Override
     public BuffVector4d absAndSet() {
-        set(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()), Math.abs(getW()));
+        set((double)Math.abs(getX()), (double)Math.abs(getY()), (double)Math.abs(getZ()), (double)Math.abs(getW()));
         return this;
     }
 
@@ -370,28 +370,28 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
     public BuffVector4d add(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new BuffVector4d(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        return new BuffVector4d((double)(getX() + _other.getX()), (double)(getY() + _other.getY()), (double)(getZ() + _other.getZ()), (double)(getW() + _other.getW()));
     }
 
     @Override
     public BuffVector4d sub(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new BuffVector4d(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        return new BuffVector4d((double)(getX() - _other.getX()), (double)(getY() - _other.getY()), (double)(getZ() - _other.getZ()), (double)(getW() - _other.getW()));
     }
 
     @Override
     public BuffVector4d simpleMul(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new BuffVector4d(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ(), getW() * _other.getW());
+        return new BuffVector4d((double)(getX() * _other.getX()), (double)(getY() * _other.getY()), (double)(getZ() * _other.getZ()), (double)(getW() * _other.getW()));
     }
 
     @Override
     public BuffVector4d simpleDiv(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new BuffVector4d(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ(), getW() / _other.getW());
+        return new BuffVector4d((double)(getX() / _other.getX()), (double)(getY() / _other.getY()), (double)(getZ() / _other.getZ()), (double)(getW() / _other.getW()));
     }
 
     @Override
@@ -409,12 +409,12 @@ public class BuffVector4d extends BuffTuple4d implements BuffVector4 {
 
     @Override
     public BuffVector4d neg() {
-        return new BuffVector4d(- getX(), - getY(), - getZ(), - getW());
+        return new BuffVector4d((double)(- getX()), (double)(- getY()), (double)(- getZ()), (double)(- getW()));
     }
 
     @Override
     public BuffVector4d abs() {
-        return new BuffVector4d(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()), Math.abs(getW()));
+        return new BuffVector4d((double)Math.abs(getX()), (double)Math.abs(getY()), (double)Math.abs(getZ()), (double)Math.abs(getW()));
     }
 
     @Override

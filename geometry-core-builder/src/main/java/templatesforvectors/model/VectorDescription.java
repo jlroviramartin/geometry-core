@@ -110,6 +110,7 @@ public class VectorDescription {
         return desc;
     }
 
+//<editor-fold defaultstate="collapsed" desc="Names">
     public String getTupleName() {
         return "Tuple" + dim;
     }
@@ -193,6 +194,7 @@ public class VectorDescription {
     public String getTupleImpListName() {
         return getTupleImpName() + "List";
     }
+//</editor-fold>
 
     /**
      * This function gets a vector descriptor of a {@code dim - 1} dimension.
@@ -224,6 +226,9 @@ public class VectorDescription {
     public String ctype;
     public boolean integral;
     public VectorCell[] properties;
+
+    public Object minValue;
+    public Object maxValue;
 
     public boolean is2D() {
         return dim == 2;

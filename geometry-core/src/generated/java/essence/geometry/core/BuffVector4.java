@@ -37,14 +37,14 @@ public interface BuffVector4 extends Vector4, BuffTuple {
      *
      * @return This vector.
      */
-    Vector4 setZero();
+    BuffVector4 setZero();
 
     /**
      * This method sets the vector to the unit.
      *
      * @return {@code this.unit.length == 1}
      */
-    Vector4 setUnit();
+    BuffVector4 setUnit();
 
     /**
      * This method adds {@code this} vector to {@code other} vector.

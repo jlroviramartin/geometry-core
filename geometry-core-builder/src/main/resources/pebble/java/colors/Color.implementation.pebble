@@ -1,0 +1,96 @@
+{%  macro ColorImplementation( desc, className ) %}
+    @Override
+    public boolean isNormalized() {
+{%      dynmacro ColorImplementation_anonymous( desc, property ) %}
+isNormal(get{{ property.upperName }}(), ({{ property.type }}){{ p().desc.minValue }}, ({{ property.type }}){{ p().desc.maxValue }})
+{%-     enddynmacro %}
+        return {{ Properties( desc, " && ", ColorImplementation_anonymous ) }};
+    }
+
+    @Override
+    public {{ className }} getNormalized() {
+{%      dynmacro getNormal_anonymous( desc, property ) %}
+clamp(get{{ property.upperName }}(), ({{ property.type }}){{ p().desc.minValue }}, ({{ property.type }}){{ p().desc.maxValue }})
+{%-     enddynmacro %}
+        return new {{ className }}({{ Properties( desc, ", ", getNormal_anonymous ) }});
+    }
+
+    @Override
+    public {{ className }} add({{ desc.colorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "+", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} sub({{ desc.colorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "-", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} simpleMul({{ desc.colorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "*", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} simpleDiv({{ desc.colorName }} other) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ BinaryOperator(desc, "/", "", "_other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} mul(double v) {
+        return new {{ className }}{{ BinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} div(double v) {
+        if (DoubleUtils.epsilonZero(v)) {
+            throw new ArithmeticError("divided by zero");
+        }
+        return new {{ className }}{{ BinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} neg() {
+        return new {{ className }}{{ UnaryOperator(desc, "-", "") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} abs() {
+        return new {{ className }}{{ UnaryFunction(desc, "Math.abs", "") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} lerp({{ desc.colorName }} other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    @Override
+    public double invLerp({{ desc.colorName }} other, {{ desc.colorName }} cLerp) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+        {{ desc.tupleTypeName }} _cLerp = TupleUtils.to{{ desc.tupleTypeName }}(cLerp);
+
+        {{ InvLerp(desc, "", "_other.", "_cLerp.") | indent(2) }}
+    }
+
+    @Override
+    public {{ className }} lineal({{ desc.colorName }} other, double alpha, double beta) {
+        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+
+        return new {{ className }}{{ Lineal(desc, "", "_other.") | indent(4) }};
+    }
+
+    private static boolean isNormal({{ desc.type }} v, {{ desc.type }} min, {{ desc.type }} max) {
+        return v >= min && v <= max;
+    }
+
+    private static {{ desc.type }} clamp({{ desc.type }} v, {{ desc.type }} min, {{ desc.type }} max) {
+        return v < min ? min : v > max ? max : v;
+    }
+{%  endmacro %}

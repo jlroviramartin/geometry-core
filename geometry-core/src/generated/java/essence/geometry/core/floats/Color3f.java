@@ -28,6 +28,8 @@ package essence.geometry.core.floats;
 import essence.geometry.core.Tuple;
 import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Color3;
+import essence.geometry.core.DoubleUtils;
+import essence.util.math.ArithmeticError;
 
 /**
  * Basic implementation of a 3 dimension color.
@@ -73,6 +75,141 @@ public class Color3f extends Tuple3f implements Color3 {
     public static final Color3f getOne() {
         return new Color3f((float)1, (float)1, (float)1);
     }
+
+    public Color3f add(Color3f other) {
+        return new Color3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
+    }
+
+    public Color3f sub(Color3f other) {
+        return new Color3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
+    }
+
+    public Color3f simpleMul(Color3f other) {
+        return new Color3f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()));
+    }
+
+    public Color3f simpleDiv(Color3f other) {
+        return new Color3f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()));
+    }
+
+    public Color3f lerp(Color3f other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public double invLerp(Color3f other, Color3f cLerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double x2 = cLerp.getX() - getX();
+        double y2 = cLerp.getY() - getY();
+        double z2 = cLerp.getZ() - getZ();
+        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+    }
+
+    public Color3f lineal(Color3f other, double alpha, double beta) {
+        return new Color3f((float)(alpha * getX() + beta * other.getX()),
+                           (float)(alpha * getY() + beta * other.getY()),
+                           (float)(alpha * getZ() + beta * other.getZ()));
+    }
+
+//<editor-fold defaultstate="collapsed" desc="Color3">
+    @Override
+    public boolean isNormalized() {
+        return isNormal(getX(), (float)0, (float)1) && isNormal(getY(), (float)0, (float)1) && isNormal(getZ(), (float)0, (float)1);
+    }
+
+    @Override
+    public Color3f getNormalized() {
+        return new Color3f(clamp(getX(), (float)0, (float)1), clamp(getY(), (float)0, (float)1), clamp(getZ(), (float)0, (float)1));
+    }
+
+    @Override
+    public Color3f add(Color3 other) {
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+
+        return new Color3f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()));
+    }
+
+    @Override
+    public Color3f sub(Color3 other) {
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+
+        return new Color3f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()));
+    }
+
+    @Override
+    public Color3f simpleMul(Color3 other) {
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+
+        return new Color3f((float)(getX() * _other.getX()), (float)(getY() * _other.getY()), (float)(getZ() * _other.getZ()));
+    }
+
+    @Override
+    public Color3f simpleDiv(Color3 other) {
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+
+        return new Color3f((float)(getX() / _other.getX()), (float)(getY() / _other.getY()), (float)(getZ() / _other.getZ()));
+    }
+
+    @Override
+    public Color3f mul(double v) {
+        return new Color3f((float)(getX() * v), (float)(getY() * v), (float)(getZ() * v));
+    }
+
+    @Override
+    public Color3f div(double v) {
+        if (DoubleUtils.epsilonZero(v)) {
+            throw new ArithmeticError("divided by zero");
+        }
+        return new Color3f((float)(getX() / v), (float)(getY() / v), (float)(getZ() / v));
+    }
+
+    @Override
+    public Color3f neg() {
+        return new Color3f((float)(- getX()), (float)(- getY()), (float)(- getZ()));
+    }
+
+    @Override
+    public Color3f abs() {
+        return new Color3f((float)Math.abs(getX()), (float)Math.abs(getY()), (float)Math.abs(getZ()));
+    }
+
+    @Override
+    public Color3f lerp(Color3 other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    @Override
+    public double invLerp(Color3 other, Color3 cLerp) {
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+        Tuple3_Float _cLerp = TupleUtils.toTuple3_Float(cLerp);
+
+        double x1 = _other.getX() - getX();
+        double y1 = _other.getY() - getY();
+        double z1 = _other.getZ() - getZ();
+        double x2 = _cLerp.getX() - getX();
+        double y2 = _cLerp.getY() - getY();
+        double z2 = _cLerp.getZ() - getZ();
+        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+    }
+
+    @Override
+    public Color3f lineal(Color3 other, double alpha, double beta) {
+        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+
+        return new Color3f((float)(alpha * getX() + beta * _other.getX()),
+                           (float)(alpha * getY() + beta * _other.getY()),
+                           (float)(alpha * getZ() + beta * _other.getZ()));
+    }
+
+    private static boolean isNormal(float v, float min, float max) {
+        return v >= min && v <= max;
+    }
+
+    private static float clamp(float v, float min, float max) {
+        return v < min ? min : v > max ? max : v;
+    }
+//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override

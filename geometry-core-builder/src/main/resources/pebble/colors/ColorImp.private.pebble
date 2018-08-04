@@ -1,5 +1,0 @@
-{#
- # This macro renders the private items of the color.
- #}
-{%  macro Private( desc, className ) %}
-{%  endmacro %}

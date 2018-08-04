@@ -24,7 +24,7 @@
     public {{ className }} linealAndSet({{ desc.pointName }} other, double alpha, double beta) {
         {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
 
-        set{{ Lineal(desc, "", "_other.", "Vector") | indent(4) }};
+        set{{ Lineal(desc, "", "_other.") | indent(4) }};
         return this;
     }
 

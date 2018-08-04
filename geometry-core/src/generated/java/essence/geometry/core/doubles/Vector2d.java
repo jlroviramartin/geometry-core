@@ -100,19 +100,19 @@ public class Vector2d extends Tuple2d implements Vector2 {
     }
 
     public Vector2d add(Vector2d other) {
-        return new Vector2d(getX() + other.getX(), getY() + other.getY());
+        return new Vector2d((double)(getX() + other.getX()), (double)(getY() + other.getY()));
     }
 
     public Vector2d sub(Vector2d other) {
-        return new Vector2d(getX() - other.getX(), getY() - other.getY());
+        return new Vector2d((double)(getX() - other.getX()), (double)(getY() - other.getY()));
     }
 
     public Vector2d simpleMul(Vector2d other) {
-        return new Vector2d(getX() * other.getX(), getY() * other.getY());
+        return new Vector2d((double)(getX() * other.getX()), (double)(getY() * other.getY()));
     }
 
     public Vector2d simpleDiv(Vector2d other) {
-        return new Vector2d(getX() / other.getX(), getY() / other.getY());
+        return new Vector2d((double)(getX() / other.getX()), (double)(getY() / other.getY()));
     }
 
     public Vector2d lerp(Vector2d other, double alpha) {
@@ -227,28 +227,28 @@ public class Vector2d extends Tuple2d implements Vector2 {
     public Vector2d add(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new Vector2d(getX() + _other.getX(), getY() + _other.getY());
+        return new Vector2d((double)(getX() + _other.getX()), (double)(getY() + _other.getY()));
     }
 
     @Override
     public Vector2d sub(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new Vector2d(getX() - _other.getX(), getY() - _other.getY());
+        return new Vector2d((double)(getX() - _other.getX()), (double)(getY() - _other.getY()));
     }
 
     @Override
     public Vector2d simpleMul(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new Vector2d(getX() * _other.getX(), getY() * _other.getY());
+        return new Vector2d((double)(getX() * _other.getX()), (double)(getY() * _other.getY()));
     }
 
     @Override
     public Vector2d simpleDiv(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new Vector2d(getX() / _other.getX(), getY() / _other.getY());
+        return new Vector2d((double)(getX() / _other.getX()), (double)(getY() / _other.getY()));
     }
 
     @Override
@@ -266,12 +266,12 @@ public class Vector2d extends Tuple2d implements Vector2 {
 
     @Override
     public Vector2d neg() {
-        return new Vector2d(- getX(), - getY());
+        return new Vector2d((double)(- getX()), (double)(- getY()));
     }
 
     @Override
     public Vector2d abs() {
-        return new Vector2d(Math.abs(getX()), Math.abs(getY()));
+        return new Vector2d((double)Math.abs(getX()), (double)Math.abs(getY()));
     }
 
     @Override

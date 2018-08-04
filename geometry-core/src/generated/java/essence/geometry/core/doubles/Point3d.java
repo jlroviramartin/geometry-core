@@ -96,15 +96,15 @@ public class Point3d extends Tuple3d implements Point3 {
     }
 
     public Point3d add(Vector3d other) {
-        return new Point3d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+        return new Point3d((double)(getX() + other.getX()), (double)(getY() + other.getY()), (double)(getZ() + other.getZ()));
     }
 
     public Point3d sub(Vector3d other) {
-        return new Point3d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+        return new Point3d((double)(getX() - other.getX()), (double)(getY() - other.getY()), (double)(getZ() - other.getZ()));
     }
 
     public Vector3d vectorTo(Point3d other) {
-        return new Vector3d(other.getX() - getX(), other.getY() - getY(), other.getZ() - getZ());
+        return new Vector3d((double)(other.getX() - getX()), (double)(other.getY() - getY()), (double)(other.getZ() - getZ()));
     }
 
     public Point3d lerp(Point3d other, double alpha) {
@@ -187,21 +187,21 @@ public class Point3d extends Tuple3d implements Point3 {
     public Point3d add(Vector3 other) {
         Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
-        return new Point3d(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
+        return new Point3d((double)(getX() + _other.getX()), (double)(getY() + _other.getY()), (double)(getZ() + _other.getZ()));
     }
 
     @Override
     public Point3d sub(Vector3 other) {
         Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
-        return new Point3d(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
+        return new Point3d((double)(getX() - _other.getX()), (double)(getY() - _other.getY()), (double)(getZ() - _other.getZ()));
     }
 
     @Override
     public Vector3d vectorTo(Point3 other) {
         Tuple3_Double _other = TupleUtils.toTuple3_Double(other);
 
-        return new Vector3d(_other.getX() - getX(), _other.getY() - getY(), _other.getZ() - getZ());
+        return new Vector3d((double)(_other.getX() - getX()), (double)(_other.getY() - getY()), (double)(_other.getZ() - getZ()));
     }
 
     @Override

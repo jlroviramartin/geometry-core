@@ -99,15 +99,15 @@ public class Point4d extends Tuple4d implements Point4 {
     }
 
     public Point4d add(Vector4d other) {
-        return new Point4d(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        return new Point4d((double)(getX() + other.getX()), (double)(getY() + other.getY()), (double)(getZ() + other.getZ()), (double)(getW() + other.getW()));
     }
 
     public Point4d sub(Vector4d other) {
-        return new Point4d(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        return new Point4d((double)(getX() - other.getX()), (double)(getY() - other.getY()), (double)(getZ() - other.getZ()), (double)(getW() - other.getW()));
     }
 
     public Vector4d vectorTo(Point4d other) {
-        return new Vector4d(other.getX() - getX(), other.getY() - getY(), other.getZ() - getZ(), other.getW() - getW());
+        return new Vector4d((double)(other.getX() - getX()), (double)(other.getY() - getY()), (double)(other.getZ() - getZ()), (double)(other.getW() - getW()));
     }
 
     public Point4d lerp(Point4d other, double alpha) {
@@ -199,21 +199,21 @@ public class Point4d extends Tuple4d implements Point4 {
     public Point4d add(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new Point4d(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        return new Point4d((double)(getX() + _other.getX()), (double)(getY() + _other.getY()), (double)(getZ() + _other.getZ()), (double)(getW() + _other.getW()));
     }
 
     @Override
     public Point4d sub(Vector4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new Point4d(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        return new Point4d((double)(getX() - _other.getX()), (double)(getY() - _other.getY()), (double)(getZ() - _other.getZ()), (double)(getW() - _other.getW()));
     }
 
     @Override
     public Vector4d vectorTo(Point4 other) {
         Tuple4_Double _other = TupleUtils.toTuple4_Double(other);
 
-        return new Vector4d(_other.getX() - getX(), _other.getY() - getY(), _other.getZ() - getZ(), _other.getW() - getW());
+        return new Vector4d((double)(_other.getX() - getX()), (double)(_other.getY() - getY()), (double)(_other.getZ() - getZ()), (double)(_other.getW() - getW()));
     }
 
     @Override

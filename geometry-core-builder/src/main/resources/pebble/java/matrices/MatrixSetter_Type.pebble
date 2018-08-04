@@ -1,0 +1,54 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/java/Tuple.Core.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.tupleTypeName }}} is a {{ desc.dim }} dimensional collection of values of type {{ desc.type }}.
+ */
+public interface {{ desc.tupleTypeName }} extends Tuple {
+
+    /**
+     * This methods sets the property [r, c].
+     *
+     * @param r Number of the row.
+     * @param c Number of the column.
+     * @param value Property [r, c].
+     */
+    void set(int r, int c, {{ desc.type }} value);
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+
+    /**
+     * This methods sets the property [{{ property.r }}, {{ property.c }}].
+     *
+     * @param value Property [{{ property.r }}, {{ property.c }}].
+     */
+    void set{{ property.upperName }}({{ property.type }} value);
+{%          endfor %}
+{%      endfor %}
+
+    /**
+     * This methods sets all the properties.
+     *
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+     * @param {{ property.name }} Property [{{ property.r }}, {{ property.c }}].
+{%          endfor %}
+{%      endfor %}
+     */
+    {{ desc.matrixImpName }} set({{ TypeNameCommaSeparated( desc ) | indent(2) }});
+}
+{%  endblock %}
+
+

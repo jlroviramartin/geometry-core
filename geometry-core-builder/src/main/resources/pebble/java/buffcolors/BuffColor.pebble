@@ -11,6 +11,99 @@
  * A {@code {{ desc.buffColorName }}} is a {{ desc.dim }} dimensional collection of values
  * that represents a color.
  */
-public interface {{ desc.buffColorName }} extends BuffTuple {
+public interface {{ desc.buffColorName }} extends BuffTuple, {{ desc.colorName }} {
+
+    /**
+     * This method normalizes the color. It ensures that all coordinates were between the minimum and the maximum.
+     */
+    {{ desc.buffColorName }} normalize();
+
+    /**
+     * This method sets the color to zero.
+     *
+     * @return This color.
+     */
+    {{ desc.buffColorName }} setZero();
+
+    /**
+     * This method adds {@code this} color to {@code other} color.
+     *
+     * @param other Other color.
+     * @return {@code result = this + other}
+     */
+    {{ desc.buffColorName }} addAndSet({{ desc.colorName }} other);
+
+    /**
+     * This method subs {@code this} color to {@code other} color.
+     *
+     * @param other Other color.
+     * @return {@code result = this - other}
+     */
+    {{ desc.buffColorName }} subAndSet({{ desc.colorName }} other);
+
+    /**
+     * This method multiplies {@code this} color to {@code other} color (coordinate by coordenate).
+     *
+     * @param other Other color.
+     * @return result.
+     */
+    {{ desc.buffColorName }} simpleMulAndSet({{ desc.colorName }} other);
+
+    /**
+     * This method divides {@code this} color by {@code other} color (coordinate by coordenate).
+     *
+     * @param other Other color.
+     * @return result.
+     */
+    {{ desc.buffColorName }} simpleDivAndSet({{ desc.colorName }} other);
+
+    /**
+     * This method multiplies {@code this} color to {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code result = this * v}
+     */
+    {{ desc.buffColorName }} mulAndSet(double v);
+
+    /**
+     * This method divides {@code this} color by {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code result = this / v}
+     */
+    {{ desc.buffColorName }} divAndSet(double v);
+
+    /**
+     * This method evaluates the negation of {@code this} color.
+     *
+     * @return {@code result = -this}
+     */
+    {{ desc.buffColorName }} negAndSet();
+
+    /**
+     * This method evaluates the absolute value of {@code this} color.
+     *
+     * @return {@code result = abs( this )}
+     */
+    {{ desc.buffColorName }} absAndSet();
+
+    /**
+     * This method evaluates the linear interpolation of {@code this} color and {@code other} color at {@code alpha}.
+     *
+     * @param other Other color.
+     * @param alpha Interpolation.
+     * @return {@code this * alpha + other * (1 - alpha)}
+     */
+    {{ desc.buffColorName }} lerpAndSet({{ desc.colorName }} other, double alpha);
+
+    /**
+     * This method evaluates the linear combination of {@code this} color and {@code other} color at {@code alpha} and {@code beta}.
+     *
+     * @param other Other color.
+     * @param alpha Interpolation for {@code this}.
+     * @param beta Interpolation for {@code other}.
+     * @return {@code this * alpha + other * beta}
+     */
+    {{ desc.buffColorName }} linealAndSet({{ desc.colorName }} other, double alpha, double beta);
 }
 {%  endblock %}

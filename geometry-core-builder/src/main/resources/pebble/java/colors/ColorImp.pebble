@@ -11,12 +11,17 @@
 {%  import "pebble/java/colors/ColorImp.public.pebble" %}
 {%  import "pebble/java/colors/ColorImp.private.pebble" %}
 
+{%  import "pebble/java/colors/Color.implementation.pebble" %}
+{%  import "pebble/java/colors/Color.implementation_nonvirtual.pebble" %}
+
 {%  block package %}{{ desc._package }}{% endblock %}
 
 {%  block import %}
 import essence.geometry.core.Tuple;
 import essence.geometry.core.TupleUtils;
 import essence.geometry.core.{{ desc.colorName }};
+import essence.geometry.core.DoubleUtils;
+import essence.util.math.ArithmeticError;
 {%  endblock %}
 
 {%  block content %}
@@ -28,6 +33,12 @@ public class {{ desc.colorImpName }} extends {{ desc.tupleImpName }} implements 
 {{ Constructors( desc, desc.colorImpName ) }}
 
 {{ Public( desc, desc.colorImpName ) }}
+
+{{ ColorImplementationNonVirtual( desc, desc.colorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.colorName }}">
+{{ ColorImplementation( desc, desc.colorImpName ) }}
+//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Object">
 {{ Object( desc, desc.colorImpName ) }}

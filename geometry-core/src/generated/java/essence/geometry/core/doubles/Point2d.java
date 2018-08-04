@@ -93,15 +93,15 @@ public class Point2d extends Tuple2d implements Point2 {
     }
 
     public Point2d add(Vector2d other) {
-        return new Point2d(getX() + other.getX(), getY() + other.getY());
+        return new Point2d((double)(getX() + other.getX()), (double)(getY() + other.getY()));
     }
 
     public Point2d sub(Vector2d other) {
-        return new Point2d(getX() - other.getX(), getY() - other.getY());
+        return new Point2d((double)(getX() - other.getX()), (double)(getY() - other.getY()));
     }
 
     public Vector2d vectorTo(Point2d other) {
-        return new Vector2d(other.getX() - getX(), other.getY() - getY());
+        return new Vector2d((double)(other.getX() - getX()), (double)(other.getY() - getY()));
     }
 
     public Point2d lerp(Point2d other, double alpha) {
@@ -175,21 +175,21 @@ public class Point2d extends Tuple2d implements Point2 {
     public Point2d add(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new Point2d(getX() + _other.getX(), getY() + _other.getY());
+        return new Point2d((double)(getX() + _other.getX()), (double)(getY() + _other.getY()));
     }
 
     @Override
     public Point2d sub(Vector2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new Point2d(getX() - _other.getX(), getY() - _other.getY());
+        return new Point2d((double)(getX() - _other.getX()), (double)(getY() - _other.getY()));
     }
 
     @Override
     public Vector2d vectorTo(Point2 other) {
         Tuple2_Double _other = TupleUtils.toTuple2_Double(other);
 
-        return new Vector2d(_other.getX() - getX(), _other.getY() - getY());
+        return new Vector2d((double)(_other.getX() - getX()), (double)(_other.getY() - getY()));
     }
 
     @Override

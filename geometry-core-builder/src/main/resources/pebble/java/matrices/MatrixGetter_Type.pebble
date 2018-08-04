@@ -1,0 +1,64 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/java/Tuple.Core.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.tupleTypeName }}} is a {{ desc.dim }} dimensional collection of values of type {{ desc.type }}.
+ */
+public interface {{ desc.tupleTypeName }} extends Tuple {
+
+    /*
+     * This method gets the number of rows.
+     *
+     * @return Number of rows.
+     */
+    int sizeRows();
+
+    /*
+     * This method gets the number of columns.
+     *
+     * @return Number of columns.
+     */
+    int sizeCols();
+
+    /*
+     * This method evaluates is {@code this} matrix is squared.
+     *
+     * @return {@code True} if {@code this} matrix is squared. {@code False} otherwise.
+     */
+    boolean isSquared();
+
+    /**
+     * This methods gets the property [r, c].
+     *
+     * @param r Number of the row.
+     * @param c Number of the column.
+     * @return Property [r, c].
+     */
+    final {{ desc.type }} get(int r, int c);
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+
+    /**
+     * This methods gets the property [{{ property.r }}, {{ property.c }}].
+     *
+     * @return Property [{{ property.r }}, {{ property.c }}].
+     */
+    final {{ property.type }} get{{ property.upperName }}();
+{%          endfor %}
+{%      endfor %}
+}
+{%  endblock %}
+
+

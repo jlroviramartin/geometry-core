@@ -110,19 +110,19 @@ public class Vector3f extends Tuple3f implements Vector3 {
     }
 
     public Vector3f add(Vector3f other) {
-        return new Vector3f(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+        return new Vector3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
     }
 
     public Vector3f sub(Vector3f other) {
-        return new Vector3f(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+        return new Vector3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
     }
 
     public Vector3f simpleMul(Vector3f other) {
-        return new Vector3f(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ());
+        return new Vector3f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()));
     }
 
     public Vector3f simpleDiv(Vector3f other) {
-        return new Vector3f(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ());
+        return new Vector3f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()));
     }
 
     public Vector3f lerp(Vector3f other, double alpha) {
@@ -207,28 +207,28 @@ public class Vector3f extends Tuple3f implements Vector3 {
     public Vector3f add(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new Vector3f(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
+        return new Vector3f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()));
     }
 
     @Override
     public Vector3f sub(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new Vector3f(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
+        return new Vector3f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()));
     }
 
     @Override
     public Vector3f simpleMul(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new Vector3f(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ());
+        return new Vector3f((float)(getX() * _other.getX()), (float)(getY() * _other.getY()), (float)(getZ() * _other.getZ()));
     }
 
     @Override
     public Vector3f simpleDiv(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new Vector3f(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ());
+        return new Vector3f((float)(getX() / _other.getX()), (float)(getY() / _other.getY()), (float)(getZ() / _other.getZ()));
     }
 
     @Override
@@ -246,12 +246,12 @@ public class Vector3f extends Tuple3f implements Vector3 {
 
     @Override
     public Vector3f neg() {
-        return new Vector3f(- getX(), - getY(), - getZ());
+        return new Vector3f((float)(- getX()), (float)(- getY()), (float)(- getZ()));
     }
 
     @Override
     public Vector3f abs() {
-        return new Vector3f(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()));
+        return new Vector3f((float)Math.abs(getX()), (float)Math.abs(getY()), (float)Math.abs(getZ()));
     }
 
     @Override

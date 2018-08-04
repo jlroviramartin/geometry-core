@@ -61,7 +61,7 @@
     public {{ className }} lineal({{ desc.pointName }} other, double alpha, double beta) {
         {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
 
-        return new {{ className }}{{ Lineal(desc, "", "_other.", "Vector") | indent(4) }};
+        return new {{ className }}{{ Lineal(desc, "", "_other.") | indent(4) }};
     }
 
     @Override

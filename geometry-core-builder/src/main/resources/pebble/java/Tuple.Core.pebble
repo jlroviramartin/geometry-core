@@ -44,28 +44,28 @@
 
 {%  macro UnaryOperator( desc, op, this, type ) %}
 {%      dynmacro UnaryOperator_anonymous( desc, property ) %}
-{{ p().op }} {{ p().this }}get{{ property.upperName }}()
+({{ property.type }})({{ p().op }} {{ p().this }}get{{ property.upperName }}())
 {%-     enddynmacro %}
 ({{ Properties( desc, ", ", UnaryOperator_anonymous ) }})
 {%- endmacro %}
 
 {%  macro UnaryFunction( desc, op, this, type ) %}
 {%      dynmacro UnaryFunction_anonymous( desc, property ) %}
-{{ p().op }}({{ p().this }}get{{ property.upperName }}())
+({{ property.type }}){{ p().op }}({{ p().this }}get{{ property.upperName }}())
 {%-     enddynmacro %}
 ({{ Properties( desc, ", ", UnaryFunction_anonymous ) }})
 {%- endmacro %}
 
 {%  macro BinaryOperator( desc, op, this, other, type ) %}
 {%      dynmacro BinaryOperator_anonymous( desc, property ) %}
-{{ p().this }}get{{ property.upperName }}() {{ p().op }} {{ p().other }}get{{ property.upperName }}()
+({{ property.type }})({{ p().this }}get{{ property.upperName }}() {{ p().op }} {{ p().other }}get{{ property.upperName }}())
 {%-     enddynmacro %}
 ({{ Properties( desc, ", ", BinaryOperator_anonymous ) }})
 {%- endmacro %}
 
 {%  macro BinaryFunction( desc, op, this, other ) %}
 {%      dynmacro BinaryFunction_anonymous( desc, property ) %}
-{{ p().op }}({{ p().this }}get{{ property.upperName }}(), {{ p().other }}get{{ property.upperName }}())
+({{ property.type }}){{ p().op }}({{ p().this }}get{{ property.upperName }}(), {{ p().other }}get{{ property.upperName }}())
 {%-     enddynmacro %}
 ({{ Properties( desc, ", ", BinaryFunction_anonymous ) }})
 {%- endmacro %}
@@ -150,7 +150,7 @@ return ({{ Properties( desc, " + ", InvLerp_anonymous3 ) }}) / Math.sqrt({{ Prop
 {#
  # This macro renders the method Lineal of the vector/point.
  #}
-{%  macro Lineal( desc, this="", other="other.", ret = "Vector" ) %}
+{%  macro Lineal( desc, this="", other="other." ) %}
 {%      dynmacro Lineal_anonymous1( desc, property ) %}
 ({{ desc.type }})(alpha * {{ p().this }}get{{ property.upperName }}() + beta * {{ p().other }}get{{ property.upperName }}())
 {%-     enddynmacro %}

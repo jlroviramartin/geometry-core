@@ -93,15 +93,15 @@ public class Point2f extends Tuple2f implements Point2 {
     }
 
     public Point2f add(Vector2f other) {
-        return new Point2f(getX() + other.getX(), getY() + other.getY());
+        return new Point2f((float)(getX() + other.getX()), (float)(getY() + other.getY()));
     }
 
     public Point2f sub(Vector2f other) {
-        return new Point2f(getX() - other.getX(), getY() - other.getY());
+        return new Point2f((float)(getX() - other.getX()), (float)(getY() - other.getY()));
     }
 
     public Vector2f vectorTo(Point2f other) {
-        return new Vector2f(other.getX() - getX(), other.getY() - getY());
+        return new Vector2f((float)(other.getX() - getX()), (float)(other.getY() - getY()));
     }
 
     public Point2f lerp(Point2f other, double alpha) {
@@ -175,21 +175,21 @@ public class Point2f extends Tuple2f implements Point2 {
     public Point2f add(Vector2 other) {
         Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
-        return new Point2f(getX() + _other.getX(), getY() + _other.getY());
+        return new Point2f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()));
     }
 
     @Override
     public Point2f sub(Vector2 other) {
         Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
-        return new Point2f(getX() - _other.getX(), getY() - _other.getY());
+        return new Point2f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()));
     }
 
     @Override
     public Vector2f vectorTo(Point2 other) {
         Tuple2_Float _other = TupleUtils.toTuple2_Float(other);
 
-        return new Vector2f(_other.getX() - getX(), _other.getY() - getY());
+        return new Vector2f((float)(_other.getX() - getX()), (float)(_other.getY() - getY()));
     }
 
     @Override

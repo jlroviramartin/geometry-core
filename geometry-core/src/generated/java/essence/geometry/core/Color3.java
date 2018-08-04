@@ -31,4 +31,108 @@ package essence.geometry.core;
  * that represents a color.
  */
 public interface Color3 extends Tuple {
+
+    boolean isNormalized();
+
+    Color3 getNormalized();
+
+    /**
+     * This method adds {@code this} color to {@code other} color.
+     *
+     * @param other Other color.
+     * @return {@code this + other}
+     */
+    Color3 add(Color3 other);
+
+    /**
+     * This method subs {@code this} color to {@code other} color.
+     *
+     * @param other Other color.
+     * @return {@code this - other}
+     */
+    Color3 sub(Color3 other);
+
+    /**
+     * This method multiplies {@code this} color by {@code other} color (coordinate by coordenate).
+     *
+     * @param other Other color.
+     * @return {@code (this.x * other.x, this.y * other.y, ...)}
+     */
+    Color3 simpleMul(Color3 other);
+
+    /**
+     * This method divides {@code this} color by {@code other} color (coordinate by coordenate).
+     *
+     * @param other Other color.
+     * @return {@code (this.x / other.x, this.y / other.y, ...)}
+     */
+    Color3 simpleDiv(Color3 other);
+
+    /**
+     * This method multiplies {@code this} color by {@code v} scalar.
+     *
+     * @param v Scalar.
+     * @return {@code this * v}
+     */
+    Color3 mul(double v);
+
+    /**
+     * This method divides {@code this} color by {@code v} scalar.
+     *
+     * @param v Scalar.
+     * @return {@code this / v}
+     */
+    Color3 div(double v);
+
+    /**
+     * This method evaluates the negation of {@code this} color.
+     *
+     * @return {@code -this}
+     */
+    Color3 neg();
+
+    /**
+     * This method evaluates the absolute value of {@code this} color.
+     *
+     * @return {@code abs( this )}
+     */
+    Color3 abs();
+
+    /**
+     * This method evaluates the linear interpolation of {@code this} color and {@code other} color at {@code alpha}.
+     *
+     * @param other Other color.
+     * @param alpha Interpolation.
+     * @return {@code this * alpha + other * (1 - alpha)}
+     */
+    default Color3 lerp(Color3 other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    /**
+     * This method evaluates the inverse of the linear interpolation of {@code this} color and {@code other} color at {@code vLerp}.
+     *
+     * @param other Other color.
+     * @param vLerp Interpolated color.
+     * @return {@code vLerp = this * result + other * (1 - result)
+     *                vLerp = this * result + other - other * result
+     *                vLerp = (this - other) * result + other
+     *                vLerp - other = (this - other) * result
+     *                vLerp - other = V1 = |V1| * U   si V1 != 0
+     *                this - other  = V2 = |V2| * U   si V2 != 0
+     *                |V1| * U = |V2| * U * result
+     *                |V1| = |V2| * result
+     *                result = |V1| / |V2|}
+     */
+    double invLerp(Color3 other, Color3 vLerp);
+
+    /**
+     * This method evaluates the linear combination of {@code this} color and {@code other} color at {@code alpha} and {@code beta}.
+     *
+     * @param other Other color.
+     * @param alpha Interpolation for {@code this}.
+     * @param beta Interpolation for {@code other}.
+     * @return {@code this * alpha + other * beta}
+     */
+    Color3 lineal(Color3 other, double alpha, double beta);
 }

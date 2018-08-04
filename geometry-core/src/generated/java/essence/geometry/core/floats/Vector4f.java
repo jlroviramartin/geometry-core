@@ -120,19 +120,19 @@ public class Vector4f extends Tuple4f implements Vector4 {
     }
 
     public Vector4f add(Vector4f other) {
-        return new Vector4f(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ(), getW() + other.getW());
+        return new Vector4f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
     }
 
     public Vector4f sub(Vector4f other) {
-        return new Vector4f(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ(), getW() - other.getW());
+        return new Vector4f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
     }
 
     public Vector4f simpleMul(Vector4f other) {
-        return new Vector4f(getX() * other.getX(), getY() * other.getY(), getZ() * other.getZ(), getW() * other.getW());
+        return new Vector4f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()), (float)(getW() * other.getW()));
     }
 
     public Vector4f simpleDiv(Vector4f other) {
-        return new Vector4f(getX() / other.getX(), getY() / other.getY(), getZ() / other.getZ(), getW() / other.getW());
+        return new Vector4f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()), (float)(getW() / other.getW()));
     }
 
     public Vector4f lerp(Vector4f other, double alpha) {
@@ -219,28 +219,28 @@ public class Vector4f extends Tuple4f implements Vector4 {
     public Vector4f add(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new Vector4f(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ(), getW() + _other.getW());
+        return new Vector4f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()), (float)(getW() + _other.getW()));
     }
 
     @Override
     public Vector4f sub(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new Vector4f(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ(), getW() - _other.getW());
+        return new Vector4f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()), (float)(getW() - _other.getW()));
     }
 
     @Override
     public Vector4f simpleMul(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new Vector4f(getX() * _other.getX(), getY() * _other.getY(), getZ() * _other.getZ(), getW() * _other.getW());
+        return new Vector4f((float)(getX() * _other.getX()), (float)(getY() * _other.getY()), (float)(getZ() * _other.getZ()), (float)(getW() * _other.getW()));
     }
 
     @Override
     public Vector4f simpleDiv(Vector4 other) {
         Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
 
-        return new Vector4f(getX() / _other.getX(), getY() / _other.getY(), getZ() / _other.getZ(), getW() / _other.getW());
+        return new Vector4f((float)(getX() / _other.getX()), (float)(getY() / _other.getY()), (float)(getZ() / _other.getZ()), (float)(getW() / _other.getW()));
     }
 
     @Override
@@ -258,12 +258,12 @@ public class Vector4f extends Tuple4f implements Vector4 {
 
     @Override
     public Vector4f neg() {
-        return new Vector4f(- getX(), - getY(), - getZ(), - getW());
+        return new Vector4f((float)(- getX()), (float)(- getY()), (float)(- getZ()), (float)(- getW()));
     }
 
     @Override
     public Vector4f abs() {
-        return new Vector4f(Math.abs(getX()), Math.abs(getY()), Math.abs(getZ()), Math.abs(getW()));
+        return new Vector4f((float)Math.abs(getX()), (float)Math.abs(getY()), (float)Math.abs(getZ()), (float)Math.abs(getW()));
     }
 
     @Override

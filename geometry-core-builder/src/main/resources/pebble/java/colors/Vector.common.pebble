@@ -1,9 +1,0 @@
-{#
- # This macro renders the function GetLengthL1 of the vector.
- #}
-{%  macro GetLengthL1( desc, this="" ) %}
-{%      dynmacro GetLengthL1_anonymous1( desc, property ) %}
-Math.abs({{ p().this }}get{{ property.upperName }}())
-{%-     enddynmacro %}
-{{ Properties( desc, "%n+ ", GetLengthL1_anonymous1 ) }}
-{%- endmacro %}

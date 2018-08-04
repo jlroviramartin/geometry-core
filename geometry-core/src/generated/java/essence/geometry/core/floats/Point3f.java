@@ -96,15 +96,15 @@ public class Point3f extends Tuple3f implements Point3 {
     }
 
     public Point3f add(Vector3f other) {
-        return new Point3f(getX() + other.getX(), getY() + other.getY(), getZ() + other.getZ());
+        return new Point3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
     }
 
     public Point3f sub(Vector3f other) {
-        return new Point3f(getX() - other.getX(), getY() - other.getY(), getZ() - other.getZ());
+        return new Point3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
     }
 
     public Vector3f vectorTo(Point3f other) {
-        return new Vector3f(other.getX() - getX(), other.getY() - getY(), other.getZ() - getZ());
+        return new Vector3f((float)(other.getX() - getX()), (float)(other.getY() - getY()), (float)(other.getZ() - getZ()));
     }
 
     public Point3f lerp(Point3f other, double alpha) {
@@ -187,21 +187,21 @@ public class Point3f extends Tuple3f implements Point3 {
     public Point3f add(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new Point3f(getX() + _other.getX(), getY() + _other.getY(), getZ() + _other.getZ());
+        return new Point3f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()));
     }
 
     @Override
     public Point3f sub(Vector3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new Point3f(getX() - _other.getX(), getY() - _other.getY(), getZ() - _other.getZ());
+        return new Point3f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()));
     }
 
     @Override
     public Vector3f vectorTo(Point3 other) {
         Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
 
-        return new Vector3f(_other.getX() - getX(), _other.getY() - getY(), _other.getZ() - getZ());
+        return new Vector3f((float)(_other.getX() - getX()), (float)(_other.getY() - getY()), (float)(_other.getZ() - getZ()));
     }
 
     @Override

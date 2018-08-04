@@ -37,14 +37,14 @@ public interface BuffVector3 extends Vector3, BuffTuple {
      *
      * @return This vector.
      */
-    Vector3 setZero();
+    BuffVector3 setZero();
 
     /**
      * This method sets the vector to the unit.
      *
      * @return {@code this.unit.length == 1}
      */
-    Vector3 setUnit();
+    BuffVector3 setUnit();
 
     /**
      * This method adds {@code this} vector to {@code other} vector.

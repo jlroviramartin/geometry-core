@@ -33,11 +33,4 @@ public interface Tuple extends EpsilonEquatable<Tuple> {
      * @return Size of the tuple.
      */
     int size();
-
-//    /**
-//     * This method copies the content of the tuple into another tuple.
-//     *
-//     * @param other Other tuple where to copy the content.
-//     */
-//    void getInto(BuffTuple other);
 }

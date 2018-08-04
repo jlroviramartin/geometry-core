@@ -6,7 +6,6 @@
 
 {%  import "pebble/java/Tuple.Core.pebble" %}
 
-<<<<<<< HEAD:geometry-core-builder/src/main/resources/pebble/java/vectors/VectorImp.pebble
 {%  import "pebble/java/vectors/VectorImp.constructors.pebble" %}
 {%  import "pebble/java/vectors/VectorImp.Object.pebble" %}
 {%  import "pebble/java/vectors/VectorImp.public.pebble" %}
@@ -15,16 +14,6 @@
 {%  import "pebble/java/vectors/Vector.common.pebble" %}
 {%  import "pebble/java/vectors/Vector.implementation.pebble" %}
 {%  import "pebble/java/vectors/Vector.implementation_nonvirtual.pebble" %}
-=======
-{%  import "pebble/vectors/VectorImp.constructors.pebble" %}
-{%  import "pebble/vectors/VectorImp.Object.pebble" %}
-{%  import "pebble/vectors/VectorImp.public.pebble" %}
-{%  import "pebble/vectors/VectorImp.private.pebble" %}
->>>>>>> cec1f6e0538fd3676e5c5f96de4e24be85be7ba6:geometry-core-builder/src/main/resources/pebble/vectors/VectorImp.pebble
-
-{%  import "pebble/vectors/Vector.common.pebble" %}
-{%  import "pebble/vectors/Vector.implementation.pebble" %}
-{%  import "pebble/vectors/Vector.implementation_nonvirtual.pebble" %}
 
 {%  block package %}{{ desc._package }}{% endblock %}
 

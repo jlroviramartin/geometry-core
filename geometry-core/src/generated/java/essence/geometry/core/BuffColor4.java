@@ -30,5 +30,98 @@ package essence.geometry.core;
  * A {@code BuffColor4} is a 4 dimensional collection of values
  * that represents a color.
  */
-public interface BuffColor4 extends BuffTuple {
+public interface BuffColor4 extends BuffTuple, Color4 {
+
+    /**
+     * This method normalizes the color. It ensures that all coordinates were between the minimum and the maximum.
+     */
+    BuffColor4 normalize();
+
+    /**
+     * This method sets the color to zero.
+     *
+     * @return This color.
+     */
+    BuffColor4 setZero();
+
+    /**
+     * This method adds {@code this} color to {@code other} color.
+     *
+     * @param other Other color.
+     * @return {@code result = this + other}
+     */
+    BuffColor4 addAndSet(Color4 other);
+
+    /**
+     * This method subs {@code this} color to {@code other} color.
+     *
+     * @param other Other color.
+     * @return {@code result = this - other}
+     */
+    BuffColor4 subAndSet(Color4 other);
+
+    /**
+     * This method multiplies {@code this} color to {@code other} color (coordinate by coordenate).
+     *
+     * @param other Other color.
+     * @return result.
+     */
+    BuffColor4 simpleMulAndSet(Color4 other);
+
+    /**
+     * This method divides {@code this} color by {@code other} color (coordinate by coordenate).
+     *
+     * @param other Other color.
+     * @return result.
+     */
+    BuffColor4 simpleDivAndSet(Color4 other);
+
+    /**
+     * This method multiplies {@code this} color to {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code result = this * v}
+     */
+    BuffColor4 mulAndSet(double v);
+
+    /**
+     * This method divides {@code this} color by {@code v}.
+     *
+     * @param v Scalar.
+     * @return {@code result = this / v}
+     */
+    BuffColor4 divAndSet(double v);
+
+    /**
+     * This method evaluates the negation of {@code this} color.
+     *
+     * @return {@code result = -this}
+     */
+    BuffColor4 negAndSet();
+
+    /**
+     * This method evaluates the absolute value of {@code this} color.
+     *
+     * @return {@code result = abs( this )}
+     */
+    BuffColor4 absAndSet();
+
+    /**
+     * This method evaluates the linear interpolation of {@code this} color and {@code other} color at {@code alpha}.
+     *
+     * @param other Other color.
+     * @param alpha Interpolation.
+     * @return {@code this * alpha + other * (1 - alpha)}
+     */
+    BuffColor4 lerpAndSet(Color4 other, double alpha);
+
+    /**
+     * This method evaluates the linear combination of {@code this} color and {@code other} color at {@code alpha} and {@code beta}.
+     *
+     * @param other Other color.
+     * @param alpha Interpolation for {@code this}.
+     * @param beta Interpolation for {@code other}.
+     * @return {@code this * alpha + other * beta}
+     */
+    BuffColor4 linealAndSet(Color4 other, double alpha, double beta);
 }
