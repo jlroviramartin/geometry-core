@@ -1,0 +1,80 @@
+{#
+ # This macro renders the math operations of the matrix.
+ #}
+{%  macro MatrixMathAndSetImplementation( desc, className ) %}
+    @Override
+    public {{ className }} setZero() {
+{%      dynmacro Accessors_setZero( desc, property ) %}
+0
+{%-     enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Accessors_setZero ) | indent(3) }});
+        return this;
+    }
+{%      if desc.dimRows == desc.dimCols %}
+
+    @Override
+    public {{ className }} setIdentity() {
+{%          dynmacro Accessors_setIdentity( desc, property ) %}
+{%              if property.r == property.c %}1{% else %}0{% endif %}
+{%-         enddynmacro %}
+        set({{ RowsAndColumns( desc, ",%n", ", ", Accessors_setIdentity ) | indent(3) }});
+        return this;
+    }
+{%      endif %}
+
+    @Override
+    public {{ className }} addAndSet({{ desc.matrixName }} other) {
+        set{{ MatrixBinaryOperator(desc, "+", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} subAndSet({{ desc.matrixName }} other) {
+        set{{ MatrixBinaryOperator(desc, "-", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} mulAndSet(double v) {
+        set{{ MatrixBinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} divAndSet(double v) {
+        set{{ MatrixBinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} mulAndSet({{ desc.matrixName }} other) {
+        set{{ MatrixMul( desc, "", "other."  ) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} negAndSet() {
+        set{{ MatrixUnaryOperator(desc, "-", "") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} absAndSet() {
+        set{{ MatrixUnaryFunction(desc, "Math.abs", "") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} transposeAndSet() {
+        set{{ MatrixTranspose( desc, "" ) | indent(3) }};
+        return this;
+    }
+{%      if (desc.dimRows >= 2) and (desc.dimRows <= 4) %}
+
+    @Override
+    public {{ className }} inverseAndSet() throws SingularMatrixException {
+        {{ MatrixInverse234( desc, "", "set" ) }}
+        return this;
+    }
+{%      endif %}
+{%  endmacro %}

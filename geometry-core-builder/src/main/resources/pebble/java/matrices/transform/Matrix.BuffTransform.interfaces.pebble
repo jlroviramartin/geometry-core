@@ -1,0 +1,53 @@
+{#
+ # This macro renders the implementation of vector transformations of the matrix.
+ #}
+{%  macro MatrixBuffTransformInterfaces( desc, className ) %}
+{%      set vdesc = desc.vector %}
+{%      set vlowdesc = desc.vector.lowerDimension %}
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    void mul({{ vdesc.buffVectorName }} v);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    void premul({{ vdesc.buffVectorName }} v);
+{%      if not desc.vector.lowerDimension is empty %}
+{#
+ # Those methods work with vector and points of a lower dimension. 
+ #}
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    void mul({{ vlowdesc.buffVectorName }} v);
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    void mul({{ vlowdesc.buffPointName }} p);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    void premul({{ vlowdesc.buffVectorName }} v);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    void premul({{ vlowdesc.buffPointName }} p);
+{%      endif %}
+{%  endmacro %}

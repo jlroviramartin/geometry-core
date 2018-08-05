@@ -1,23 +1,7 @@
-{%  extends "pebble/java/Base.pebble" %}
-
 {#
- # This template renders a tupe.
+ # This macro renders the interfaces of the setters of a matrix.
  #}
-
-{%  import "pebble/java/Tuple.Core.pebble" %}
-
-{%  block package %}{{ desc._package }}{% endblock %}
-
-{%  block import %}
-import essence.geometry.core.Tuple;
-{%  endblock %}
-
-{%  block content %}
-/**
- * A {@code {{ desc.tupleTypeName }}} is a {{ desc.dim }} dimensional collection of values of type {{ desc.type }}.
- */
-public interface {{ desc.tupleTypeName }} extends Tuple {
-
+{%  macro MatrixSetterTypeInterfaces( desc, className ) %}
     /**
      * This methods sets the property [r, c].
      *
@@ -48,7 +32,4 @@ public interface {{ desc.tupleTypeName }} extends Tuple {
 {%      endfor %}
      */
     {{ desc.matrixImpName }} set({{ TypeNameCommaSeparated( desc ) | indent(2) }});
-}
-{%  endblock %}
-
-
+{%  endmacro %}

@@ -8,15 +8,18 @@
 
 {%  import "pebble/java/matrices/MatrixImp.constructors.pebble" %}
 {%  import "pebble/java/matrices/MatrixImp.public.pebble" %}
-{%  import "pebble/java/matrices/MatrixImp.Accessors.pebble" %}
 {%  import "pebble/java/matrices/MatrixImp.private.pebble" %}
 {%  import "pebble/java/matrices/MatrixImp.Object.pebble" %}
-{%  import "pebble/java/matrices/MatrixImp.Transform.pebble" %}
-{%  import "pebble/java/matrices/MatrixImp.BuffTransform.pebble" %}
 {%  import "pebble/java/matrices/MatrixImp.EpsilonEquatable.pebble" %}
 
-{%  import "pebble/java/matrices/MatrixImp.Math.pebble" %}
-{%  import "pebble/java/matrices/MatrixImp.MathAndSet.pebble" %}
+{%  import "pebble/java/matrices/gettersetter/MatrixType.Getter.implementation.pebble" %}
+{%  import "pebble/java/matrices/gettersetter/MatrixType.Setter.implementation.pebble" %}
+
+{%  import "pebble/java/matrices/math/Matrix.Math.implementation.pebble" %}
+{%  import "pebble/java/matrices/math/Matrix.MathAndSet.implementation.pebble" %}
+
+{%  import "pebble/java/matrices/transform/Matrix.Transform.implementation.pebble" %}
+{%  import "pebble/java/matrices/transform/Matrix.BuffTransform.implementation.pebble" %}
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
@@ -36,6 +39,8 @@ import essence.geometry.core.{{ desc.vector.lowerDimension.buffVectorName }};
 import essence.geometry.core.{{ desc.vector.lowerDimension.buffPointName }};
 {%  endif %}
 import essence.geometry.core.VectorFormatInfo;
+import essence.geometry.core.{{ desc.MatrixName }};
+import essence.geometry.core.{{ desc.buffMatrixName }};
 
 import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
 {%  endblock %}
@@ -44,7 +49,7 @@ import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
 /**
  * Basic implementation of a {{ desc.dimRows }}x{{ desc.dimCols }} matrix.
  */
-public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ desc.matrixImpName }}> {
+public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ desc.matrixImpName }}>, {{ desc.buffMatrixName }} {
 //<editor-fold defaultstate="collapsed" desc="fields">
 {{ Fields( desc ) }}
 //</editor-fold>
@@ -54,18 +59,20 @@ public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ 
 {{ Public( desc, desc.matrixImpName ) }}
 
 //<editor-fold defaultstate="collapsed" desc="accessors">
-{{ Accessors( desc, desc.matrixImpName ) }}
+{{ MatrixGetterTypeImplementation( desc, desc.matrixImpName ) }}
+
+{{ MatrixSetterTypeImplementation( desc, desc.matrixImpName ) }}
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Transforms">
-{{ Transform( desc, desc.matrixImpName ) }}
+{{ MatrixTransformImplementation( desc, desc.matrixImpName ) }}
 
-{{ BuffTransform( desc, desc.matrixImpName ) }}
+{{ MatrixBuffTransformImplementation( desc, desc.matrixImpName ) }}
 //</editor-fold>
 
-{{ Math( desc, desc.matrixImpName ) }}
+{{ MatrixMathImplementation( desc, desc.matrixImpName ) }}
 
-{{ MathAndSet( desc, desc.matrixImpName ) }}
+{{ MatrixMathAndSetImplementation( desc, desc.matrixImpName ) }}
 
 //<editor-fold defaultstate="collapsed" desc="Object">
 {{ Object( desc, desc.matrixImpName ) }}

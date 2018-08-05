@@ -4,107 +4,16 @@
  # This template renders a matrix.
  #}
 
+{%  import "pebble/java/matrices/math/Matrix.MathAndSet.interfaces.pebble" %}
+
 {%  block package %}{{ desc._package }}{% endblock %}
 
 {%  block content %}
 /**
  * A {@code {{ desc.buffMatrixName }}} is a collection of values that represents a matrix.
  */
-interface {{ desc.buffMatrixName }} extends {{ desc.matrixName }} {
+public interface {{ desc.buffMatrixName }} extends {{ desc.matrixName }} {
 
-    /**
-     * This method sets {@code this} matrix to zero.
-     *
-     * @return {@code this = zero}
-     */
-    {{ desc.buffMatrixName }} setZero();
-{%      if desc.dimRows == desc.dimCols %}
-
-    /**
-     * This method sets {@code this} matrix to the identity.
-     *
-     * @return {@code this = identity}
-     */
-    {{ desc.buffMatrixName }} setIdentity();
-{%      endif %}
-
-    /**
-     * This method adds {@code this} matrix and {@code other} matrix and sets the result
-     * into {@code this}.
-     *
-     * @param other Other matrix.
-     * @return {@code this = this + other}
-     */
-    {{ desc.buffMatrixName }} addAndSet({{ desc.matrixName }} other);
-
-    /**
-     * This method subs {@code this} matrix and {@code other} matrix and sets the result
-     * into {@code this}.
-     *
-     * @param other Other matrix.
-     * @return {@code this = this - other}
-     */
-    {{ desc.buffMatrixName }} subAndSet({{ desc.matrixName }} other);
-
-    /**
-     * This method multiplies {@code this} matrix by {@code v} and sets the result
-     * into {@code this}.
-     *
-     * @param v Scalar.
-     * @return {@code this = this * v}
-     */
-    {{ desc.buffMatrixName }} mulAndSet(double v);
-
-    /**
-     * This method divides {@code this} matrix by {@code v} and sets the result
-     * into {@code this}.
-     *
-     * @param v Scalar.
-     * @return {@code this = this / v}
-     */
-    {{ desc.buffMatrixName }} divAndSet(double v);
-
-    /**
-     * This method multiplies {@code this} matrix by {@code other} matrix and sets the result
-     * into {@code this}.
-     *
-     * @param other Other matrix.
-     * @return {@code this = this * other}
-     */
-    {{ desc.buffMatrixName }} mulAndSet({{ desc.matrixName }} other);
-
-    /**
-     * This method changes the sign of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = -this}
-     */
-    {{ desc.buffMatrixName }} negAndSet();
-
-    /**
-     * This method calculates the absolute value of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = abs(this)}
-     */
-    {{ desc.buffMatrixName }} absAndSet();
-
-    /**
-     * This method calculates the transpose of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = transpose(this)}
-     */
-    {{ desc.buffMatrixName }} transposeAndSet();
-{%      if (desc.dimRows >= 2) and (desc.dimRows <= 4) %}
-
-    /**
-     * This method evaluates the inverse of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = this^-1}
-     */
-    {{ desc.buffMatrixName }} inverseAndSet() throws SingularMatrixException;
-{%      endif %}
+{{ MatrixMathAndSetInterfaces( desc,desc.buffMatrixName  ) }}
 }
 {%  endblock %}

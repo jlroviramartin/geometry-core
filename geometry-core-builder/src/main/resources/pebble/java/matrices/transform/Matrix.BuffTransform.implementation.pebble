@@ -1,0 +1,77 @@
+{#
+ # This macro renders the implementation of vector transformations of the matrix.
+ #}
+{%  macro MatrixBuffTransformImplementation( desc, className ) %}
+{%      set vdesc = desc.vector %}
+{%      set vlowdesc = desc.vector.lowerDimension %}
+    @Override
+    public void mul({{ vdesc.buffVectorName }} v) {
+        {{ vdesc.buffTupleTypeName }} _v = TupleUtils.to{{ vdesc.buffTupleTypeName }}(v);
+
+        {{ MulVector( desc, "", "_v.", ret = "_v.set" ) | indent(4) }}
+    }
+
+    public void mul({{ vdesc.buffVectorImpName }} v) {
+        {{ MulVector( desc, "", "v.", ret = "v.set" ) | indent(4) }}
+    }
+
+    @Override
+    public void premul({{ vdesc.buffVectorName }} v) {
+        {{ vdesc.buffTupleTypeName }} _v = TupleUtils.to{{ vdesc.buffTupleTypeName }}(v);
+
+        {{ PremulVector( desc, "", "_v.", ret = "_v.set" ) | indent(4) }}
+    }
+
+    public void premul({{ vdesc.buffVectorImpName }} v) {
+        {{ PremulVector( desc, "", "v.", ret = "v.set " ) | indent(4) }}
+    }
+{%      if not desc.vector.lowerDimension is empty %}
+{#
+ # Those methods work with vector and points of a lower dimension. 
+ #}
+
+    @Override
+    public void mul({{ vlowdesc.buffVectorName }} v) {
+        {{ vlowdesc.buffTupleTypeName }} _v = TupleUtils.to{{ vlowdesc.buffTupleTypeName }}(v);
+
+        {{ MulVectorLow( desc, "", "_v.", ret = "_v.set" ) | indent(4) }}
+    }
+
+    public void mul({{ vlowdesc.buffVectorImpName }} v) {
+        {{ MulVectorLow( desc, "", "v.", ret = "v.set" ) | indent(4) }}
+    }
+
+    @Override
+    public void mul({{ vlowdesc.buffPointName }} p) {
+        {{ vlowdesc.buffTupleTypeName }} _p = TupleUtils.to{{ vlowdesc.buffTupleTypeName }}(p);
+
+        {{ MulpointLow( desc, "", "_p.", ret = "_p.set" ) | indent(4) }}
+    }
+
+    public void mul({{ vlowdesc.buffPointImpName }} p) {
+        {{ MulpointLow( desc, "", "p.", ret = "p.set" ) | indent(4) }}
+    }
+
+    @Override
+    public void premul({{ vlowdesc.buffVectorName }} v) {
+        {{ vlowdesc.buffTupleTypeName }} _v = TupleUtils.to{{ vlowdesc.buffTupleTypeName }}(v);
+
+        {{ PremulVectorLow( desc, "", "_v.", ret = "_v.set" ) | indent(4) }}
+    }
+
+    public void premul({{ vlowdesc.buffVectorImpName }} v) {
+        {{ PremulVectorLow( desc, "", "v.", ret = "v.set"  ) | indent(4) }}
+    }
+
+    @Override
+    public void premul({{ vlowdesc.buffPointName }} p) {
+        {{ vlowdesc.buffTupleTypeName }} _p = TupleUtils.to{{ vlowdesc.buffTupleTypeName }}(p);
+
+        {{ PremulPointLow( desc, "", "_p.", ret = "_p.set" ) | indent(4) }}
+    }
+
+    public void premul({{ vlowdesc.buffPointImpName }} p) {
+        {{ PremulPointLow( desc, "", "p.", ret = "p.set" ) | indent(4) }}
+    }
+{%      endif %}
+{%  endmacro %}

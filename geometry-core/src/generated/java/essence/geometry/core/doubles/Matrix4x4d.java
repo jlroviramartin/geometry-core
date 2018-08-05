@@ -38,13 +38,15 @@ import essence.geometry.core.Point3;
 import essence.geometry.core.BuffVector3;
 import essence.geometry.core.BuffPoint3;
 import essence.geometry.core.VectorFormatInfo;
+import essence.geometry.core.Matrix4x4;
+import essence.geometry.core.BuffMatrix4x4;
 
 import static essence.geometry.core.DoubleUtils.EPSILON;
 
 /**
  * Basic implementation of a 4x4 matrix.
  */
-public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
+public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d>, BuffMatrix4x4 {
 //<editor-fold defaultstate="collapsed" desc="fields">
     /** M00 component. */
     private double m00;
@@ -154,40 +156,22 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     }
 
 //<editor-fold defaultstate="collapsed" desc="accessors">
-    /*
-     * This method gets the number of rows.
-     *
-     * @return Number of rows.
-     */
-    public int sizeRows() {
+    @Override
+    public final int sizeRows() {
         return 4;
     }
 
-    /*
-     * This method gets the number of columns.
-     *
-     * @return Number of columns.
-     */
-    public int sizeCols() {
+    @Override
+    public final int sizeCols() {
         return 4;
     }
 
-    /*
-     * This method evaluates is {@code this} matrix is squared.
-     *
-     * @return {@code True} if {@code this} matrix is squared. {@code False} otherwise.
-     */
-    public boolean isSquared() {
+    @Override
+    public final boolean isSquared() {
         return true;
     }
 
-    /**
-     * This methods gets the property [r, c].
-     *
-     * @param r Number of the row.
-     * @param c Number of the column.
-     * @return Property [r, c].
-     */
+    @Override
     public final double get(int r, int c) {
         switch(r) {
         case 0:
@@ -238,14 +222,88 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * This methods sets the property [r, c].
-     *
-     * @param r Number of the row.
-     * @param c Number of the column.
-     * @param value Property [r, c].
-     */
-    public void set(int r, int c, double value) {
+    @Override
+    public final double getM00() {
+        return m00;
+    }
+
+    @Override
+    public final double getM01() {
+        return m01;
+    }
+
+    @Override
+    public final double getM02() {
+        return m02;
+    }
+
+    @Override
+    public final double getM03() {
+        return m03;
+    }
+
+    @Override
+    public final double getM10() {
+        return m10;
+    }
+
+    @Override
+    public final double getM11() {
+        return m11;
+    }
+
+    @Override
+    public final double getM12() {
+        return m12;
+    }
+
+    @Override
+    public final double getM13() {
+        return m13;
+    }
+
+    @Override
+    public final double getM20() {
+        return m20;
+    }
+
+    @Override
+    public final double getM21() {
+        return m21;
+    }
+
+    @Override
+    public final double getM22() {
+        return m22;
+    }
+
+    @Override
+    public final double getM23() {
+        return m23;
+    }
+
+    @Override
+    public final double getM30() {
+        return m30;
+    }
+
+    @Override
+    public final double getM31() {
+        return m31;
+    }
+
+    @Override
+    public final double getM32() {
+        return m32;
+    }
+
+    @Override
+    public final double getM33() {
+        return m33;
+    }
+
+    @Override
+    public final void set(int r, int c, double value) {
         switch(r) {
         case 0:
             switch(c) {
@@ -311,315 +369,88 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * This methods gets the property [0, 0].
-     *
-     * @return Property [0, 0].
-     */
-    public final double getM00() {
-        return m00;
-    }
-
-    /**
-     * This methods sets the property [0, 0].
-     *
-     * @param value Property [0, 0].
-     */
-    public void setM00(double value) {
+    @Override
+    public final void setM00(double value) {
         m00 = value;
     }
 
-    /**
-     * This methods gets the property [0, 1].
-     *
-     * @return Property [0, 1].
-     */
-    public final double getM01() {
-        return m01;
-    }
-
-    /**
-     * This methods sets the property [0, 1].
-     *
-     * @param value Property [0, 1].
-     */
-    public void setM01(double value) {
+    @Override
+    public final void setM01(double value) {
         m01 = value;
     }
 
-    /**
-     * This methods gets the property [0, 2].
-     *
-     * @return Property [0, 2].
-     */
-    public final double getM02() {
-        return m02;
-    }
-
-    /**
-     * This methods sets the property [0, 2].
-     *
-     * @param value Property [0, 2].
-     */
-    public void setM02(double value) {
+    @Override
+    public final void setM02(double value) {
         m02 = value;
     }
 
-    /**
-     * This methods gets the property [0, 3].
-     *
-     * @return Property [0, 3].
-     */
-    public final double getM03() {
-        return m03;
-    }
-
-    /**
-     * This methods sets the property [0, 3].
-     *
-     * @param value Property [0, 3].
-     */
-    public void setM03(double value) {
+    @Override
+    public final void setM03(double value) {
         m03 = value;
     }
 
-    /**
-     * This methods gets the property [1, 0].
-     *
-     * @return Property [1, 0].
-     */
-    public final double getM10() {
-        return m10;
-    }
-
-    /**
-     * This methods sets the property [1, 0].
-     *
-     * @param value Property [1, 0].
-     */
-    public void setM10(double value) {
+    @Override
+    public final void setM10(double value) {
         m10 = value;
     }
 
-    /**
-     * This methods gets the property [1, 1].
-     *
-     * @return Property [1, 1].
-     */
-    public final double getM11() {
-        return m11;
-    }
-
-    /**
-     * This methods sets the property [1, 1].
-     *
-     * @param value Property [1, 1].
-     */
-    public void setM11(double value) {
+    @Override
+    public final void setM11(double value) {
         m11 = value;
     }
 
-    /**
-     * This methods gets the property [1, 2].
-     *
-     * @return Property [1, 2].
-     */
-    public final double getM12() {
-        return m12;
-    }
-
-    /**
-     * This methods sets the property [1, 2].
-     *
-     * @param value Property [1, 2].
-     */
-    public void setM12(double value) {
+    @Override
+    public final void setM12(double value) {
         m12 = value;
     }
 
-    /**
-     * This methods gets the property [1, 3].
-     *
-     * @return Property [1, 3].
-     */
-    public final double getM13() {
-        return m13;
-    }
-
-    /**
-     * This methods sets the property [1, 3].
-     *
-     * @param value Property [1, 3].
-     */
-    public void setM13(double value) {
+    @Override
+    public final void setM13(double value) {
         m13 = value;
     }
 
-    /**
-     * This methods gets the property [2, 0].
-     *
-     * @return Property [2, 0].
-     */
-    public final double getM20() {
-        return m20;
-    }
-
-    /**
-     * This methods sets the property [2, 0].
-     *
-     * @param value Property [2, 0].
-     */
-    public void setM20(double value) {
+    @Override
+    public final void setM20(double value) {
         m20 = value;
     }
 
-    /**
-     * This methods gets the property [2, 1].
-     *
-     * @return Property [2, 1].
-     */
-    public final double getM21() {
-        return m21;
-    }
-
-    /**
-     * This methods sets the property [2, 1].
-     *
-     * @param value Property [2, 1].
-     */
-    public void setM21(double value) {
+    @Override
+    public final void setM21(double value) {
         m21 = value;
     }
 
-    /**
-     * This methods gets the property [2, 2].
-     *
-     * @return Property [2, 2].
-     */
-    public final double getM22() {
-        return m22;
-    }
-
-    /**
-     * This methods sets the property [2, 2].
-     *
-     * @param value Property [2, 2].
-     */
-    public void setM22(double value) {
+    @Override
+    public final void setM22(double value) {
         m22 = value;
     }
 
-    /**
-     * This methods gets the property [2, 3].
-     *
-     * @return Property [2, 3].
-     */
-    public final double getM23() {
-        return m23;
-    }
-
-    /**
-     * This methods sets the property [2, 3].
-     *
-     * @param value Property [2, 3].
-     */
-    public void setM23(double value) {
+    @Override
+    public final void setM23(double value) {
         m23 = value;
     }
 
-    /**
-     * This methods gets the property [3, 0].
-     *
-     * @return Property [3, 0].
-     */
-    public final double getM30() {
-        return m30;
-    }
-
-    /**
-     * This methods sets the property [3, 0].
-     *
-     * @param value Property [3, 0].
-     */
-    public void setM30(double value) {
+    @Override
+    public final void setM30(double value) {
         m30 = value;
     }
 
-    /**
-     * This methods gets the property [3, 1].
-     *
-     * @return Property [3, 1].
-     */
-    public final double getM31() {
-        return m31;
-    }
-
-    /**
-     * This methods sets the property [3, 1].
-     *
-     * @param value Property [3, 1].
-     */
-    public void setM31(double value) {
+    @Override
+    public final void setM31(double value) {
         m31 = value;
     }
 
-    /**
-     * This methods gets the property [3, 2].
-     *
-     * @return Property [3, 2].
-     */
-    public final double getM32() {
-        return m32;
-    }
-
-    /**
-     * This methods sets the property [3, 2].
-     *
-     * @param value Property [3, 2].
-     */
-    public void setM32(double value) {
+    @Override
+    public final void setM32(double value) {
         m32 = value;
     }
 
-    /**
-     * This methods gets the property [3, 3].
-     *
-     * @return Property [3, 3].
-     */
-    public final double getM33() {
-        return m33;
-    }
-
-    /**
-     * This methods sets the property [3, 3].
-     *
-     * @param value Property [3, 3].
-     */
-    public void setM33(double value) {
+    @Override
+    public final void setM33(double value) {
         m33 = value;
     }
 
-    /**
-     * This methods sets all the properties.
-     *
-     * @param m00 Property [0, 0].
-     * @param m01 Property [0, 1].
-     * @param m02 Property [0, 2].
-     * @param m03 Property [0, 3].
-     * @param m10 Property [1, 0].
-     * @param m11 Property [1, 1].
-     * @param m12 Property [1, 2].
-     * @param m13 Property [1, 3].
-     * @param m20 Property [2, 0].
-     * @param m21 Property [2, 1].
-     * @param m22 Property [2, 2].
-     * @param m23 Property [2, 3].
-     * @param m30 Property [3, 0].
-     * @param m31 Property [3, 1].
-     * @param m32 Property [3, 2].
-     * @param m33 Property [3, 3].
-     */
-    public Matrix4x4d set(double m00, double m01, double m02, double m03,
+    @Override
+    public final void set(double m00, double m01, double m02, double m03,
                           double m10, double m11, double m12, double m13,
                           double m20, double m21, double m22, double m23,
                           double m30, double m31, double m32, double m33) {
@@ -639,7 +470,6 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         this.m31 = m31;
         this.m32 = m32;
         this.m33 = m33;
-        return this;
     }
 //</editor-fold>
 
@@ -804,11 +634,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return new Point3d(x / w, y / w, z / w);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public void mul(BuffVector4 v) {
         BuffTuple4_Double _v = TupleUtils.toBuffTuple4_Double(v);
 
@@ -818,11 +644,6 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                getM30() * _v.getX() + getM31() * _v.getY() + getM32() * _v.getZ() + getM33() * _v.getW());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public void mul(BuffVector4d v) {
         v.set(getM00() * v.getX() + getM01() * v.getY() + getM02() * v.getZ() + getM03() * v.getW(),
               getM10() * v.getX() + getM11() * v.getY() + getM12() * v.getZ() + getM13() * v.getW(),
@@ -830,11 +651,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
               getM30() * v.getX() + getM31() * v.getY() + getM32() * v.getZ() + getM33() * v.getW());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public void premul(BuffVector4 v) {
         BuffTuple4_Double _v = TupleUtils.toBuffTuple4_Double(v);
 
@@ -844,11 +661,6 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                _v.getX() * getM03() + _v.getY() * getM13() + _v.getZ() * getM23() + _v.getW() * getM33());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public void premul(BuffVector4d v) {
         v.set (v.getX() * getM00() + v.getY() * getM10() + v.getZ() * getM20() + v.getW() * getM30(),
                v.getX() * getM01() + v.getY() * getM11() + v.getZ() * getM21() + v.getW() * getM31(),
@@ -856,11 +668,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                v.getX() * getM03() + v.getY() * getM13() + v.getZ() * getM23() + v.getW() * getM33());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public void mul(BuffVector3 v) {
         BuffTuple3_Double _v = TupleUtils.toBuffTuple3_Double(v);
 
@@ -870,11 +678,6 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         _v.set(x, y, z);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public void mul(BuffVector3d v) {
         double x = getM00() * v.getX() + getM01() * v.getY() + getM02() * v.getZ();
         double y = getM10() * v.getX() + getM11() * v.getY() + getM12() * v.getZ();
@@ -882,11 +685,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         v.set(x, y, z);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
+    @Override
     public void mul(BuffPoint3 p) {
         BuffTuple3_Double _p = TupleUtils.toBuffTuple3_Double(p);
 
@@ -897,11 +696,6 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         _p.set(x / w, y / w, z / w);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
     public void mul(BuffPoint3d p) {
         double x = getM00() * p.getX() + getM01() * p.getY() + getM02() * p.getZ() + getM03();
         double y = getM10() * p.getX() + getM11() * p.getY() + getM12() * p.getZ() + getM13();
@@ -910,11 +704,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         p.set(x / w, y / w, z / w);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public void premul(BuffVector3 v) {
         BuffTuple3_Double _v = TupleUtils.toBuffTuple3_Double(v);
 
@@ -924,11 +714,6 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         _v.set(x, y, z);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public void premul(BuffVector3d v) {
         double x = v.getX() * getM00() + v.getY() * getM10() + v.getZ() * getM20();
         double y = v.getX() * getM01() + v.getY() * getM11() + v.getZ() * getM21();
@@ -936,11 +721,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         v.set(x, y, z);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
+    @Override
     public void premul(BuffPoint3 p) {
         BuffTuple3_Double _p = TupleUtils.toBuffTuple3_Double(p);
 
@@ -951,11 +732,6 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         _p.set(x / w, y / w, z / w);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
     public void premul(BuffPoint3d p) {
         double x = p.getX() * getM00() + p.getY() * getM10() + p.getZ() * getM20() + getM30();
         double y = p.getX() * getM01() + p.getY() * getM11() + p.getZ() * getM21() + getM31();
@@ -965,15 +741,12 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
     }
 //</editor-fold>
 
+    @Override
     public final boolean isValid() {
         return !isNaN() && !isInfinity();
     }
 
-    /**
-     * This method evaluates is {@code this} matrix contains any NaN component.
-     *
-     * @return {@code True} if {@code this} matrix contains any NaN component. {@code False} otherwise.
-     */
+    @Override
     public final boolean isNaN() {
         return Double.isNaN(getM00()) || Double.isNaN(getM01()) || Double.isNaN(getM02()) || Double.isNaN(getM03()) ||
                Double.isNaN(getM10()) || Double.isNaN(getM11()) || Double.isNaN(getM12()) || Double.isNaN(getM13()) ||
@@ -981,11 +754,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                Double.isNaN(getM30()) || Double.isNaN(getM31()) || Double.isNaN(getM32()) || Double.isNaN(getM33());
     }
 
-    /**
-     * This method evaluates is {@code this} matrix contains any infinity component.
-     *
-     * @return {@code True} if {@code this} matrix contains any infinity component. {@code False} otherwise.
-     */
+    @Override
     public final boolean isInfinity() {
         return Double.isInfinite(getM00()) || Double.isInfinite(getM01()) || Double.isInfinite(getM02()) || Double.isInfinite(getM03()) ||
                Double.isInfinite(getM10()) || Double.isInfinite(getM11()) || Double.isInfinite(getM12()) || Double.isInfinite(getM13()) ||
@@ -993,21 +762,12 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                Double.isInfinite(getM30()) || Double.isInfinite(getM31()) || Double.isInfinite(getM32()) || Double.isInfinite(getM33());
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is zero.
-     *
-     * @return {@code True} if {@code this} matrix is zero. {@code False} otherwise.
-     */
+    @Override
     public final boolean isZero() {
         return isZero(EPSILON);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is zero.
-     *
-     * @param epsilon Error.
-     * @return {@code True} if {@code this} matrix is zero. {@code False} otherwise.
-     */
+    @Override
     public final boolean isZero(double epsilon) {
         return epsilonEquals(0, 0, 0, 0,
                              0, 0, 0, 0,
@@ -1015,21 +775,12 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                              0, 0, 0, 0, epsilon);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is the identity.
-     *
-     * @return {@code True} if {@code this} matrix is the identity. {@code False} otherwise.
-     */
+    @Override
     public boolean isIdentity() {
         return isIdentity(EPSILON);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is the identity.
-     *
-     * @param epsilon Error.
-     * @return {@code True} if {@code this} matrix is the identity. {@code False} otherwise.
-     */
+    @Override
     public boolean isIdentity(double epsilon) {
         return epsilonEquals(1, 0, 0, 0,
                              0, 1, 0, 0,
@@ -1037,30 +788,17 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                              0, 0, 0, 1, epsilon);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is the invertible.
-     *
-     * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.
-     */
+    @Override
     public boolean isInvertible() {
         return isInvertible(EPSILON);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is the invertible.
-     *
-     * @param epsilon Error.
-     * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.
-     */
+    @Override
     public boolean isInvertible(double epsilon) {
         return !DoubleUtils.epsilonEquals(getDeterminant(), epsilon);
     }
 
-    /**
-     * This method evaluates the determinant of {@code this} matrix
-     *
-     * @return Determinant.
-     */
+    @Override
     public double getDeterminant() {
         return ((getM00() * getM11() - getM01() * getM10()) * (getM22() * getM33() - getM23() * getM32())
                 - (getM00() * getM12() - getM02() * getM10()) * (getM21() * getM33() - getM23() * getM31())
@@ -1070,38 +808,23 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                 + (getM02() * getM13() - getM03() * getM12()) * (getM20() * getM31() - getM21() * getM30()));
     }
 
-    /**
-     * This method adds {@code this} matrix and {@code other} matrix.
-     *
-     * @param other Other matrix.
-     * @return {@code this + other}
-     */
-    public Matrix4x4d add(Matrix4x4d other) {
+    @Override
+    public Matrix4x4d add(Matrix4x4 other) {
         return new Matrix4x4d(getM00() + other.getM00(), getM01() + other.getM01(), getM02() + other.getM02(), getM03() + other.getM03(),
                               getM10() + other.getM10(), getM11() + other.getM11(), getM12() + other.getM12(), getM13() + other.getM13(),
                               getM20() + other.getM20(), getM21() + other.getM21(), getM22() + other.getM22(), getM23() + other.getM23(),
                               getM30() + other.getM30(), getM31() + other.getM31(), getM32() + other.getM32(), getM33() + other.getM33());
     }
 
-    /**
-     * This method subs {@code this} matrix and {@code other} matrix.
-     *
-     * @param other Other matrix.
-     * @return {@code this - other}
-     */
-    public Matrix4x4d sub(Matrix4x4d other) {
+    @Override
+    public Matrix4x4d sub(Matrix4x4 other) {
         return new Matrix4x4d(getM00() - other.getM00(), getM01() - other.getM01(), getM02() - other.getM02(), getM03() - other.getM03(),
                               getM10() - other.getM10(), getM11() - other.getM11(), getM12() - other.getM12(), getM13() - other.getM13(),
                               getM20() - other.getM20(), getM21() - other.getM21(), getM22() - other.getM22(), getM23() - other.getM23(),
                               getM30() - other.getM30(), getM31() - other.getM31(), getM32() - other.getM32(), getM33() - other.getM33());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by {@code v}.
-     *
-     * @param v Scalar.
-     * @return {@code this * v}
-     */
+    @Override
     public Matrix4x4d mul(double v) {
         return new Matrix4x4d((double)(getM00() * v), (double)(getM01() * v), (double)(getM02() * v), (double)(getM03() * v),
                               (double)(getM10() * v), (double)(getM11() * v), (double)(getM12() * v), (double)(getM13() * v),
@@ -1109,12 +832,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                               (double)(getM30() * v), (double)(getM31() * v), (double)(getM32() * v), (double)(getM33() * v));
     }
 
-    /**
-     * This method divides {@code this} matrix by {@code v}.
-     *
-     * @param v Scalar.
-     * @return {@code this / v}
-     */
+    @Override
     public Matrix4x4d div(double v) {
         return new Matrix4x4d((double)(getM00() / v), (double)(getM01() / v), (double)(getM02() / v), (double)(getM03() / v),
                               (double)(getM10() / v), (double)(getM11() / v), (double)(getM12() / v), (double)(getM13() / v),
@@ -1122,13 +840,8 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                               (double)(getM30() / v), (double)(getM31() / v), (double)(getM32() / v), (double)(getM33() / v));
     }
 
-    /**
-     * This method multiplies {@code this} matrix by {@code other} matrix.
-     *
-     * @param other Other matrix.
-     * @return {@code this * other}
-     */
-    public Matrix4x4d mul(Matrix4x4d other) {
+    @Override
+    public Matrix4x4d mul(Matrix4x4 other) {
         return new Matrix4x4d(getM00() * other.getM00() + getM01() * other.getM10() + getM02() * other.getM20() + getM03() * other.getM30(),
                               getM00() * other.getM01() + getM01() * other.getM11() + getM02() * other.getM21() + getM03() * other.getM31(),
                               getM00() * other.getM02() + getM01() * other.getM12() + getM02() * other.getM22() + getM03() * other.getM32(),
@@ -1147,11 +860,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                               getM30() * other.getM03() + getM31() * other.getM13() + getM32() * other.getM23() + getM33() * other.getM33());
     }
 
-    /**
-     * This method changes the sign of {@code this} matrix.
-     *
-     * @return {@code -this}
-     */
+    @Override
     public Matrix4x4d neg() {
         return new Matrix4x4d(- getM00(), - getM01(), - getM02(), - getM03(),
                               - getM10(), - getM11(), - getM12(), - getM13(),
@@ -1159,11 +868,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                               - getM30(), - getM31(), - getM32(), - getM33());
     }
 
-    /**
-     * This method calculates the absolute value of {@code this} matrix.
-     *
-     * @return {@code abs(this)}
-     */
+    @Override
     public Matrix4x4d abs() {
         return new Matrix4x4d(Math.abs(getM00()), Math.abs(getM01()), Math.abs(getM02()), Math.abs(getM03()),
                               Math.abs(getM10()), Math.abs(getM11()), Math.abs(getM12()), Math.abs(getM13()),
@@ -1171,11 +876,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                               Math.abs(getM30()), Math.abs(getM31()), Math.abs(getM32()), Math.abs(getM33()));
     }
 
-    /**
-     * This method calculates the transpose of {@code this} matrix.
-     *
-     * @return {@code transpose(this)}
-     */
+    @Override
     public Matrix4x4d transpose() {
         return new Matrix4x4d(getM00(), getM10(), getM20(), getM30(),
                               getM01(), getM11(), getM21(), getM31(),
@@ -1183,11 +884,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                               getM03(), getM13(), getM23(), getM33());
     }
 
-    /**
-     * This method evaluates the inverse of {@code this} matrix.
-     *
-     * @return {@code inverse(this)}
-     */
+    @Override
     public Matrix4x4d inverse() throws SingularMatrixException {
         double s = getDeterminant();
         if (DoubleUtils.epsilonZero(s, EPSILON)) {
@@ -1247,11 +944,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
                              + getM02() * (getM10() * getM21() - getM11() * getM20())) * s));
     }
 
-    /**
-     * This method sets {@code this} matrix to zero.
-     *
-     * @return {@code this = zero}
-     */
+    @Override
     public Matrix4x4d setZero() {
         set(0, 0, 0, 0,
             0, 0, 0, 0,
@@ -1260,11 +953,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method sets {@code this} matrix to the identity.
-     *
-     * @return {@code this = identity}
-     */
+    @Override
     public Matrix4x4d setIdentity() {
         set(1, 0, 0, 0,
             0, 1, 0, 0,
@@ -1273,14 +962,8 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method adds {@code this} matrix and {@code other} matrix and sets the result
-     * into {@code this}.
-     *
-     * @param other Other matrix.
-     * @return {@code this = this + other}
-     */
-    public Matrix4x4d addAndSet(Matrix4x4d other) {
+    @Override
+    public Matrix4x4d addAndSet(Matrix4x4 other) {
         set(getM00() + other.getM00(), getM01() + other.getM01(), getM02() + other.getM02(), getM03() + other.getM03(),
             getM10() + other.getM10(), getM11() + other.getM11(), getM12() + other.getM12(), getM13() + other.getM13(),
             getM20() + other.getM20(), getM21() + other.getM21(), getM22() + other.getM22(), getM23() + other.getM23(),
@@ -1288,14 +971,8 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method subs {@code this} matrix and {@code other} matrix and sets the result
-     * into {@code this}.
-     *
-     * @param other Other matrix.
-     * @return {@code this = this - other}
-     */
-    public Matrix4x4d subAndSet(Matrix4x4d other) {
+    @Override
+    public Matrix4x4d subAndSet(Matrix4x4 other) {
         set(getM00() - other.getM00(), getM01() - other.getM01(), getM02() - other.getM02(), getM03() - other.getM03(),
             getM10() - other.getM10(), getM11() - other.getM11(), getM12() - other.getM12(), getM13() - other.getM13(),
             getM20() - other.getM20(), getM21() - other.getM21(), getM22() - other.getM22(), getM23() - other.getM23(),
@@ -1303,13 +980,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method multiplies {@code this} matrix by {@code v} and sets the result
-     * into {@code this}.
-     *
-     * @param v Scalar.
-     * @return {@code this = this * v}
-     */
+    @Override
     public Matrix4x4d mulAndSet(double v) {
         set((double)(getM00() * v), (double)(getM01() * v), (double)(getM02() * v), (double)(getM03() * v),
             (double)(getM10() * v), (double)(getM11() * v), (double)(getM12() * v), (double)(getM13() * v),
@@ -1318,13 +989,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method divides {@code this} matrix by {@code v} and sets the result
-     * into {@code this}.
-     *
-     * @param v Scalar.
-     * @return {@code this = this / v}
-     */
+    @Override
     public Matrix4x4d divAndSet(double v) {
         set((double)(getM00() / v), (double)(getM01() / v), (double)(getM02() / v), (double)(getM03() / v),
             (double)(getM10() / v), (double)(getM11() / v), (double)(getM12() / v), (double)(getM13() / v),
@@ -1333,14 +998,8 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method multiplies {@code this} matrix by {@code other} matrix and sets the result
-     * into {@code this}.
-     *
-     * @param other Other matrix.
-     * @return {@code this = this * other}
-     */
-    public Matrix4x4d mulAndSet(Matrix4x4d other) {
+    @Override
+    public Matrix4x4d mulAndSet(Matrix4x4 other) {
         set(getM00() * other.getM00() + getM01() * other.getM10() + getM02() * other.getM20() + getM03() * other.getM30(),
             getM00() * other.getM01() + getM01() * other.getM11() + getM02() * other.getM21() + getM03() * other.getM31(),
             getM00() * other.getM02() + getM01() * other.getM12() + getM02() * other.getM22() + getM03() * other.getM32(),
@@ -1360,12 +1019,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method changes the sign of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = -this}
-     */
+    @Override
     public Matrix4x4d negAndSet() {
         set(- getM00(), - getM01(), - getM02(), - getM03(),
             - getM10(), - getM11(), - getM12(), - getM13(),
@@ -1374,12 +1028,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method calculates the absolute value of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = abs(this)}
-     */
+    @Override
     public Matrix4x4d absAndSet() {
         set(Math.abs(getM00()), Math.abs(getM01()), Math.abs(getM02()), Math.abs(getM03()),
             Math.abs(getM10()), Math.abs(getM11()), Math.abs(getM12()), Math.abs(getM13()),
@@ -1388,12 +1037,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method calculates the transpose of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = transpose(this)}
-     */
+    @Override
     public Matrix4x4d transposeAndSet() {
         set(getM00(), getM10(), getM20(), getM30(),
             getM01(), getM11(), getM21(), getM31(),
@@ -1402,12 +1046,7 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d> {
         return this;
     }
 
-    /**
-     * This method evaluates the inverse of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = this^-1}
-     */
+    @Override
     public Matrix4x4d inverseAndSet() throws SingularMatrixException {
         double s = getDeterminant();
         if (DoubleUtils.epsilonZero(s, EPSILON)) {

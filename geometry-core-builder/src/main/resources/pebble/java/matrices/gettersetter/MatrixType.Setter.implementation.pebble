@@ -1,0 +1,39 @@
+{#
+ # This macro renders the implementation of the setters of a matrix.
+ #}
+{%  macro MatrixSetterTypeImplementation( desc, className ) %}
+    @Override
+    public final void set(int r, int c, {{ desc.type }} value) {
+        switch(r) {
+{%      for row in desc.rows %}
+            case {{ row.r }}:
+                switch(c) {
+{%          for property in row.cols %}
+                    case {{ property.c }}:
+                        {{ property.name }} = value;
+                        return;
+{%          endfor %}
+                }
+{%      endfor %}
+        }
+        throw new IndexOutOfBoundsException();
+    }
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+
+    @Override
+    public final void set{{ property.upperName }}({{ property.type }} value) {
+        {{ property.name }} = value;
+    }
+{%          endfor %}
+{%      endfor %}
+
+    @Override
+    public final void set({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+        this.{{ property.name }} = {{ property.name }};
+{%          endfor %}
+{%      endfor %}
+    }
+{%  endmacro %}

@@ -1,0 +1,24 @@
+{%  extends "pebble/java/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/java/Tuple.Core.pebble" %}
+{%  import "pebble/java/matrices/gettersetter/MatrixType.Getter.interfaces.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+{%  endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.matrixGetterTypeName }}} is a {{ desc.dimRows }}x{{ desc.dimCols }} dimensional collection of values
+ * of type {{ desc.type }}.
+ */
+public interface {{ desc.matrixGetterTypeName }} {
+
+{{ MatrixGetterTypeInterfaces( desc, desc.matrixGetterTypeName ) }}
+}
+{%  endblock %}

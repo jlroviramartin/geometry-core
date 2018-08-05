@@ -34,13 +34,15 @@ import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector2;
 import essence.geometry.core.BuffVector2;
 import essence.geometry.core.VectorFormatInfo;
+import essence.geometry.core.Matrix2x2;
+import essence.geometry.core.BuffMatrix2x2;
 
 import static essence.geometry.core.DoubleUtils.EPSILON;
 
 /**
  * Basic implementation of a 2x2 matrix.
  */
-public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
+public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d>, BuffMatrix2x2 {
 //<editor-fold defaultstate="collapsed" desc="fields">
     /** M00 component. */
     private double m00;
@@ -89,40 +91,22 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
     }
 
 //<editor-fold defaultstate="collapsed" desc="accessors">
-    /*
-     * This method gets the number of rows.
-     *
-     * @return Number of rows.
-     */
-    public int sizeRows() {
+    @Override
+    public final int sizeRows() {
         return 2;
     }
 
-    /*
-     * This method gets the number of columns.
-     *
-     * @return Number of columns.
-     */
-    public int sizeCols() {
+    @Override
+    public final int sizeCols() {
         return 2;
     }
 
-    /*
-     * This method evaluates is {@code this} matrix is squared.
-     *
-     * @return {@code True} if {@code this} matrix is squared. {@code False} otherwise.
-     */
-    public boolean isSquared() {
+    @Override
+    public final boolean isSquared() {
         return true;
     }
 
-    /**
-     * This methods gets the property [r, c].
-     *
-     * @param r Number of the row.
-     * @param c Number of the column.
-     * @return Property [r, c].
-     */
+    @Override
     public final double get(int r, int c) {
         switch(r) {
         case 0:
@@ -143,14 +127,28 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * This methods sets the property [r, c].
-     *
-     * @param r Number of the row.
-     * @param c Number of the column.
-     * @param value Property [r, c].
-     */
-    public void set(int r, int c, double value) {
+    @Override
+    public final double getM00() {
+        return m00;
+    }
+
+    @Override
+    public final double getM01() {
+        return m01;
+    }
+
+    @Override
+    public final double getM10() {
+        return m10;
+    }
+
+    @Override
+    public final double getM11() {
+        return m11;
+    }
+
+    @Override
+    public final void set(int r, int c, double value) {
         switch(r) {
         case 0:
             switch(c) {
@@ -174,93 +172,33 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * This methods gets the property [0, 0].
-     *
-     * @return Property [0, 0].
-     */
-    public final double getM00() {
-        return m00;
-    }
-
-    /**
-     * This methods sets the property [0, 0].
-     *
-     * @param value Property [0, 0].
-     */
-    public void setM00(double value) {
+    @Override
+    public final void setM00(double value) {
         m00 = value;
     }
 
-    /**
-     * This methods gets the property [0, 1].
-     *
-     * @return Property [0, 1].
-     */
-    public final double getM01() {
-        return m01;
-    }
-
-    /**
-     * This methods sets the property [0, 1].
-     *
-     * @param value Property [0, 1].
-     */
-    public void setM01(double value) {
+    @Override
+    public final void setM01(double value) {
         m01 = value;
     }
 
-    /**
-     * This methods gets the property [1, 0].
-     *
-     * @return Property [1, 0].
-     */
-    public final double getM10() {
-        return m10;
-    }
-
-    /**
-     * This methods sets the property [1, 0].
-     *
-     * @param value Property [1, 0].
-     */
-    public void setM10(double value) {
+    @Override
+    public final void setM10(double value) {
         m10 = value;
     }
 
-    /**
-     * This methods gets the property [1, 1].
-     *
-     * @return Property [1, 1].
-     */
-    public final double getM11() {
-        return m11;
-    }
-
-    /**
-     * This methods sets the property [1, 1].
-     *
-     * @param value Property [1, 1].
-     */
-    public void setM11(double value) {
+    @Override
+    public final void setM11(double value) {
         m11 = value;
     }
 
-    /**
-     * This methods sets all the properties.
-     *
-     * @param m00 Property [0, 0].
-     * @param m01 Property [0, 1].
-     * @param m10 Property [1, 0].
-     * @param m11 Property [1, 1].
-     */
-    public Matrix2x2d set(double m00, double m01,
+    @Override
+    public final void set(double m00, double m01,
                           double m10, double m11) {
         this.m00 = m00;
         this.m01 = m01;
         this.m10 = m10;
         this.m11 = m11;
-        return this;
     }
 //</editor-fold>
 
@@ -309,11 +247,7 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
                             v.getX() * getM01() + v.getY() * getM11());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public void mul(BuffVector2 v) {
         BuffTuple2_Double _v = TupleUtils.toBuffTuple2_Double(v);
 
@@ -321,21 +255,12 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
                getM10() * _v.getX() + getM11() * _v.getY());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public void mul(BuffVector2d v) {
         v.set(getM00() * v.getX() + getM01() * v.getY(),
               getM10() * v.getX() + getM11() * v.getY());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public void premul(BuffVector2 v) {
         BuffTuple2_Double _v = TupleUtils.toBuffTuple2_Double(v);
 
@@ -343,202 +268,118 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
                _v.getX() * getM01() + _v.getY() * getM11());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public void premul(BuffVector2d v) {
         v.set (v.getX() * getM00() + v.getY() * getM10(),
                v.getX() * getM01() + v.getY() * getM11());
     }
 //</editor-fold>
 
+    @Override
     public final boolean isValid() {
         return !isNaN() && !isInfinity();
     }
 
-    /**
-     * This method evaluates is {@code this} matrix contains any NaN component.
-     *
-     * @return {@code True} if {@code this} matrix contains any NaN component. {@code False} otherwise.
-     */
+    @Override
     public final boolean isNaN() {
         return Double.isNaN(getM00()) || Double.isNaN(getM01()) ||
                Double.isNaN(getM10()) || Double.isNaN(getM11());
     }
 
-    /**
-     * This method evaluates is {@code this} matrix contains any infinity component.
-     *
-     * @return {@code True} if {@code this} matrix contains any infinity component. {@code False} otherwise.
-     */
+    @Override
     public final boolean isInfinity() {
         return Double.isInfinite(getM00()) || Double.isInfinite(getM01()) ||
                Double.isInfinite(getM10()) || Double.isInfinite(getM11());
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is zero.
-     *
-     * @return {@code True} if {@code this} matrix is zero. {@code False} otherwise.
-     */
+    @Override
     public final boolean isZero() {
         return isZero(EPSILON);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is zero.
-     *
-     * @param epsilon Error.
-     * @return {@code True} if {@code this} matrix is zero. {@code False} otherwise.
-     */
+    @Override
     public final boolean isZero(double epsilon) {
         return epsilonEquals(0, 0,
                              0, 0, epsilon);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is the identity.
-     *
-     * @return {@code True} if {@code this} matrix is the identity. {@code False} otherwise.
-     */
+    @Override
     public boolean isIdentity() {
         return isIdentity(EPSILON);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is the identity.
-     *
-     * @param epsilon Error.
-     * @return {@code True} if {@code this} matrix is the identity. {@code False} otherwise.
-     */
+    @Override
     public boolean isIdentity(double epsilon) {
         return epsilonEquals(1, 0,
                              0, 1, epsilon);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is the invertible.
-     *
-     * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.
-     */
+    @Override
     public boolean isInvertible() {
         return isInvertible(EPSILON);
     }
 
-    /**
-     * This method evaluates is {@code this} matrix is the invertible.
-     *
-     * @param epsilon Error.
-     * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.
-     */
+    @Override
     public boolean isInvertible(double epsilon) {
         return !DoubleUtils.epsilonEquals(getDeterminant(), epsilon);
     }
 
-    /**
-     * This method evaluates the determinant of {@code this} matrix
-     *
-     * @return Determinant.
-     */
+    @Override
     public double getDeterminant() {
         return (getM00() * getM11()
                 - getM01() * getM10());
     }
 
-    /**
-     * This method adds {@code this} matrix and {@code other} matrix.
-     *
-     * @param other Other matrix.
-     * @return {@code this + other}
-     */
-    public Matrix2x2d add(Matrix2x2d other) {
+    @Override
+    public Matrix2x2d add(Matrix2x2 other) {
         return new Matrix2x2d(getM00() + other.getM00(), getM01() + other.getM01(),
                               getM10() + other.getM10(), getM11() + other.getM11());
     }
 
-    /**
-     * This method subs {@code this} matrix and {@code other} matrix.
-     *
-     * @param other Other matrix.
-     * @return {@code this - other}
-     */
-    public Matrix2x2d sub(Matrix2x2d other) {
+    @Override
+    public Matrix2x2d sub(Matrix2x2 other) {
         return new Matrix2x2d(getM00() - other.getM00(), getM01() - other.getM01(),
                               getM10() - other.getM10(), getM11() - other.getM11());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by {@code v}.
-     *
-     * @param v Scalar.
-     * @return {@code this * v}
-     */
+    @Override
     public Matrix2x2d mul(double v) {
         return new Matrix2x2d((double)(getM00() * v), (double)(getM01() * v),
                               (double)(getM10() * v), (double)(getM11() * v));
     }
 
-    /**
-     * This method divides {@code this} matrix by {@code v}.
-     *
-     * @param v Scalar.
-     * @return {@code this / v}
-     */
+    @Override
     public Matrix2x2d div(double v) {
         return new Matrix2x2d((double)(getM00() / v), (double)(getM01() / v),
                               (double)(getM10() / v), (double)(getM11() / v));
     }
 
-    /**
-     * This method multiplies {@code this} matrix by {@code other} matrix.
-     *
-     * @param other Other matrix.
-     * @return {@code this * other}
-     */
-    public Matrix2x2d mul(Matrix2x2d other) {
+    @Override
+    public Matrix2x2d mul(Matrix2x2 other) {
         return new Matrix2x2d(getM00() * other.getM00() + getM01() * other.getM10(),
                               getM00() * other.getM01() + getM01() * other.getM11(),
                               getM10() * other.getM00() + getM11() * other.getM10(),
                               getM10() * other.getM01() + getM11() * other.getM11());
     }
 
-    /**
-     * This method changes the sign of {@code this} matrix.
-     *
-     * @return {@code -this}
-     */
+    @Override
     public Matrix2x2d neg() {
         return new Matrix2x2d(- getM00(), - getM01(),
                               - getM10(), - getM11());
     }
 
-    /**
-     * This method calculates the absolute value of {@code this} matrix.
-     *
-     * @return {@code abs(this)}
-     */
+    @Override
     public Matrix2x2d abs() {
         return new Matrix2x2d(Math.abs(getM00()), Math.abs(getM01()),
                               Math.abs(getM10()), Math.abs(getM11()));
     }
 
-    /**
-     * This method calculates the transpose of {@code this} matrix.
-     *
-     * @return {@code transpose(this)}
-     */
+    @Override
     public Matrix2x2d transpose() {
         return new Matrix2x2d(getM00(), getM10(),
                               getM01(), getM11());
     }
 
-    /**
-     * This method evaluates the inverse of {@code this} matrix.
-     *
-     * @return {@code inverse(this)}
-     */
+    @Override
     public Matrix2x2d inverse() throws SingularMatrixException {
         double s = getDeterminant();
         if (DoubleUtils.epsilonZero(s, EPSILON)) {
@@ -552,88 +393,50 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
                    (double)(-getM10() * s), (double)(getM00() * s));
     }
 
-    /**
-     * This method sets {@code this} matrix to zero.
-     *
-     * @return {@code this = zero}
-     */
+    @Override
     public Matrix2x2d setZero() {
         set(0, 0,
             0, 0);
         return this;
     }
 
-    /**
-     * This method sets {@code this} matrix to the identity.
-     *
-     * @return {@code this = identity}
-     */
+    @Override
     public Matrix2x2d setIdentity() {
         set(1, 0,
             0, 1);
         return this;
     }
 
-    /**
-     * This method adds {@code this} matrix and {@code other} matrix and sets the result
-     * into {@code this}.
-     *
-     * @param other Other matrix.
-     * @return {@code this = this + other}
-     */
-    public Matrix2x2d addAndSet(Matrix2x2d other) {
+    @Override
+    public Matrix2x2d addAndSet(Matrix2x2 other) {
         set(getM00() + other.getM00(), getM01() + other.getM01(),
             getM10() + other.getM10(), getM11() + other.getM11());
         return this;
     }
 
-    /**
-     * This method subs {@code this} matrix and {@code other} matrix and sets the result
-     * into {@code this}.
-     *
-     * @param other Other matrix.
-     * @return {@code this = this - other}
-     */
-    public Matrix2x2d subAndSet(Matrix2x2d other) {
+    @Override
+    public Matrix2x2d subAndSet(Matrix2x2 other) {
         set(getM00() - other.getM00(), getM01() - other.getM01(),
             getM10() - other.getM10(), getM11() - other.getM11());
         return this;
     }
 
-    /**
-     * This method multiplies {@code this} matrix by {@code v} and sets the result
-     * into {@code this}.
-     *
-     * @param v Scalar.
-     * @return {@code this = this * v}
-     */
+    @Override
     public Matrix2x2d mulAndSet(double v) {
         set((double)(getM00() * v), (double)(getM01() * v),
             (double)(getM10() * v), (double)(getM11() * v));
         return this;
     }
 
-    /**
-     * This method divides {@code this} matrix by {@code v} and sets the result
-     * into {@code this}.
-     *
-     * @param v Scalar.
-     * @return {@code this = this / v}
-     */
+    @Override
     public Matrix2x2d divAndSet(double v) {
         set((double)(getM00() / v), (double)(getM01() / v),
             (double)(getM10() / v), (double)(getM11() / v));
         return this;
     }
 
-    /**
-     * This method multiplies {@code this} matrix by {@code other} matrix and sets the result
-     * into {@code this}.
-     *
-     * @param other Other matrix.
-     * @return {@code this = this * other}
-     */
-    public Matrix2x2d mulAndSet(Matrix2x2d other) {
+    @Override
+    public Matrix2x2d mulAndSet(Matrix2x2 other) {
         set(getM00() * other.getM00() + getM01() * other.getM10(),
             getM00() * other.getM01() + getM01() * other.getM11(),
             getM10() * other.getM00() + getM11() * other.getM10(),
@@ -641,48 +444,28 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d> {
         return this;
     }
 
-    /**
-     * This method changes the sign of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = -this}
-     */
+    @Override
     public Matrix2x2d negAndSet() {
         set(- getM00(), - getM01(),
             - getM10(), - getM11());
         return this;
     }
 
-    /**
-     * This method calculates the absolute value of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = abs(this)}
-     */
+    @Override
     public Matrix2x2d absAndSet() {
         set(Math.abs(getM00()), Math.abs(getM01()),
             Math.abs(getM10()), Math.abs(getM11()));
         return this;
     }
 
-    /**
-     * This method calculates the transpose of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = transpose(this)}
-     */
+    @Override
     public Matrix2x2d transposeAndSet() {
         set(getM00(), getM10(),
             getM01(), getM11());
         return this;
     }
 
-    /**
-     * This method evaluates the inverse of {@code this} matrix and sets the result
-     * into {@code this}.
-     *
-     * @return {@code this = this^-1}
-     */
+    @Override
     public Matrix2x2d inverseAndSet() throws SingularMatrixException {
         double s = getDeterminant();
         if (DoubleUtils.epsilonZero(s, EPSILON)) {

@@ -1,0 +1,53 @@
+{#
+ # This macro renders the implementation of vector transformations of the matrix.
+ #}
+{%  macro MatrixTransformInterfaces( desc, className ) %}
+{%      set vdesc = desc.vector %}
+{%      set vlowdesc = desc.vector.lowerDimension %}
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public {{ vdesc.vectorName }} mul({{ vdesc.vectorName }} v);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public {{ vdesc.vectorName }} premul({{ vdesc.vectorName }} v);
+{%      if not desc.vector.lowerDimension is empty %}
+{#
+ # Those methods work with vector and points of a lower dimension. 
+ #}
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public {{ vlowdesc.vectorName }} mul({{ vlowdesc.vectorName }} v);
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    public {{ vlowdesc.pointName }} mul({{ vlowdesc.pointName }} p);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public {{ vlowdesc.vectorName }} premul({{ vlowdesc.vectorName }} v);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    public {{ vlowdesc.pointName }} premul({{ vlowdesc.pointName }} p);
+{%      endif %}
+{%  endmacro %}

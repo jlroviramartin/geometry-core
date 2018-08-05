@@ -25,10 +25,35 @@ import java.util.Arrays;
  */
 public class MatrixDescrition {
 
+    public static final String CORE_PACKAGE = "essence.geometry.core";
+
+    public static MatrixDescrition getDefault(int dim) {
+        MatrixDescrition mdesc = new MatrixDescrition();
+        mdesc._package = CORE_PACKAGE;
+        mdesc.corePackage = CORE_PACKAGE;
+        mdesc.dimRows = dim;
+        mdesc.dimCols = dim;
+        mdesc.suffix = "";
+        mdesc.type = "";
+        mdesc.ctype = "";
+        mdesc.properties = new MatrixCell[dim * dim];
+
+        mdesc.vector = VectorDescription.getDefault(dim);
+
+        int i = 0;
+        for (int r = 0; r < mdesc.dimRows; r++) {
+            for (int c = 0; c < mdesc.dimCols; c++) {
+                mdesc.properties[i] = new MatrixCell("m" + r + "" + c, mdesc.type, mdesc.ctype, r, c);
+                i++;
+            }
+        }
+        return mdesc;
+    }
+
     public static MatrixDescrition getDouble(int dim) {
         MatrixDescrition mdesc = new MatrixDescrition();
-        mdesc._package = "essence.geometry.core.doubles";
-        mdesc.corePackage = "essence.geometry.core";
+        mdesc._package = CORE_PACKAGE + ".doubles";
+        mdesc.corePackage = CORE_PACKAGE;
         mdesc.dimRows = dim;
         mdesc.dimCols = dim;
         mdesc.suffix = "d";
@@ -50,8 +75,8 @@ public class MatrixDescrition {
 
     public static MatrixDescrition getFloat(int dim) {
         MatrixDescrition mdesc = new MatrixDescrition();
-        mdesc._package = "essence.geometry.core.floats";
-        mdesc.corePackage = "essence.geometry.core";
+        mdesc._package = CORE_PACKAGE + ".floats";
+        mdesc.corePackage = CORE_PACKAGE;
         mdesc.dimRows = dim;
         mdesc.dimCols = dim;
         mdesc.suffix = "f";
@@ -76,12 +101,20 @@ public class MatrixDescrition {
         return "Matrix" + dimRows + "x" + dimCols + suffix;
     }
 
-    public String getMatrixGetterName() {
-        return "MatrixGetter";
+    public String getMatrixName() {
+        return "Matrix" + dimRows + "x" + dimCols;
     }
 
-    public String getMatrixSetterName() {
-        return "MatrixSetter";
+    public String getBuffMatrixName() {
+        return "BuffMatrix" + dimRows + "x" + dimCols;
+    }
+
+    public String getMatrixGetterTypeName() {
+        return "MatrixGetter" + dimRows + "x" + dimCols + "_" + ctype;
+    }
+
+    public String getMatrixSetterTypeName() {
+        return "MatrixSetter" + dimRows + "x" + dimCols + "_" + ctype;
     }
 //</editor-fold>
 

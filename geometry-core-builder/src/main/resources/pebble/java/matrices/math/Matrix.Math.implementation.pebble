@@ -1,0 +1,139 @@
+{#
+ # This macro renders the math operations of the matrix.
+ #}
+{%  macro MatrixMathImplementation( desc, className ) %}
+    @Override
+    public final boolean isValid() {
+        return !isNaN() && !isInfinity();
+    }
+
+    @Override
+    public final boolean isNaN() {
+{%      dynmacro Math_isNaN( desc, property ) %}
+{{ desc.ctype }}.isNaN(get{{ property.upperName }}())
+{%-     enddynmacro %}
+        return {{ RowsAndColumns( desc, " ||%n", " || ", Math_isNaN ) | indent(3) }};
+    }
+
+    @Override
+    public final boolean isInfinity() {
+{%      dynmacro Math_isInfinity( desc, property ) %}
+{{ desc.ctype }}.isInfinite(get{{ property.upperName }}())
+{%-     enddynmacro %}
+        return {{ RowsAndColumns( desc, " ||%n", " || ", Math_isInfinity ) | indent(3) }};
+    }
+
+    @Override
+    public final boolean isZero() {
+        return isZero(EPSILON);
+    }
+
+    @Override
+    public final boolean isZero(double epsilon) {
+{%      dynmacro Math_isZero( desc, property ) %}
+0
+{%-     enddynmacro %}
+        return epsilonEquals({{ RowsAndColumns( desc, ",%n", ", ", Math_isZero ) | indent(3) }}, epsilon);
+    }
+
+    @Override
+    public boolean isIdentity() {
+        return isIdentity(EPSILON);
+    }
+
+    @Override
+    public boolean isIdentity(double epsilon) {
+{%      if desc.dimRows == desc.dimCols %}
+{%          dynmacro Math_isIdentity( desc, property ) %}
+{%              if property.r == property.c %}1{% else %}0{% endif %}
+{%-         enddynmacro %}
+        return epsilonEquals({{ RowsAndColumns( desc, ",%n", ", ", Math_isIdentity ) | indent(3) }}, epsilon);
+{%      else %}
+        return false;
+{%      endif %}
+    }
+
+    @Override
+    public boolean isInvertible() {
+        return isInvertible(EPSILON);
+    }
+
+    @Override
+    public boolean isInvertible(double epsilon) {
+        return !DoubleUtils.epsilonEquals(getDeterminant(), epsilon);
+    }
+{%      if desc.dimRows == 2 %}
+
+    @Override
+    public double getDeterminant() {
+        return (getM00() * getM11()
+                - getM01() * getM10());
+    }
+{%      elseif desc.dimRows == 3 %}
+
+    @Override
+    public double getDeterminant() {
+        return (getM00() * (getM11() * getM22() - getM21() * getM12())
+                - getM01() * (getM10() * getM22() - getM20() * getM12())
+                + getM02() * (getM10() * getM21() - getM20() * getM11()));
+    }
+{%      elseif desc.dimRows == 4 %}
+
+    @Override
+    public double getDeterminant() {
+        return ((getM00() * getM11() - getM01() * getM10()) * (getM22() * getM33() - getM23() * getM32())
+                - (getM00() * getM12() - getM02() * getM10()) * (getM21() * getM33() - getM23() * getM31())
+                + (getM00() * getM13() - getM03() * getM10()) * (getM21() * getM32() - getM22() * getM31())
+                + (getM01() * getM12() - getM02() * getM11()) * (getM20() * getM33() - getM23() * getM30())
+                - (getM01() * getM13() - getM03() * getM11()) * (getM20() * getM32() - getM22() * getM30())
+                + (getM02() * getM13() - getM03() * getM12()) * (getM20() * getM31() - getM21() * getM30()));
+    }
+{%      endif %}
+
+    @Override
+    public {{ className }} add({{ desc.matrixName }} other) {
+        return new {{ className }}{{ MatrixBinaryOperator(desc, "+", "", "other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} sub({{ desc.matrixName }} other) {
+        return new {{ className }}{{ MatrixBinaryOperator(desc, "-", "", "other.") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} mul(double v) {
+        return new {{ className }}{{ MatrixBinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} div(double v) {
+        return new {{ className }}{{ MatrixBinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} mul({{ desc.matrixName }} other) {
+        return new {{ className }}{{ MatrixMul( desc, "", "other."  ) }};
+    }
+
+    @Override
+    public {{ className }} neg() {
+        return new {{ className }}{{ MatrixUnaryOperator(desc, "-", "") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} abs() {
+        return new {{ className }}{{ MatrixUnaryFunction(desc, "Math.abs", "") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} transpose() {
+        return new {{ className }}{{ MatrixTranspose( desc, "" ) | indent(3) }};
+    }
+{%      if (desc.dimRows >= 2) and (desc.dimRows <= 4) %}
+
+    @Override
+    public {{ className }} inverse() throws SingularMatrixException {
+        {{ MatrixInverse234( desc, "", "return new " ~ className ) | indent(3) }}
+    }
+{%      endif %}
+{%  endmacro %}

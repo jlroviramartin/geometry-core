@@ -29,6 +29,12 @@ public class MatrixTemplates extends BaseTemplate {
 
     private final Template matrixImpPebble = load("pebble/java/matrices/MatrixImp.pebble");
 
+    private final Template matrixPebble = load("pebble/java/matrices/Matrix.pebble");
+    private final Template buffmatrixPebble = load("pebble/java/matrices/BuffMatrix.pebble");
+
+    private final Template matrixGetterTypePebble = load("pebble/java/matrices/gettersetter/MatrixGetter_Type.pebble");
+    private final Template matrixSetterTypePebble = load("pebble/java/matrices/gettersetter/Matrixsetter_Type.pebble");
+
     @Override
     public void execute() {
 
@@ -40,22 +46,27 @@ public class MatrixTemplates extends BaseTemplate {
             buildFloat(i);
             buildDouble(i);
         }
-        buildInteger(2);
     }
 
     private void buildSimple(int dim) {
+        MatrixDescrition mdesc = MatrixDescrition.getDefault(dim);
+        writeToFile(matrixPebble, mdesc, mdesc.getMatrixName(), mdesc._package);
+        writeToFile(buffmatrixPebble, mdesc, mdesc.getBuffMatrixName(), mdesc._package);
     }
 
     private void buildFloat(int dim) {
         MatrixDescrition mdesc = MatrixDescrition.getFloat(dim);
         writeToFile(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
+
+        writeToFile(matrixGetterTypePebble, mdesc, mdesc.getMatrixGetterTypeName(), mdesc._package);
+        writeToFile(matrixSetterTypePebble, mdesc, mdesc.getMatrixSetterTypeName(), mdesc._package);
     }
 
     private void buildDouble(int dim) {
         MatrixDescrition mdesc = MatrixDescrition.getDouble(dim);
         writeToFile(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
-    }
 
-    private void buildInteger(int dim) {
+        writeToFile(matrixGetterTypePebble, mdesc, mdesc.getMatrixGetterTypeName(), mdesc._package);
+        writeToFile(matrixSetterTypePebble, mdesc, mdesc.getMatrixSetterTypeName(), mdesc._package);
     }
 }
