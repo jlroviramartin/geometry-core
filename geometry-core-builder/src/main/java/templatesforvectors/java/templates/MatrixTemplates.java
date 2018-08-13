@@ -19,7 +19,7 @@
 package templatesforvectors.java.templates;
 
 import templatesforvectors.BaseTemplate;
-import templatesforvectors.model.MatrixDescrition;
+import templatesforvectors.model.MatrixDescription;
 
 /**
  *
@@ -49,13 +49,13 @@ public class MatrixTemplates extends BaseTemplate {
     }
 
     private void buildSimple(int dim) {
-        MatrixDescrition mdesc = MatrixDescrition.getDefault(dim);
+        MatrixDescription mdesc = MatrixDescription.getDefault(dim);
         writeToFile(matrixPebble, mdesc, mdesc.getMatrixName(), mdesc._package);
         writeToFile(buffmatrixPebble, mdesc, mdesc.getBuffMatrixName(), mdesc._package);
     }
 
     private void buildFloat(int dim) {
-        MatrixDescrition mdesc = MatrixDescrition.getFloat(dim);
+        MatrixDescription mdesc = MatrixDescription.getFloat(dim);
         writeToFile(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
 
         writeToFile(matrixGetterTypePebble, mdesc, mdesc.getMatrixGetterTypeName(), mdesc._package);
@@ -63,7 +63,7 @@ public class MatrixTemplates extends BaseTemplate {
     }
 
     private void buildDouble(int dim) {
-        MatrixDescrition mdesc = MatrixDescrition.getDouble(dim);
+        MatrixDescription mdesc = MatrixDescription.getDouble(dim);
         writeToFile(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
 
         writeToFile(matrixGetterTypePebble, mdesc, mdesc.getMatrixGetterTypeName(), mdesc._package);

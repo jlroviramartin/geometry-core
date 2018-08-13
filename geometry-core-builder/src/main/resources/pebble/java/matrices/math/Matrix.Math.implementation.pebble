@@ -92,11 +92,23 @@
 
     @Override
     public {{ className }} add({{ desc.matrixName }} other) {
+        {{ className }} _other = to{{ className }}(other);
+
+        return new {{ className }}{{ MatrixBinaryOperator(desc, "+", "", "_other.") | indent(4) }};
+    }
+
+    public {{ className }} add({{ className }} other) {
         return new {{ className }}{{ MatrixBinaryOperator(desc, "+", "", "other.") | indent(4) }};
     }
 
     @Override
     public {{ className }} sub({{ desc.matrixName }} other) {
+        {{ className }} _other = to{{ className }}(other);
+
+        return new {{ className }}{{ MatrixBinaryOperator(desc, "-", "", "_other.") | indent(4) }};
+    }
+
+    public {{ className }} sub({{ className }} other) {
         return new {{ className }}{{ MatrixBinaryOperator(desc, "-", "", "other.") | indent(4) }};
     }
 
@@ -112,6 +124,12 @@
 
     @Override
     public {{ className }} mul({{ desc.matrixName }} other) {
+        {{ className }} _other = to{{ className }}(other);
+
+        return new {{ className }}{{ MatrixMul( desc, "", "_other."  ) }};
+    }
+
+    public {{ className }} mul({{ className }} other) {
         return new {{ className }}{{ MatrixMul( desc, "", "other."  ) }};
     }
 

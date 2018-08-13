@@ -261,12 +261,6 @@ public class BuffTuple3d implements Cloneable, BuffTuple, BuffTuple3_Double, Buf
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Tuple3_Double">
-    /**
-     * This method gets the component {@code index}.
-     *
-     * @param index Index of the component.
-     * @return Value of the component.
-     */
     @Override
     public final double getAt(int index) {
         switch(index) {
@@ -280,31 +274,16 @@ public class BuffTuple3d implements Cloneable, BuffTuple, BuffTuple3_Double, Buf
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * This method gets the X component.
-     *
-     * @return Value of the X component.
-     */
     @Override
     public final double getX() {
         return x;
     }
 
-    /**
-     * This method gets the Y component.
-     *
-     * @return Value of the Y component.
-     */
     @Override
     public final double getY() {
         return y;
     }
 
-    /**
-     * This method gets the Z component.
-     *
-     * @return Value of the Z component.
-     */
     @Override
     public final double getZ() {
         return z;
@@ -398,11 +377,6 @@ public class BuffTuple3d implements Cloneable, BuffTuple, BuffTuple3_Double, Buf
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Tuple3_Number">
-    /**
-     * This method sets the values of {@code this} tuple into {@code buff}.
-     *
-     * @param buff Where to put the values.
-     */
     @Override
     public final void getInto(BuffTuple3_Number buff) {
         buff.setDouble(x, y, z);

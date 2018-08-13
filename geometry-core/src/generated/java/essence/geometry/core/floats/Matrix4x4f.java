@@ -31,6 +31,8 @@ import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.SingularMatrixException;
 import essence.geometry.core.Tuple;
 import essence.geometry.core.TupleUtils;
+import essence.geometry.core.MatrixInpector;
+import essence.geometry.core.MatrixSet;
 import essence.geometry.core.Vector4;
 import essence.geometry.core.BuffVector4;
 import essence.geometry.core.Vector3;
@@ -46,7 +48,7 @@ import static essence.geometry.core.FloatUtils.EPSILON;
 /**
  * Basic implementation of a 4x4 matrix.
  */
-public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, BuffMatrix4x4 {
+public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, BuffMatrix4x4, MatrixSetter4x4_Float {
 //<editor-fold defaultstate="collapsed" desc="fields">
     /** M00 component. */
     private float m00;
@@ -474,11 +476,7 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Transforms">
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector4f mul(Vector4 v) {
         Tuple4_Float _v = TupleUtils.toTuple4_Float(v);
 
@@ -488,11 +486,6 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
                             getM30() * _v.getX() + getM31() * _v.getY() + getM32() * _v.getZ() + getM33() * _v.getW());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector4f mul(Vector4f v) {
         return new Vector4f(getM00() * v.getX() + getM01() * v.getY() + getM02() * v.getZ() + getM03() * v.getW(),
                             getM10() * v.getX() + getM11() * v.getY() + getM12() * v.getZ() + getM13() * v.getW(),
@@ -500,11 +493,7 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
                             getM30() * v.getX() + getM31() * v.getY() + getM32() * v.getZ() + getM33() * v.getW());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector4f premul(Vector4 v) {
         Tuple4_Float _v = TupleUtils.toTuple4_Float(v);
 
@@ -514,11 +503,6 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
                             _v.getX() * getM03() + _v.getY() * getM13() + _v.getZ() * getM23() + _v.getW() * getM33());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector4f premul(Vector4f v) {
         return new Vector4f(v.getX() * getM00() + v.getY() * getM10() + v.getZ() * getM20() + v.getW() * getM30(),
                             v.getX() * getM01() + v.getY() * getM11() + v.getZ() * getM21() + v.getW() * getM31(),
@@ -526,11 +510,7 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
                             v.getX() * getM03() + v.getY() * getM13() + v.getZ() * getM23() + v.getW() * getM33());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector3f mul(Vector3 v) {
         Tuple3_Float _v = toTupleLow(v);
 
@@ -540,11 +520,6 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
         return new Vector3f(x, y, z);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector3f mul(Vector3f v) {
         float x = getM00() * v.getX() + getM01() * v.getY() + getM02() * v.getZ();
         float y = getM10() * v.getX() + getM11() * v.getY() + getM12() * v.getZ();
@@ -552,11 +527,7 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
         return new Vector3f(x, y, z);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
+    @Override
     public Point3f mul(Point3 p) {
         Tuple3_Float _p = toTupleLow(p);
 
@@ -567,11 +538,6 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
         return new Point3f(x / w, y / w, z / w);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
     public Point3f mul(Point3f p) {
         float x = getM00() * p.getX() + getM01() * p.getY() + getM02() * p.getZ() + getM03();
         float y = getM10() * p.getX() + getM11() * p.getY() + getM12() * p.getZ() + getM13();
@@ -580,11 +546,7 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
         return new Point3f(x / w, y / w, z / w);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector3f premul(Vector3 v) {
         Tuple3_Float _v = toTupleLow(v);
 
@@ -594,11 +556,6 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
         return new Vector3f(x, y, z);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector3f premul(Vector3f v) {
         float x = v.getX() * getM00() + v.getY() * getM10() + v.getZ() * getM20();
         float y = v.getX() * getM01() + v.getY() * getM11() + v.getZ() * getM21();
@@ -606,11 +563,7 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
         return new Vector3f(x, y, z);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
+    @Override
     public Point3f premul(Point3 p) {
         Tuple3_Float _p = toTupleLow(p);
 
@@ -621,11 +574,6 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
         return new Point3f(x / w, y / w, z / w);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
     public Point3f premul(Point3f p) {
         float x = p.getX() * getM00() + p.getY() * getM10() + p.getZ() * getM20() + getM30();
         float y = p.getX() * getM01() + p.getY() * getM11() + p.getZ() * getM21() + getM31();
@@ -810,6 +758,15 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
 
     @Override
     public Matrix4x4f add(Matrix4x4 other) {
+        Matrix4x4f _other = toMatrix4x4f(other);
+
+        return new Matrix4x4f(getM00() + _other.getM00(), getM01() + _other.getM01(), getM02() + _other.getM02(), getM03() + _other.getM03(),
+                              getM10() + _other.getM10(), getM11() + _other.getM11(), getM12() + _other.getM12(), getM13() + _other.getM13(),
+                              getM20() + _other.getM20(), getM21() + _other.getM21(), getM22() + _other.getM22(), getM23() + _other.getM23(),
+                              getM30() + _other.getM30(), getM31() + _other.getM31(), getM32() + _other.getM32(), getM33() + _other.getM33());
+    }
+
+    public Matrix4x4f add(Matrix4x4f other) {
         return new Matrix4x4f(getM00() + other.getM00(), getM01() + other.getM01(), getM02() + other.getM02(), getM03() + other.getM03(),
                               getM10() + other.getM10(), getM11() + other.getM11(), getM12() + other.getM12(), getM13() + other.getM13(),
                               getM20() + other.getM20(), getM21() + other.getM21(), getM22() + other.getM22(), getM23() + other.getM23(),
@@ -818,6 +775,15 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
 
     @Override
     public Matrix4x4f sub(Matrix4x4 other) {
+        Matrix4x4f _other = toMatrix4x4f(other);
+
+        return new Matrix4x4f(getM00() - _other.getM00(), getM01() - _other.getM01(), getM02() - _other.getM02(), getM03() - _other.getM03(),
+                              getM10() - _other.getM10(), getM11() - _other.getM11(), getM12() - _other.getM12(), getM13() - _other.getM13(),
+                              getM20() - _other.getM20(), getM21() - _other.getM21(), getM22() - _other.getM22(), getM23() - _other.getM23(),
+                              getM30() - _other.getM30(), getM31() - _other.getM31(), getM32() - _other.getM32(), getM33() - _other.getM33());
+    }
+
+    public Matrix4x4f sub(Matrix4x4f other) {
         return new Matrix4x4f(getM00() - other.getM00(), getM01() - other.getM01(), getM02() - other.getM02(), getM03() - other.getM03(),
                               getM10() - other.getM10(), getM11() - other.getM11(), getM12() - other.getM12(), getM13() - other.getM13(),
                               getM20() - other.getM20(), getM21() - other.getM21(), getM22() - other.getM22(), getM23() - other.getM23(),
@@ -842,6 +808,27 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
 
     @Override
     public Matrix4x4f mul(Matrix4x4 other) {
+        Matrix4x4f _other = toMatrix4x4f(other);
+
+        return new Matrix4x4f(getM00() * _other.getM00() + getM01() * _other.getM10() + getM02() * _other.getM20() + getM03() * _other.getM30(),
+                              getM00() * _other.getM01() + getM01() * _other.getM11() + getM02() * _other.getM21() + getM03() * _other.getM31(),
+                              getM00() * _other.getM02() + getM01() * _other.getM12() + getM02() * _other.getM22() + getM03() * _other.getM32(),
+                              getM00() * _other.getM03() + getM01() * _other.getM13() + getM02() * _other.getM23() + getM03() * _other.getM33(),
+                              getM10() * _other.getM00() + getM11() * _other.getM10() + getM12() * _other.getM20() + getM13() * _other.getM30(),
+                              getM10() * _other.getM01() + getM11() * _other.getM11() + getM12() * _other.getM21() + getM13() * _other.getM31(),
+                              getM10() * _other.getM02() + getM11() * _other.getM12() + getM12() * _other.getM22() + getM13() * _other.getM32(),
+                              getM10() * _other.getM03() + getM11() * _other.getM13() + getM12() * _other.getM23() + getM13() * _other.getM33(),
+                              getM20() * _other.getM00() + getM21() * _other.getM10() + getM22() * _other.getM20() + getM23() * _other.getM30(),
+                              getM20() * _other.getM01() + getM21() * _other.getM11() + getM22() * _other.getM21() + getM23() * _other.getM31(),
+                              getM20() * _other.getM02() + getM21() * _other.getM12() + getM22() * _other.getM22() + getM23() * _other.getM32(),
+                              getM20() * _other.getM03() + getM21() * _other.getM13() + getM22() * _other.getM23() + getM23() * _other.getM33(),
+                              getM30() * _other.getM00() + getM31() * _other.getM10() + getM32() * _other.getM20() + getM33() * _other.getM30(),
+                              getM30() * _other.getM01() + getM31() * _other.getM11() + getM32() * _other.getM21() + getM33() * _other.getM31(),
+                              getM30() * _other.getM02() + getM31() * _other.getM12() + getM32() * _other.getM22() + getM33() * _other.getM32(),
+                              getM30() * _other.getM03() + getM31() * _other.getM13() + getM32() * _other.getM23() + getM33() * _other.getM33());
+    }
+
+    public Matrix4x4f mul(Matrix4x4f other) {
         return new Matrix4x4f(getM00() * other.getM00() + getM01() * other.getM10() + getM02() * other.getM20() + getM03() * other.getM30(),
                               getM00() * other.getM01() + getM01() * other.getM11() + getM02() * other.getM21() + getM03() * other.getM31(),
                               getM00() * other.getM02() + getM01() * other.getM12() + getM02() * other.getM22() + getM03() * other.getM32(),
@@ -964,6 +951,16 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
 
     @Override
     public Matrix4x4f addAndSet(Matrix4x4 other) {
+        Matrix4x4f _other = toMatrix4x4f(other);
+
+        set(getM00() + _other.getM00(), getM01() + _other.getM01(), getM02() + _other.getM02(), getM03() + _other.getM03(),
+            getM10() + _other.getM10(), getM11() + _other.getM11(), getM12() + _other.getM12(), getM13() + _other.getM13(),
+            getM20() + _other.getM20(), getM21() + _other.getM21(), getM22() + _other.getM22(), getM23() + _other.getM23(),
+            getM30() + _other.getM30(), getM31() + _other.getM31(), getM32() + _other.getM32(), getM33() + _other.getM33());
+        return this;
+    }
+
+    public Matrix4x4f addAndSet(Matrix4x4f other) {
         set(getM00() + other.getM00(), getM01() + other.getM01(), getM02() + other.getM02(), getM03() + other.getM03(),
             getM10() + other.getM10(), getM11() + other.getM11(), getM12() + other.getM12(), getM13() + other.getM13(),
             getM20() + other.getM20(), getM21() + other.getM21(), getM22() + other.getM22(), getM23() + other.getM23(),
@@ -973,6 +970,16 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
 
     @Override
     public Matrix4x4f subAndSet(Matrix4x4 other) {
+        Matrix4x4f _other = toMatrix4x4f(other);
+
+        set(getM00() - _other.getM00(), getM01() - _other.getM01(), getM02() - _other.getM02(), getM03() - _other.getM03(),
+            getM10() - _other.getM10(), getM11() - _other.getM11(), getM12() - _other.getM12(), getM13() - _other.getM13(),
+            getM20() - _other.getM20(), getM21() - _other.getM21(), getM22() - _other.getM22(), getM23() - _other.getM23(),
+            getM30() - _other.getM30(), getM31() - _other.getM31(), getM32() - _other.getM32(), getM33() - _other.getM33());
+        return this;
+    }
+
+    public Matrix4x4f subAndSet(Matrix4x4f other) {
         set(getM00() - other.getM00(), getM01() - other.getM01(), getM02() - other.getM02(), getM03() - other.getM03(),
             getM10() - other.getM10(), getM11() - other.getM11(), getM12() - other.getM12(), getM13() - other.getM13(),
             getM20() - other.getM20(), getM21() - other.getM21(), getM22() - other.getM22(), getM23() - other.getM23(),
@@ -1000,6 +1007,28 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
 
     @Override
     public Matrix4x4f mulAndSet(Matrix4x4 other) {
+        Matrix4x4f _other = toMatrix4x4f(other);
+
+        set(getM00() * _other.getM00() + getM01() * _other.getM10() + getM02() * _other.getM20() + getM03() * _other.getM30(),
+            getM00() * _other.getM01() + getM01() * _other.getM11() + getM02() * _other.getM21() + getM03() * _other.getM31(),
+            getM00() * _other.getM02() + getM01() * _other.getM12() + getM02() * _other.getM22() + getM03() * _other.getM32(),
+            getM00() * _other.getM03() + getM01() * _other.getM13() + getM02() * _other.getM23() + getM03() * _other.getM33(),
+            getM10() * _other.getM00() + getM11() * _other.getM10() + getM12() * _other.getM20() + getM13() * _other.getM30(),
+            getM10() * _other.getM01() + getM11() * _other.getM11() + getM12() * _other.getM21() + getM13() * _other.getM31(),
+            getM10() * _other.getM02() + getM11() * _other.getM12() + getM12() * _other.getM22() + getM13() * _other.getM32(),
+            getM10() * _other.getM03() + getM11() * _other.getM13() + getM12() * _other.getM23() + getM13() * _other.getM33(),
+            getM20() * _other.getM00() + getM21() * _other.getM10() + getM22() * _other.getM20() + getM23() * _other.getM30(),
+            getM20() * _other.getM01() + getM21() * _other.getM11() + getM22() * _other.getM21() + getM23() * _other.getM31(),
+            getM20() * _other.getM02() + getM21() * _other.getM12() + getM22() * _other.getM22() + getM23() * _other.getM32(),
+            getM20() * _other.getM03() + getM21() * _other.getM13() + getM22() * _other.getM23() + getM23() * _other.getM33(),
+            getM30() * _other.getM00() + getM31() * _other.getM10() + getM32() * _other.getM20() + getM33() * _other.getM30(),
+            getM30() * _other.getM01() + getM31() * _other.getM11() + getM32() * _other.getM21() + getM33() * _other.getM31(),
+            getM30() * _other.getM02() + getM31() * _other.getM12() + getM32() * _other.getM22() + getM33() * _other.getM32(),
+            getM30() * _other.getM03() + getM31() * _other.getM13() + getM32() * _other.getM23() + getM33() * _other.getM33());
+        return this;
+    }
+
+    public Matrix4x4f mulAndSet(Matrix4x4f other) {
         set(getM00() * other.getM00() + getM01() * other.getM10() + getM02() * other.getM20() + getM03() * other.getM30(),
             getM00() * other.getM01() + getM01() * other.getM11() + getM02() * other.getM21() + getM03() * other.getM31(),
             getM00() * other.getM02() + getM01() * other.getM12() + getM02() * other.getM22() + getM03() * other.getM32(),
@@ -1107,6 +1136,53 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
         return this;
     }
 
+//<editor-fold defaultstate="collapsed" desc="MatrixInpector">
+    //int sizeRows();
+
+    //int sizeCols();
+
+    @Override
+    public void getInto(MatrixSet matrixSet) {
+        matrixSet.setAt( 0, 0, (float)m00 );
+        matrixSet.setAt( 0, 1, (float)m01 );
+        matrixSet.setAt( 0, 2, (float)m02 );
+        matrixSet.setAt( 0, 3, (float)m03 );
+        matrixSet.setAt( 1, 0, (float)m10 );
+        matrixSet.setAt( 1, 1, (float)m11 );
+        matrixSet.setAt( 1, 2, (float)m12 );
+        matrixSet.setAt( 1, 3, (float)m13 );
+        matrixSet.setAt( 2, 0, (float)m20 );
+        matrixSet.setAt( 2, 1, (float)m21 );
+        matrixSet.setAt( 2, 2, (float)m22 );
+        matrixSet.setAt( 2, 3, (float)m23 );
+        matrixSet.setAt( 3, 0, (float)m30 );
+        matrixSet.setAt( 3, 1, (float)m31 );
+        matrixSet.setAt( 3, 2, (float)m32 );
+        matrixSet.setAt( 3, 3, (float)m33 );
+    }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="MatrixSet">
+    @Override
+    public void setAt(int r, int c, float value) {
+        set(r, c, (float)value);
+    }
+
+    @Override
+    public void setAt(int r, int c, double value) {
+        set(r, c, (float)value);
+    }
+
+    @Override
+    public <T> void setAt(Class<T> type, int r, int c, T value) {
+        if (Number.class.isAssignableFrom(type)) {
+            set(r, c, ((Number)value).floatValue());
+            return;
+        }
+        throw new UnsupportedOperationException();
+    }
+//</editor-fold>
+
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
     public String toString() {
@@ -1185,6 +1261,15 @@ public class Matrix4x4f implements Cloneable, EpsilonEquatable<Matrix4x4f>, Buff
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="private">
+    private Matrix4x4f toMatrix4x4f(Matrix4x4 other) {
+        if (other instanceof Matrix4x4f) {
+            return (Matrix4x4f)other;
+        }
+        Matrix4x4f aux = new Matrix4x4f();
+        other.getInto(aux);
+        return aux;
+    }
+
     private boolean epsilonEquals(float m00, float m01, float m02, float m03,
                                   float m10, float m11, float m12, float m13,
                                   float m20, float m21, float m22, float m23,

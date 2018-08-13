@@ -31,5 +31,5 @@
 {%          endfor %}
 {%      endfor %}
      */
-    {{ desc.matrixImpName }} set({{ TypeNameCommaSeparated( desc ) | indent(2) }});
+    void set({{ TypeNameCommaSeparated( desc ) | indent(2) }});
 {%  endmacro %}

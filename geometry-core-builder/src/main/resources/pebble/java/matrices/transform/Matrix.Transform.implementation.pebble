@@ -4,42 +4,24 @@
 {%  macro MatrixTransformImplementation( desc, className ) %}
 {%      set vdesc = desc.vector %}
 {%      set vlowdesc = desc.vector.lowerDimension %}
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public {{ vdesc.vectorImpName }} mul({{ vdesc.vectorName }} v) {
         {{ vdesc.tupleTypeName }} _v = TupleUtils.to{{ vdesc.tupleTypeName }}(v);
 
         {{ MulVector( desc, "", "_v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public {{ vdesc.vectorImpName }} mul({{ vdesc.vectorImpName }} v) {
         {{ MulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public {{ vdesc.vectorImpName }} premul({{ vdesc.vectorName }} v) {
         {{ vdesc.tupleTypeName }} _v = TupleUtils.to{{ vdesc.tupleTypeName }}(v);
 
         {{ PremulVector( desc, "", "_v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public {{ vdesc.vectorImpName }} premul({{ vdesc.vectorImpName }} v) {
         {{ PremulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
     }
@@ -48,82 +30,46 @@
  # Those methods work with vector and points of a lower dimension. 
  #}
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public {{ vlowdesc.vectorImpName }} mul({{ vlowdesc.vectorName }} v) {
         {{ vlowdesc.tupleTypeName }} _v = toTupleLow(v);
 
         {{ MulVectorLow( desc, "", "_v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public {{ vlowdesc.vectorImpName }} mul({{ vlowdesc.vectorImpName }} v) {
         {{ MulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
+    @Override
     public {{ vlowdesc.pointImpName }} mul({{ vlowdesc.pointName }} p) {
         {{ vlowdesc.tupleTypeName }} _p = toTupleLow(p);
 
         {{ MulpointLow( desc, "", "_p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
     public {{ vlowdesc.pointImpName }} mul({{ vlowdesc.pointImpName }} p) {
         {{ MulpointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public {{ vlowdesc.vectorImpName }} premul({{ vlowdesc.vectorName }} v) {
         {{ vlowdesc.tupleTypeName }} _v = toTupleLow(v);
 
         {{ PremulVectorLow( desc, "", "_v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public {{ vlowdesc.vectorImpName }} premul({{ vlowdesc.vectorImpName }} v) {
         {{ PremulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
+    @Override
     public {{ vlowdesc.pointImpName }} premul({{ vlowdesc.pointName }} p) {
         {{ vlowdesc.tupleTypeName }} _p = toTupleLow(p);
 
         {{ PremulPointLow( desc, "", "_p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
     public {{ vlowdesc.pointImpName }} premul({{ vlowdesc.pointImpName }} p) {
         {{ PremulPointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
     }

@@ -2,11 +2,6 @@
  # This macro renders the implementation of Tuple_Number of the tuple.
  #}
 {%  macro Tuple_Number( desc ) %}
-    /**
-     * This method sets the values of {@code this} tuple into {@code buff}.
-     *
-     * @param buff Where to put the values.
-     */
     @Override
     public final void getInto({{ desc.buffTupleNumberName }} buff) {
         buff.set{{ desc.ctype }}({{ NameCommaSeparated(desc) }});

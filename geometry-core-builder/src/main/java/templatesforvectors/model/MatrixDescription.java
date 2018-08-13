@@ -23,12 +23,12 @@ import java.util.Arrays;
 /**
  * Description of a matrix.
  */
-public class MatrixDescrition {
+public class MatrixDescription {
 
     public static final String CORE_PACKAGE = "essence.geometry.core";
 
-    public static MatrixDescrition getDefault(int dim) {
-        MatrixDescrition mdesc = new MatrixDescrition();
+    public static MatrixDescription getDefault(int dim) {
+        MatrixDescription mdesc = new MatrixDescription();
         mdesc._package = CORE_PACKAGE;
         mdesc.corePackage = CORE_PACKAGE;
         mdesc.dimRows = dim;
@@ -50,8 +50,8 @@ public class MatrixDescrition {
         return mdesc;
     }
 
-    public static MatrixDescrition getDouble(int dim) {
-        MatrixDescrition mdesc = new MatrixDescrition();
+    public static MatrixDescription getDouble(int dim) {
+        MatrixDescription mdesc = new MatrixDescription();
         mdesc._package = CORE_PACKAGE + ".doubles";
         mdesc.corePackage = CORE_PACKAGE;
         mdesc.dimRows = dim;
@@ -73,8 +73,8 @@ public class MatrixDescrition {
         return mdesc;
     }
 
-    public static MatrixDescrition getFloat(int dim) {
-        MatrixDescrition mdesc = new MatrixDescrition();
+    public static MatrixDescription getFloat(int dim) {
+        MatrixDescription mdesc = new MatrixDescription();
         mdesc._package = CORE_PACKAGE + ".floats";
         mdesc.corePackage = CORE_PACKAGE;
         mdesc.dimRows = dim;

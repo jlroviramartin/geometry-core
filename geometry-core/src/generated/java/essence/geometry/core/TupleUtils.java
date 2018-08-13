@@ -52,6 +52,24 @@ import essence.geometry.core.bytes.BuffTuple3b;
 import essence.geometry.core.bytes.Tuple4_Byte;
 import essence.geometry.core.bytes.BuffTuple4_Byte;
 import essence.geometry.core.bytes.BuffTuple4b;
+import essence.geometry.core.floats.MatrixGetter2x2_Float;
+import essence.geometry.core.floats.Matrix2x2f;
+import essence.geometry.core.floats.MatrixSetter2x2_Float;
+import essence.geometry.core.doubles.MatrixGetter2x2_Double;
+import essence.geometry.core.doubles.Matrix2x2d;
+import essence.geometry.core.doubles.MatrixSetter2x2_Double;
+import essence.geometry.core.floats.MatrixGetter3x3_Float;
+import essence.geometry.core.floats.Matrix3x3f;
+import essence.geometry.core.floats.MatrixSetter3x3_Float;
+import essence.geometry.core.doubles.MatrixGetter3x3_Double;
+import essence.geometry.core.doubles.Matrix3x3d;
+import essence.geometry.core.doubles.MatrixSetter3x3_Double;
+import essence.geometry.core.floats.MatrixGetter4x4_Float;
+import essence.geometry.core.floats.Matrix4x4f;
+import essence.geometry.core.floats.MatrixSetter4x4_Float;
+import essence.geometry.core.doubles.MatrixGetter4x4_Double;
+import essence.geometry.core.doubles.Matrix4x4d;
+import essence.geometry.core.doubles.MatrixSetter4x4_Double;
 
 public class TupleUtils {
 
@@ -1647,4 +1665,154 @@ public class TupleUtils {
             }
         };
     }
+
+    /**
+     * This method converts a Tuple into a MatrixGetter2x2_Float. It is a helper method to ease the operations.
+     *
+     * @param other Tuple.
+     * @return MatrixGetter2x2_Float.
+     */
+    public static MatrixGetter2x2_Float toMatrixGetter2x2_Float(MatrixInpector other) {
+        if (other instanceof MatrixGetter2x2_Float) {
+            return (MatrixGetter2x2_Float)other;
+        }
+
+        Matrix2x2f aux = new Matrix2x2f();
+        other.getInto(aux);
+        return aux;
+    }
+
+    ///**
+    // * This method converts a Tuple into a MatrixSetter2x2_Float. It is a helper method to ease the operations.
+    // *
+    // * @param other Tuple.
+    // * @return MatrixSetter2x2_Float.
+    // */
+    //public static MatrixSetter2x2_Float toMatrixSetter2x2_Float(BuffTuple other) {
+    //}
+
+    /**
+     * This method converts a Tuple into a MatrixGetter2x2_Double. It is a helper method to ease the operations.
+     *
+     * @param other Tuple.
+     * @return MatrixGetter2x2_Double.
+     */
+    public static MatrixGetter2x2_Double toMatrixGetter2x2_Double(MatrixInpector other) {
+        if (other instanceof MatrixGetter2x2_Double) {
+            return (MatrixGetter2x2_Double)other;
+        }
+
+        Matrix2x2d aux = new Matrix2x2d();
+        other.getInto(aux);
+        return aux;
+    }
+
+    ///**
+    // * This method converts a Tuple into a MatrixSetter2x2_Double. It is a helper method to ease the operations.
+    // *
+    // * @param other Tuple.
+    // * @return MatrixSetter2x2_Double.
+    // */
+    //public static MatrixSetter2x2_Double toMatrixSetter2x2_Double(BuffTuple other) {
+    //}
+
+    /**
+     * This method converts a Tuple into a MatrixGetter3x3_Float. It is a helper method to ease the operations.
+     *
+     * @param other Tuple.
+     * @return MatrixGetter3x3_Float.
+     */
+    public static MatrixGetter3x3_Float toMatrixGetter3x3_Float(MatrixInpector other) {
+        if (other instanceof MatrixGetter3x3_Float) {
+            return (MatrixGetter3x3_Float)other;
+        }
+
+        Matrix3x3f aux = new Matrix3x3f();
+        other.getInto(aux);
+        return aux;
+    }
+
+    ///**
+    // * This method converts a Tuple into a MatrixSetter3x3_Float. It is a helper method to ease the operations.
+    // *
+    // * @param other Tuple.
+    // * @return MatrixSetter3x3_Float.
+    // */
+    //public static MatrixSetter3x3_Float toMatrixSetter3x3_Float(BuffTuple other) {
+    //}
+
+    /**
+     * This method converts a Tuple into a MatrixGetter3x3_Double. It is a helper method to ease the operations.
+     *
+     * @param other Tuple.
+     * @return MatrixGetter3x3_Double.
+     */
+    public static MatrixGetter3x3_Double toMatrixGetter3x3_Double(MatrixInpector other) {
+        if (other instanceof MatrixGetter3x3_Double) {
+            return (MatrixGetter3x3_Double)other;
+        }
+
+        Matrix3x3d aux = new Matrix3x3d();
+        other.getInto(aux);
+        return aux;
+    }
+
+    ///**
+    // * This method converts a Tuple into a MatrixSetter3x3_Double. It is a helper method to ease the operations.
+    // *
+    // * @param other Tuple.
+    // * @return MatrixSetter3x3_Double.
+    // */
+    //public static MatrixSetter3x3_Double toMatrixSetter3x3_Double(BuffTuple other) {
+    //}
+
+    /**
+     * This method converts a Tuple into a MatrixGetter4x4_Float. It is a helper method to ease the operations.
+     *
+     * @param other Tuple.
+     * @return MatrixGetter4x4_Float.
+     */
+    public static MatrixGetter4x4_Float toMatrixGetter4x4_Float(MatrixInpector other) {
+        if (other instanceof MatrixGetter4x4_Float) {
+            return (MatrixGetter4x4_Float)other;
+        }
+
+        Matrix4x4f aux = new Matrix4x4f();
+        other.getInto(aux);
+        return aux;
+    }
+
+    ///**
+    // * This method converts a Tuple into a MatrixSetter4x4_Float. It is a helper method to ease the operations.
+    // *
+    // * @param other Tuple.
+    // * @return MatrixSetter4x4_Float.
+    // */
+    //public static MatrixSetter4x4_Float toMatrixSetter4x4_Float(BuffTuple other) {
+    //}
+
+    /**
+     * This method converts a Tuple into a MatrixGetter4x4_Double. It is a helper method to ease the operations.
+     *
+     * @param other Tuple.
+     * @return MatrixGetter4x4_Double.
+     */
+    public static MatrixGetter4x4_Double toMatrixGetter4x4_Double(MatrixInpector other) {
+        if (other instanceof MatrixGetter4x4_Double) {
+            return (MatrixGetter4x4_Double)other;
+        }
+
+        Matrix4x4d aux = new Matrix4x4d();
+        other.getInto(aux);
+        return aux;
+    }
+
+    ///**
+    // * This method converts a Tuple into a MatrixSetter4x4_Double. It is a helper method to ease the operations.
+    // *
+    // * @param other Tuple.
+    // * @return MatrixSetter4x4_Double.
+    // */
+    //public static MatrixSetter4x4_Double toMatrixSetter4x4_Double(BuffTuple other) {
+    //}
 }

@@ -25,11 +25,12 @@
  */
 package essence.geometry.core;
 
+import essence.geometry.core.MatrixSet;
 
 /**
  * A {@code BuffMatrix4x4} is a collection of values that represents a matrix.
  */
-public interface BuffMatrix4x4 extends Matrix4x4 {
+public interface BuffMatrix4x4 extends Matrix4x4, MatrixSet {
 
     /**
      * This method sets {@code this} matrix to zero.
@@ -52,7 +53,7 @@ public interface BuffMatrix4x4 extends Matrix4x4 {
      * @param other Other matrix.
      * @return {@code this = this + other}
      */
-    BuffMatrix4x4 addAndSet(BuffMatrix4x4 other);
+    BuffMatrix4x4 addAndSet(Matrix4x4 other);
 
     /**
      * This method subs {@code this} matrix and {@code other} matrix and sets the result
@@ -61,7 +62,7 @@ public interface BuffMatrix4x4 extends Matrix4x4 {
      * @param other Other matrix.
      * @return {@code this = this - other}
      */
-    BuffMatrix4x4 subAndSet(BuffMatrix4x4 other);
+    BuffMatrix4x4 subAndSet(Matrix4x4 other);
 
     /**
      * This method multiplies {@code this} matrix by {@code v} and sets the result
@@ -88,7 +89,7 @@ public interface BuffMatrix4x4 extends Matrix4x4 {
      * @param other Other matrix.
      * @return {@code this = this * other}
      */
-    BuffMatrix4x4 mulAndSet(BuffMatrix4x4 other);
+    BuffMatrix4x4 mulAndSet(Matrix4x4 other);
 
     /**
      * This method changes the sign of {@code this} matrix and sets the result

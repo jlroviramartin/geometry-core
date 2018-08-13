@@ -77,5 +77,5 @@ public interface MatrixSetter2x2_Float extends MatrixGetter2x2_Float {
      * @param m10 Property [1, 0].
      * @param m11 Property [1, 1].
      */
-    Matrix2x2f set(float m00, float m01, float m10, float m11);
+    void set(float m00, float m01, float m10, float m11);
 }

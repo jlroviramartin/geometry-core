@@ -30,6 +30,8 @@ import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.SingularMatrixException;
 import essence.geometry.core.Tuple;
 import essence.geometry.core.TupleUtils;
+import essence.geometry.core.MatrixInpector;
+import essence.geometry.core.MatrixSet;
 import essence.geometry.core.{{ desc.vector.vectorName }};
 import essence.geometry.core.{{ desc.vector.buffVectorName }};
 {%  if not desc.vector.lowerDimension is empty %}
@@ -49,7 +51,7 @@ import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
 /**
  * Basic implementation of a {{ desc.dimRows }}x{{ desc.dimCols }} matrix.
  */
-public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ desc.matrixImpName }}>, {{ desc.buffMatrixName }} {
+public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ desc.matrixImpName }}>, {{ desc.buffMatrixName }}, {{ desc.matrixSetterTypeName }} {
 //<editor-fold defaultstate="collapsed" desc="fields">
 {{ Fields( desc ) }}
 //</editor-fold>
@@ -73,6 +75,42 @@ public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ 
 {{ MatrixMathImplementation( desc, desc.matrixImpName ) }}
 
 {{ MatrixMathAndSetImplementation( desc, desc.matrixImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="MatrixInpector">
+    //int sizeRows();
+
+    //int sizeCols();
+
+    @Override
+    public void getInto(MatrixSet matrixSet) {
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+        matrixSet.setAt( {{ row.r }}, {{ property.c }}, ({{ property.type }}){{ property.name }} );
+{%          endfor %}
+{%      endfor %}
+    }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="MatrixSet">
+    @Override
+    public void setAt(int r, int c, float value) {
+        set(r, c, ({{ desc.type }})value);
+    }
+
+    @Override
+    public void setAt(int r, int c, double value) {
+        set(r, c, ({{ desc.type }})value);
+    }
+
+    @Override
+    public <T> void setAt(Class<T> type, int r, int c, T value) {
+        if (Number.class.isAssignableFrom(type)) {
+            set(r, c, ((Number)value).{{ desc.type }}Value());
+            return;
+        }
+        throw new UnsupportedOperationException();
+    }
+//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Object">
 {{ Object( desc, desc.matrixImpName ) }}

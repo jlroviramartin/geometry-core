@@ -16,15 +16,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package templatesforvectors.model;
+package essence.geometry.core;
 
 /**
  *
  * @author joseluis
  */
-public class TupleUtilsDescription {
-    
-    public String _package;
-    public VectorDescription[] descriptors;
-    public MatrixDescription[] mdescriptors;
+public interface TupleSet {
+
+    void set(int index, byte value);
+
+    void set(int index, short value);
+
+    void set(int index, int value);
+
+    void set(int index, long value);
+
+    void set(int index, float value);
+
+    void set(int index, double value);
+
+    <T> void set(Class<T> type, int index, T value);
 }

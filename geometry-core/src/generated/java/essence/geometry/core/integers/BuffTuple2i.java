@@ -238,12 +238,6 @@ public class BuffTuple2i implements Cloneable, BuffTuple, BuffTuple2_Integer, Bu
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Tuple2_Integer">
-    /**
-     * This method gets the component {@code index}.
-     *
-     * @param index Index of the component.
-     * @return Value of the component.
-     */
     @Override
     public final int getAt(int index) {
         switch(index) {
@@ -255,21 +249,11 @@ public class BuffTuple2i implements Cloneable, BuffTuple, BuffTuple2_Integer, Bu
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * This method gets the X component.
-     *
-     * @return Value of the X component.
-     */
     @Override
     public final int getX() {
         return x;
     }
 
-    /**
-     * This method gets the Y component.
-     *
-     * @return Value of the Y component.
-     */
     @Override
     public final int getY() {
         return y;
@@ -351,11 +335,6 @@ public class BuffTuple2i implements Cloneable, BuffTuple, BuffTuple2_Integer, Bu
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Tuple2_Number">
-    /**
-     * This method sets the values of {@code this} tuple into {@code buff}.
-     *
-     * @param buff Where to put the values.
-     */
     @Override
     public final void getInto(BuffTuple2_Number buff) {
         buff.setInteger(x, y);

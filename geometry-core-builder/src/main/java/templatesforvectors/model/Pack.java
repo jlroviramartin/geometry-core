@@ -19,7 +19,7 @@
 package templatesforvectors.model;
 
 import templatesforvectors.model.VectorDescription;
-import templatesforvectors.model.MatrixDescrition;
+import templatesforvectors.model.MatrixDescription;
 
 /**
  *
@@ -27,7 +27,7 @@ import templatesforvectors.model.MatrixDescrition;
  */
 public class Pack {
 
-    MatrixDescrition matrixImp;
+    MatrixDescription matrixImp;
     VectorDescription vector;
     VectorDescription vectorImp;
 }

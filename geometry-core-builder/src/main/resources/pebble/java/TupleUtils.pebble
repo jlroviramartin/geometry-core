@@ -14,6 +14,11 @@ import {{ vdesc._package }}.{{ vdesc.tupleTypeName }};
 import {{ vdesc._package }}.{{ vdesc.buffTupleTypeName }};
 import {{ vdesc._package }}.{{ vdesc.buffTupleImpName }};
 {%      endfor %}
+{%      for mdesc in desc.mdescriptors %}
+import {{ mdesc._package }}.{{ mdesc.matrixGetterTypeName }};
+import {{ mdesc._package }}.{{ mdesc.matrixImpName }};
+import {{ mdesc._package }}.{{ mdesc.matrixSetterTypeName }};
+{%      endfor %}
 {%  endblock %}
 
 
@@ -162,6 +167,33 @@ public class TupleUtils {
             }
         };
     }
+{%      endfor %}
+{%      for mdesc in desc.mdescriptors %}
+
+    /**
+     * This method converts a Tuple into a {{ mdesc.matrixGetterTypeName }}. It is a helper method to ease the operations.
+     *
+     * @param other Tuple.
+     * @return {{ mdesc.matrixGetterTypeName }}.
+     */
+    public static {{ mdesc.matrixGetterTypeName }} to{{ mdesc.matrixGetterTypeName }}(MatrixInpector other) {
+        if (other instanceof {{ mdesc.matrixGetterTypeName }}) {
+            return ({{ mdesc.matrixGetterTypeName }})other;
+        }
+
+        {{ mdesc.matrixImpName }} aux = new {{ mdesc.matrixImpName }}();
+        other.getInto(aux);
+        return aux;
+    }
+
+    ///**
+    // * This method converts a Tuple into a {{ mdesc.matrixSetterTypeName }}. It is a helper method to ease the operations.
+    // *
+    // * @param other Tuple.
+    // * @return {{ mdesc.matrixSetterTypeName }}.
+    // */
+    //public static {{ mdesc.matrixSetterTypeName }} to{{ mdesc.matrixSetterTypeName }}(BuffTuple other) {
+    //}
 {%      endfor %}
 }
 {%  endblock %}

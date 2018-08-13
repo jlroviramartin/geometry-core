@@ -1,4 +1,10 @@
 {#
+ # This macro renders the property at '(r, c)' of 'desc' in upper case.
+ #}
+{%  macro PropertyUpperName( desc, r, c ) %}{{ reflection( desc, "getProperty", [ r, c ] ).upperName }}{% endmacro %}
+
+
+{#
  # This macro renders all properties using row and column separator.
  #}
 {%  macro RowsAndColumns( desc, rseparator, cseparator, macroItem ) %}
@@ -82,7 +88,6 @@
 {%- endmacro %}
 
 
-
 {#
  # This macro renders a matrix multiplication.
  #}
@@ -96,7 +101,7 @@
 {%              endif %}
 {%              for k in range( 0, desc.dimRows - 1 ) %}
 {%                  if not (loop.first) %} + {% endif %}
-{{ this }}get{{ reflection( desc, "getProperty", [ row.r, k ] ).upperName }}() * {{ other }}get{{ reflection( desc, "getProperty", [ k, property.c ] ).upperName }}()
+{{ this }}get{{ PropertyUpperName( desc, row.r, k ) }}() * {{ other }}get{{ PropertyUpperName( desc, k, property.c ) }}()
 {%-             endfor %}
 {%          endfor %}
 {%      endfor %})
@@ -107,7 +112,7 @@
  #}
 {%  macro MatrixTranspose( desc, this = "" ) %}
 {%      dynmacro Math_abs( desc, property ) %}
-{{ p().this }}get{{ reflection( desc, "getProperty", [ property.c, property.r ] ).upperName }}()
+{{ p().this }}get{{ PropertyUpperName( desc, property.c, property.r ) }}()
 {%-     enddynmacro %}
 ({{ RowsAndColumns( desc, ",%n", ", ", Math_abs ) | indent(3) }})
 {%- endmacro %}

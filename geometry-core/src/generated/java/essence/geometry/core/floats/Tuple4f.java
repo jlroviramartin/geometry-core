@@ -188,12 +188,6 @@ public class Tuple4f implements Cloneable, Tuple, Tuple4_Float, Tuple4_Number  {
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Tuple4_Float">
-    /**
-     * This method gets the component {@code index}.
-     *
-     * @param index Index of the component.
-     * @return Value of the component.
-     */
     @Override
     public final float getAt(int index) {
         switch(index) {
@@ -209,41 +203,21 @@ public class Tuple4f implements Cloneable, Tuple, Tuple4_Float, Tuple4_Number  {
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * This method gets the X component.
-     *
-     * @return Value of the X component.
-     */
     @Override
     public final float getX() {
         return x;
     }
 
-    /**
-     * This method gets the Y component.
-     *
-     * @return Value of the Y component.
-     */
     @Override
     public final float getY() {
         return y;
     }
 
-    /**
-     * This method gets the Z component.
-     *
-     * @return Value of the Z component.
-     */
     @Override
     public final float getZ() {
         return z;
     }
 
-    /**
-     * This method gets the W component.
-     *
-     * @return Value of the W component.
-     */
     @Override
     public final float getW() {
         return w;
@@ -251,11 +225,6 @@ public class Tuple4f implements Cloneable, Tuple, Tuple4_Float, Tuple4_Number  {
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Tuple4_Number">
-    /**
-     * This method sets the values of {@code this} tuple into {@code buff}.
-     *
-     * @param buff Where to put the values.
-     */
     @Override
     public final void getInto(BuffTuple4_Number buff) {
         buff.setFloat(x, y, z, w);

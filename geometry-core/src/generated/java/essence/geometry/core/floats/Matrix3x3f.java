@@ -31,6 +31,8 @@ import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.SingularMatrixException;
 import essence.geometry.core.Tuple;
 import essence.geometry.core.TupleUtils;
+import essence.geometry.core.MatrixInpector;
+import essence.geometry.core.MatrixSet;
 import essence.geometry.core.Vector3;
 import essence.geometry.core.BuffVector3;
 import essence.geometry.core.Vector2;
@@ -46,7 +48,7 @@ import static essence.geometry.core.FloatUtils.EPSILON;
 /**
  * Basic implementation of a 3x3 matrix.
  */
-public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, BuffMatrix3x3 {
+public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, BuffMatrix3x3, MatrixSetter3x3_Float {
 //<editor-fold defaultstate="collapsed" desc="fields">
     /** M00 component. */
     private float m00;
@@ -324,11 +326,7 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Transforms">
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector3f mul(Vector3 v) {
         Tuple3_Float _v = TupleUtils.toTuple3_Float(v);
 
@@ -337,22 +335,13 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
                             getM20() * _v.getX() + getM21() * _v.getY() + getM22() * _v.getZ());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector3f mul(Vector3f v) {
         return new Vector3f(getM00() * v.getX() + getM01() * v.getY() + getM02() * v.getZ(),
                             getM10() * v.getX() + getM11() * v.getY() + getM12() * v.getZ(),
                             getM20() * v.getX() + getM21() * v.getY() + getM22() * v.getZ());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector3f premul(Vector3 v) {
         Tuple3_Float _v = TupleUtils.toTuple3_Float(v);
 
@@ -361,22 +350,13 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
                             _v.getX() * getM02() + _v.getY() * getM12() + _v.getZ() * getM22());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector3f premul(Vector3f v) {
         return new Vector3f(v.getX() * getM00() + v.getY() * getM10() + v.getZ() * getM20(),
                             v.getX() * getM01() + v.getY() * getM11() + v.getZ() * getM21(),
                             v.getX() * getM02() + v.getY() * getM12() + v.getZ() * getM22());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector2f mul(Vector2 v) {
         Tuple2_Float _v = toTupleLow(v);
 
@@ -385,22 +365,13 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
         return new Vector2f(x, y);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector2f mul(Vector2f v) {
         float x = getM00() * v.getX() + getM01() * v.getY();
         float y = getM10() * v.getX() + getM11() * v.getY();
         return new Vector2f(x, y);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
+    @Override
     public Point2f mul(Point2 p) {
         Tuple2_Float _p = toTupleLow(p);
 
@@ -410,11 +381,6 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
         return new Point2f(x / z, y / z);
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
     public Point2f mul(Point2f p) {
         float x = getM00() * p.getX() + getM01() * p.getY() + getM02();
         float y = getM10() * p.getX() + getM11() * p.getY() + getM12();
@@ -422,11 +388,7 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
         return new Point2f(x / z, y / z);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector2f premul(Vector2 v) {
         Tuple2_Float _v = toTupleLow(v);
 
@@ -435,22 +397,13 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
         return new Vector2f(x, y);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector2f premul(Vector2f v) {
         float x = v.getX() * getM00() + v.getY() * getM10();
         float y = v.getX() * getM01() + v.getY() * getM11();
         return new Vector2f(x, y);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
+    @Override
     public Point2f premul(Point2 p) {
         Tuple2_Float _p = toTupleLow(p);
 
@@ -460,11 +413,6 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
         return new Point2f(x / z, y / z);
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code p} point.
-     *
-     * @param p Point.
-     */
     public Point2f premul(Point2f p) {
         float x = p.getX() * getM00() + p.getY() * getM10() + getM20();
         float y = p.getX() * getM01() + p.getY() * getM11() + getM21();
@@ -629,6 +577,14 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
 
     @Override
     public Matrix3x3f add(Matrix3x3 other) {
+        Matrix3x3f _other = toMatrix3x3f(other);
+
+        return new Matrix3x3f(getM00() + _other.getM00(), getM01() + _other.getM01(), getM02() + _other.getM02(),
+                              getM10() + _other.getM10(), getM11() + _other.getM11(), getM12() + _other.getM12(),
+                              getM20() + _other.getM20(), getM21() + _other.getM21(), getM22() + _other.getM22());
+    }
+
+    public Matrix3x3f add(Matrix3x3f other) {
         return new Matrix3x3f(getM00() + other.getM00(), getM01() + other.getM01(), getM02() + other.getM02(),
                               getM10() + other.getM10(), getM11() + other.getM11(), getM12() + other.getM12(),
                               getM20() + other.getM20(), getM21() + other.getM21(), getM22() + other.getM22());
@@ -636,6 +592,14 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
 
     @Override
     public Matrix3x3f sub(Matrix3x3 other) {
+        Matrix3x3f _other = toMatrix3x3f(other);
+
+        return new Matrix3x3f(getM00() - _other.getM00(), getM01() - _other.getM01(), getM02() - _other.getM02(),
+                              getM10() - _other.getM10(), getM11() - _other.getM11(), getM12() - _other.getM12(),
+                              getM20() - _other.getM20(), getM21() - _other.getM21(), getM22() - _other.getM22());
+    }
+
+    public Matrix3x3f sub(Matrix3x3f other) {
         return new Matrix3x3f(getM00() - other.getM00(), getM01() - other.getM01(), getM02() - other.getM02(),
                               getM10() - other.getM10(), getM11() - other.getM11(), getM12() - other.getM12(),
                               getM20() - other.getM20(), getM21() - other.getM21(), getM22() - other.getM22());
@@ -657,6 +621,20 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
 
     @Override
     public Matrix3x3f mul(Matrix3x3 other) {
+        Matrix3x3f _other = toMatrix3x3f(other);
+
+        return new Matrix3x3f(getM00() * _other.getM00() + getM01() * _other.getM10() + getM02() * _other.getM20(),
+                              getM00() * _other.getM01() + getM01() * _other.getM11() + getM02() * _other.getM21(),
+                              getM00() * _other.getM02() + getM01() * _other.getM12() + getM02() * _other.getM22(),
+                              getM10() * _other.getM00() + getM11() * _other.getM10() + getM12() * _other.getM20(),
+                              getM10() * _other.getM01() + getM11() * _other.getM11() + getM12() * _other.getM21(),
+                              getM10() * _other.getM02() + getM11() * _other.getM12() + getM12() * _other.getM22(),
+                              getM20() * _other.getM00() + getM21() * _other.getM10() + getM22() * _other.getM20(),
+                              getM20() * _other.getM01() + getM21() * _other.getM11() + getM22() * _other.getM21(),
+                              getM20() * _other.getM02() + getM21() * _other.getM12() + getM22() * _other.getM22());
+    }
+
+    public Matrix3x3f mul(Matrix3x3f other) {
         return new Matrix3x3f(getM00() * other.getM00() + getM01() * other.getM10() + getM02() * other.getM20(),
                               getM00() * other.getM01() + getM01() * other.getM11() + getM02() * other.getM21(),
                               getM00() * other.getM02() + getM01() * other.getM12() + getM02() * other.getM22(),
@@ -728,6 +706,15 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
 
     @Override
     public Matrix3x3f addAndSet(Matrix3x3 other) {
+        Matrix3x3f _other = toMatrix3x3f(other);
+
+        set(getM00() + _other.getM00(), getM01() + _other.getM01(), getM02() + _other.getM02(),
+            getM10() + _other.getM10(), getM11() + _other.getM11(), getM12() + _other.getM12(),
+            getM20() + _other.getM20(), getM21() + _other.getM21(), getM22() + _other.getM22());
+        return this;
+    }
+
+    public Matrix3x3f addAndSet(Matrix3x3f other) {
         set(getM00() + other.getM00(), getM01() + other.getM01(), getM02() + other.getM02(),
             getM10() + other.getM10(), getM11() + other.getM11(), getM12() + other.getM12(),
             getM20() + other.getM20(), getM21() + other.getM21(), getM22() + other.getM22());
@@ -736,6 +723,15 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
 
     @Override
     public Matrix3x3f subAndSet(Matrix3x3 other) {
+        Matrix3x3f _other = toMatrix3x3f(other);
+
+        set(getM00() - _other.getM00(), getM01() - _other.getM01(), getM02() - _other.getM02(),
+            getM10() - _other.getM10(), getM11() - _other.getM11(), getM12() - _other.getM12(),
+            getM20() - _other.getM20(), getM21() - _other.getM21(), getM22() - _other.getM22());
+        return this;
+    }
+
+    public Matrix3x3f subAndSet(Matrix3x3f other) {
         set(getM00() - other.getM00(), getM01() - other.getM01(), getM02() - other.getM02(),
             getM10() - other.getM10(), getM11() - other.getM11(), getM12() - other.getM12(),
             getM20() - other.getM20(), getM21() - other.getM21(), getM22() - other.getM22());
@@ -760,6 +756,21 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
 
     @Override
     public Matrix3x3f mulAndSet(Matrix3x3 other) {
+        Matrix3x3f _other = toMatrix3x3f(other);
+
+        set(getM00() * _other.getM00() + getM01() * _other.getM10() + getM02() * _other.getM20(),
+            getM00() * _other.getM01() + getM01() * _other.getM11() + getM02() * _other.getM21(),
+            getM00() * _other.getM02() + getM01() * _other.getM12() + getM02() * _other.getM22(),
+            getM10() * _other.getM00() + getM11() * _other.getM10() + getM12() * _other.getM20(),
+            getM10() * _other.getM01() + getM11() * _other.getM11() + getM12() * _other.getM21(),
+            getM10() * _other.getM02() + getM11() * _other.getM12() + getM12() * _other.getM22(),
+            getM20() * _other.getM00() + getM21() * _other.getM10() + getM22() * _other.getM20(),
+            getM20() * _other.getM01() + getM21() * _other.getM11() + getM22() * _other.getM21(),
+            getM20() * _other.getM02() + getM21() * _other.getM12() + getM22() * _other.getM22());
+        return this;
+    }
+
+    public Matrix3x3f mulAndSet(Matrix3x3f other) {
         set(getM00() * other.getM00() + getM01() * other.getM10() + getM02() * other.getM20(),
             getM00() * other.getM01() + getM01() * other.getM11() + getM02() * other.getM21(),
             getM00() * other.getM02() + getM01() * other.getM12() + getM02() * other.getM22(),
@@ -817,6 +828,46 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
             (float)((getM00() * getM11() - getM01() * getM10()) * s));
         return this;
     }
+
+//<editor-fold defaultstate="collapsed" desc="MatrixInpector">
+    //int sizeRows();
+
+    //int sizeCols();
+
+    @Override
+    public void getInto(MatrixSet matrixSet) {
+        matrixSet.setAt( 0, 0, (float)m00 );
+        matrixSet.setAt( 0, 1, (float)m01 );
+        matrixSet.setAt( 0, 2, (float)m02 );
+        matrixSet.setAt( 1, 0, (float)m10 );
+        matrixSet.setAt( 1, 1, (float)m11 );
+        matrixSet.setAt( 1, 2, (float)m12 );
+        matrixSet.setAt( 2, 0, (float)m20 );
+        matrixSet.setAt( 2, 1, (float)m21 );
+        matrixSet.setAt( 2, 2, (float)m22 );
+    }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="MatrixSet">
+    @Override
+    public void setAt(int r, int c, float value) {
+        set(r, c, (float)value);
+    }
+
+    @Override
+    public void setAt(int r, int c, double value) {
+        set(r, c, (float)value);
+    }
+
+    @Override
+    public <T> void setAt(Class<T> type, int r, int c, T value) {
+        if (Number.class.isAssignableFrom(type)) {
+            set(r, c, ((Number)value).floatValue());
+            return;
+        }
+        throw new UnsupportedOperationException();
+    }
+//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
@@ -886,6 +937,15 @@ public class Matrix3x3f implements Cloneable, EpsilonEquatable<Matrix3x3f>, Buff
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="private">
+    private Matrix3x3f toMatrix3x3f(Matrix3x3 other) {
+        if (other instanceof Matrix3x3f) {
+            return (Matrix3x3f)other;
+        }
+        Matrix3x3f aux = new Matrix3x3f();
+        other.getInto(aux);
+        return aux;
+    }
+
     private boolean epsilonEquals(float m00, float m01, float m02,
                                   float m10, float m11, float m12,
                                   float m20, float m21, float m22) {

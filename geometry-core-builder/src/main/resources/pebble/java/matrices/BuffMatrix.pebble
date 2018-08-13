@@ -8,11 +8,15 @@
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
+{%  block import %}
+import essence.geometry.core.MatrixSet;
+{%  endblock %}
+
 {%  block content %}
 /**
  * A {@code {{ desc.buffMatrixName }}} is a collection of values that represents a matrix.
  */
-public interface {{ desc.buffMatrixName }} extends {{ desc.matrixName }} {
+public interface {{ desc.buffMatrixName }} extends {{ desc.matrixName }}, MatrixSet {
 
 {{ MatrixMathAndSetInterfaces( desc,desc.buffMatrixName  ) }}
 }

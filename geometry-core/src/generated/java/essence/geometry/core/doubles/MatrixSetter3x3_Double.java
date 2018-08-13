@@ -117,5 +117,5 @@ public interface MatrixSetter3x3_Double extends MatrixGetter3x3_Double {
      * @param m21 Property [2, 1].
      * @param m22 Property [2, 2].
      */
-    Matrix3x3d set(double m00, double m01, double m02, double m10, double m11, double m12, double m20, double m21, double m22);
+    void set(double m00, double m01, double m02, double m10, double m11, double m12, double m20, double m21, double m22);
 }

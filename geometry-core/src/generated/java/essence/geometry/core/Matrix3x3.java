@@ -25,11 +25,96 @@
  */
 package essence.geometry.core;
 
+import essence.geometry.core.MatrixInpector;
 
 /**
  * A {@code Matrix3x3} is a collection of values that represents a matrix.
  */
-public interface Matrix3x3 {
+public interface Matrix3x3 extends MatrixInpector {
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public Vector3 mul(Vector3 v);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public Vector3 premul(Vector3 v);
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public Vector2 mul(Vector2 v);
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    public Point2 mul(Point2 p);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    public Vector2 premul(Vector2 v);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    public Point2 premul(Point2 p);
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    void mul(BuffVector3 v);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    void premul(BuffVector3 v);
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    void mul(BuffVector2 v);
+
+    /**
+     * This method multiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    void mul(BuffPoint2 p);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code v} vector.
+     *
+     * @param v Vector.
+     */
+    void premul(BuffVector2 v);
+
+    /**
+     * This method premultiplies {@code this} matrix by the {@code p} point.
+     *
+     * @param p Point.
+     */
+    void premul(BuffPoint2 p);
 
     /**
      * This method evaluates is {@code this} matrix is valid.
@@ -83,14 +168,14 @@ public interface Matrix3x3 {
     boolean isIdentity(double epsilon);
 
     /**
-     * This method evaluates is {@code this} matrix is the invertible.
+     * This method evaluates if {@code this} matrix is the invertible.
      *
      * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.
      */
     boolean isInvertible();
 
     /**
-     * This method evaluates is {@code this} matrix is the invertible.
+     * This method evaluates   {@code this} matrix is the invertible.
      *
      * @param epsilon Error.
      * @return {@code True} if {@code this} matrix is invertible. {@code False} otherwise.

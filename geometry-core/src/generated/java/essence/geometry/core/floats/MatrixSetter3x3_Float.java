@@ -117,5 +117,5 @@ public interface MatrixSetter3x3_Float extends MatrixGetter3x3_Float {
      * @param m21 Property [2, 1].
      * @param m22 Property [2, 2].
      */
-    Matrix3x3f set(float m00, float m01, float m02, float m10, float m11, float m12, float m20, float m21, float m22);
+    void set(float m00, float m01, float m02, float m10, float m11, float m12, float m20, float m21, float m22);
 }

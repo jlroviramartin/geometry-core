@@ -25,7 +25,7 @@
      * @param other Other matrix.
      * @return {@code this = this + other}
      */
-    {{ className }} addAndSet({{ className }} other);
+    {{ className }} addAndSet({{ desc.matrixName }} other);
 
     /**
      * This method subs {@code this} matrix and {@code other} matrix and sets the result
@@ -34,7 +34,7 @@
      * @param other Other matrix.
      * @return {@code this = this - other}
      */
-    {{ className }} subAndSet({{ className }} other);
+    {{ className }} subAndSet({{ desc.matrixName }} other);
 
     /**
      * This method multiplies {@code this} matrix by {@code v} and sets the result
@@ -61,7 +61,7 @@
      * @param other Other matrix.
      * @return {@code this = this * other}
      */
-    {{ className }} mulAndSet({{ className }} other);
+    {{ className }} mulAndSet({{ desc.matrixName }} other);
 
     /**
      * This method changes the sign of {@code this} matrix and sets the result

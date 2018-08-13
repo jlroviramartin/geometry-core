@@ -2,6 +2,15 @@
  # This macro renders the private items of the matrix.
  #}
 {%  macro Private( desc, className ) %}
+    private {{ className }} to{{ className }}({{ desc.matrixName }} other) {
+        if (other instanceof {{ className }}) {
+            return ({{ className }})other;
+        }
+        {{ className }} aux = new {{ className }}();
+        other.getInto(aux);
+        return aux;
+    }
+
     private boolean epsilonEquals({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
 {%      dynmacro Private_anonymous3( desc, property ) %}
 {{ property.name }}

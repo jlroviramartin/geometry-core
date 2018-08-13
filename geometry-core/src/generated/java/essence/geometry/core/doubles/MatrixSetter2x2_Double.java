@@ -77,5 +77,5 @@ public interface MatrixSetter2x2_Double extends MatrixGetter2x2_Double {
      * @param m10 Property [1, 0].
      * @param m11 Property [1, 1].
      */
-    Matrix2x2d set(double m00, double m01, double m10, double m11);
+    void set(double m00, double m01, double m10, double m11);
 }

@@ -284,12 +284,6 @@ public class BuffTuple4b implements Cloneable, BuffTuple, BuffTuple4_Byte, BuffT
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Tuple4_Byte">
-    /**
-     * This method gets the component {@code index}.
-     *
-     * @param index Index of the component.
-     * @return Value of the component.
-     */
     @Override
     public final byte getAt(int index) {
         switch(index) {
@@ -305,41 +299,21 @@ public class BuffTuple4b implements Cloneable, BuffTuple, BuffTuple4_Byte, BuffT
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * This method gets the X component.
-     *
-     * @return Value of the X component.
-     */
     @Override
     public final byte getX() {
         return x;
     }
 
-    /**
-     * This method gets the Y component.
-     *
-     * @return Value of the Y component.
-     */
     @Override
     public final byte getY() {
         return y;
     }
 
-    /**
-     * This method gets the Z component.
-     *
-     * @return Value of the Z component.
-     */
     @Override
     public final byte getZ() {
         return z;
     }
 
-    /**
-     * This method gets the W component.
-     *
-     * @return Value of the W component.
-     */
     @Override
     public final byte getW() {
         return w;
@@ -445,11 +419,6 @@ public class BuffTuple4b implements Cloneable, BuffTuple, BuffTuple4_Byte, BuffT
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Tuple4_Number">
-    /**
-     * This method sets the values of {@code this} tuple into {@code buff}.
-     *
-     * @param buff Where to put the values.
-     */
     @Override
     public final void getInto(BuffTuple4_Number buff) {
         buff.setByte(x, y, z, w);

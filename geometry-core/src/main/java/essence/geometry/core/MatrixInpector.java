@@ -16,15 +16,32 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package templatesforvectors.model;
+package essence.geometry.core;
 
 /**
  *
  * @author joseluis
  */
-public class TupleUtilsDescription {
-    
-    public String _package;
-    public VectorDescription[] descriptors;
-    public MatrixDescription[] mdescriptors;
+public interface MatrixInpector {
+
+    /**
+     * This method gets the number of rows of the tuple.
+     *
+     * @return Number of rows of the tuple.
+     */
+    int sizeRows();
+
+    /**
+     * This method gets the number of columns of the tuple.
+     *
+     * @return Number of columns of the tuple.
+     */
+    int sizeCols();
+
+    /**
+     * This method gets the values of the matrix into {@code matrixSet}.
+     *
+     * @param matrixSet Where to get the values.
+     */
+    void getInto(MatrixSet matrixSet);
 }

@@ -2,12 +2,6 @@
  # This macro renders the implementation of Tuple_Type of the tuple.
  #}
 {%  macro Tuple_Type( desc ) %}
-    /**
-     * This method gets the component {@code index}.
-     *
-     * @param index Index of the component.
-     * @return Value of the component.
-     */
     @Override
     public final {{ desc.type }} getAt(int index) {
         switch(index) {
@@ -20,11 +14,6 @@
     }
 {%      for property in desc.properties %}
 
-    /**
-     * This method gets the {{ property.upperName }} component.
-     *
-     * @return Value of the {{ property.upperName }} component.
-     */
     @Override
     public final {{ property.type }} get{{ property.upperName }}() {
         return {{ property.name }};

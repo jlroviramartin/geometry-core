@@ -21,6 +21,7 @@ package templatesforvectors.java.templates;
 import java.util.ArrayList;
 import java.util.List;
 import templatesforvectors.BaseTemplate;
+import templatesforvectors.model.MatrixDescription;
 import templatesforvectors.model.TupleUtilsDescription;
 import templatesforvectors.model.VectorDescription;
 
@@ -117,8 +118,15 @@ public class TupleTemplates extends BaseTemplate {
         aux.add(VectorDescription.getByte(3));
         aux.add(VectorDescription.getByte(4));
 
+        List<MatrixDescription> maux = new ArrayList<>();
+        for (int i = 2; i <= 4; i++) {
+            maux.add(MatrixDescription.getFloat(i));
+            maux.add(MatrixDescription.getDouble(i));
+        }
+
         desc._package = VectorDescription.CORE_PACKAGE;
         desc.descriptors = aux.toArray(new VectorDescription[aux.size()]);
+        desc.mdescriptors = maux.toArray(new MatrixDescription[maux.size()]);
 
         writeToFile(tupleUtils, desc, "TupleUtils", desc._package);
     }

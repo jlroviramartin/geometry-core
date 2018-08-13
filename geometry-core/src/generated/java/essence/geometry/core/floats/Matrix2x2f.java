@@ -31,6 +31,8 @@ import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.SingularMatrixException;
 import essence.geometry.core.Tuple;
 import essence.geometry.core.TupleUtils;
+import essence.geometry.core.MatrixInpector;
+import essence.geometry.core.MatrixSet;
 import essence.geometry.core.Vector2;
 import essence.geometry.core.BuffVector2;
 import essence.geometry.core.VectorFormatInfo;
@@ -42,7 +44,7 @@ import static essence.geometry.core.FloatUtils.EPSILON;
 /**
  * Basic implementation of a 2x2 matrix.
  */
-public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, BuffMatrix2x2 {
+public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, BuffMatrix2x2, MatrixSetter2x2_Float {
 //<editor-fold defaultstate="collapsed" desc="fields">
     /** M00 component. */
     private float m00;
@@ -203,11 +205,7 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Transforms">
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector2f mul(Vector2 v) {
         Tuple2_Float _v = TupleUtils.toTuple2_Float(v);
 
@@ -215,21 +213,12 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
                             getM10() * _v.getX() + getM11() * _v.getY());
     }
 
-    /**
-     * This method multiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector2f mul(Vector2f v) {
         return new Vector2f(getM00() * v.getX() + getM01() * v.getY(),
                             getM10() * v.getX() + getM11() * v.getY());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
+    @Override
     public Vector2f premul(Vector2 v) {
         Tuple2_Float _v = TupleUtils.toTuple2_Float(v);
 
@@ -237,11 +226,6 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
                             _v.getX() * getM01() + _v.getY() * getM11());
     }
 
-    /**
-     * This method premultiplies {@code this} matrix by the {@code v} vector.
-     *
-     * @param v Vector.
-     */
     public Vector2f premul(Vector2f v) {
         return new Vector2f(v.getX() * getM00() + v.getY() * getM10(),
                             v.getX() * getM01() + v.getY() * getM11());
@@ -331,12 +315,26 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
 
     @Override
     public Matrix2x2f add(Matrix2x2 other) {
+        Matrix2x2f _other = toMatrix2x2f(other);
+
+        return new Matrix2x2f(getM00() + _other.getM00(), getM01() + _other.getM01(),
+                              getM10() + _other.getM10(), getM11() + _other.getM11());
+    }
+
+    public Matrix2x2f add(Matrix2x2f other) {
         return new Matrix2x2f(getM00() + other.getM00(), getM01() + other.getM01(),
                               getM10() + other.getM10(), getM11() + other.getM11());
     }
 
     @Override
     public Matrix2x2f sub(Matrix2x2 other) {
+        Matrix2x2f _other = toMatrix2x2f(other);
+
+        return new Matrix2x2f(getM00() - _other.getM00(), getM01() - _other.getM01(),
+                              getM10() - _other.getM10(), getM11() - _other.getM11());
+    }
+
+    public Matrix2x2f sub(Matrix2x2f other) {
         return new Matrix2x2f(getM00() - other.getM00(), getM01() - other.getM01(),
                               getM10() - other.getM10(), getM11() - other.getM11());
     }
@@ -355,6 +353,15 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
 
     @Override
     public Matrix2x2f mul(Matrix2x2 other) {
+        Matrix2x2f _other = toMatrix2x2f(other);
+
+        return new Matrix2x2f(getM00() * _other.getM00() + getM01() * _other.getM10(),
+                              getM00() * _other.getM01() + getM01() * _other.getM11(),
+                              getM10() * _other.getM00() + getM11() * _other.getM10(),
+                              getM10() * _other.getM01() + getM11() * _other.getM11());
+    }
+
+    public Matrix2x2f mul(Matrix2x2f other) {
         return new Matrix2x2f(getM00() * other.getM00() + getM01() * other.getM10(),
                               getM00() * other.getM01() + getM01() * other.getM11(),
                               getM10() * other.getM00() + getM11() * other.getM10(),
@@ -409,6 +416,14 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
 
     @Override
     public Matrix2x2f addAndSet(Matrix2x2 other) {
+        Matrix2x2f _other = toMatrix2x2f(other);
+
+        set(getM00() + _other.getM00(), getM01() + _other.getM01(),
+            getM10() + _other.getM10(), getM11() + _other.getM11());
+        return this;
+    }
+
+    public Matrix2x2f addAndSet(Matrix2x2f other) {
         set(getM00() + other.getM00(), getM01() + other.getM01(),
             getM10() + other.getM10(), getM11() + other.getM11());
         return this;
@@ -416,6 +431,14 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
 
     @Override
     public Matrix2x2f subAndSet(Matrix2x2 other) {
+        Matrix2x2f _other = toMatrix2x2f(other);
+
+        set(getM00() - _other.getM00(), getM01() - _other.getM01(),
+            getM10() - _other.getM10(), getM11() - _other.getM11());
+        return this;
+    }
+
+    public Matrix2x2f subAndSet(Matrix2x2f other) {
         set(getM00() - other.getM00(), getM01() - other.getM01(),
             getM10() - other.getM10(), getM11() - other.getM11());
         return this;
@@ -437,6 +460,16 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
 
     @Override
     public Matrix2x2f mulAndSet(Matrix2x2 other) {
+        Matrix2x2f _other = toMatrix2x2f(other);
+
+        set(getM00() * _other.getM00() + getM01() * _other.getM10(),
+            getM00() * _other.getM01() + getM01() * _other.getM11(),
+            getM10() * _other.getM00() + getM11() * _other.getM10(),
+            getM10() * _other.getM01() + getM11() * _other.getM11());
+        return this;
+    }
+
+    public Matrix2x2f mulAndSet(Matrix2x2f other) {
         set(getM00() * other.getM00() + getM01() * other.getM10(),
             getM00() * other.getM01() + getM01() * other.getM11(),
             getM10() * other.getM00() + getM11() * other.getM10(),
@@ -479,6 +512,41 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
             (float)(-getM10() * s), (float)(getM00() * s));
         return this;
     }
+
+//<editor-fold defaultstate="collapsed" desc="MatrixInpector">
+    //int sizeRows();
+
+    //int sizeCols();
+
+    @Override
+    public void getInto(MatrixSet matrixSet) {
+        matrixSet.setAt( 0, 0, (float)m00 );
+        matrixSet.setAt( 0, 1, (float)m01 );
+        matrixSet.setAt( 1, 0, (float)m10 );
+        matrixSet.setAt( 1, 1, (float)m11 );
+    }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="MatrixSet">
+    @Override
+    public void setAt(int r, int c, float value) {
+        set(r, c, (float)value);
+    }
+
+    @Override
+    public void setAt(int r, int c, double value) {
+        set(r, c, (float)value);
+    }
+
+    @Override
+    public <T> void setAt(Class<T> type, int r, int c, T value) {
+        if (Number.class.isAssignableFrom(type)) {
+            set(r, c, ((Number)value).floatValue());
+            return;
+        }
+        throw new UnsupportedOperationException();
+    }
+//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Object">
     @Override
@@ -540,6 +608,15 @@ public class Matrix2x2f implements Cloneable, EpsilonEquatable<Matrix2x2f>, Buff
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="private">
+    private Matrix2x2f toMatrix2x2f(Matrix2x2 other) {
+        if (other instanceof Matrix2x2f) {
+            return (Matrix2x2f)other;
+        }
+        Matrix2x2f aux = new Matrix2x2f();
+        other.getInto(aux);
+        return aux;
+    }
+
     private boolean epsilonEquals(float m00, float m01,
                                   float m10, float m11) {
         return epsilonEquals(m00, m01,
