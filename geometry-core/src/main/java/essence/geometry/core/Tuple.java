@@ -28,9 +28,16 @@ import essence.util.math.EpsilonEquatable;
 public interface Tuple extends EpsilonEquatable<Tuple> {
 
     /**
-     * This method gets the number of components of the tuple.
+     * This method gets the number of components of this tuple.
      *
-     * @return Size of the tuple.
+     * @return Size of this tuple.
      */
     int size();
+
+    /**
+     * This method gets the values of this tuple into {@code tupleSet}.
+     *
+     * @param tupleSet Where to get the values.
+     */
+    void getInto(TupleSet tupleSet);
 }

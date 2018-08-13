@@ -31,10 +31,33 @@
      * @param tuple Tuple.
      */
     public {{ className }}(Tuple tuple) {
-        {{ desc.tupleTypeName }} _tuple = TupleUtils.to{{ desc.tupleTypeName }}(tuple);
-
+        if (tuple instanceof {{ desc.tupleImpName }}) {
+            {{ desc.tupleImpName }} _tuple = ({{ desc.tupleImpName }})tuple;
 {%      for property in desc.properties %}
-        this.{{ property.name }} = _tuple.get{{ property.upperName }}();
+            this.{{ property.name }} = _tuple.get{{ property.upperName }}();
+{%      endfor %}
+        } else if (tuple instanceof {{ desc.buffTupleImpName }}) {
+            {{ desc.buffTupleImpName }} _tuple = ({{ desc.buffTupleImpName }})tuple;
+{%      for property in desc.properties %}
+            this.{{ property.name }} = _tuple.get{{ property.upperName }}();
+{%      endfor %}
+        } else {
+            {{ desc.tupleImpName }} _tuple = new {{ desc.tupleImpName }}(tuple);
+{%      for property in desc.properties %}
+            this.{{ property.name }} = _tuple.get{{ property.upperName }}();
+{%      endfor %}
+        }
+    }
+
+    public {{ className }}({{ desc.tupleImpName }} tuple) {
+{%      for property in desc.properties %}
+        this.{{ property.name }} = tuple.get{{ property.upperName }}();
+{%      endfor %}
+    }
+
+    public {{ className }}({{ desc.buffTupleImpName }} tuple) {
+{%      for property in desc.properties %}
+        this.{{ property.name }} = tuple.get{{ property.upperName }}();
 {%      endfor %}
     }
 {%  endmacro %}

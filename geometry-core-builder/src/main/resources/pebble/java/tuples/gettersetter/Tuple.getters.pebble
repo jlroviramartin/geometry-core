@@ -1,8 +1,7 @@
 {#
  # This macro renders the implementation of Tuple_Type of the tuple.
  #}
-{%  macro Tuple_Type( desc ) %}
-    @Override
+{%  macro TupleGetters( desc ) %}
     public final {{ desc.type }} getAt(int index) {
         switch(index) {
 {%      for property in desc.properties %}
@@ -14,7 +13,6 @@
     }
 {%      for property in desc.properties %}
 
-    @Override
     public final {{ property.type }} get{{ property.upperName }}() {
         return {{ property.name }};
     }

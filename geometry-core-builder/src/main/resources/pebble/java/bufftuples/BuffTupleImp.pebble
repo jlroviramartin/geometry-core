@@ -12,25 +12,23 @@
 {%  import "pebble/java/tuples/TupleImp.Object.pebble" %}
 {%  import "pebble/java/tuples/TupleImp.EpsilonEquatable.pebble" %}
 
-{%  import "pebble/java/tuples/Tuple_Number.implementation.pebble" %}
-{%  import "pebble/java/tuples/Tuple_Type.implementation.pebble" %}
+{%  import "pebble/java/tuples/gettersetter/Tuple.getters.pebble" %}
+{%  import "pebble/java/tuples/gettersetter/Tuple.setters.pebble" %}
+
 {%  import "pebble/java/tuples/Tuple.implementation.pebble" %}
 
-{%  import "pebble/java/bufftuples/BuffTuple_Number.implementation.pebble" %}
-{%  import "pebble/java/bufftuples/BuffTuple_Type.implementation.pebble" %}
-{%  import "pebble/java/bufftuples/BuffTuple.implementation.pebble" %}
+{%  import "pebble/java/bufftuples/TupleSet.implementation.pebble" %}
 
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
 {%  block import %}
 import java.util.logging.Logger;
+import essence.util.math.EpsilonEquatable;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
-import essence.geometry.core.BuffTuple;
+import essence.geometry.core.TupleSet;
 import essence.geometry.core.VectorFormatInfo;
-import essence.geometry.core.{{ desc.buffTupleNumberName }};
 
 import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
 {%  endblock %}
@@ -39,7 +37,7 @@ import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
 /**
  * Basic implementation of a {{ desc.dim }} dimension tuple.
  */
-public class {{ desc.buffTupleImpName }} implements Cloneable, BuffTuple, {{ desc.buffTupleTypeName }}, {{ desc.buffTupleNumberName }}  {
+public class {{ desc.buffTupleImpName }} implements Cloneable, EpsilonEquatable<Tuple>, Tuple, TupleSet  {
 
 //<editor-fold defaultstate="collapsed" desc="fields">
 {{ Fields( desc ) }}
@@ -49,36 +47,26 @@ public class {{ desc.buffTupleImpName }} implements Cloneable, BuffTuple, {{ des
 
 {{ Public( desc ) }}
 
-//<editor-fold defaultstate="collapsed" desc="Object">
-{{ Object( desc, desc.buffTupleImpName ) }}
+//<editor-fold defaultstate="collapsed" desc="accessors">
+{{ TupleGetters( desc ) }}
+
+{{ TupleSetters( desc ) }}
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="BuffTuple">
-{{ BuffTuple( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.buffTupleImpName, true ) }}
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Tuple">
 {{ Tuple( desc ) }}
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="{{ desc.buffTupleTypeName }}">
-{{ BuffTuple_Type( desc ) }}
-//</editor-fold>
-
-//<editor-fold defaultstate="collapsed" desc="{{ desc.tupleTypeName }}">
-{{ Tuple_Type( desc ) }}
-//</editor-fold>
-
-//<editor-fold defaultstate="collapsed" desc="{{ desc.buffTupleNumberName }}">
-{{ BuffTuple_Number( desc ) }}
-//</editor-fold>
-
-//<editor-fold defaultstate="collapsed" desc="{{ desc.tupleNumberName }}">
-{{ Tuple_Number( desc ) }}
+//<editor-fold defaultstate="collapsed" desc="TupleSet">
+{{ TupleSet( desc ) }}
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Tuple>">
-{{ EpsilonEquatable( desc, desc.buffTupleImpName ) }}
+{{ EpsilonEquatable( desc, desc.buffTupleImpName, true ) }}
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="private">

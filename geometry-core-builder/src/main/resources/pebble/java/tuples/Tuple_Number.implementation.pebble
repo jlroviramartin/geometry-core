@@ -1,9 +1,0 @@
-{#
- # This macro renders the implementation of Tuple_Number of the tuple.
- #}
-{%  macro Tuple_Number( desc ) %}
-    @Override
-    public final void getInto({{ desc.buffTupleNumberName }} buff) {
-        buff.set{{ desc.ctype }}({{ NameCommaSeparated(desc) }});
-    }
-{%  endmacro %}

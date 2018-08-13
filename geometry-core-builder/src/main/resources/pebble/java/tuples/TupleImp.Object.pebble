@@ -1,7 +1,7 @@
 {#
  # This macro renders the overwriting of Object methods of the tuple.
  #}
-{%  macro Object( desc, className ) %}
+{%  macro Object( desc, className, isBuff = false ) %}
     @Override
     public String toString() {
         VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
@@ -12,26 +12,37 @@
             {{ Properties( desc, ", ", Object_toString ) | indent(3)  }});
     }
 
+{%      dynmacro Object_equals1( desc, property ) %}
+other.get{{ property.upperName }}()
+{%-     enddynmacro %}
     @Override
     public boolean equals(Object other) {
+        if (other instanceof {{ desc.tupleImpName }}) {
+            return equals(({{ desc.tupleImpName }})other);
+        } else if (other instanceof {{ desc.buffTupleImpName }}) {
+            return equals(({{ desc.buffTupleImpName }})other);
+        } else if (other instanceof Tuple) {
+            return equals(new {{ desc.tupleImpName }}((Tuple)other));
+        }
+        return false;
+    }
+
+    public boolean equals({{ desc.tupleImpName }} other) {
+{%  if not isBuff %}
         if (other == this) {
             return true;
         }
-        if (other instanceof {{ className }}) {
-            {{ className }} _other = ({{ className }})other;
-{%      dynmacro Object_equals1( desc, property ) %}
-_other.{{ property.name }}
-{%-     enddynmacro %}
-            return equals({{ Properties( desc, ",%n", Object_equals1 ) | indent(4) }});
+{%  endif %}
+        return equals({{ Properties( desc, ",%n", Object_equals1 ) | indent(4) }});
+    }
+
+    public boolean equals({{ desc.buffTupleImpName }} other) {
+{%  if isBuff %}
+        if (other == this) {
+            return true;
         }
-        if (other instanceof Tuple) {
-            {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}((Tuple)other);
-{%      dynmacro Object_equals2( desc, property ) %}
-_other.get{{ property.upperName }}()
-{%-     enddynmacro %}
-            return equals({{ Properties( desc, ",%n", Object_equals2 ) | indent(4) }});
-        }
-        return false;
+{%  endif %}
+        return equals({{ Properties( desc, ",%n", Object_equals1 ) | indent(4) }});
     }
 
     @Override

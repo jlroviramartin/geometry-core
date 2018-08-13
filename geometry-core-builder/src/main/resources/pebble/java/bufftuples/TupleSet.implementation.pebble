@@ -1,0 +1,44 @@
+{#
+ # This macro renders the implementation of Tuple of the tuple.
+ #}
+{%  macro TupleSet( desc ) %}
+    @Override
+    public void set(int index, byte value) {
+        setAt(index, ({{ desc.type }})value);
+    }
+
+    @Override
+    public void set(int index, short value) {
+        setAt(index, ({{ desc.type }})value);
+    }
+
+    @Override
+    public void set(int index, int value) {
+        setAt(index, ({{ desc.type }})value);
+    }
+
+    @Override
+    public void set(int index, long value) {
+        setAt(index, ({{ desc.type }})value);
+    }
+
+    @Override
+    public void set(int index, float value) {
+        setAt(index, ({{ desc.type }})value);
+    }
+
+    @Override
+    public void set(int index, double value) {
+        setAt(index, ({{ desc.type }})value);
+    }
+
+    @Override
+    public <T> void set(Class<T> type, int index, T value) {
+        if (Number.class.isAssignableFrom(type)) {
+            setAt(index, ((Number)value).{{ desc.type }}Value());
+            return;
+        }
+        throw new UnsupportedOperationException();
+    }
+{%  endmacro %}
+

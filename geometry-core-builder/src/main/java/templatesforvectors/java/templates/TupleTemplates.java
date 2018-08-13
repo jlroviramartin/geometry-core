@@ -31,12 +31,8 @@ import templatesforvectors.model.VectorDescription;
  */
 public class TupleTemplates extends BaseTemplate {
 
-    private final Template bufftuple_Number = load("pebble/java/bufftuples/BuffTuple_Number.pebble");
-    private final Template bufftuple_Type = load("pebble/java/bufftuples/BuffTuple_Type.pebble");
     private final Template bufftupleImp = load("pebble/java/bufftuples/BuffTupleImp.pebble");
 
-    private final Template tuple_Number = load("pebble/java/tuples/Tuple_Number.pebble");
-    private final Template tuple_Type = load("pebble/java/tuples/Tuple_Type.pebble");
     private final Template tupleImp = load("pebble/java/tuples/TupleImp.pebble");
     private final Template tupleImpList = load("pebble/java/collections/TupleImpList.pebble");
 
@@ -63,16 +59,11 @@ public class TupleTemplates extends BaseTemplate {
 
     private void buildSimple(int dim) {
         VectorDescription desc = VectorDescription.getDefault(dim);
-        writeToFile(tuple_Number, desc, desc.getTupleNumberName(), desc._package);
-        writeToFile(bufftuple_Number, desc, desc.getBuffTupleNumberName(), desc._package);
     }
 
     private void buildFloat(int dim) {
         VectorDescription desc = VectorDescription.getFloat(dim);
-        writeToFile(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
         writeToFile(tupleImp, desc, desc.getTupleImpName(), desc._package);
-
-        writeToFile(bufftuple_Type, desc, desc.getBuffTupleTypeName(), desc._package);
         writeToFile(bufftupleImp, desc, desc.getBuffTupleImpName(), desc._package);
 
         //writeToFile(tupleImpList, desc, desc.getTupleImpListName(), desc._package);
@@ -80,10 +71,7 @@ public class TupleTemplates extends BaseTemplate {
 
     private void buildDouble(int dim) {
         VectorDescription desc = VectorDescription.getDouble(dim);
-        writeToFile(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
         writeToFile(tupleImp, desc, desc.getTupleImpName(), desc._package);
-
-        writeToFile(bufftuple_Type, desc, desc.getBuffTupleTypeName(), desc._package);
         writeToFile(bufftupleImp, desc, desc.getBuffTupleImpName(), desc._package);
 
         //writeToFile(tupleImpList, desc, desc.getTupleImpListName(), desc._package);
@@ -91,19 +79,13 @@ public class TupleTemplates extends BaseTemplate {
 
     private void buildInteger(int dim) {
         VectorDescription desc = VectorDescription.getInteger(dim);
-        writeToFile(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
         writeToFile(tupleImp, desc, desc.getTupleImpName(), desc._package);
-
-        writeToFile(bufftuple_Type, desc, desc.getBuffTupleTypeName(), desc._package);
         writeToFile(bufftupleImp, desc, desc.getBuffTupleImpName(), desc._package);
     }
 
     private void buildByte(int dim) {
         VectorDescription desc = VectorDescription.getByte(dim);
-        writeToFile(tuple_Type, desc, desc.getTupleTypeName(), desc._package);
         writeToFile(tupleImp, desc, desc.getTupleImpName(), desc._package);
-
-        writeToFile(bufftuple_Type, desc, desc.getBuffTupleTypeName(), desc._package);
         writeToFile(bufftupleImp, desc, desc.getBuffTupleImpName(), desc._package);
     }
 

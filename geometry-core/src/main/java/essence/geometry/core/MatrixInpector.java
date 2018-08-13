@@ -25,21 +25,21 @@ package essence.geometry.core;
 public interface MatrixInpector {
 
     /**
-     * This method gets the number of rows of the tuple.
+     * This method gets the number of rows of this tuple.
      *
-     * @return Number of rows of the tuple.
+     * @return Number of rows of this tuple.
      */
     int sizeRows();
 
     /**
-     * This method gets the number of columns of the tuple.
+     * This method gets the number of columns of this tuple.
      *
-     * @return Number of columns of the tuple.
+     * @return Number of columns of this tuple.
      */
     int sizeCols();
 
     /**
-     * This method gets the values of the matrix into {@code matrixSet}.
+     * This method gets the values of this matrix into {@code matrixSet}.
      *
      * @param matrixSet Where to get the values.
      */

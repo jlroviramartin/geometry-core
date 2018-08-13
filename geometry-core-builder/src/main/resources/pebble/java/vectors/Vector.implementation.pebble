@@ -36,11 +36,25 @@
 
     @Override
     public double angleTo({{ desc.vectorName }} other) {
-        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+        if (other instanceof {{ desc.vectorImpName }}) {
+            return angleTo(({{ desc.vectorImpName }})other);
+        } else if (other instanceof {{ desc.buffVectorImpName }}) {
+            return angleTo(({{ desc.buffVectorImpName }})other);
+        } else {
+            return angleTo(new {{ desc.vectorImpName }}(other));
+        }
+    }
 
+    public double angleTo({{ desc.vectorImpName }} other) {
         // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
-        return Math.atan2(getX() * _other.getY() - getY() * _other.getX(),
-                getX() * _other.getX() + getY() * _other.getY());
+        return Math.atan2(getX() * other.getY() - getY() * other.getX(),
+                getX() * other.getX() + getY() * other.getY());
+    }
+
+    public double angleTo({{ desc.buffVectorImpName }} other) {
+        // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
+        return Math.atan2(getX() * other.getY() - getY() * other.getX(),
+                getX() * other.getX() + getY() * other.getY());
     }
 
     @Override

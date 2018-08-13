@@ -6,29 +6,12 @@
     public int size() {
         return {{ desc.dim }};
     }
-{#
+
     @Override
-    public void getInto(BuffTuple other) {
-{%      dynmacro Public_getInto( desc, property ) %}
-get{{ property.upperName }}()
-{%-     enddynmacro %}
-        if (other instanceof {{ desc.buffTupleImpName }}) {
-            {{ desc.buffTupleImpName }} _other = ({{ desc.buffTupleImpName }})other;
-            _other.set({{ Properties( desc, ", ", Public_getInto ) | indent(5) }});
-            return;
-        }
-        if (other instanceof {{ desc.buffTupleTypeName }}) {
-            {{ desc.buffTupleTypeName }} _other = ({{ desc.buffTupleTypeName }})other;
-            _other.set({{ Properties( desc, ", ", Public_getInto ) | indent(5) }});
-            return;
-        }
-        if (other instanceof {{ desc.buffTupleNumberName }}) {
-            {{ desc.buffTupleNumberName }} _other = ({{ desc.buffTupleNumberName }})other;
-            _other.set{{ desc.ctype }}({{ Properties( desc, ", ", Public_getInto ) | indent(5) }});
-            return;
-        }
-        throw new UnsupportedOperationException();
+    public void getInto(TupleSet tupleSet) {
+{%      for property in desc.properties %}
+        tupleSet.set({{ property.index }}, {{ property.name }});
+{%      endfor %}
     }
-#}
 {%  endmacro %}
 
