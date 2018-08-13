@@ -12,8 +12,8 @@
 {%  import "pebble/java/matrices/MatrixImp.Object.pebble" %}
 {%  import "pebble/java/matrices/MatrixImp.EpsilonEquatable.pebble" %}
 
-{%  import "pebble/java/matrices/gettersetter/MatrixType.Getter.implementation.pebble" %}
-{%  import "pebble/java/matrices/gettersetter/MatrixType.Setter.implementation.pebble" %}
+{%  import "pebble/java/matrices/gettersetter/MatrixType.Getters.pebble" %}
+{%  import "pebble/java/matrices/gettersetter/MatrixType.Setters.pebble" %}
 
 {%  import "pebble/java/matrices/math/Matrix.Math.implementation.pebble" %}
 {%  import "pebble/java/matrices/math/Matrix.MathAndSet.implementation.pebble" %}
@@ -51,7 +51,7 @@ import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
 /**
  * Basic implementation of a {{ desc.dimRows }}x{{ desc.dimCols }} matrix.
  */
-public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ desc.matrixImpName }}>, {{ desc.buffMatrixName }}, {{ desc.matrixSetterTypeName }} {
+public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ desc.matrixImpName }}>, {{ desc.buffMatrixName }} {
 //<editor-fold defaultstate="collapsed" desc="fields">
 {{ Fields( desc ) }}
 //</editor-fold>
@@ -59,12 +59,6 @@ public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ 
 {{ Constructors( desc, desc.matrixImpName ) }}
 
 {{ Public( desc, desc.matrixImpName ) }}
-
-//<editor-fold defaultstate="collapsed" desc="accessors">
-{{ MatrixGetterTypeImplementation( desc, desc.matrixImpName ) }}
-
-{{ MatrixSetterTypeImplementation( desc, desc.matrixImpName ) }}
-//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Transforms">
 {{ MatrixTransformImplementation( desc, desc.matrixImpName ) }}
@@ -76,10 +70,22 @@ public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ 
 
 {{ MatrixMathAndSetImplementation( desc, desc.matrixImpName ) }}
 
-//<editor-fold defaultstate="collapsed" desc="MatrixInpector">
-    //int sizeRows();
+//<editor-fold defaultstate="collapsed" desc="accessors">
+{{ MatrixGetters( desc, desc.matrixImpName ) }}
 
-    //int sizeCols();
+{{ MatrixSetters( desc, desc.matrixImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="MatrixInpector">
+    @Override
+    public final int sizeRows() {
+        return {{ desc.dimRows }};
+    }
+
+    @Override
+    public final int sizeCols() {
+        return {{ desc.dimCols }};
+    }
 
     @Override
     public void getInto(MatrixSet matrixSet) {

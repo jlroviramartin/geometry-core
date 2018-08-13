@@ -6,9 +6,7 @@
         if (other instanceof {{ className }}) {
             return ({{ className }})other;
         }
-        {{ className }} aux = new {{ className }}();
-        other.getInto(aux);
-        return aux;
+        return new {{ className }}(other);
     }
 
     private boolean epsilonEquals({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {

@@ -32,8 +32,8 @@ public class MatrixTemplates extends BaseTemplate {
     private final Template matrixPebble = load("pebble/java/matrices/Matrix.pebble");
     private final Template buffmatrixPebble = load("pebble/java/matrices/BuffMatrix.pebble");
 
-    private final Template matrixGetterTypePebble = load("pebble/java/matrices/gettersetter/MatrixGetter_Type.pebble");
-    private final Template matrixSetterTypePebble = load("pebble/java/matrices/gettersetter/Matrixsetter_Type.pebble");
+    //private final Template matrixGetterTypePebble = load("pebble/java/matrices/gettersetter/MatrixGetter_Type.pebble");
+    //private final Template matrixSetterTypePebble = load("pebble/java/matrices/gettersetter/Matrixsetter_Type.pebble");
 
     @Override
     public void execute() {
@@ -58,15 +58,15 @@ public class MatrixTemplates extends BaseTemplate {
         MatrixDescription mdesc = MatrixDescription.getFloat(dim);
         writeToFile(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
 
-        writeToFile(matrixGetterTypePebble, mdesc, mdesc.getMatrixGetterTypeName(), mdesc._package);
-        writeToFile(matrixSetterTypePebble, mdesc, mdesc.getMatrixSetterTypeName(), mdesc._package);
+        //writeToFile(matrixGetterTypePebble, mdesc, mdesc.getMatrixGetterTypeName(), mdesc._package);
+        //writeToFile(matrixSetterTypePebble, mdesc, mdesc.getMatrixSetterTypeName(), mdesc._package);
     }
 
     private void buildDouble(int dim) {
         MatrixDescription mdesc = MatrixDescription.getDouble(dim);
         writeToFile(matrixImpPebble, mdesc, mdesc.getMatrixImpName(), mdesc._package);
 
-        writeToFile(matrixGetterTypePebble, mdesc, mdesc.getMatrixGetterTypeName(), mdesc._package);
-        writeToFile(matrixSetterTypePebble, mdesc, mdesc.getMatrixSetterTypeName(), mdesc._package);
+        //writeToFile(matrixGetterTypePebble, mdesc, mdesc.getMatrixGetterTypeName(), mdesc._package);
+        //writeToFile(matrixSetterTypePebble, mdesc, mdesc.getMatrixSetterTypeName(), mdesc._package);
     }
 }

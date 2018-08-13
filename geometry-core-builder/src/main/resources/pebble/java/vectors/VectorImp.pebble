@@ -13,7 +13,6 @@
 
 {%  import "pebble/java/vectors/Vector.common.pebble" %}
 {%  import "pebble/java/vectors/Vector.implementation.pebble" %}
-{%  import "pebble/java/vectors/Vector.implementation_nonvirtual.pebble" %}
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
@@ -36,8 +35,6 @@ public class {{ desc.vectorImpName }} extends {{ desc.tupleImpName }} implements
 {{ Constructors( desc, desc.vectorImpName ) }}
 
 {{ Public( desc, desc.vectorImpName ) }}
-
-{{ MathNonVirtual( desc, desc.vectorImpName ) }}
 
 //<editor-fold defaultstate="collapsed" desc="{{ desc.vectorName }}">
 {{ Math( desc, desc.vectorImpName ) }}

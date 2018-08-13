@@ -13,10 +13,8 @@
 
 {%  import "pebble/java/vectors/Vector.common.pebble" %}
 {%  import "pebble/java/vectors/Vector.implementation.pebble" %}
-{%  import "pebble/java/vectors/Vector.implementation_nonvirtual.pebble" %}
 
 {%  import "pebble/java/buffvectors/BuffVector.implementation.pebble" %}
-{%  import "pebble/java/buffvectors/BuffVector.implementation_nonvirtual.pebble" %}
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
@@ -40,10 +38,6 @@ public class {{ desc.buffVectorImpName }} extends {{ desc.buffTupleImpName }} im
 {{ Constructors( desc, desc.buffVectorImpName ) }}
 
 {{ Public( desc, desc.buffVectorImpName ) }}
-
-{{ MathAndSetNonVirtual( desc, desc.buffVectorImpName ) }}
-
-{{ MathNonVirtual( desc, desc.buffVectorImpName ) }}
 
 //<editor-fold defaultstate="collapsed" desc="{{ desc.buffVectorName }}">
 {{ MathAndSet( desc, desc.buffVectorImpName ) }}

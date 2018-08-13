@@ -6,9 +6,13 @@
 {%      set vlowdesc = desc.vector.lowerDimension %}
     @Override
     public void mul({{ vdesc.buffVectorName }} v) {
-        {{ vdesc.buffTupleTypeName }} _v = TupleUtils.to{{ vdesc.buffTupleTypeName }}(v);
-
-        {{ MulVector( desc, "", "_v.", ret = "_v.set" ) | indent(4) }}
+        if (v instanceof {{ vdesc.buffVectorImpName }}) {
+            this.mul(({{ vdesc.buffVectorImpName }})v);
+        } else {
+            {{ vdesc.buffVectorImpName }} _v = new {{ vdesc.buffVectorImpName }}(v);
+            this.mul(_v);
+            v.set(_v);
+        }
     }
 
     public void mul({{ vdesc.buffVectorImpName }} v) {
@@ -17,9 +21,13 @@
 
     @Override
     public void premul({{ vdesc.buffVectorName }} v) {
-        {{ vdesc.buffTupleTypeName }} _v = TupleUtils.to{{ vdesc.buffTupleTypeName }}(v);
-
-        {{ PremulVector( desc, "", "_v.", ret = "_v.set" ) | indent(4) }}
+        if (v instanceof {{ vdesc.buffVectorImpName }}) {
+            this.premul(({{ vdesc.buffVectorImpName }})v);
+        } else {
+            {{ vdesc.buffVectorImpName }} _v = new {{ vdesc.buffVectorImpName }}(v);
+            this.premul(_v);
+            v.set(_v);
+        }
     }
 
     public void premul({{ vdesc.buffVectorImpName }} v) {
@@ -32,9 +40,13 @@
 
     @Override
     public void mul({{ vlowdesc.buffVectorName }} v) {
-        {{ vlowdesc.buffTupleTypeName }} _v = TupleUtils.to{{ vlowdesc.buffTupleTypeName }}(v);
-
-        {{ MulVectorLow( desc, "", "_v.", ret = "_v.set" ) | indent(4) }}
+        if (v instanceof {{ vlowdesc.buffVectorImpName }}) {
+            this.mul(({{ vlowdesc.buffVectorImpName }})v);
+        } else {
+            {{ vlowdesc.buffVectorImpName }} _v = new {{ vlowdesc.buffVectorImpName }}(v);
+            this.mul(_v);
+            v.set(_v);
+        }
     }
 
     public void mul({{ vlowdesc.buffVectorImpName }} v) {
@@ -43,9 +55,13 @@
 
     @Override
     public void mul({{ vlowdesc.buffPointName }} p) {
-        {{ vlowdesc.buffTupleTypeName }} _p = TupleUtils.to{{ vlowdesc.buffTupleTypeName }}(p);
-
-        {{ MulpointLow( desc, "", "_p.", ret = "_p.set" ) | indent(4) }}
+        if (p instanceof {{ vlowdesc.buffVectorImpName }}) {
+            this.mul(({{ vlowdesc.buffPointImpName }})p);
+        } else {
+            {{ vlowdesc.buffPointImpName }} _p = new {{ vlowdesc.buffPointImpName }}(p);
+            this.mul(_p);
+            p.set(_p);
+        }
     }
 
     public void mul({{ vlowdesc.buffPointImpName }} p) {
@@ -54,9 +70,13 @@
 
     @Override
     public void premul({{ vlowdesc.buffVectorName }} v) {
-        {{ vlowdesc.buffTupleTypeName }} _v = TupleUtils.to{{ vlowdesc.buffTupleTypeName }}(v);
-
-        {{ PremulVectorLow( desc, "", "_v.", ret = "_v.set" ) | indent(4) }}
+        if (v instanceof {{ vlowdesc.buffVectorImpName }}) {
+            this.premul(({{ vlowdesc.buffVectorImpName }})v);
+        } else {
+            {{ vlowdesc.buffVectorImpName }} _v = new {{ vlowdesc.buffVectorImpName }}(v);
+            this.premul(_v);
+            v.set(_v);
+        }
     }
 
     public void premul({{ vlowdesc.buffVectorImpName }} v) {
@@ -65,9 +85,13 @@
 
     @Override
     public void premul({{ vlowdesc.buffPointName }} p) {
-        {{ vlowdesc.buffTupleTypeName }} _p = TupleUtils.to{{ vlowdesc.buffTupleTypeName }}(p);
-
-        {{ PremulPointLow( desc, "", "_p.", ret = "_p.set" ) | indent(4) }}
+        if (p instanceof {{ vlowdesc.buffVectorImpName }}) {
+            this.premul(({{ vlowdesc.buffPointImpName }})p);
+        } else {
+            {{ vlowdesc.buffPointImpName }} _p = new {{ vlowdesc.buffPointImpName }}(p);
+            this.premul(_p);
+            p.set(_p);
+        }
     }
 
     public void premul({{ vlowdesc.buffPointImpName }} p) {

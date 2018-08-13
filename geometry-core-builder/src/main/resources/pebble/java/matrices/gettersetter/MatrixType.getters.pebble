@@ -1,23 +1,11 @@
 {#
  # This macro renders the implementation of the getters of a matrix.
  #}
-{%  macro MatrixGetterTypeImplementation( desc, className ) %}
-    @Override
-    public final int sizeRows() {
-        return {{ desc.dimRows }};
-    }
-
-    @Override
-    public final int sizeCols() {
-        return {{ desc.dimCols }};
-    }
-
-    @Override
+{%  macro MatrixGetters( desc, className ) %}
     public final boolean isSquared() {
         return {{ desc.dimRows == desc.dimCols }};
     }
 
-    @Override
     public final {{ desc.type }} get(int r, int c) {
         switch(r) {
 {%      for row in desc.rows %}
@@ -35,7 +23,6 @@
 {%      for row in desc.rows %}
 {%          for property in row.cols %}
 
-    @Override
     public final {{ property.type }} get{{ property.upperName }}() {
         return {{ property.name }};
     }

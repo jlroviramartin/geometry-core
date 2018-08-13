@@ -13,10 +13,8 @@
 
 {%  import "pebble/java/points/Point.common.pebble" %}
 {%  import "pebble/java/points/Point.implementation.pebble" %}
-{%  import "pebble/java/points/Point.implementation_nonvirtual.pebble" %}
 
 {%  import "pebble/java/buffpoints/BuffPoint.implementation.pebble" %}
-{%  import "pebble/java/buffpoints/BuffPoint.implementation_nonvirtual.pebble" %}
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
@@ -37,10 +35,6 @@ public class {{ desc.buffPointImpName }} extends {{ desc.buffTupleImpName }} imp
 {{ Constructors( desc, desc.buffPointImpName ) }}
 
 {{ Public( desc, desc.buffPointImpName ) }}
-
-{{ MathAndSetNonVirtual( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
-
-{{ MathNonVirtual( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}
 
 //<editor-fold defaultstate="collapsed" desc="{{ desc.buffPointName }}">
 {{ MathAndSet( desc, desc.buffPointImpName, desc.buffVectorImpName ) }}

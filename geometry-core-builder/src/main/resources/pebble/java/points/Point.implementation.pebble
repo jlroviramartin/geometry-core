@@ -4,77 +4,179 @@
         {{ GetQuadrant(desc) | indent(2) }}
     }
 
-    @Override
-    public double getDistance({{ desc.pointName }} other) {
-        return Math.sqrt(getDistanceCuad(other));
-    }
+{{ Math_GetDistance( desc, "getDistance", "Sqrt" ) }}
 
-    @Override
-    public double getDistanceCuad({{ desc.pointName }} other) {
-        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+{{ Math_GetDistance( desc, "getDistanceCuad", "Cuad" ) }}
 
-        return {{ GetDistanceCuad(desc, "", "_other.") | indent(4) }};
-    }
+{{ Math_GetDistance( desc, "getDistanceL1", "L1" ) }}
 
-    @Override
-    public double getDistanceL1({{ desc.pointName }} other) {
-        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+{{ Math_BinaryOperator( desc, className, "add", "+" ) }}
 
-        return {{ GetDistanceL1(desc, "", "_other.") | indent(4) }};
-    }
-
-    @Override
-    public {{ className }} add({{ desc.vectorName }} other) {
-        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
-
-        return new {{ className }}{{ BinaryOperator(desc, "+", "", "_other.") | indent(4) }};
-    }
-
-    @Override
-    public {{ className }} sub({{ desc.vectorName }} other) {
-        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
-
-        return new {{ className }}{{ BinaryOperator(desc, "-", "", "_other.") | indent(4) }};
-    }
+{{ Math_BinaryOperator( desc, className, "sub", "-" ) }}
 
     @Override
     public {{ vectorClassName }} vectorTo({{ desc.pointName }} other) {
-        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+        if (other instanceof {{ desc.pointImpName }}) {
+            return vectorTo(({{ desc.pointImpName }})other);
+        } else if (other instanceof {{ desc.buffPointImpName }}) {
+            return vectorTo(({{ desc.buffPointImpName }})other);
+        } else {
+            return vectorTo(new {{ desc.pointImpName }}(other));
+        }
+    }
 
-        return new {{ vectorClassName }}{{ BinaryOperator(desc, "-", "_other.", "") | indent(4) }};
+    public {{ vectorClassName }} vectorTo({{ desc.pointImpName }} other) {
+        return new {{ vectorClassName }}{{ BinaryOperator(desc, "-", "other.", "") | indent(4) }};
+    }
+
+    public {{ vectorClassName }} vectorTo({{ desc.buffPointImpName }} other) {
+        return new {{ vectorClassName }}{{ BinaryOperator(desc, "-", "other.", "") | indent(4) }};
     }
 
     @Override
     public {{ className }} lerp({{ desc.pointName }} other, double alpha) {
+        if (other instanceof {{ desc.pointImpName }}) {
+            return lerp(({{ desc.pointImpName }})other, alpha);
+        } else if (other instanceof {{ desc.buffPointImpName }}) {
+            return lerp(({{ desc.buffPointImpName }})other, alpha);
+        } else {
+            return lerp(new {{ desc.pointImpName }}(other), alpha);
+        }
+    }
+
+    public {{ className }} lerp({{ desc.pointImpName }} other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public {{ className }} lerp({{ desc.buffPointImpName }} other, double alpha) {
         return lineal(other, 1 - alpha, alpha);
     }
 
     @Override
     public double invLerp({{ desc.pointName }} other, {{ desc.pointName }} pLerp) {
-        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
-        {{ desc.tupleTypeName }} _pLerp = TupleUtils.to{{ desc.tupleTypeName }}(pLerp);
+        if (other instanceof {{ desc.pointImpName }} && pLerp instanceof {{ desc.pointImpName }}) {
+            return invLerp(({{ desc.pointImpName }})other, ({{ desc.pointImpName }})pLerp);
+        } else if (other instanceof {{ desc.buffPointImpName }} && pLerp instanceof {{ desc.buffPointImpName }}) {
+            return invLerp(({{ desc.buffPointImpName }})other, ({{ desc.buffPointImpName }})pLerp);
+        } else {
+            return invLerp(new {{ desc.pointImpName }}(other), new {{ desc.pointImpName }}(pLerp));
+        }
+    }
 
-        {{ InvLerp(desc, "", "_other.", "_pLerp.") | indent(2) }}
+    public double invLerp({{ desc.pointImpName }} other, {{ desc.pointImpName }} pLerp) {
+        {{ InvLerp(desc, "", "other.", "pLerp.") | indent(2) }}
+    }
+
+    public double invLerp({{ desc.buffPointImpName }} other, {{ desc.buffPointImpName }} pLerp) {
+        {{ InvLerp(desc, "", "other.", "pLerp.") | indent(2) }}
     }
 
     @Override
     public {{ className }} lineal({{ desc.pointName }} other, double alpha, double beta) {
-        {{ desc.tupleTypeName }} _other = TupleUtils.to{{ desc.tupleTypeName }}(other);
+        if (other instanceof {{ desc.pointImpName }}) {
+            return lineal(({{ desc.pointImpName }})other, alpha, beta);
+        } else if (other instanceof {{ desc.buffPointImpName }}) {
+            return lineal(({{ desc.buffPointImpName }})other, alpha, beta);
+        } else {
+            return lineal(new {{ desc.pointImpName }}(other), alpha, beta);
+        }
+    }
 
-        return new {{ className }}{{ Lineal(desc, "", "_other.") | indent(4) }};
+    public {{ className }} lineal({{ desc.pointImpName }} other, double alpha, double beta) {
+        return new {{ className }}{{ Lineal(desc, "", "other.") | indent(4) }};
+    }
+
+    public {{ className }} lineal({{ desc.buffPointImpName }} other, double alpha, double beta) {
+        return new {{ className }}{{ Lineal(desc, "", "other.") | indent(4) }};
     }
 
     @Override
     public double scalarProjection({{ desc.vectorName }} where) {
-        return new {{ vectorClassName }}(this).dot(where) / where.getLength();
+        if (where instanceof {{ desc.vectorImpName }}) {
+            return scalarProjection(({{ desc.vectorImpName }})where);
+        } else if (where instanceof {{ desc.buffVectorImpName }}) {
+            return scalarProjection(({{ desc.buffVectorImpName }})where);
+        } else {
+            return scalarProjection(new {{ desc.vectorImpName }}(where));
+        }
     }
 
+    public double scalarProjection({{ desc.vectorImpName }} where) {
+        {{ ScalarProjection(desc, "", "where.", "return " ) | indent(4) }}
+    }
+
+    public double scalarProjection({{ desc.buffVectorImpName }} where) {
+        {{ ScalarProjection(desc, "", "where.", "return " ) | indent(4) }}
+    }
+
+{#
+    return new {{ className }}(new {{ vectorClassName }}(this).vectorProjection(where));
+#}
     @Override
     public {{ className }} vectorProjection({{ desc.vectorName }} where) {
-        {{ desc.tupleTypeName }} _where = TupleUtils.to{{ desc.tupleTypeName }}(where);
-
-        {{ VectorProjection(desc, "", "_where.", "return new " ~ className ) | indent(4) }}
-
-        //return new {{ className }}(new {{ vectorClassName }}(this).vectorProjection(where));
+        if (where instanceof {{ desc.vectorImpName }}) {
+            return vectorProjection(({{ desc.vectorImpName }})where);
+        } else if (where instanceof {{ desc.buffVectorImpName }}) {
+            return vectorProjection(({{ desc.buffVectorImpName }})where);
+        } else {
+            return vectorProjection(new {{ desc.vectorImpName }}(where));
+        }
     }
+
+    public {{ className }} vectorProjection({{ desc.vectorImpName }} where) {
+        {{ VectorProjection(desc, "", "where.", "return new " ~ className ) | indent(4) }}
+    }
+
+    public {{ className }} vectorProjection({{ desc.buffVectorImpName }} where) {
+        {{ VectorProjection(desc, "", "where.", "return new " ~ className ) | indent(4) }}
+    }
+{%  endmacro %}
+
+{%  macro Math_BinaryOperator( desc, className, name, op ) %}
+    @Override
+    public {{ className }} {{ name }}({{ desc.vectorName }} other) {
+        if (other instanceof {{ desc.vectorImpName }}) {
+            return {{ name }}(({{ desc.vectorImpName }})other);
+        } else if (other instanceof {{ desc.buffVectorImpName }}) {
+            return {{ name }}(({{ desc.buffVectorImpName }})other);
+        } else {
+            return {{ name }}(new {{ desc.vectorImpName }}(other));
+        }
+    }
+
+    public {{ className }} {{ name }}({{ desc.vectorImpName }} other) {
+        return new {{ className }}{{ BinaryOperator(desc, "+", "", "other.") | indent(4) }};
+    }
+
+    public {{ className }} {{ name }}({{ desc.buffVectorImpName }} other) {
+        return new {{ className }}{{ BinaryOperator(desc, "+", "", "other.") | indent(4) }};
+    }
+{%  endmacro %}
+
+{%  macro Math_GetDistance( desc, name, type ) %}
+    @Override
+    public double {{ name }}({{ desc.pointName }} other) {
+        if (other instanceof {{ desc.pointImpName }}) {
+            return {{ name }}(({{ desc.pointImpName }})other);
+        } else if (other instanceof {{ desc.buffPointImpName }}) {
+            return {{ name }}(({{ desc.buffPointImpName }})other);
+        } else {
+            return {{ name }}(new {{ desc.pointImpName }}(other));
+        }
+    }
+
+    public double {{ name }}({{ desc.pointImpName }} other) {
+        return {{ Math_GetDistanceByType( desc, type ) }};
+    }
+
+    public double {{ name }}({{ desc.buffPointImpName }} other) {
+        return {{ Math_GetDistanceByType( desc, type ) }};
+    }
+{%  endmacro %}
+
+{%  macro Math_GetDistanceByType( desc, type ) %}
+{%  if type == "Sqrt" %}Math.sqrt(getDistanceCuad(other))
+{%- elseif type == "Cuad" %}{{ GetDistanceCuad(desc, "", "other.") | indent(4) }}
+{%- elseif type == "L1" %}{{ GetDistanceL1(desc, "", "other.") | indent(4) }}
+{%- endif %}
 {%  endmacro %}

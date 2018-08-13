@@ -23,6 +23,17 @@ Math.abs({{ p().other }}get{{ property.upperName }}() - {{ p().this }}get{{ prop
 {#
  # This macro renders the method projection over a vector of the point.
  #}
+{%  macro ScalarProjection( desc, this="", other="other.", ret = "return ..." ) %}
+{%      dynmacro Math_ScalarProjection( desc, property ) %}
+{{ p().this }}get{{ property.upperName }}() * {{ p().other }}get{{ property.upperName }}()
+{%-     enddynmacro %}
+    double dot = {{ Properties( desc, " + ", Math_ScalarProjection ) }};
+    {{ret}} dot / where.getLengthCuad();
+{%  endmacro %}
+
+{#
+ # This macro renders the method projection over a vector of the point.
+ #}
 {%  macro VectorProjection( desc, this="", other="other.", ret = "return ..." ) %}
 {%      dynmacro Math_VectorProjection( desc, property ) %}
 {{ p().this }}get{{ property.upperName }}() * {{ p().other }}get{{ property.upperName }}()

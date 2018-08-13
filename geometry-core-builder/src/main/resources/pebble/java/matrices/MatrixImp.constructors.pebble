@@ -28,4 +28,11 @@
 {%          endfor %}
 {%      endfor %}
     }
+
+    /**
+     * Copy constructor.
+     */
+    public {{ className }}(MatrixInpector other) {
+        other.getInto(this);
+    }
 {% endmacro %}
