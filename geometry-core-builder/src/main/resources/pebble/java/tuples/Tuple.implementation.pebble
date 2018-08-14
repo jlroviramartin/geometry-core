@@ -3,12 +3,12 @@
  #}
 {%  macro Tuple( desc ) %}
     @Override
-    public int size() {
+    public final int size() {
         return {{ desc.dim }};
     }
 
     @Override
-    public void getInto(TupleSet tupleSet) {
+    public final void getInto(TupleSet tupleSet) {
 {%      for property in desc.properties %}
         tupleSet.set({{ property.index }}, {{ property.name }});
 {%      endfor %}

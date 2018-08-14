@@ -5,32 +5,32 @@
 {%      set vdesc = desc.vector %}
 {%      set vlowdesc = desc.vector.lowerDimension %}
     @Override
-    public void mul({{ vdesc.buffVectorName }} v) {
+    public void mulAndSetInto({{ vdesc.buffVectorName }} v) {
         if (v instanceof {{ vdesc.buffVectorImpName }}) {
-            this.mul(({{ vdesc.buffVectorImpName }})v);
+            this.mulAndSetInto(({{ vdesc.buffVectorImpName }})v);
         } else {
             {{ vdesc.buffVectorImpName }} _v = new {{ vdesc.buffVectorImpName }}(v);
-            this.mul(_v);
-            v.set(_v);
+            this.mulAndSetInto(_v);
+            _v.getInto(v);
         }
     }
 
-    public void mul({{ vdesc.buffVectorImpName }} v) {
+    public void mulAndSetInto({{ vdesc.buffVectorImpName }} v) {
         {{ MulVector( desc, "", "v.", ret = "v.set" ) | indent(4) }}
     }
 
     @Override
-    public void premul({{ vdesc.buffVectorName }} v) {
+    public void premulAndSetInto({{ vdesc.buffVectorName }} v) {
         if (v instanceof {{ vdesc.buffVectorImpName }}) {
-            this.premul(({{ vdesc.buffVectorImpName }})v);
+            this.premulAndSetInto(({{ vdesc.buffVectorImpName }})v);
         } else {
             {{ vdesc.buffVectorImpName }} _v = new {{ vdesc.buffVectorImpName }}(v);
-            this.premul(_v);
-            v.set(_v);
+            this.premulAndSetInto(_v);
+            _v.getInto(v);
         }
     }
 
-    public void premul({{ vdesc.buffVectorImpName }} v) {
+    public void premulAndSetInto({{ vdesc.buffVectorImpName }} v) {
         {{ PremulVector( desc, "", "v.", ret = "v.set " ) | indent(4) }}
     }
 {%      if not desc.vector.lowerDimension is empty %}
@@ -39,62 +39,62 @@
  #}
 
     @Override
-    public void mul({{ vlowdesc.buffVectorName }} v) {
+    public void mulAndSetInto({{ vlowdesc.buffVectorName }} v) {
         if (v instanceof {{ vlowdesc.buffVectorImpName }}) {
-            this.mul(({{ vlowdesc.buffVectorImpName }})v);
+            this.mulAndSetInto(({{ vlowdesc.buffVectorImpName }})v);
         } else {
             {{ vlowdesc.buffVectorImpName }} _v = new {{ vlowdesc.buffVectorImpName }}(v);
-            this.mul(_v);
-            v.set(_v);
+            this.mulAndSetInto(_v);
+            _v.getInto(v);
         }
     }
 
-    public void mul({{ vlowdesc.buffVectorImpName }} v) {
+    public void mulAndSetInto({{ vlowdesc.buffVectorImpName }} v) {
         {{ MulVectorLow( desc, "", "v.", ret = "v.set" ) | indent(4) }}
     }
 
     @Override
-    public void mul({{ vlowdesc.buffPointName }} p) {
+    public void mulAndSetInto({{ vlowdesc.buffPointName }} p) {
         if (p instanceof {{ vlowdesc.buffVectorImpName }}) {
-            this.mul(({{ vlowdesc.buffPointImpName }})p);
+            this.mulAndSetInto(({{ vlowdesc.buffPointImpName }})p);
         } else {
             {{ vlowdesc.buffPointImpName }} _p = new {{ vlowdesc.buffPointImpName }}(p);
-            this.mul(_p);
-            p.set(_p);
+            this.mulAndSetInto(_p);
+            _p.getInto(p);
         }
     }
 
-    public void mul({{ vlowdesc.buffPointImpName }} p) {
+    public void mulAndSetInto({{ vlowdesc.buffPointImpName }} p) {
         {{ MulpointLow( desc, "", "p.", ret = "p.set" ) | indent(4) }}
     }
 
     @Override
-    public void premul({{ vlowdesc.buffVectorName }} v) {
+    public void premulAndSetInto({{ vlowdesc.buffVectorName }} v) {
         if (v instanceof {{ vlowdesc.buffVectorImpName }}) {
-            this.premul(({{ vlowdesc.buffVectorImpName }})v);
+            this.premulAndSetInto(({{ vlowdesc.buffVectorImpName }})v);
         } else {
             {{ vlowdesc.buffVectorImpName }} _v = new {{ vlowdesc.buffVectorImpName }}(v);
-            this.premul(_v);
-            v.set(_v);
+            this.premulAndSetInto(_v);
+            _v.getInto(v);
         }
     }
 
-    public void premul({{ vlowdesc.buffVectorImpName }} v) {
+    public void premulAndSetInto({{ vlowdesc.buffVectorImpName }} v) {
         {{ PremulVectorLow( desc, "", "v.", ret = "v.set"  ) | indent(4) }}
     }
 
     @Override
-    public void premul({{ vlowdesc.buffPointName }} p) {
+    public void premulAndSetInto({{ vlowdesc.buffPointName }} p) {
         if (p instanceof {{ vlowdesc.buffVectorImpName }}) {
-            this.premul(({{ vlowdesc.buffPointImpName }})p);
+            this.premulAndSetInto(({{ vlowdesc.buffPointImpName }})p);
         } else {
             {{ vlowdesc.buffPointImpName }} _p = new {{ vlowdesc.buffPointImpName }}(p);
-            this.premul(_p);
-            p.set(_p);
+            this.premulAndSetInto(_p);
+            _p.getInto(p);
         }
     }
 
-    public void premul({{ vlowdesc.buffPointImpName }} p) {
+    public void premulAndSetInto({{ vlowdesc.buffPointImpName }} p) {
         {{ PremulPointLow( desc, "", "p.", ret = "p.set" ) | indent(4) }}
     }
 {%      endif %}

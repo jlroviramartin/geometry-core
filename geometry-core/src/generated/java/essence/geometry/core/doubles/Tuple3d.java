@@ -94,12 +94,22 @@ public class Tuple3d implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
         }
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
     public Tuple3d(Tuple3d tuple) {
         this.x = tuple.getX();
         this.y = tuple.getY();
         this.z = tuple.getZ();
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
     public Tuple3d(BuffTuple3d tuple) {
         this.x = tuple.getX();
         this.y = tuple.getY();
@@ -192,7 +202,6 @@ public class Tuple3d implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
         }
         return false;
     }
-
     public boolean equals(Tuple3d other) {
         if (other == this) {
             return true;
@@ -214,9 +223,9 @@ public class Tuple3d implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
         // http://www.jarvana.com/jarvana/view/org/apache/lucene/lucene-spatial/2.9.3/lucene-spatial-2.9.3-sources.jar!/org/apache/lucene/spatial/geometry/shape/Vector2D.java
         final int prime = 31;
         int hash = 1;
-        hash = prime * hash + Double.hashCode(x);
-        hash = prime * hash + Double.hashCode(y);
-        hash = prime * hash + Double.hashCode(z);
+        hash = prime * hash + Double.hashCode(getX());
+        hash = prime * hash + Double.hashCode(getY());
+        hash = prime * hash + Double.hashCode(getZ());
         return hash;
     }
 
@@ -229,12 +238,12 @@ public class Tuple3d implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
 
 //<editor-fold defaultstate="collapsed" desc="Tuple">
     @Override
-    public int size() {
+    public final int size() {
         return 3;
     }
 
     @Override
-    public void getInto(TupleSet tupleSet) {
+    public final void getInto(TupleSet tupleSet) {
         tupleSet.set(0, x);
         tupleSet.set(1, y);
         tupleSet.set(2, z);

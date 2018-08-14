@@ -76,42 +76,6 @@ public class Color3f extends Tuple3f implements Color3 {
         return new Color3f((float)1, (float)1, (float)1);
     }
 
-    public Color3f add(Color3f other) {
-        return new Color3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
-    }
-
-    public Color3f sub(Color3f other) {
-        return new Color3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
-    }
-
-    public Color3f simpleMul(Color3f other) {
-        return new Color3f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()));
-    }
-
-    public Color3f simpleDiv(Color3f other) {
-        return new Color3f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()));
-    }
-
-    public Color3f lerp(Color3f other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
-    public double invLerp(Color3f other, Color3f cLerp) {
-        double x1 = other.getX() - getX();
-        double y1 = other.getY() - getY();
-        double z1 = other.getZ() - getZ();
-        double x2 = cLerp.getX() - getX();
-        double y2 = cLerp.getY() - getY();
-        double z2 = cLerp.getZ() - getZ();
-        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
-    }
-
-    public Color3f lineal(Color3f other, double alpha, double beta) {
-        return new Color3f((float)(alpha * getX() + beta * other.getX()),
-                           (float)(alpha * getY() + beta * other.getY()),
-                           (float)(alpha * getZ() + beta * other.getZ()));
-    }
-
 //<editor-fold defaultstate="collapsed" desc="Color3">
     @Override
     public boolean isNormalized() {
@@ -125,30 +89,78 @@ public class Color3f extends Tuple3f implements Color3 {
 
     @Override
     public Color3f add(Color3 other) {
-        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+        if (other instanceof Color3f) {
+            return add((Color3f)other);
+        } else if (other instanceof BuffColor3f) {
+            return add((BuffColor3f)other);
+        } else {
+            return add(new Color3f(other));
+        }
+    }
 
-        return new Color3f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()));
+    public Color3f add(Color3f other) {
+        return new Color3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
+    }
+
+    public Color3f add(BuffColor3f other) {
+        return new Color3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
     }
 
     @Override
     public Color3f sub(Color3 other) {
-        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+        if (other instanceof Color3f) {
+            return sub((Color3f)other);
+        } else if (other instanceof BuffColor3f) {
+            return sub((BuffColor3f)other);
+        } else {
+            return sub(new Color3f(other));
+        }
+    }
 
-        return new Color3f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()));
+    public Color3f sub(Color3f other) {
+        return new Color3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
+    }
+
+    public Color3f sub(BuffColor3f other) {
+        return new Color3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
     }
 
     @Override
     public Color3f simpleMul(Color3 other) {
-        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+        if (other instanceof Color3f) {
+            return simpleMul((Color3f)other);
+        } else if (other instanceof BuffColor3f) {
+            return simpleMul((BuffColor3f)other);
+        } else {
+            return simpleMul(new Color3f(other));
+        }
+    }
 
-        return new Color3f((float)(getX() * _other.getX()), (float)(getY() * _other.getY()), (float)(getZ() * _other.getZ()));
+    public Color3f simpleMul(Color3f other) {
+        return new Color3f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()));
+    }
+
+    public Color3f simpleMul(BuffColor3f other) {
+        return new Color3f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()));
     }
 
     @Override
     public Color3f simpleDiv(Color3 other) {
-        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+        if (other instanceof Color3f) {
+            return simpleDiv((Color3f)other);
+        } else if (other instanceof BuffColor3f) {
+            return simpleDiv((BuffColor3f)other);
+        } else {
+            return simpleDiv(new Color3f(other));
+        }
+    }
 
-        return new Color3f((float)(getX() / _other.getX()), (float)(getY() / _other.getY()), (float)(getZ() / _other.getZ()));
+    public Color3f simpleDiv(Color3f other) {
+        return new Color3f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()));
+    }
+
+    public Color3f simpleDiv(BuffColor3f other) {
+        return new Color3f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()));
     }
 
     @Override
@@ -176,30 +188,75 @@ public class Color3f extends Tuple3f implements Color3 {
 
     @Override
     public Color3f lerp(Color3 other, double alpha) {
+        if (other instanceof Color3f) {
+            return lerp((Color3f)other, alpha);
+        } else if (other instanceof BuffColor3f) {
+            return lerp((BuffColor3f)other, alpha);
+        } else {
+            return lerp(new Color3f(other), alpha);
+        }
+    }
+
+    public Color3f lerp(Color3f other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public Color3f lerp(BuffColor3f other, double alpha) {
         return lineal(other, 1 - alpha, alpha);
     }
 
     @Override
-    public double invLerp(Color3 other, Color3 cLerp) {
-        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
-        Tuple3_Float _cLerp = TupleUtils.toTuple3_Float(cLerp);
+    public double invLerp(Color3 other, Color3 lerp) {
+        if (other instanceof Color3f && lerp instanceof Color3f) {
+            return invLerp((Color3f)other, (Color3f)lerp);
+        } else if (other instanceof BuffColor3f && lerp instanceof BuffColor3f) {
+            return invLerp((BuffColor3f)other, (BuffColor3f)lerp);
+        } else {
+            return invLerp(new Color3f(other), new Color3f(other));
+        }
+    }
 
-        double x1 = _other.getX() - getX();
-        double y1 = _other.getY() - getY();
-        double z1 = _other.getZ() - getZ();
-        double x2 = _cLerp.getX() - getX();
-        double y2 = _cLerp.getY() - getY();
-        double z2 = _cLerp.getZ() - getZ();
+    public double invLerp(Color3f other, Color3f lerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
+        return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+    }
+
+    public double invLerp(BuffColor3f other, BuffColor3f lerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
         return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
     }
 
     @Override
     public Color3f lineal(Color3 other, double alpha, double beta) {
-        Tuple3_Float _other = TupleUtils.toTuple3_Float(other);
+        if (other instanceof Color3f) {
+            return lineal((Color3f)other, alpha, beta);
+        } else if (other instanceof BuffColor3f) {
+            return lineal((BuffColor3f)other, alpha, beta);
+        } else {
+            return lineal(new Color3f(other), alpha, beta);
+        }
+    }
 
-        return new Color3f((float)(alpha * getX() + beta * _other.getX()),
-                           (float)(alpha * getY() + beta * _other.getY()),
-                           (float)(alpha * getZ() + beta * _other.getZ()));
+    public Color3f lineal(Color3f other, double alpha, double beta) {
+        return new Color3f((float)(alpha * getX() + beta * other.getX()),
+                           (float)(alpha * getY() + beta * other.getY()),
+                           (float)(alpha * getZ() + beta * other.getZ()));
+    }
+
+    public Color3f lineal(BuffColor3f other, double alpha, double beta) {
+        return new Color3f((float)(alpha * getX() + beta * other.getX()),
+                           (float)(alpha * getY() + beta * other.getY()),
+                           (float)(alpha * getZ() + beta * other.getZ()));
     }
 
     private static boolean isNormal(float v, float min, float max) {

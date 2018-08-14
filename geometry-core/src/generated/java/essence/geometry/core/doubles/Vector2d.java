@@ -64,6 +64,24 @@ public class Vector2d extends Tuple2d implements Vector2 {
     }
 
     /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public Vector2d(Vector2d tuple) {
+        super(tuple);
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public Vector2d(BuffVector2d tuple) {
+        super(tuple);
+    }
+
+    /**
      * Zero vector.
      *
      * @return Vector zero.
@@ -313,29 +331,29 @@ public class Vector2d extends Tuple2d implements Vector2 {
     }
 
     @Override
-    public double invLerp(Vector2 other, Vector2 vLerp) {
-        if (other instanceof Vector2d && vLerp instanceof Vector2d) {
-            return invLerp((Vector2d)other, (Vector2d)vLerp);
-        } else if (other instanceof BuffVector2d && vLerp instanceof BuffVector2d) {
-            return invLerp((BuffVector2d)other, (BuffVector2d)vLerp);
+    public double invLerp(Vector2 other, Vector2 lerp) {
+        if (other instanceof Vector2d && lerp instanceof Vector2d) {
+            return invLerp((Vector2d)other, (Vector2d)lerp);
+        } else if (other instanceof BuffVector2d && lerp instanceof BuffVector2d) {
+            return invLerp((BuffVector2d)other, (BuffVector2d)lerp);
         } else {
-            return invLerp(new Vector2d(other), new Vector2d(vLerp));
+            return invLerp(new Vector2d(other), new Vector2d(other));
         }
     }
 
-    public double invLerp(Vector2d other, Vector2d vLerp) {
+    public double invLerp(Vector2d other, Vector2d lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
-        double x2 = vLerp.getX() - getX();
-        double y2 = vLerp.getY() - getY();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
         return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
     }
 
-    public double invLerp(BuffVector2d other, BuffVector2d vLerp) {
+    public double invLerp(BuffVector2d other, BuffVector2d lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
-        double x2 = vLerp.getX() - getX();
-        double y2 = vLerp.getY() - getY();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
         return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
     }
 

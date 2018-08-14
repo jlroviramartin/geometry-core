@@ -101,6 +101,11 @@ public class Tuple4b implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
         }
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
     public Tuple4b(Tuple4b tuple) {
         this.x = tuple.getX();
         this.y = tuple.getY();
@@ -108,6 +113,11 @@ public class Tuple4b implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
         this.w = tuple.getW();
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
     public Tuple4b(BuffTuple4b tuple) {
         this.x = tuple.getX();
         this.y = tuple.getY();
@@ -207,7 +217,6 @@ public class Tuple4b implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
         }
         return false;
     }
-
     public boolean equals(Tuple4b other) {
         if (other == this) {
             return true;
@@ -231,10 +240,10 @@ public class Tuple4b implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
         // http://www.jarvana.com/jarvana/view/org/apache/lucene/lucene-spatial/2.9.3/lucene-spatial-2.9.3-sources.jar!/org/apache/lucene/spatial/geometry/shape/Vector2D.java
         final int prime = 31;
         int hash = 1;
-        hash = prime * hash + Byte.hashCode(x);
-        hash = prime * hash + Byte.hashCode(y);
-        hash = prime * hash + Byte.hashCode(z);
-        hash = prime * hash + Byte.hashCode(w);
+        hash = prime * hash + Byte.hashCode(getX());
+        hash = prime * hash + Byte.hashCode(getY());
+        hash = prime * hash + Byte.hashCode(getZ());
+        hash = prime * hash + Byte.hashCode(getW());
         return hash;
     }
 
@@ -247,12 +256,12 @@ public class Tuple4b implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
 
 //<editor-fold defaultstate="collapsed" desc="Tuple">
     @Override
-    public int size() {
+    public final int size() {
         return 4;
     }
 
     @Override
-    public void getInto(TupleSet tupleSet) {
+    public final void getInto(TupleSet tupleSet) {
         tupleSet.set(0, x);
         tupleSet.set(1, y);
         tupleSet.set(2, z);

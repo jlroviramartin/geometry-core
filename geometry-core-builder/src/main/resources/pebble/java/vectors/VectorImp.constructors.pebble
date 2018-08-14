@@ -27,5 +27,23 @@
     public {{ className }}(Tuple tuple) {
         super(tuple);
     }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ className }}({{ desc.vectorImpName }} tuple) {
+        super(tuple);
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ className }}({{ desc.buffVectorImpName }} tuple) {
+        super(tuple);
+    }
 {%  endmacro %}
 

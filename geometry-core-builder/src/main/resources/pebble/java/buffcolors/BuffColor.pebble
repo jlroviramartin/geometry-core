@@ -11,7 +11,7 @@
  * A {@code {{ desc.buffColorName }}} is a {{ desc.dim }} dimensional collection of values
  * that represents a color.
  */
-public interface {{ desc.buffColorName }} extends BuffTuple, {{ desc.colorName }} {
+public interface {{ desc.buffColorName }} extends {{ desc.colorName }}, TupleSet {
 
     /**
      * This method normalizes the color. It ensures that all coordinates were between the minimum and the maximum.

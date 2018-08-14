@@ -51,14 +51,14 @@ public interface Matrix2x2 extends MatrixInpector {
      *
      * @param v Vector.
      */
-    void mul(BuffVector2 v);
+    void mulAndSetInto(BuffVector2 v);
 
     /**
      * This method premultiplies {@code this} matrix by the {@code v} vector.
      *
      * @param v Vector.
      */
-    void premul(BuffVector2 v);
+    void premulAndSetInto(BuffVector2 v);
 
     /**
      * This method evaluates is {@code this} matrix is valid.

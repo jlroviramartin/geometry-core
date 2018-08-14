@@ -9,14 +9,14 @@
      *
      * @param v Vector.
      */
-    void mul({{ vdesc.buffVectorName }} v);
+    void mulAndSetInto({{ vdesc.buffVectorName }} v);
 
     /**
      * This method premultiplies {@code this} matrix by the {@code v} vector.
      *
      * @param v Vector.
      */
-    void premul({{ vdesc.buffVectorName }} v);
+    void premulAndSetInto({{ vdesc.buffVectorName }} v);
 {%      if not desc.vector.lowerDimension is empty %}
 {#
  # Those methods work with vector and points of a lower dimension. 
@@ -27,27 +27,27 @@
      *
      * @param v Vector.
      */
-    void mul({{ vlowdesc.buffVectorName }} v);
+    void mulAndSetInto({{ vlowdesc.buffVectorName }} v);
 
     /**
      * This method multiplies {@code this} matrix by the {@code p} point.
      *
      * @param p Point.
      */
-    void mul({{ vlowdesc.buffPointName }} p);
+    void mulAndSetInto({{ vlowdesc.buffPointName }} p);
 
     /**
      * This method premultiplies {@code this} matrix by the {@code v} vector.
      *
      * @param v Vector.
      */
-    void premul({{ vlowdesc.buffVectorName }} v);
+    void premulAndSetInto({{ vlowdesc.buffVectorName }} v);
 
     /**
      * This method premultiplies {@code this} matrix by the {@code p} point.
      *
      * @param p Point.
      */
-    void premul({{ vlowdesc.buffPointName }} p);
+    void premulAndSetInto({{ vlowdesc.buffPointName }} p);
 {%      endif %}
 {%  endmacro %}

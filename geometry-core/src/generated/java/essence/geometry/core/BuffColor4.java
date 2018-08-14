@@ -30,7 +30,7 @@ package essence.geometry.core;
  * A {@code BuffColor4} is a 4 dimensional collection of values
  * that represents a color.
  */
-public interface BuffColor4 extends Color4 {
+public interface BuffColor4 extends Color4, TupleSet {
 
     /**
      * This method normalizes the color. It ensures that all coordinates were between the minimum and the maximum.

@@ -78,78 +78,6 @@ public class BuffColor4b extends BuffTuple4b implements BuffColor4 {
         return new BuffColor4b((byte)1, (byte)1, (byte)1, (byte)1);
     }
 
-    public BuffColor4b addAndSet(BuffColor4b other) {
-        set((byte)(getX() + other.getX()), (byte)(getY() + other.getY()), (byte)(getZ() + other.getZ()), (byte)(getW() + other.getW()));
-        return this;
-    }
-
-    public BuffColor4b subAndSet(BuffColor4b other) {
-        set((byte)(getX() - other.getX()), (byte)(getY() - other.getY()), (byte)(getZ() - other.getZ()), (byte)(getW() - other.getW()));
-        return this;
-    }
-
-    public BuffColor4b simpleMulAndSet(BuffColor4b other) {
-        set((byte)(getX() * other.getX()), (byte)(getY() * other.getY()), (byte)(getZ() * other.getZ()), (byte)(getW() * other.getW()));
-        return this;
-    }
-
-    public BuffColor4b simpleDivAndSet(BuffColor4b other) {
-        set((byte)(getX() / other.getX()), (byte)(getY() / other.getY()), (byte)(getZ() / other.getZ()), (byte)(getW() / other.getW()));
-        return this;
-    }
-
-    public BuffColor4b lerpAndSet(BuffColor4b other, double alpha) {
-        linealAndSet(other, 1 - alpha, alpha);
-        return this;
-    }
-
-    public BuffColor4b linealAndSet(BuffColor4b other, double alpha, double beta) {
-        set((byte)(alpha * getX() + beta * other.getX()),
-            (byte)(alpha * getY() + beta * other.getY()),
-            (byte)(alpha * getZ() + beta * other.getZ()),
-            (byte)(alpha * getW() + beta * other.getW()));
-        return this;
-    }
-
-    public BuffColor4b add(BuffColor4b other) {
-        return new BuffColor4b((byte)(getX() + other.getX()), (byte)(getY() + other.getY()), (byte)(getZ() + other.getZ()), (byte)(getW() + other.getW()));
-    }
-
-    public BuffColor4b sub(BuffColor4b other) {
-        return new BuffColor4b((byte)(getX() - other.getX()), (byte)(getY() - other.getY()), (byte)(getZ() - other.getZ()), (byte)(getW() - other.getW()));
-    }
-
-    public BuffColor4b simpleMul(BuffColor4b other) {
-        return new BuffColor4b((byte)(getX() * other.getX()), (byte)(getY() * other.getY()), (byte)(getZ() * other.getZ()), (byte)(getW() * other.getW()));
-    }
-
-    public BuffColor4b simpleDiv(BuffColor4b other) {
-        return new BuffColor4b((byte)(getX() / other.getX()), (byte)(getY() / other.getY()), (byte)(getZ() / other.getZ()), (byte)(getW() / other.getW()));
-    }
-
-    public BuffColor4b lerp(BuffColor4b other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
-    public double invLerp(BuffColor4b other, BuffColor4b cLerp) {
-        double x1 = other.getX() - getX();
-        double y1 = other.getY() - getY();
-        double z1 = other.getZ() - getZ();
-        double w1 = other.getW() - getW();
-        double x2 = cLerp.getX() - getX();
-        double y2 = cLerp.getY() - getY();
-        double z2 = cLerp.getZ() - getZ();
-        double w2 = cLerp.getW() - getW();
-        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
-    }
-
-    public BuffColor4b lineal(BuffColor4b other, double alpha, double beta) {
-        return new BuffColor4b((byte)(alpha * getX() + beta * other.getX()),
-                               (byte)(alpha * getY() + beta * other.getY()),
-                               (byte)(alpha * getZ() + beta * other.getZ()),
-                               (byte)(alpha * getW() + beta * other.getW()));
-    }
-
 //<editor-fold defaultstate="collapsed" desc="BuffColor4">
     @Override
     public BuffColor4b normalize() {
@@ -165,33 +93,85 @@ public class BuffColor4b extends BuffTuple4b implements BuffColor4 {
 
     @Override
     public BuffColor4b addAndSet(Color4 other) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return addAndSet((Color4b)other);
+        } else if (other instanceof BuffColor4b) {
+            return addAndSet((BuffColor4b)other);
+        } else {
+            return addAndSet(new Color4b(other));
+        }
+    }
 
-        set((byte)(getX() + _other.getX()), (byte)(getY() + _other.getY()), (byte)(getZ() + _other.getZ()), (byte)(getW() + _other.getW()));
+    public BuffColor4b addAndSet(Color4b other) {
+        set((byte)(getX() + other.getX()), (byte)(getY() + other.getY()), (byte)(getZ() + other.getZ()), (byte)(getW() + other.getW()));
+        return this;
+    }
+
+    public BuffColor4b addAndSet(BuffColor4b other) {
+        set((byte)(getX() + other.getX()), (byte)(getY() + other.getY()), (byte)(getZ() + other.getZ()), (byte)(getW() + other.getW()));
         return this;
     }
 
     @Override
     public BuffColor4b subAndSet(Color4 other) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return subAndSet((Color4b)other);
+        } else if (other instanceof BuffColor4b) {
+            return subAndSet((BuffColor4b)other);
+        } else {
+            return subAndSet(new Color4b(other));
+        }
+    }
 
-        set((byte)(getX() - _other.getX()), (byte)(getY() - _other.getY()), (byte)(getZ() - _other.getZ()), (byte)(getW() - _other.getW()));
+    public BuffColor4b subAndSet(Color4b other) {
+        set((byte)(getX() - other.getX()), (byte)(getY() - other.getY()), (byte)(getZ() - other.getZ()), (byte)(getW() - other.getW()));
+        return this;
+    }
+
+    public BuffColor4b subAndSet(BuffColor4b other) {
+        set((byte)(getX() - other.getX()), (byte)(getY() - other.getY()), (byte)(getZ() - other.getZ()), (byte)(getW() - other.getW()));
         return this;
     }
 
     @Override
     public BuffColor4b simpleMulAndSet(Color4 other) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return simpleMulAndSet((Color4b)other);
+        } else if (other instanceof BuffColor4b) {
+            return simpleMulAndSet((BuffColor4b)other);
+        } else {
+            return simpleMulAndSet(new Color4b(other));
+        }
+    }
 
-        set((byte)(getX() * _other.getX()), (byte)(getY() * _other.getY()), (byte)(getZ() * _other.getZ()), (byte)(getW() * _other.getW()));
+    public BuffColor4b simpleMulAndSet(Color4b other) {
+        set((byte)(getX() * other.getX()), (byte)(getY() * other.getY()), (byte)(getZ() * other.getZ()), (byte)(getW() * other.getW()));
+        return this;
+    }
+
+    public BuffColor4b simpleMulAndSet(BuffColor4b other) {
+        set((byte)(getX() * other.getX()), (byte)(getY() * other.getY()), (byte)(getZ() * other.getZ()), (byte)(getW() * other.getW()));
         return this;
     }
 
     @Override
     public BuffColor4b simpleDivAndSet(Color4 other) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return simpleDivAndSet((Color4b)other);
+        } else if (other instanceof BuffColor4b) {
+            return simpleDivAndSet((BuffColor4b)other);
+        } else {
+            return simpleDivAndSet(new Color4b(other));
+        }
+    }
 
-        set((byte)(getX() / _other.getX()), (byte)(getY() / _other.getY()), (byte)(getZ() / _other.getZ()), (byte)(getW() / _other.getW()));
+    public BuffColor4b simpleDivAndSet(Color4b other) {
+        set((byte)(getX() / other.getX()), (byte)(getY() / other.getY()), (byte)(getZ() / other.getZ()), (byte)(getW() / other.getW()));
+        return this;
+    }
+
+    public BuffColor4b simpleDivAndSet(BuffColor4b other) {
+        set((byte)(getX() / other.getX()), (byte)(getY() / other.getY()), (byte)(getZ() / other.getZ()), (byte)(getW() / other.getW()));
         return this;
     }
 
@@ -221,18 +201,49 @@ public class BuffColor4b extends BuffTuple4b implements BuffColor4 {
 
     @Override
     public BuffColor4b lerpAndSet(Color4 other, double alpha) {
+        if (other instanceof Color4b) {
+            return lerpAndSet((Color4b)other, alpha);
+        } else if (other instanceof BuffColor4b) {
+            return lerpAndSet((BuffColor4b)other, alpha);
+        } else {
+            return lerpAndSet(new Color4b(other), alpha);
+        }
+    }
+
+    public BuffColor4b lerpAndSet(Color4b other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    public BuffColor4b lerpAndSet(BuffColor4b other, double alpha) {
         linealAndSet(other, 1 - alpha, alpha);
         return this;
     }
 
     @Override
     public BuffColor4b linealAndSet(Color4 other, double alpha, double beta) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return linealAndSet((Color4b)other, alpha, beta);
+        } else if (other instanceof BuffColor4b) {
+            return linealAndSet((BuffColor4b)other, alpha, beta);
+        } else {
+            return linealAndSet(new Color4b(other), alpha, beta);
+        }
+    }
 
-        set((byte)(alpha * getX() + beta * _other.getX()),
-            (byte)(alpha * getY() + beta * _other.getY()),
-            (byte)(alpha * getZ() + beta * _other.getZ()),
-            (byte)(alpha * getW() + beta * _other.getW()));
+    public BuffColor4b linealAndSet(Color4b other, double alpha, double beta) {
+        set((byte)(alpha * getX() + beta * other.getX()),
+            (byte)(alpha * getY() + beta * other.getY()),
+            (byte)(alpha * getZ() + beta * other.getZ()),
+            (byte)(alpha * getW() + beta * other.getW()));
+        return this;
+    }
+
+    public BuffColor4b linealAndSet(BuffColor4b other, double alpha, double beta) {
+        set((byte)(alpha * getX() + beta * other.getX()),
+            (byte)(alpha * getY() + beta * other.getY()),
+            (byte)(alpha * getZ() + beta * other.getZ()),
+            (byte)(alpha * getW() + beta * other.getW()));
         return this;
     }
 //</editor-fold>
@@ -250,30 +261,78 @@ public class BuffColor4b extends BuffTuple4b implements BuffColor4 {
 
     @Override
     public BuffColor4b add(Color4 other) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return add((Color4b)other);
+        } else if (other instanceof BuffColor4b) {
+            return add((BuffColor4b)other);
+        } else {
+            return add(new Color4b(other));
+        }
+    }
 
-        return new BuffColor4b((byte)(getX() + _other.getX()), (byte)(getY() + _other.getY()), (byte)(getZ() + _other.getZ()), (byte)(getW() + _other.getW()));
+    public BuffColor4b add(Color4b other) {
+        return new BuffColor4b((byte)(getX() + other.getX()), (byte)(getY() + other.getY()), (byte)(getZ() + other.getZ()), (byte)(getW() + other.getW()));
+    }
+
+    public BuffColor4b add(BuffColor4b other) {
+        return new BuffColor4b((byte)(getX() + other.getX()), (byte)(getY() + other.getY()), (byte)(getZ() + other.getZ()), (byte)(getW() + other.getW()));
     }
 
     @Override
     public BuffColor4b sub(Color4 other) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return sub((Color4b)other);
+        } else if (other instanceof BuffColor4b) {
+            return sub((BuffColor4b)other);
+        } else {
+            return sub(new Color4b(other));
+        }
+    }
 
-        return new BuffColor4b((byte)(getX() - _other.getX()), (byte)(getY() - _other.getY()), (byte)(getZ() - _other.getZ()), (byte)(getW() - _other.getW()));
+    public BuffColor4b sub(Color4b other) {
+        return new BuffColor4b((byte)(getX() - other.getX()), (byte)(getY() - other.getY()), (byte)(getZ() - other.getZ()), (byte)(getW() - other.getW()));
+    }
+
+    public BuffColor4b sub(BuffColor4b other) {
+        return new BuffColor4b((byte)(getX() - other.getX()), (byte)(getY() - other.getY()), (byte)(getZ() - other.getZ()), (byte)(getW() - other.getW()));
     }
 
     @Override
     public BuffColor4b simpleMul(Color4 other) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return simpleMul((Color4b)other);
+        } else if (other instanceof BuffColor4b) {
+            return simpleMul((BuffColor4b)other);
+        } else {
+            return simpleMul(new Color4b(other));
+        }
+    }
 
-        return new BuffColor4b((byte)(getX() * _other.getX()), (byte)(getY() * _other.getY()), (byte)(getZ() * _other.getZ()), (byte)(getW() * _other.getW()));
+    public BuffColor4b simpleMul(Color4b other) {
+        return new BuffColor4b((byte)(getX() * other.getX()), (byte)(getY() * other.getY()), (byte)(getZ() * other.getZ()), (byte)(getW() * other.getW()));
+    }
+
+    public BuffColor4b simpleMul(BuffColor4b other) {
+        return new BuffColor4b((byte)(getX() * other.getX()), (byte)(getY() * other.getY()), (byte)(getZ() * other.getZ()), (byte)(getW() * other.getW()));
     }
 
     @Override
     public BuffColor4b simpleDiv(Color4 other) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return simpleDiv((Color4b)other);
+        } else if (other instanceof BuffColor4b) {
+            return simpleDiv((BuffColor4b)other);
+        } else {
+            return simpleDiv(new Color4b(other));
+        }
+    }
 
-        return new BuffColor4b((byte)(getX() / _other.getX()), (byte)(getY() / _other.getY()), (byte)(getZ() / _other.getZ()), (byte)(getW() / _other.getW()));
+    public BuffColor4b simpleDiv(Color4b other) {
+        return new BuffColor4b((byte)(getX() / other.getX()), (byte)(getY() / other.getY()), (byte)(getZ() / other.getZ()), (byte)(getW() / other.getW()));
+    }
+
+    public BuffColor4b simpleDiv(BuffColor4b other) {
+        return new BuffColor4b((byte)(getX() / other.getX()), (byte)(getY() / other.getY()), (byte)(getZ() / other.getZ()), (byte)(getW() / other.getW()));
     }
 
     @Override
@@ -301,33 +360,81 @@ public class BuffColor4b extends BuffTuple4b implements BuffColor4 {
 
     @Override
     public BuffColor4b lerp(Color4 other, double alpha) {
+        if (other instanceof Color4b) {
+            return lerp((Color4b)other, alpha);
+        } else if (other instanceof BuffColor4b) {
+            return lerp((BuffColor4b)other, alpha);
+        } else {
+            return lerp(new Color4b(other), alpha);
+        }
+    }
+
+    public BuffColor4b lerp(Color4b other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public BuffColor4b lerp(BuffColor4b other, double alpha) {
         return lineal(other, 1 - alpha, alpha);
     }
 
     @Override
-    public double invLerp(Color4 other, Color4 cLerp) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
-        Tuple4_Byte _cLerp = TupleUtils.toTuple4_Byte(cLerp);
+    public double invLerp(Color4 other, Color4 lerp) {
+        if (other instanceof Color4b && lerp instanceof Color4b) {
+            return invLerp((Color4b)other, (Color4b)lerp);
+        } else if (other instanceof BuffColor4b && lerp instanceof BuffColor4b) {
+            return invLerp((BuffColor4b)other, (BuffColor4b)lerp);
+        } else {
+            return invLerp(new Color4b(other), new Color4b(other));
+        }
+    }
 
-        double x1 = _other.getX() - getX();
-        double y1 = _other.getY() - getY();
-        double z1 = _other.getZ() - getZ();
-        double w1 = _other.getW() - getW();
-        double x2 = _cLerp.getX() - getX();
-        double y2 = _cLerp.getY() - getY();
-        double z2 = _cLerp.getZ() - getZ();
-        double w2 = _cLerp.getW() - getW();
+    public double invLerp(Color4b other, Color4b lerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double w1 = other.getW() - getW();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
+        double w2 = lerp.getW() - getW();
+        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
+    }
+
+    public double invLerp(BuffColor4b other, BuffColor4b lerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double w1 = other.getW() - getW();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
+        double w2 = lerp.getW() - getW();
         return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
     }
 
     @Override
     public BuffColor4b lineal(Color4 other, double alpha, double beta) {
-        Tuple4_Byte _other = TupleUtils.toTuple4_Byte(other);
+        if (other instanceof Color4b) {
+            return lineal((Color4b)other, alpha, beta);
+        } else if (other instanceof BuffColor4b) {
+            return lineal((BuffColor4b)other, alpha, beta);
+        } else {
+            return lineal(new Color4b(other), alpha, beta);
+        }
+    }
 
-        return new BuffColor4b((byte)(alpha * getX() + beta * _other.getX()),
-                               (byte)(alpha * getY() + beta * _other.getY()),
-                               (byte)(alpha * getZ() + beta * _other.getZ()),
-                               (byte)(alpha * getW() + beta * _other.getW()));
+    public BuffColor4b lineal(Color4b other, double alpha, double beta) {
+        return new BuffColor4b((byte)(alpha * getX() + beta * other.getX()),
+                               (byte)(alpha * getY() + beta * other.getY()),
+                               (byte)(alpha * getZ() + beta * other.getZ()),
+                               (byte)(alpha * getW() + beta * other.getW()));
+    }
+
+    public BuffColor4b lineal(BuffColor4b other, double alpha, double beta) {
+        return new BuffColor4b((byte)(alpha * getX() + beta * other.getX()),
+                               (byte)(alpha * getY() + beta * other.getY()),
+                               (byte)(alpha * getZ() + beta * other.getZ()),
+                               (byte)(alpha * getW() + beta * other.getW()));
     }
 
     private static boolean isNormal(byte v, byte min, byte max) {

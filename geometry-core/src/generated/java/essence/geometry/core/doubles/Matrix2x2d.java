@@ -102,10 +102,13 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d>, Buff
 //<editor-fold defaultstate="collapsed" desc="Transforms">
     @Override
     public Vector2d mul(Vector2 v) {
-        Tuple2_Double _v = TupleUtils.toTuple2_Double(v);
-
-        return new Vector2d(getM00() * _v.getX() + getM01() * _v.getY(),
-                            getM10() * _v.getX() + getM11() * _v.getY());
+        if (v instanceof Vector2d) {
+            return mul((Vector2d)v);
+        } else if (v instanceof BuffVector2d) {
+            return mul((BuffVector2d)v);
+        } else {
+            return mul(new Vector2d(v));
+        }
     }
 
     public Vector2d mul(Vector2d v) {
@@ -113,12 +116,20 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d>, Buff
                             getM10() * v.getX() + getM11() * v.getY());
     }
 
+    public Vector2d mul(BuffVector2d v) {
+        return new Vector2d(getM00() * v.getX() + getM01() * v.getY(),
+                            getM10() * v.getX() + getM11() * v.getY());
+    }
+
     @Override
     public Vector2d premul(Vector2 v) {
-        Tuple2_Double _v = TupleUtils.toTuple2_Double(v);
-
-        return new Vector2d(_v.getX() * getM00() + _v.getY() * getM10(),
-                            _v.getX() * getM01() + _v.getY() * getM11());
+        if (v instanceof Vector2d) {
+            return premul((Vector2d)v);
+        } else if (v instanceof BuffVector2d) {
+            return premul((BuffVector2d)v);
+        } else {
+            return premul(new Vector2d(v));
+        }
     }
 
     public Vector2d premul(Vector2d v) {
@@ -126,34 +137,39 @@ public class Matrix2x2d implements Cloneable, EpsilonEquatable<Matrix2x2d>, Buff
                             v.getX() * getM01() + v.getY() * getM11());
     }
 
+    public Vector2d premul(BuffVector2d v) {
+        return new Vector2d(v.getX() * getM00() + v.getY() * getM10(),
+                            v.getX() * getM01() + v.getY() * getM11());
+    }
+
     @Override
-    public void mul(BuffVector2 v) {
+    public void mulAndSetInto(BuffVector2 v) {
         if (v instanceof BuffVector2d) {
-            this.mul((BuffVector2d)v);
+            this.mulAndSetInto((BuffVector2d)v);
         } else {
             BuffVector2d _v = new BuffVector2d(v);
-            this.mul(_v);
-            v.set(_v);
+            this.mulAndSetInto(_v);
+            _v.getInto(v);
         }
     }
 
-    public void mul(BuffVector2d v) {
+    public void mulAndSetInto(BuffVector2d v) {
         v.set(getM00() * v.getX() + getM01() * v.getY(),
               getM10() * v.getX() + getM11() * v.getY());
     }
 
     @Override
-    public void premul(BuffVector2 v) {
+    public void premulAndSetInto(BuffVector2 v) {
         if (v instanceof BuffVector2d) {
-            this.premul((BuffVector2d)v);
+            this.premulAndSetInto((BuffVector2d)v);
         } else {
             BuffVector2d _v = new BuffVector2d(v);
-            this.premul(_v);
-            v.set(_v);
+            this.premulAndSetInto(_v);
+            _v.getInto(v);
         }
     }
 
-    public void premul(BuffVector2d v) {
+    public void premulAndSetInto(BuffVector2d v) {
         v.set (v.getX() * getM00() + v.getY() * getM10(),
                v.getX() * getM01() + v.getY() * getM11());
     }

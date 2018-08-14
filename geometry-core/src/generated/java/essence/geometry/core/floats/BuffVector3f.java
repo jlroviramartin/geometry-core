@@ -66,6 +66,24 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
     }
 
     /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public BuffVector3f(Vector3f tuple) {
+        super(tuple);
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public BuffVector3f(BuffVector3f tuple) {
+        super(tuple);
+    }
+
+    /**
      * Zero vector.
      *
      * @return Vector zero.
@@ -266,14 +284,14 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
         }
     }
 
-    public BuffVector3f linealAndSet(BuffVector3f other, double alpha, double beta) {
+    public BuffVector3f linealAndSet(Vector3f other, double alpha, double beta) {
         set((float)(alpha * getX() + beta * other.getX()),
             (float)(alpha * getY() + beta * other.getY()),
             (float)(alpha * getZ() + beta * other.getZ()));
         return this;
     }
 
-    public BuffVector3f linealAndSet(Vector3f other, double alpha, double beta) {
+    public BuffVector3f linealAndSet(BuffVector3f other, double alpha, double beta) {
         set((float)(alpha * getX() + beta * other.getX()),
             (float)(alpha * getY() + beta * other.getY()),
             (float)(alpha * getZ() + beta * other.getZ()));
@@ -494,33 +512,33 @@ public class BuffVector3f extends BuffTuple3f implements BuffVector3 {
     }
 
     @Override
-    public double invLerp(Vector3 other, Vector3 vLerp) {
-        if (other instanceof Vector3f && vLerp instanceof Vector3f) {
-            return invLerp((Vector3f)other, (Vector3f)vLerp);
-        } else if (other instanceof BuffVector3f && vLerp instanceof BuffVector3f) {
-            return invLerp((BuffVector3f)other, (BuffVector3f)vLerp);
+    public double invLerp(Vector3 other, Vector3 lerp) {
+        if (other instanceof Vector3f && lerp instanceof Vector3f) {
+            return invLerp((Vector3f)other, (Vector3f)lerp);
+        } else if (other instanceof BuffVector3f && lerp instanceof BuffVector3f) {
+            return invLerp((BuffVector3f)other, (BuffVector3f)lerp);
         } else {
-            return invLerp(new Vector3f(other), new Vector3f(vLerp));
+            return invLerp(new Vector3f(other), new Vector3f(other));
         }
     }
 
-    public double invLerp(Vector3f other, Vector3f vLerp) {
+    public double invLerp(Vector3f other, Vector3f lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
         double z1 = other.getZ() - getZ();
-        double x2 = vLerp.getX() - getX();
-        double y2 = vLerp.getY() - getY();
-        double z2 = vLerp.getZ() - getZ();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
         return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
     }
 
-    public double invLerp(BuffVector3f other, BuffVector3f vLerp) {
+    public double invLerp(BuffVector3f other, BuffVector3f lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
         double z1 = other.getZ() - getZ();
-        double x2 = vLerp.getX() - getX();
-        double y2 = vLerp.getY() - getY();
-        double z2 = vLerp.getZ() - getZ();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
         return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
     }
 

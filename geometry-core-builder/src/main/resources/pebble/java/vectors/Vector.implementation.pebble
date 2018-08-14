@@ -84,93 +84,9 @@
     }
 {%      endif %}
 
-{{  Math_BinaryOperator( desc, className, "add", "+" ) }}
+{{ SimpleMathImplementation( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName ) }}
 
-{{  Math_BinaryOperator( desc, className, "sub", "-" ) }}
-
-{{  Math_BinaryOperator( desc, className, "simpleMul", "*" ) }}
-
-{{  Math_BinaryOperator( desc, className, "simpleDiv", "/" ) }}
-
-    @Override
-    public {{ className }} mul(double v) {
-        return new {{ className }}{{ BinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
-    }
-
-    @Override
-    public {{ className }} div(double v) {
-        if (DoubleUtils.epsilonZero(v)) {
-            throw new ArithmeticError("divided by zero");
-        }
-        return new {{ className }}{{ BinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
-    }
-
-    @Override
-    public {{ className }} neg() {
-        return new {{ className }}{{ UnaryOperator(desc, "-", "") | indent(4) }};
-    }
-
-    @Override
-    public {{ className }} abs() {
-        return new {{ className }}{{ UnaryFunction(desc, "Math.abs", "") | indent(4) }};
-    }
-
-    @Override
-    public {{ className }} lerp({{ desc.vectorName }} other, double alpha) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return lerp(({{ desc.vectorImpName }})other, alpha);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return lerp(({{ desc.buffVectorImpName }})other, alpha);
-        } else {
-            return lerp(new {{ desc.vectorImpName }}(other), alpha);
-        }
-    }
-
-    public {{ className }} lerp({{ desc.vectorImpName }} other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
-    public {{ className }} lerp({{ desc.buffVectorImpName }} other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
-    @Override
-    public double invLerp({{ desc.vectorName }} other, {{ desc.vectorName }} vLerp) {
-        if (other instanceof {{ desc.vectorImpName }} && vLerp instanceof {{ desc.vectorImpName }}) {
-            return invLerp(({{ desc.vectorImpName }})other, ({{ desc.vectorImpName }})vLerp);
-        } else if (other instanceof {{ desc.buffVectorImpName }} && vLerp instanceof {{ desc.buffVectorImpName }}) {
-            return invLerp(({{ desc.buffVectorImpName }})other, ({{ desc.buffVectorImpName }})vLerp);
-        } else {
-            return invLerp(new {{ desc.vectorImpName }}(other), new {{ desc.vectorImpName }}(vLerp));
-        }
-    }
-
-    public double invLerp({{ desc.vectorImpName }} other, {{ desc.vectorImpName }} vLerp) {
-        {{ InvLerp(desc, "", "other.", "vLerp.") | indent(2) }}
-    }
-
-    public double invLerp({{ desc.buffVectorImpName }} other, {{ desc.buffVectorImpName }} vLerp) {
-        {{ InvLerp(desc, "", "other.", "vLerp.") | indent(2) }}
-    }
-
-    @Override
-    public {{ className }} lineal({{ desc.vectorName }} other, double alpha, double beta) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return lineal(({{ desc.vectorImpName }})other, alpha, beta);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return lineal(({{ desc.buffVectorImpName }})other, alpha, beta);
-        } else {
-            return lineal(new {{ desc.vectorImpName }}(other), alpha, beta);
-        }
-    }
-
-    public {{ className }} lineal({{ desc.vectorImpName }} other, double alpha, double beta) {
-        return new {{ className }}{{ Lineal(desc, "", "other.") | indent(4) }};
-    }
-
-    public {{ className }} lineal({{ desc.buffVectorImpName }} other, double alpha, double beta) {
-        return new {{ className }}{{ Lineal(desc, "", "other.") | indent(4) }};
-    }
+{{ LerpAndInvLerpAndLinealImplementation( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName )  }}
 
     @Override
     public double dot({{ desc.vectorName }} other) {
@@ -264,26 +180,5 @@ get{{ property.upperName }}() * other.get{{ property.upperName }}()
     public {{ desc.buffVectorImpName }} vectorProjection({{ desc.buffVectorImpName }} where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
-    }
-{%  endmacro %}
-
-{%  macro Math_BinaryOperator( desc, className, name, op ) %}
-    @Override
-    public {{ className }} {{ name }}({{ desc.vectorName }} other) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return {{ name }}(({{ desc.vectorImpName }})other);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return {{ name }}(({{ desc.buffVectorImpName }})other);
-        } else {
-            return {{ name }}(new {{ desc.vectorImpName }}(other));
-        }
-    }
-
-    public {{ className }} {{ name }}({{ desc.vectorImpName }} other) {
-        return new {{ className }}{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
-    }
-
-    public {{ className }} {{ name }}({{ desc.buffVectorImpName }} other) {
-        return new {{ className }}{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
     }
 {%  endmacro %}

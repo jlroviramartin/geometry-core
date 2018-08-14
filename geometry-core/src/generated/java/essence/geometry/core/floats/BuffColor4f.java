@@ -78,78 +78,6 @@ public class BuffColor4f extends BuffTuple4f implements BuffColor4 {
         return new BuffColor4f((float)1, (float)1, (float)1, (float)1);
     }
 
-    public BuffColor4f addAndSet(BuffColor4f other) {
-        set((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
-        return this;
-    }
-
-    public BuffColor4f subAndSet(BuffColor4f other) {
-        set((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
-        return this;
-    }
-
-    public BuffColor4f simpleMulAndSet(BuffColor4f other) {
-        set((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()), (float)(getW() * other.getW()));
-        return this;
-    }
-
-    public BuffColor4f simpleDivAndSet(BuffColor4f other) {
-        set((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()), (float)(getW() / other.getW()));
-        return this;
-    }
-
-    public BuffColor4f lerpAndSet(BuffColor4f other, double alpha) {
-        linealAndSet(other, 1 - alpha, alpha);
-        return this;
-    }
-
-    public BuffColor4f linealAndSet(BuffColor4f other, double alpha, double beta) {
-        set((float)(alpha * getX() + beta * other.getX()),
-            (float)(alpha * getY() + beta * other.getY()),
-            (float)(alpha * getZ() + beta * other.getZ()),
-            (float)(alpha * getW() + beta * other.getW()));
-        return this;
-    }
-
-    public BuffColor4f add(BuffColor4f other) {
-        return new BuffColor4f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
-    }
-
-    public BuffColor4f sub(BuffColor4f other) {
-        return new BuffColor4f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
-    }
-
-    public BuffColor4f simpleMul(BuffColor4f other) {
-        return new BuffColor4f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()), (float)(getW() * other.getW()));
-    }
-
-    public BuffColor4f simpleDiv(BuffColor4f other) {
-        return new BuffColor4f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()), (float)(getW() / other.getW()));
-    }
-
-    public BuffColor4f lerp(BuffColor4f other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
-
-    public double invLerp(BuffColor4f other, BuffColor4f cLerp) {
-        double x1 = other.getX() - getX();
-        double y1 = other.getY() - getY();
-        double z1 = other.getZ() - getZ();
-        double w1 = other.getW() - getW();
-        double x2 = cLerp.getX() - getX();
-        double y2 = cLerp.getY() - getY();
-        double z2 = cLerp.getZ() - getZ();
-        double w2 = cLerp.getW() - getW();
-        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
-    }
-
-    public BuffColor4f lineal(BuffColor4f other, double alpha, double beta) {
-        return new BuffColor4f((float)(alpha * getX() + beta * other.getX()),
-                               (float)(alpha * getY() + beta * other.getY()),
-                               (float)(alpha * getZ() + beta * other.getZ()),
-                               (float)(alpha * getW() + beta * other.getW()));
-    }
-
 //<editor-fold defaultstate="collapsed" desc="BuffColor4">
     @Override
     public BuffColor4f normalize() {
@@ -165,33 +93,85 @@ public class BuffColor4f extends BuffTuple4f implements BuffColor4 {
 
     @Override
     public BuffColor4f addAndSet(Color4 other) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return addAndSet((Color4f)other);
+        } else if (other instanceof BuffColor4f) {
+            return addAndSet((BuffColor4f)other);
+        } else {
+            return addAndSet(new Color4f(other));
+        }
+    }
 
-        set((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()), (float)(getW() + _other.getW()));
+    public BuffColor4f addAndSet(Color4f other) {
+        set((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
+        return this;
+    }
+
+    public BuffColor4f addAndSet(BuffColor4f other) {
+        set((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
         return this;
     }
 
     @Override
     public BuffColor4f subAndSet(Color4 other) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return subAndSet((Color4f)other);
+        } else if (other instanceof BuffColor4f) {
+            return subAndSet((BuffColor4f)other);
+        } else {
+            return subAndSet(new Color4f(other));
+        }
+    }
 
-        set((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()), (float)(getW() - _other.getW()));
+    public BuffColor4f subAndSet(Color4f other) {
+        set((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
+        return this;
+    }
+
+    public BuffColor4f subAndSet(BuffColor4f other) {
+        set((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
         return this;
     }
 
     @Override
     public BuffColor4f simpleMulAndSet(Color4 other) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return simpleMulAndSet((Color4f)other);
+        } else if (other instanceof BuffColor4f) {
+            return simpleMulAndSet((BuffColor4f)other);
+        } else {
+            return simpleMulAndSet(new Color4f(other));
+        }
+    }
 
-        set((float)(getX() * _other.getX()), (float)(getY() * _other.getY()), (float)(getZ() * _other.getZ()), (float)(getW() * _other.getW()));
+    public BuffColor4f simpleMulAndSet(Color4f other) {
+        set((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()), (float)(getW() * other.getW()));
+        return this;
+    }
+
+    public BuffColor4f simpleMulAndSet(BuffColor4f other) {
+        set((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()), (float)(getW() * other.getW()));
         return this;
     }
 
     @Override
     public BuffColor4f simpleDivAndSet(Color4 other) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return simpleDivAndSet((Color4f)other);
+        } else if (other instanceof BuffColor4f) {
+            return simpleDivAndSet((BuffColor4f)other);
+        } else {
+            return simpleDivAndSet(new Color4f(other));
+        }
+    }
 
-        set((float)(getX() / _other.getX()), (float)(getY() / _other.getY()), (float)(getZ() / _other.getZ()), (float)(getW() / _other.getW()));
+    public BuffColor4f simpleDivAndSet(Color4f other) {
+        set((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()), (float)(getW() / other.getW()));
+        return this;
+    }
+
+    public BuffColor4f simpleDivAndSet(BuffColor4f other) {
+        set((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()), (float)(getW() / other.getW()));
         return this;
     }
 
@@ -221,18 +201,49 @@ public class BuffColor4f extends BuffTuple4f implements BuffColor4 {
 
     @Override
     public BuffColor4f lerpAndSet(Color4 other, double alpha) {
+        if (other instanceof Color4f) {
+            return lerpAndSet((Color4f)other, alpha);
+        } else if (other instanceof BuffColor4f) {
+            return lerpAndSet((BuffColor4f)other, alpha);
+        } else {
+            return lerpAndSet(new Color4f(other), alpha);
+        }
+    }
+
+    public BuffColor4f lerpAndSet(Color4f other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    public BuffColor4f lerpAndSet(BuffColor4f other, double alpha) {
         linealAndSet(other, 1 - alpha, alpha);
         return this;
     }
 
     @Override
     public BuffColor4f linealAndSet(Color4 other, double alpha, double beta) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return linealAndSet((Color4f)other, alpha, beta);
+        } else if (other instanceof BuffColor4f) {
+            return linealAndSet((BuffColor4f)other, alpha, beta);
+        } else {
+            return linealAndSet(new Color4f(other), alpha, beta);
+        }
+    }
 
-        set((float)(alpha * getX() + beta * _other.getX()),
-            (float)(alpha * getY() + beta * _other.getY()),
-            (float)(alpha * getZ() + beta * _other.getZ()),
-            (float)(alpha * getW() + beta * _other.getW()));
+    public BuffColor4f linealAndSet(Color4f other, double alpha, double beta) {
+        set((float)(alpha * getX() + beta * other.getX()),
+            (float)(alpha * getY() + beta * other.getY()),
+            (float)(alpha * getZ() + beta * other.getZ()),
+            (float)(alpha * getW() + beta * other.getW()));
+        return this;
+    }
+
+    public BuffColor4f linealAndSet(BuffColor4f other, double alpha, double beta) {
+        set((float)(alpha * getX() + beta * other.getX()),
+            (float)(alpha * getY() + beta * other.getY()),
+            (float)(alpha * getZ() + beta * other.getZ()),
+            (float)(alpha * getW() + beta * other.getW()));
         return this;
     }
 //</editor-fold>
@@ -250,30 +261,78 @@ public class BuffColor4f extends BuffTuple4f implements BuffColor4 {
 
     @Override
     public BuffColor4f add(Color4 other) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return add((Color4f)other);
+        } else if (other instanceof BuffColor4f) {
+            return add((BuffColor4f)other);
+        } else {
+            return add(new Color4f(other));
+        }
+    }
 
-        return new BuffColor4f((float)(getX() + _other.getX()), (float)(getY() + _other.getY()), (float)(getZ() + _other.getZ()), (float)(getW() + _other.getW()));
+    public BuffColor4f add(Color4f other) {
+        return new BuffColor4f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
+    }
+
+    public BuffColor4f add(BuffColor4f other) {
+        return new BuffColor4f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()), (float)(getW() + other.getW()));
     }
 
     @Override
     public BuffColor4f sub(Color4 other) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return sub((Color4f)other);
+        } else if (other instanceof BuffColor4f) {
+            return sub((BuffColor4f)other);
+        } else {
+            return sub(new Color4f(other));
+        }
+    }
 
-        return new BuffColor4f((float)(getX() - _other.getX()), (float)(getY() - _other.getY()), (float)(getZ() - _other.getZ()), (float)(getW() - _other.getW()));
+    public BuffColor4f sub(Color4f other) {
+        return new BuffColor4f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
+    }
+
+    public BuffColor4f sub(BuffColor4f other) {
+        return new BuffColor4f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()), (float)(getW() - other.getW()));
     }
 
     @Override
     public BuffColor4f simpleMul(Color4 other) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return simpleMul((Color4f)other);
+        } else if (other instanceof BuffColor4f) {
+            return simpleMul((BuffColor4f)other);
+        } else {
+            return simpleMul(new Color4f(other));
+        }
+    }
 
-        return new BuffColor4f((float)(getX() * _other.getX()), (float)(getY() * _other.getY()), (float)(getZ() * _other.getZ()), (float)(getW() * _other.getW()));
+    public BuffColor4f simpleMul(Color4f other) {
+        return new BuffColor4f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()), (float)(getW() * other.getW()));
+    }
+
+    public BuffColor4f simpleMul(BuffColor4f other) {
+        return new BuffColor4f((float)(getX() * other.getX()), (float)(getY() * other.getY()), (float)(getZ() * other.getZ()), (float)(getW() * other.getW()));
     }
 
     @Override
     public BuffColor4f simpleDiv(Color4 other) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return simpleDiv((Color4f)other);
+        } else if (other instanceof BuffColor4f) {
+            return simpleDiv((BuffColor4f)other);
+        } else {
+            return simpleDiv(new Color4f(other));
+        }
+    }
 
-        return new BuffColor4f((float)(getX() / _other.getX()), (float)(getY() / _other.getY()), (float)(getZ() / _other.getZ()), (float)(getW() / _other.getW()));
+    public BuffColor4f simpleDiv(Color4f other) {
+        return new BuffColor4f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()), (float)(getW() / other.getW()));
+    }
+
+    public BuffColor4f simpleDiv(BuffColor4f other) {
+        return new BuffColor4f((float)(getX() / other.getX()), (float)(getY() / other.getY()), (float)(getZ() / other.getZ()), (float)(getW() / other.getW()));
     }
 
     @Override
@@ -301,33 +360,81 @@ public class BuffColor4f extends BuffTuple4f implements BuffColor4 {
 
     @Override
     public BuffColor4f lerp(Color4 other, double alpha) {
+        if (other instanceof Color4f) {
+            return lerp((Color4f)other, alpha);
+        } else if (other instanceof BuffColor4f) {
+            return lerp((BuffColor4f)other, alpha);
+        } else {
+            return lerp(new Color4f(other), alpha);
+        }
+    }
+
+    public BuffColor4f lerp(Color4f other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public BuffColor4f lerp(BuffColor4f other, double alpha) {
         return lineal(other, 1 - alpha, alpha);
     }
 
     @Override
-    public double invLerp(Color4 other, Color4 cLerp) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
-        Tuple4_Float _cLerp = TupleUtils.toTuple4_Float(cLerp);
+    public double invLerp(Color4 other, Color4 lerp) {
+        if (other instanceof Color4f && lerp instanceof Color4f) {
+            return invLerp((Color4f)other, (Color4f)lerp);
+        } else if (other instanceof BuffColor4f && lerp instanceof BuffColor4f) {
+            return invLerp((BuffColor4f)other, (BuffColor4f)lerp);
+        } else {
+            return invLerp(new Color4f(other), new Color4f(other));
+        }
+    }
 
-        double x1 = _other.getX() - getX();
-        double y1 = _other.getY() - getY();
-        double z1 = _other.getZ() - getZ();
-        double w1 = _other.getW() - getW();
-        double x2 = _cLerp.getX() - getX();
-        double y2 = _cLerp.getY() - getY();
-        double z2 = _cLerp.getZ() - getZ();
-        double w2 = _cLerp.getW() - getW();
+    public double invLerp(Color4f other, Color4f lerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double w1 = other.getW() - getW();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
+        double w2 = lerp.getW() - getW();
+        return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
+    }
+
+    public double invLerp(BuffColor4f other, BuffColor4f lerp) {
+        double x1 = other.getX() - getX();
+        double y1 = other.getY() - getY();
+        double z1 = other.getZ() - getZ();
+        double w1 = other.getW() - getW();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
+        double w2 = lerp.getW() - getW();
         return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
     }
 
     @Override
     public BuffColor4f lineal(Color4 other, double alpha, double beta) {
-        Tuple4_Float _other = TupleUtils.toTuple4_Float(other);
+        if (other instanceof Color4f) {
+            return lineal((Color4f)other, alpha, beta);
+        } else if (other instanceof BuffColor4f) {
+            return lineal((BuffColor4f)other, alpha, beta);
+        } else {
+            return lineal(new Color4f(other), alpha, beta);
+        }
+    }
 
-        return new BuffColor4f((float)(alpha * getX() + beta * _other.getX()),
-                               (float)(alpha * getY() + beta * _other.getY()),
-                               (float)(alpha * getZ() + beta * _other.getZ()),
-                               (float)(alpha * getW() + beta * _other.getW()));
+    public BuffColor4f lineal(Color4f other, double alpha, double beta) {
+        return new BuffColor4f((float)(alpha * getX() + beta * other.getX()),
+                               (float)(alpha * getY() + beta * other.getY()),
+                               (float)(alpha * getZ() + beta * other.getZ()),
+                               (float)(alpha * getW() + beta * other.getW()));
+    }
+
+    public BuffColor4f lineal(BuffColor4f other, double alpha, double beta) {
+        return new BuffColor4f((float)(alpha * getX() + beta * other.getX()),
+                               (float)(alpha * getY() + beta * other.getY()),
+                               (float)(alpha * getZ() + beta * other.getZ()),
+                               (float)(alpha * getW() + beta * other.getW()));
     }
 
     private static boolean isNormal(float v, float min, float max) {

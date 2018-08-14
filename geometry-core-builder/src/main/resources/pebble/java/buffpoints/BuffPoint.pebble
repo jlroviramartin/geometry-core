@@ -11,7 +11,7 @@
  * A {@code {{ desc.buffPointName }}} is a {{ desc.dim }} dimensional collection of values
  * that represents a point.
  */
-public interface {{ desc.buffPointName }} extends {{ desc.pointName }}, BuffTuple {
+public interface {{ desc.buffPointName }} extends {{ desc.pointName }}, TupleSet {
 
     /**
      * This method adds {@code this} point to {@code other} vector and sets the result

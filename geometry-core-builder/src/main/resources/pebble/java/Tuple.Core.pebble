@@ -157,3 +157,249 @@ return ({{ Properties( desc, " + ", InvLerp_anonymous3 ) }}) / Math.sqrt({{ Prop
 ({{ Properties( desc, ",%n", Lineal_anonymous1 ) }})
 {%- endmacro %}
 
+{#
+ # This macro renders the implementation of:
+ #   lerp
+ #   invLerp
+ #   lineal
+ #}
+{%  macro LerpAndInvLerpAndLinealImplementation( desc, className, tupleName, tupleImpName, buffTupleImpName ) %}
+    @Override
+    public {{ className }} lerp({{ tupleName }} other, double alpha) {
+        if (other instanceof {{ tupleImpName }}) {
+            return lerp(({{ tupleImpName }})other, alpha);
+        } else if (other instanceof {{ buffTupleImpName }}) {
+            return lerp(({{ buffTupleImpName }})other, alpha);
+        } else {
+            return lerp(new {{ tupleImpName }}(other), alpha);
+        }
+    }
+
+    public {{ className }} lerp({{ tupleImpName }} other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    public {{ className }} lerp({{ buffTupleImpName }} other, double alpha) {
+        return lineal(other, 1 - alpha, alpha);
+    }
+
+    @Override
+    public double invLerp({{ tupleName }} other, {{ tupleName }} lerp) {
+        if (other instanceof {{ tupleImpName }} && lerp instanceof {{ tupleImpName }}) {
+            return invLerp(({{ tupleImpName }})other, ({{ tupleImpName }})lerp);
+        } else if (other instanceof {{ buffTupleImpName }} && lerp instanceof {{ buffTupleImpName }}) {
+            return invLerp(({{ buffTupleImpName }})other, ({{ buffTupleImpName }})lerp);
+        } else {
+            return invLerp(new {{ tupleImpName }}(other), new {{ tupleImpName }}(other));
+        }
+    }
+
+    public double invLerp({{ tupleImpName }} other, {{ tupleImpName }} lerp) {
+        {{ InvLerp(desc, "", "other.", "lerp.") | indent(2) }}
+    }
+
+    public double invLerp({{ buffTupleImpName }} other, {{ buffTupleImpName }} lerp) {
+        {{ InvLerp(desc, "", "other.", "lerp.") | indent(2) }}
+    }
+
+    @Override
+    public {{ className }} lineal({{ tupleName }} other, double alpha, double beta) {
+        if (other instanceof {{ tupleImpName }}) {
+            return lineal(({{ tupleImpName }})other, alpha, beta);
+        } else if (other instanceof {{ buffTupleImpName }}) {
+            return lineal(({{ buffTupleImpName }})other, alpha, beta);
+        } else {
+            return lineal(new {{ tupleImpName }}(other), alpha, beta);
+        }
+    }
+
+    public {{ className }} lineal({{ tupleImpName }} other, double alpha, double beta) {
+        return new {{ className }}{{ Lineal(desc, "", "other.") | indent(4) }};
+    }
+
+    public {{ className }} lineal({{ buffTupleImpName }} other, double alpha, double beta) {
+        return new {{ className }}{{ Lineal(desc, "", "other.") | indent(4) }};
+    }
+{%  endmacro %}
+
+{#
+ # This macro renders the implementation of:
+ #   lerpAndSet
+ #   linealAndSet
+ #}
+{%  macro LerpAndLinealAndSetImplementation( desc, className, tupleName, tupleImpName, buffTupleImpName ) %}
+    @Override
+    public {{ className }} lerpAndSet({{ tupleName }} other, double alpha) {
+        if (other instanceof {{ tupleImpName }}) {
+            return lerpAndSet(({{ tupleImpName }})other, alpha);
+        } else if (other instanceof {{ buffTupleImpName }}) {
+            return lerpAndSet(({{ buffTupleImpName }})other, alpha);
+        } else {
+            return lerpAndSet(new {{ tupleImpName }}(other), alpha);
+        }
+    }
+
+    public {{ className }} lerpAndSet({{ tupleImpName }} other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    public {{ className }} lerpAndSet({{ buffTupleImpName }} other, double alpha) {
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
+    }
+
+    @Override
+    public {{ className }} linealAndSet({{ tupleName }} other, double alpha, double beta) {
+        if (other instanceof {{ tupleImpName }}) {
+            return linealAndSet(({{ tupleImpName }})other, alpha, beta);
+        } else if (other instanceof {{ buffTupleImpName }}) {
+            return linealAndSet(({{ buffTupleImpName }})other, alpha, beta);
+        } else {
+            return linealAndSet(new {{ tupleImpName }}(other), alpha, beta);
+        }
+    }
+
+    public {{ className }} linealAndSet({{ tupleImpName }} other, double alpha, double beta) {
+        set{{ Lineal(desc, "", "other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} linealAndSet({{ buffTupleImpName }} other, double alpha, double beta) {
+        set{{ Lineal(desc, "", "other.") | indent(4) }};
+        return this;
+    }
+{%  endmacro %}
+
+{#
+ # This macro renders the implementation of:
+ #   add
+ #   sub
+ #   simpleMul
+ #   simpleDiv
+ #   mul
+ #   div
+ #   neg
+ #   abs
+ #}
+{%  macro SimpleMathImplementation( desc, className, tupleName, tupleImpName, buffTupleImpName ) %}
+{{ SimpleMathImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, "add", "+" ) }}
+
+{{ SimpleMathImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, "sub", "-" ) }}
+
+{{ SimpleMathImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, "simpleMul", "*" ) }}
+
+{{ SimpleMathImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, "simpleDiv", "/" ) }}
+
+    @Override
+    public {{ className }} mul(double v) {
+        return new {{ className }}{{ BinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} div(double v) {
+        if (DoubleUtils.epsilonZero(v)) {
+            throw new ArithmeticError("divided by zero");
+        }
+        return new {{ className }}{{ BinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} neg() {
+        return new {{ className }}{{ UnaryOperator(desc, "-", "") | indent(4) }};
+    }
+
+    @Override
+    public {{ className }} abs() {
+        return new {{ className }}{{ UnaryFunction(desc, "Math.abs", "") | indent(4) }};
+    }
+{%  endmacro %}
+
+{#
+ # This macro renders the implementation of:
+ #   addAndSet
+ #   subAndSet
+ #   simpleMulAndSet
+ #   simpleDivAndSet
+ #   mulAndSet
+ #   divAndSet
+ #   negAndSet
+ #   absAndSet
+ #}
+{%  macro SimpleMathAndSetImplementation( desc, className, tupleName, tupleImpName, buffTupleImpName ) %}
+{{ SimpleMathAndSetImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, "addAndSet", "+" ) }}
+
+{{ SimpleMathAndSetImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, "subAndSet", "-" ) }}
+
+{{ SimpleMathAndSetImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, "simpleMulAndSet", "*" ) }}
+
+{{ SimpleMathAndSetImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, "simpleDivAndSet", "/" ) }}
+
+    @Override
+    public {{ className }} mulAndSet(double v) {
+        set{{ BinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} divAndSet(double v) {
+        set{{ BinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} negAndSet() {
+        set{{ UnaryOperator(desc, "-", "") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} absAndSet() {
+        set{{ UnaryFunction(desc, "Math.abs", "") | indent(4) }};
+        return this;
+    }
+{% endmacro %}
+
+{%  macro SimpleMathImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, name, op ) %}
+    @Override
+    public {{ className }} {{ name }}({{ tupleName }} other) {
+        if (other instanceof {{ tupleImpName }}) {
+            return {{ name }}(({{ tupleImpName }})other);
+        } else if (other instanceof {{ buffTupleImpName }}) {
+            return {{ name }}(({{ buffTupleImpName }})other);
+        } else {
+            return {{ name }}(new {{ tupleImpName }}(other));
+        }
+    }
+
+    public {{ className }} {{ name }}({{ tupleImpName }} other) {
+        return new {{ className }}{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
+    }
+
+    public {{ className }} {{ name }}({{ buffTupleImpName }} other) {
+        return new {{ className }}{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
+    }
+{%  endmacro %}
+
+{%  macro SimpleMathAndSetImplementation_BinaryOperator( desc, className, tupleName, tupleImpName, buffTupleImpName, name, op ) %}
+    @Override
+    public {{ className }} {{ name }}({{ tupleName }} other) {
+        if (other instanceof {{ tupleImpName }}) {
+            return {{ name }}(({{ tupleImpName }})other);
+        } else if (other instanceof {{ buffTupleImpName }}) {
+            return {{ name }}(({{ buffTupleImpName }})other);
+        } else {
+            return {{ name }}(new {{ tupleImpName }}(other));
+        }
+    }
+
+    public {{ className }} {{ name }}({{ tupleImpName }} other) {
+        set{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} {{ name }}({{ buffTupleImpName }} other) {
+        set{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
+        return this;
+    }
+{%  endmacro %}

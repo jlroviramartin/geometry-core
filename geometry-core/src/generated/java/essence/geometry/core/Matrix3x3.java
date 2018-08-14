@@ -79,42 +79,42 @@ public interface Matrix3x3 extends MatrixInpector {
      *
      * @param v Vector.
      */
-    void mul(BuffVector3 v);
+    void mulAndSetInto(BuffVector3 v);
 
     /**
      * This method premultiplies {@code this} matrix by the {@code v} vector.
      *
      * @param v Vector.
      */
-    void premul(BuffVector3 v);
+    void premulAndSetInto(BuffVector3 v);
 
     /**
      * This method multiplies {@code this} matrix by the {@code v} vector.
      *
      * @param v Vector.
      */
-    void mul(BuffVector2 v);
+    void mulAndSetInto(BuffVector2 v);
 
     /**
      * This method multiplies {@code this} matrix by the {@code p} point.
      *
      * @param p Point.
      */
-    void mul(BuffPoint2 p);
+    void mulAndSetInto(BuffPoint2 p);
 
     /**
      * This method premultiplies {@code this} matrix by the {@code v} vector.
      *
      * @param v Vector.
      */
-    void premul(BuffVector2 v);
+    void premulAndSetInto(BuffVector2 v);
 
     /**
      * This method premultiplies {@code this} matrix by the {@code p} point.
      *
      * @param p Point.
      */
-    void premul(BuffPoint2 p);
+    void premulAndSetInto(BuffPoint2 p);
 
     /**
      * This method evaluates is {@code this} matrix is valid.

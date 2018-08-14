@@ -134,11 +134,13 @@ public class BuffPoint2f extends BuffTuple2f implements BuffPoint2 {
     }
 
     public BuffPoint2f lerpAndSet(Point2f other, double alpha) {
-        return linealAndSet(other, 1 - alpha, alpha);
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
     }
 
     public BuffPoint2f lerpAndSet(BuffPoint2f other, double alpha) {
-        return linealAndSet(other, 1 - alpha, alpha);
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
     }
 
     @Override
@@ -300,11 +302,11 @@ public class BuffPoint2f extends BuffTuple2f implements BuffPoint2 {
     }
 
     public BuffPoint2f sub(Vector2f other) {
-        return new BuffPoint2f((float)(getX() + other.getX()), (float)(getY() + other.getY()));
+        return new BuffPoint2f((float)(getX() - other.getX()), (float)(getY() - other.getY()));
     }
 
     public BuffPoint2f sub(BuffVector2f other) {
-        return new BuffPoint2f((float)(getX() + other.getX()), (float)(getY() + other.getY()));
+        return new BuffPoint2f((float)(getX() - other.getX()), (float)(getY() - other.getY()));
     }
 
     @Override
@@ -346,29 +348,29 @@ public class BuffPoint2f extends BuffTuple2f implements BuffPoint2 {
     }
 
     @Override
-    public double invLerp(Point2 other, Point2 pLerp) {
-        if (other instanceof Point2f && pLerp instanceof Point2f) {
-            return invLerp((Point2f)other, (Point2f)pLerp);
-        } else if (other instanceof BuffPoint2f && pLerp instanceof BuffPoint2f) {
-            return invLerp((BuffPoint2f)other, (BuffPoint2f)pLerp);
+    public double invLerp(Point2 other, Point2 lerp) {
+        if (other instanceof Point2f && lerp instanceof Point2f) {
+            return invLerp((Point2f)other, (Point2f)lerp);
+        } else if (other instanceof BuffPoint2f && lerp instanceof BuffPoint2f) {
+            return invLerp((BuffPoint2f)other, (BuffPoint2f)lerp);
         } else {
-            return invLerp(new Point2f(other), new Point2f(pLerp));
+            return invLerp(new Point2f(other), new Point2f(other));
         }
     }
 
-    public double invLerp(Point2f other, Point2f pLerp) {
+    public double invLerp(Point2f other, Point2f lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
-        double x2 = pLerp.getX() - getX();
-        double y2 = pLerp.getY() - getY();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
         return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
     }
 
-    public double invLerp(BuffPoint2f other, BuffPoint2f pLerp) {
+    public double invLerp(BuffPoint2f other, BuffPoint2f lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
-        double x2 = pLerp.getX() - getX();
-        double y2 = pLerp.getY() - getY();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
         return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
     }
 

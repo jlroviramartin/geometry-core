@@ -12,9 +12,6 @@
             {{ Properties( desc, ", ", Object_toString ) | indent(3)  }});
     }
 
-{%      dynmacro Object_equals1( desc, property ) %}
-other.get{{ property.upperName }}()
-{%-     enddynmacro %}
     @Override
     public boolean equals(Object other) {
         if (other instanceof {{ desc.tupleImpName }}) {
@@ -26,6 +23,10 @@ other.get{{ property.upperName }}()
         }
         return false;
     }
+
+{%-     dynmacro Object_equals1( desc, property ) %}
+other.get{{ property.upperName }}()
+{%-     enddynmacro %}
 
     public boolean equals({{ desc.tupleImpName }} other) {
 {%  if not isBuff %}
@@ -52,7 +53,7 @@ other.get{{ property.upperName }}()
         final int prime = 31;
         int hash = 1;
 {%      for property in desc.properties %}
-        hash = prime * hash + {{ desc.ctype }}.hashCode({{ property.name }});
+        hash = prime * hash + {{ desc.ctype }}.hashCode(get{{ property.upperName }}());
 {%      endfor %}
         return hash;
     }

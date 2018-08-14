@@ -186,11 +186,11 @@ public class Point2i extends Tuple2i implements Point2 {
     }
 
     public Point2i sub(Vector2i other) {
-        return new Point2i((int)(getX() + other.getX()), (int)(getY() + other.getY()));
+        return new Point2i((int)(getX() - other.getX()), (int)(getY() - other.getY()));
     }
 
     public Point2i sub(BuffVector2i other) {
-        return new Point2i((int)(getX() + other.getX()), (int)(getY() + other.getY()));
+        return new Point2i((int)(getX() - other.getX()), (int)(getY() - other.getY()));
     }
 
     @Override
@@ -232,29 +232,29 @@ public class Point2i extends Tuple2i implements Point2 {
     }
 
     @Override
-    public double invLerp(Point2 other, Point2 pLerp) {
-        if (other instanceof Point2i && pLerp instanceof Point2i) {
-            return invLerp((Point2i)other, (Point2i)pLerp);
-        } else if (other instanceof BuffPoint2i && pLerp instanceof BuffPoint2i) {
-            return invLerp((BuffPoint2i)other, (BuffPoint2i)pLerp);
+    public double invLerp(Point2 other, Point2 lerp) {
+        if (other instanceof Point2i && lerp instanceof Point2i) {
+            return invLerp((Point2i)other, (Point2i)lerp);
+        } else if (other instanceof BuffPoint2i && lerp instanceof BuffPoint2i) {
+            return invLerp((BuffPoint2i)other, (BuffPoint2i)lerp);
         } else {
-            return invLerp(new Point2i(other), new Point2i(pLerp));
+            return invLerp(new Point2i(other), new Point2i(other));
         }
     }
 
-    public double invLerp(Point2i other, Point2i pLerp) {
+    public double invLerp(Point2i other, Point2i lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
-        double x2 = pLerp.getX() - getX();
-        double y2 = pLerp.getY() - getY();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
         return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
     }
 
-    public double invLerp(BuffPoint2i other, BuffPoint2i pLerp) {
+    public double invLerp(BuffPoint2i other, BuffPoint2i lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
-        double x2 = pLerp.getX() - getX();
-        double y2 = pLerp.getY() - getY();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
         return (x1 * x2 + y1 * y2) / Math.sqrt(x1 * x1 + y1 * y1);
     }
 

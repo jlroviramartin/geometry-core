@@ -135,11 +135,13 @@ public class BuffPoint3f extends BuffTuple3f implements BuffPoint3 {
     }
 
     public BuffPoint3f lerpAndSet(Point3f other, double alpha) {
-        return linealAndSet(other, 1 - alpha, alpha);
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
     }
 
     public BuffPoint3f lerpAndSet(BuffPoint3f other, double alpha) {
-        return linealAndSet(other, 1 - alpha, alpha);
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
     }
 
     @Override
@@ -311,11 +313,11 @@ public class BuffPoint3f extends BuffTuple3f implements BuffPoint3 {
     }
 
     public BuffPoint3f sub(Vector3f other) {
-        return new BuffPoint3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
+        return new BuffPoint3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
     }
 
     public BuffPoint3f sub(BuffVector3f other) {
-        return new BuffPoint3f((float)(getX() + other.getX()), (float)(getY() + other.getY()), (float)(getZ() + other.getZ()));
+        return new BuffPoint3f((float)(getX() - other.getX()), (float)(getY() - other.getY()), (float)(getZ() - other.getZ()));
     }
 
     @Override
@@ -357,33 +359,33 @@ public class BuffPoint3f extends BuffTuple3f implements BuffPoint3 {
     }
 
     @Override
-    public double invLerp(Point3 other, Point3 pLerp) {
-        if (other instanceof Point3f && pLerp instanceof Point3f) {
-            return invLerp((Point3f)other, (Point3f)pLerp);
-        } else if (other instanceof BuffPoint3f && pLerp instanceof BuffPoint3f) {
-            return invLerp((BuffPoint3f)other, (BuffPoint3f)pLerp);
+    public double invLerp(Point3 other, Point3 lerp) {
+        if (other instanceof Point3f && lerp instanceof Point3f) {
+            return invLerp((Point3f)other, (Point3f)lerp);
+        } else if (other instanceof BuffPoint3f && lerp instanceof BuffPoint3f) {
+            return invLerp((BuffPoint3f)other, (BuffPoint3f)lerp);
         } else {
-            return invLerp(new Point3f(other), new Point3f(pLerp));
+            return invLerp(new Point3f(other), new Point3f(other));
         }
     }
 
-    public double invLerp(Point3f other, Point3f pLerp) {
+    public double invLerp(Point3f other, Point3f lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
         double z1 = other.getZ() - getZ();
-        double x2 = pLerp.getX() - getX();
-        double y2 = pLerp.getY() - getY();
-        double z2 = pLerp.getZ() - getZ();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
         return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
     }
 
-    public double invLerp(BuffPoint3f other, BuffPoint3f pLerp) {
+    public double invLerp(BuffPoint3f other, BuffPoint3f lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
         double z1 = other.getZ() - getZ();
-        double x2 = pLerp.getX() - getX();
-        double y2 = pLerp.getY() - getY();
-        double z2 = pLerp.getZ() - getZ();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
         return (x1 * x2 + y1 * y2 + z1 * z2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
     }
 

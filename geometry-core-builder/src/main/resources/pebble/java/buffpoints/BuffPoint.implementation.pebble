@@ -1,47 +1,9 @@
 {%  macro MathAndSet( desc, className, vectorClassName ) %}
-{{ MathAndSet_BinaryOperator( desc, className, "addAndSet", "+" ) }}
+{{ SimpleMathAndSetImplementation_BinaryOperator( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName, "addAndSet", "+" ) }}
 
-{{ MathAndSet_BinaryOperator( desc, className, "subAndSet", "-" ) }}
+{{ SimpleMathAndSetImplementation_BinaryOperator( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName, "subAndSet", "-" ) }}
 
-    @Override
-    public {{ className }} lerpAndSet({{ desc.pointName }} other, double alpha) {
-        if (other instanceof {{ desc.pointImpName }}) {
-            return lerpAndSet(({{ desc.pointImpName }})other, alpha);
-        } else if (other instanceof {{ desc.buffPointImpName }}) {
-            return lerpAndSet(({{ desc.buffPointImpName }})other, alpha);
-        } else {
-            return lerpAndSet(new {{ desc.pointImpName }}(other), alpha);
-        }
-    }
-
-    public {{ className }} lerpAndSet({{ desc.pointImpName }} other, double alpha) {
-        return linealAndSet(other, 1 - alpha, alpha);
-    }
-
-    public {{ className }} lerpAndSet({{ desc.buffPointImpName }} other, double alpha) {
-        return linealAndSet(other, 1 - alpha, alpha);
-    }
-
-    @Override
-    public {{ className }} linealAndSet({{ desc.pointName }} other, double alpha, double beta) {
-        if (other instanceof {{ desc.pointImpName }}) {
-            return linealAndSet(({{ desc.pointImpName }})other, alpha, beta);
-        } else if (other instanceof {{ desc.buffPointImpName }}) {
-            return linealAndSet(({{ desc.buffPointImpName }})other, alpha, beta);
-        } else {
-            return linealAndSet(new {{ desc.pointImpName }}(other), alpha, beta);
-        }
-    }
-
-    public {{ className }} linealAndSet({{ desc.pointImpName }} other, double alpha, double beta) {
-        set{{ Lineal(desc, "", "other.") | indent(4) }};
-        return this;
-    }
-
-    public {{ className }} linealAndSet({{ desc.buffPointImpName }} other, double alpha, double beta) {
-        set{{ Lineal(desc, "", "other.") | indent(4) }};
-        return this;
-    }
+{{ LerpAndLinealAndSetImplementation( desc, className, desc.pointName, desc.pointImpName, desc.buffPointImpName )  }}
 
 {#
     set(new {{ vectorClassName }}(this).vectorProjectionAndSet(where));
@@ -65,29 +27,6 @@
 
     public {{ className }} vectorProjectionAndSet({{ desc.buffVectorImpName }} where) {
         {{ VectorProjection(desc, "", "where.", "set") | indent(4) }}
-        return this;
-    }
-{%  endmacro %}
-
-{%  macro MathAndSet_BinaryOperator( desc, className, name, op ) %}
-    @Override
-    public {{ className }} {{ name }}({{ desc.vectorName }} other) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return {{ name }}(({{ desc.vectorImpName }})other);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return {{ name }}(({{ desc.buffVectorImpName }})other);
-        } else {
-            return {{ name }}(new {{ desc.vectorImpName }}(other));
-        }
-    }
-
-    public {{ className }} {{ name }}({{ desc.vectorImpName }} other) {
-        set{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
-        return this;
-    }
-
-    public {{ className }} {{ name }}({{ desc.buffVectorImpName }} other) {
-        set{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
         return this;
     }
 {%  endmacro %}

@@ -30,7 +30,7 @@ package essence.geometry.core;
  * A {@code BuffPoint3} is a 3 dimensional collection of values
  * that represents a point.
  */
-public interface BuffPoint3 extends Point3 {
+public interface BuffPoint3 extends Point3, TupleSet {
 
     /**
      * This method adds {@code this} point to {@code other} vector and sets the result

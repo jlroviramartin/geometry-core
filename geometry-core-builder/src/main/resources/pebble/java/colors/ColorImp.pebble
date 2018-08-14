@@ -12,7 +12,6 @@
 {%  import "pebble/java/colors/ColorImp.private.pebble" %}
 
 {%  import "pebble/java/colors/Color.implementation.pebble" %}
-{%  import "pebble/java/colors/Color.implementation_nonvirtual.pebble" %}
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
@@ -33,8 +32,6 @@ public class {{ desc.colorImpName }} extends {{ desc.tupleImpName }} implements 
 {{ Constructors( desc, desc.colorImpName ) }}
 
 {{ Public( desc, desc.colorImpName ) }}
-
-{{ ColorImplementationNonVirtual( desc, desc.colorImpName ) }}
 
 //<editor-fold defaultstate="collapsed" desc="{{ desc.colorName }}">
 {{ ColorImplementation( desc, desc.colorImpName ) }}

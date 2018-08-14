@@ -12,9 +12,7 @@
 {%  import "pebble/java/colors/ColorImp.private.pebble" %}
 
 {%  import "pebble/java/colors/Color.implementation.pebble" %}
-{%  import "pebble/java/colors/Color.implementation_nonvirtual.pebble" %}
 {%  import "pebble/java/buffcolors/BuffColor.implementation.pebble" %}
-{%  import "pebble/java/buffcolors/BuffColor.implementation_nonvirtual.pebble" %}
 
 {%  block package %}{{ desc._package }}{% endblock %}
 
@@ -36,10 +34,6 @@ public class {{ desc.buffColorImpName }} extends {{ desc.buffTupleImpName }} imp
 {{ Constructors( desc, desc.buffColorImpName ) }}
 
 {{ Public( desc, desc.buffColorImpName ) }}
-
-{{ BuffColorImplementationNonVirtual( desc, desc.buffColorImpName ) }}
-
-{{ ColorImplementationNonVirtual( desc, desc.buffColorImpName ) }}
 
 //<editor-fold defaultstate="collapsed" desc="{{ desc.buffColorName }}">
 {{ BuffColorImplementation( desc, desc.buffColorImpName ) }}

@@ -30,7 +30,7 @@ package essence.geometry.core;
  * A {@code BuffColor3} is a 3 dimensional collection of values
  * that represents a color.
  */
-public interface BuffColor3 extends Color3 {
+public interface BuffColor3 extends Color3, TupleSet {
 
     /**
      * This method normalizes the color. It ensures that all coordinates were between the minimum and the maximum.

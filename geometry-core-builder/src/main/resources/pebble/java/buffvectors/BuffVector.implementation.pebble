@@ -49,79 +49,9 @@
     }
 {%      endif %}
 
-{{  MathAndSet_BinaryOperator( desc, className, "addAndSet", "+" ) }}
+{{ SimpleMathAndSetImplementation( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName ) }}
 
-{{  MathAndSet_BinaryOperator( desc, className, "subAndSet", "-" ) }}
-
-{{  MathAndSet_BinaryOperator( desc, className, "simpleMulAndSet", "*" ) }}
-
-{{  MathAndSet_BinaryOperator( desc, className, "simpleDivAndSet", "/" ) }}
-
-    @Override
-    public {{ className }} mulAndSet(double v) {
-        set{{ BinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
-        return this;
-    }
-
-    @Override
-    public {{ className }} divAndSet(double v) {
-        set{{ BinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
-        return this;
-    }
-
-    @Override
-    public {{ className }} negAndSet() {
-        set{{ UnaryOperator(desc, "-", "") | indent(4) }};
-        return this;
-    }
-
-    @Override
-    public {{ className }} absAndSet() {
-        set{{ UnaryFunction(desc, "Math.abs", "") | indent(4) }};
-        return this;
-    }
-
-    @Override
-    public {{ className }} lerpAndSet({{ desc.vectorName }} other, double alpha) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return lerpAndSet(({{ desc.vectorImpName }})other, alpha);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return lerpAndSet(({{ desc.buffVectorImpName }})other, alpha);
-        } else {
-            return lerpAndSet(new {{ desc.vectorImpName }}(other), alpha);
-        }
-    }
-
-    public {{ className }} lerpAndSet({{ desc.vectorImpName }} other, double alpha) {
-        linealAndSet(other, 1 - alpha, alpha);
-        return this;
-    }
-
-    public {{ className }} lerpAndSet({{ desc.buffVectorImpName }} other, double alpha) {
-        linealAndSet(other, 1 - alpha, alpha);
-        return this;
-    }
-
-    @Override
-    public {{ className }} linealAndSet({{ desc.vectorName }} other, double alpha, double beta) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return linealAndSet(({{ desc.vectorImpName }})other, alpha, beta);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return linealAndSet(({{ desc.buffVectorImpName }})other, alpha, beta);
-        } else {
-            return linealAndSet(new {{ desc.vectorImpName }}(other), alpha, beta);
-        }
-    }
-
-    public {{ className }} linealAndSet({{ desc.buffVectorImpName }} other, double alpha, double beta) {
-        set{{ Lineal(desc, "", "other.") | indent(4) }};
-        return this;
-    }
-
-    public {{ className }} linealAndSet({{ desc.vectorImpName }} other, double alpha, double beta) {
-        set{{ Lineal(desc, "", "other.") | indent(4) }};
-        return this;
-    }
+{{ LerpAndLinealAndSetImplementation( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName )  }}
 {%      if desc.dim == 2 %}
 {%      elseif desc.dim == 3 %}
 
@@ -181,29 +111,6 @@
     public {{ className }} vectorProjectionAndSet({{ desc.buffVectorImpName }} where) {
         double r = dot(where) / where.getLengthCuad();
         set{{ BinaryOperatorScalar(desc, "*", "where.", "r") | indent(4) }};
-        return this;
-    }
-{%  endmacro %}
-
-{%  macro MathAndSet_BinaryOperator( desc, className, name, op ) %}
-    @Override
-    public {{ className }} {{ name }}({{ desc.vectorName }} other) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return {{ name }}(({{ desc.vectorImpName }})other);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return {{ name }}(({{ desc.buffVectorImpName }})other);
-        } else {
-            return {{ name }}(new {{ desc.vectorImpName }}(other));
-        }
-    }
-
-    public {{ className }} {{ name }}({{ desc.vectorImpName }} other) {
-        set{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
-        return this;
-    }
-
-    public {{ className }} {{ name }}({{ desc.buffVectorImpName }} other) {
-        set{{ BinaryOperator(desc, op, "", "other.") | indent(4) }};
         return this;
     }
 {%  endmacro %}

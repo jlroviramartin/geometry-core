@@ -101,6 +101,11 @@ public class BuffTuple4d implements Cloneable, EpsilonEquatable<Tuple>, Tuple, T
         }
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
     public BuffTuple4d(Tuple4d tuple) {
         this.x = tuple.getX();
         this.y = tuple.getY();
@@ -108,6 +113,11 @@ public class BuffTuple4d implements Cloneable, EpsilonEquatable<Tuple>, Tuple, T
         this.w = tuple.getW();
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
     public BuffTuple4d(BuffTuple4d tuple) {
         this.x = tuple.getX();
         this.y = tuple.getY();
@@ -282,7 +292,6 @@ public class BuffTuple4d implements Cloneable, EpsilonEquatable<Tuple>, Tuple, T
         }
         return false;
     }
-
     public boolean equals(Tuple4d other) {
         return equals(other.getX(),
                       other.getY(),
@@ -306,10 +315,10 @@ public class BuffTuple4d implements Cloneable, EpsilonEquatable<Tuple>, Tuple, T
         // http://www.jarvana.com/jarvana/view/org/apache/lucene/lucene-spatial/2.9.3/lucene-spatial-2.9.3-sources.jar!/org/apache/lucene/spatial/geometry/shape/Vector2D.java
         final int prime = 31;
         int hash = 1;
-        hash = prime * hash + Double.hashCode(x);
-        hash = prime * hash + Double.hashCode(y);
-        hash = prime * hash + Double.hashCode(z);
-        hash = prime * hash + Double.hashCode(w);
+        hash = prime * hash + Double.hashCode(getX());
+        hash = prime * hash + Double.hashCode(getY());
+        hash = prime * hash + Double.hashCode(getZ());
+        hash = prime * hash + Double.hashCode(getW());
         return hash;
     }
 
@@ -322,12 +331,12 @@ public class BuffTuple4d implements Cloneable, EpsilonEquatable<Tuple>, Tuple, T
 
 //<editor-fold defaultstate="collapsed" desc="Tuple">
     @Override
-    public int size() {
+    public final int size() {
         return 4;
     }
 
     @Override
-    public void getInto(TupleSet tupleSet) {
+    public final void getInto(TupleSet tupleSet) {
         tupleSet.set(0, x);
         tupleSet.set(1, y);
         tupleSet.set(2, z);
@@ -337,37 +346,37 @@ public class BuffTuple4d implements Cloneable, EpsilonEquatable<Tuple>, Tuple, T
 
 //<editor-fold defaultstate="collapsed" desc="TupleSet">
     @Override
-    public void set(int index, byte value) {
+    public final void set(int index, byte value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public void set(int index, short value) {
+    public final void set(int index, short value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public void set(int index, int value) {
+    public final void set(int index, int value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public void set(int index, long value) {
+    public final void set(int index, long value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public void set(int index, float value) {
+    public final void set(int index, float value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public void set(int index, double value) {
+    public final void set(int index, double value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public <T> void set(Class<T> type, int index, T value) {
+    public final <T> void set(Class<T> type, int index, T value) {
         if (Number.class.isAssignableFrom(type)) {
             setAt(index, ((Number)value).doubleValue());
             return;

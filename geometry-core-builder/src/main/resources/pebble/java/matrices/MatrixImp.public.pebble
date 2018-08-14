@@ -15,14 +15,5 @@
         return new {{ className }}({{ RowsAndColumns( desc, ",%n", ", ", Public_getIdentity ) | indent(3) }});
     }
 {%      endif %}
-{%      if not desc.vector.lowerDimension is empty %}
-
-    protected static {{ desc.vector.lowerDimension.tupleTypeName }} toTupleLow(Tuple other) {
-        if (other instanceof {{ desc.vector.lowerDimension.tupleTypeName }}) {
-            return ({{ desc.vector.lowerDimension.tupleTypeName }})other;
-        }
-        return new {{ desc.vector.lowerDimension.tupleImpName }}(other);
-    }
-{%      endif %}
 {%  endmacro %}
 

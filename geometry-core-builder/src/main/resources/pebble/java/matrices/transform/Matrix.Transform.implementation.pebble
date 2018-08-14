@@ -6,23 +6,39 @@
 {%      set vlowdesc = desc.vector.lowerDimension %}
     @Override
     public {{ vdesc.vectorImpName }} mul({{ vdesc.vectorName }} v) {
-        {{ vdesc.tupleTypeName }} _v = TupleUtils.to{{ vdesc.tupleTypeName }}(v);
-
-        {{ MulVector( desc, "", "_v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
+        if (v instanceof {{ vdesc.vectorImpName }}) {
+            return mul(({{ vdesc.vectorImpName }})v);
+        } else if (v instanceof {{ vdesc.buffVectorImpName }}) {
+            return mul(({{ vdesc.buffVectorImpName }})v);
+        } else {
+            return mul(new {{ vdesc.vectorImpName }}(v));
+        }
     }
 
     public {{ vdesc.vectorImpName }} mul({{ vdesc.vectorImpName }} v) {
         {{ MulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
     }
 
+    public {{ vdesc.vectorImpName }} mul({{ vdesc.buffVectorImpName }} v) {
+        {{ MulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
+    }
+
     @Override
     public {{ vdesc.vectorImpName }} premul({{ vdesc.vectorName }} v) {
-        {{ vdesc.tupleTypeName }} _v = TupleUtils.to{{ vdesc.tupleTypeName }}(v);
-
-        {{ PremulVector( desc, "", "_v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
+        if (v instanceof {{ vdesc.vectorImpName }}) {
+            return premul(({{ vdesc.vectorImpName }})v);
+        } else if (v instanceof {{ vdesc.buffVectorImpName }}) {
+            return premul(({{ vdesc.buffVectorImpName }})v);
+        } else {
+            return premul(new {{ vdesc.vectorImpName }}(v));
+        }
     }
 
     public {{ vdesc.vectorImpName }} premul({{ vdesc.vectorImpName }} v) {
+        {{ PremulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
+    }
+
+    public {{ vdesc.vectorImpName }} premul({{ vdesc.buffVectorImpName }} v) {
         {{ PremulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
     }
 {%      if not desc.vector.lowerDimension is empty %}
@@ -32,45 +48,77 @@
 
     @Override
     public {{ vlowdesc.vectorImpName }} mul({{ vlowdesc.vectorName }} v) {
-        {{ vlowdesc.tupleTypeName }} _v = toTupleLow(v);
-
-        {{ MulVectorLow( desc, "", "_v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
+        if (v instanceof {{ vlowdesc.vectorImpName }}) {
+            return mul(({{ vlowdesc.vectorImpName }})v);
+        } else if (v instanceof {{ vlowdesc.buffVectorImpName }}) {
+            return mul(({{ vlowdesc.buffVectorImpName }})v);
+        } else {
+            return mul(new {{ vlowdesc.vectorImpName }}(v));
+        }
     }
 
     public {{ vlowdesc.vectorImpName }} mul({{ vlowdesc.vectorImpName }} v) {
         {{ MulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
     }
 
+    public {{ vlowdesc.vectorImpName }} mul({{ vlowdesc.buffVectorImpName }} v) {
+        {{ MulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
+    }
+
     @Override
     public {{ vlowdesc.pointImpName }} mul({{ vlowdesc.pointName }} p) {
-        {{ vlowdesc.tupleTypeName }} _p = toTupleLow(p);
-
-        {{ MulpointLow( desc, "", "_p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
+        if (p instanceof {{ vlowdesc.pointImpName }}) {
+            return mul(({{ vlowdesc.pointImpName }})p);
+        } else if (p instanceof {{ vlowdesc.buffPointImpName }}) {
+            return mul(({{ vlowdesc.buffPointImpName }})p);
+        } else {
+            return mul(new {{ vlowdesc.pointImpName }}(p));
+        }
     }
 
     public {{ vlowdesc.pointImpName }} mul({{ vlowdesc.pointImpName }} p) {
         {{ MulpointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
     }
 
+    public {{ vlowdesc.pointImpName }} mul({{ vlowdesc.buffPointImpName }} p) {
+        {{ MulpointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
+    }
+
     @Override
     public {{ vlowdesc.vectorImpName }} premul({{ vlowdesc.vectorName }} v) {
-        {{ vlowdesc.tupleTypeName }} _v = toTupleLow(v);
-
-        {{ PremulVectorLow( desc, "", "_v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
+        if (v instanceof {{ vlowdesc.vectorImpName }}) {
+            return premul(({{ vlowdesc.vectorImpName }})v);
+        } else if (v instanceof {{ vlowdesc.buffVectorImpName }}) {
+            return premul(({{ vlowdesc.buffVectorImpName }})v);
+        } else {
+            return premul(new {{ vlowdesc.vectorImpName }}(v));
+        }
     }
 
     public {{ vlowdesc.vectorImpName }} premul({{ vlowdesc.vectorImpName }} v) {
         {{ PremulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
     }
 
+    public {{ vlowdesc.vectorImpName }} premul({{ vlowdesc.buffVectorImpName }} v) {
+        {{ PremulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
+    }
+
     @Override
     public {{ vlowdesc.pointImpName }} premul({{ vlowdesc.pointName }} p) {
-        {{ vlowdesc.tupleTypeName }} _p = toTupleLow(p);
-
-        {{ PremulPointLow( desc, "", "_p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
+        if (p instanceof {{ vlowdesc.pointImpName }}) {
+            return premul(({{ vlowdesc.pointImpName }})p);
+        } else if (p instanceof {{ vlowdesc.buffPointImpName }}) {
+            return premul(({{ vlowdesc.buffPointImpName }})p);
+        } else {
+            return premul(new {{ vlowdesc.pointImpName }}(p));
+        }
     }
 
     public {{ vlowdesc.pointImpName }} premul({{ vlowdesc.pointImpName }} p) {
+        {{ PremulPointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
+    }
+
+    public {{ vlowdesc.pointImpName }} premul({{ vlowdesc.buffPointImpName }} p) {
         {{ PremulPointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
     }
 {%      endif %}

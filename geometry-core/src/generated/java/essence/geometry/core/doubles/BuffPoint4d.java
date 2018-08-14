@@ -136,11 +136,13 @@ public class BuffPoint4d extends BuffTuple4d implements BuffPoint4 {
     }
 
     public BuffPoint4d lerpAndSet(Point4d other, double alpha) {
-        return linealAndSet(other, 1 - alpha, alpha);
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
     }
 
     public BuffPoint4d lerpAndSet(BuffPoint4d other, double alpha) {
-        return linealAndSet(other, 1 - alpha, alpha);
+        linealAndSet(other, 1 - alpha, alpha);
+        return this;
     }
 
     @Override
@@ -322,11 +324,11 @@ public class BuffPoint4d extends BuffTuple4d implements BuffPoint4 {
     }
 
     public BuffPoint4d sub(Vector4d other) {
-        return new BuffPoint4d((double)(getX() + other.getX()), (double)(getY() + other.getY()), (double)(getZ() + other.getZ()), (double)(getW() + other.getW()));
+        return new BuffPoint4d((double)(getX() - other.getX()), (double)(getY() - other.getY()), (double)(getZ() - other.getZ()), (double)(getW() - other.getW()));
     }
 
     public BuffPoint4d sub(BuffVector4d other) {
-        return new BuffPoint4d((double)(getX() + other.getX()), (double)(getY() + other.getY()), (double)(getZ() + other.getZ()), (double)(getW() + other.getW()));
+        return new BuffPoint4d((double)(getX() - other.getX()), (double)(getY() - other.getY()), (double)(getZ() - other.getZ()), (double)(getW() - other.getW()));
     }
 
     @Override
@@ -368,37 +370,37 @@ public class BuffPoint4d extends BuffTuple4d implements BuffPoint4 {
     }
 
     @Override
-    public double invLerp(Point4 other, Point4 pLerp) {
-        if (other instanceof Point4d && pLerp instanceof Point4d) {
-            return invLerp((Point4d)other, (Point4d)pLerp);
-        } else if (other instanceof BuffPoint4d && pLerp instanceof BuffPoint4d) {
-            return invLerp((BuffPoint4d)other, (BuffPoint4d)pLerp);
+    public double invLerp(Point4 other, Point4 lerp) {
+        if (other instanceof Point4d && lerp instanceof Point4d) {
+            return invLerp((Point4d)other, (Point4d)lerp);
+        } else if (other instanceof BuffPoint4d && lerp instanceof BuffPoint4d) {
+            return invLerp((BuffPoint4d)other, (BuffPoint4d)lerp);
         } else {
-            return invLerp(new Point4d(other), new Point4d(pLerp));
+            return invLerp(new Point4d(other), new Point4d(other));
         }
     }
 
-    public double invLerp(Point4d other, Point4d pLerp) {
+    public double invLerp(Point4d other, Point4d lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
         double z1 = other.getZ() - getZ();
         double w1 = other.getW() - getW();
-        double x2 = pLerp.getX() - getX();
-        double y2 = pLerp.getY() - getY();
-        double z2 = pLerp.getZ() - getZ();
-        double w2 = pLerp.getW() - getW();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
+        double w2 = lerp.getW() - getW();
         return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
     }
 
-    public double invLerp(BuffPoint4d other, BuffPoint4d pLerp) {
+    public double invLerp(BuffPoint4d other, BuffPoint4d lerp) {
         double x1 = other.getX() - getX();
         double y1 = other.getY() - getY();
         double z1 = other.getZ() - getZ();
         double w1 = other.getW() - getW();
-        double x2 = pLerp.getX() - getX();
-        double y2 = pLerp.getY() - getY();
-        double z2 = pLerp.getZ() - getZ();
-        double w2 = pLerp.getW() - getW();
+        double x2 = lerp.getX() - getX();
+        double y2 = lerp.getY() - getY();
+        double z2 = lerp.getZ() - getZ();
+        double w2 = lerp.getW() - getW();
         return (x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2) / Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1 + w1 * w1);
     }
 

@@ -30,7 +30,7 @@ package essence.geometry.core;
  * A {@code BuffVector2} is a 2 dimensional collection of values
  * that represents a vector.
  */
-public interface BuffVector2 extends Vector2 {
+public interface BuffVector2 extends Vector2, TupleSet {
 
     /**
      * This method sets the vector to zero.

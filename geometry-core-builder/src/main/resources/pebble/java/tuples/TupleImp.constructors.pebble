@@ -49,12 +49,22 @@
         }
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
     public {{ className }}({{ desc.tupleImpName }} tuple) {
 {%      for property in desc.properties %}
         this.{{ property.name }} = tuple.get{{ property.upperName }}();
 {%      endfor %}
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
     public {{ className }}({{ desc.buffTupleImpName }} tuple) {
 {%      for property in desc.properties %}
         this.{{ property.name }} = tuple.get{{ property.upperName }}();
