@@ -26,7 +26,6 @@
 package essence.geometry.core.doubles;
 
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector3;
 import essence.geometry.core.Point3;
 import essence.geometry.core.BuffPoint3;

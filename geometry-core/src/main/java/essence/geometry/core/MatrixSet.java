@@ -24,9 +24,9 @@ package essence.geometry.core;
  */
 public interface MatrixSet {
 
-    void setAt(int r, int c, float value);
+    void setFloat(int r, int c, float value);
 
-    void setAt(int r, int c, double value);
+    void setDouble(int r, int c, double value);
 
-    <T> void setAt(Class<T> type, int r, int c, T value);
+    <T> void set(Class<T> type, int r, int c, T value);
 }

@@ -226,8 +226,8 @@ public class Tuple2f implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
 
     @Override
     public final void getInto(TupleSet tupleSet) {
-        tupleSet.set(0, x);
-        tupleSet.set(1, y);
+        tupleSet.setFloat(0, x);
+        tupleSet.setFloat(1, y);
     }
 //</editor-fold>
 

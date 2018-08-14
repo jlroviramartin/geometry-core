@@ -17,7 +17,6 @@
 
 {%  block import %}
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.{{ desc.colorName }};
 import essence.geometry.core.DoubleUtils;
 import essence.util.math.ArithmeticError;

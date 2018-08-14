@@ -18,11 +18,7 @@
  */
 package templatesforvectors.java.templates;
 
-import java.util.ArrayList;
-import java.util.List;
 import templatesforvectors.BaseTemplate;
-import templatesforvectors.model.MatrixDescription;
-import templatesforvectors.model.TupleUtilsDescription;
 import templatesforvectors.model.VectorDescription;
 
 /**
@@ -35,8 +31,6 @@ public class TupleTemplates extends BaseTemplate {
 
     private final Template tupleImp = load("pebble/java/tuples/TupleImp.pebble");
     private final Template tupleImpList = load("pebble/java/collections/TupleImpList.pebble");
-
-    private final Template tupleUtils = load("pebble/java/TupleUtils.pebble");
 
     @Override
     public void execute() {
@@ -53,8 +47,6 @@ public class TupleTemplates extends BaseTemplate {
         buildInteger(2);
         buildByte(3);
         buildByte(4);
-
-        buildTupleUtils();
     }
 
     private void buildSimple(int dim) {
@@ -87,29 +79,5 @@ public class TupleTemplates extends BaseTemplate {
         VectorDescription desc = VectorDescription.getByte(dim);
         writeToFile(tupleImp, desc, desc.getTupleImpName(), desc._package);
         writeToFile(bufftupleImp, desc, desc.getBuffTupleImpName(), desc._package);
-    }
-
-    private void buildTupleUtils() {
-        TupleUtilsDescription desc = new TupleUtilsDescription();
-        List<VectorDescription> aux = new ArrayList<>();
-        for (int i = 2; i <= 4; i++) {
-            aux.add(VectorDescription.getFloat(i));
-            aux.add(VectorDescription.getDouble(i));
-        }
-        aux.add(VectorDescription.getInteger(2));
-        aux.add(VectorDescription.getByte(3));
-        aux.add(VectorDescription.getByte(4));
-
-        List<MatrixDescription> maux = new ArrayList<>();
-        for (int i = 2; i <= 4; i++) {
-            maux.add(MatrixDescription.getFloat(i));
-            maux.add(MatrixDescription.getDouble(i));
-        }
-
-        desc._package = VectorDescription.CORE_PACKAGE;
-        desc.descriptors = aux.toArray(new VectorDescription[aux.size()]);
-        desc.mdescriptors = maux.toArray(new MatrixDescription[maux.size()]);
-
-        writeToFile(tupleUtils, desc, "TupleUtils", desc._package);
     }
 }

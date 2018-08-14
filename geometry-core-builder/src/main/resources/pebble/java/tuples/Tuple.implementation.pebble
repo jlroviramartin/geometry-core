@@ -10,7 +10,7 @@
     @Override
     public final void getInto(TupleSet tupleSet) {
 {%      for property in desc.properties %}
-        tupleSet.set({{ property.index }}, {{ property.name }});
+        tupleSet.set{{ property.ctype }}({{ property.index }}, {{ property.name }});
 {%      endfor %}
     }
 {%  endmacro %}

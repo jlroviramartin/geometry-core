@@ -59,18 +59,14 @@ public interface Vector3 extends Tuple {
      *
      * @return Length of this vector.
      */
-    default double getLength() {
-        return Math.sqrt(getLengthCuad());
-    }
+    double getLength();
 
     /**
      * This method gets the squared length of {@code this} vector.
      *
      * @return Squared length of this vector.
      */
-    default double getLengthCuad() {
-        return dot(this);
-    }
+    double getLengthCuad();
 
     /**
      * This method gets the L1 (Manhattan) length of {@code this} vector.
@@ -155,9 +151,7 @@ public interface Vector3 extends Tuple {
      * @param alpha Interpolation.
      * @return {@code this * alpha + other * (1 - alpha)}
      */
-    default Vector3 lerp(Vector3 other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
+    Vector3 lerp(Vector3 other, double alpha);
 
     /**
      * This method evaluates the inverse of the linear interpolation of {@code this} vector and {@code other} vector at {@code vLerp}.
@@ -209,9 +203,7 @@ public interface Vector3 extends Tuple {
      * @param v3 Other vector.
      * @return {@code this . ( v1 x v2 )}
      */
-    default double tripleProduct(Vector3 v2, Vector3 v3) {
-        return dot(v2.cross(v3));
-    }
+    double tripleProduct(Vector3 v2, Vector3 v3);
 
     /**
      * This method evaluates the scalar projection of {@code this} vector over {@code where} vector.
@@ -220,9 +212,7 @@ public interface Vector3 extends Tuple {
      * @param where Where to project.
      * @return {@code this . where.getUnit()}
      */
-    default double scalarProjection(Vector3 where) {
-        return dot(where) / where.getLength();
-    }
+    double scalarProjection(Vector3 where);
 
     /**
      * This method evaluates the vector projection of {@code this} vector over {@code where} vector.

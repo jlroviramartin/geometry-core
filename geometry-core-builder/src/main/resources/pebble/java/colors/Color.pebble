@@ -13,8 +13,18 @@
  */
 public interface {{ desc.colorName }} extends Tuple {
 
+    /**
+     * This method tests if {@code this} color is normalized (coordinates are between the min and max values).
+     *
+     * @return True if {@code this} color is normalized. False otherwise.
+     */
     boolean isNormalized();
 
+    /**
+     * This method gets the {@code this} normalized (coordinates are between the min and max values).
+     *
+     * @return Color normalized.
+     */
     {{ desc.colorName }} getNormalized();
 
     /**
@@ -86,9 +96,7 @@ public interface {{ desc.colorName }} extends Tuple {
      * @param alpha Interpolation.
      * @return {@code this * alpha + other * (1 - alpha)}
      */
-    default {{ desc.colorName }} lerp({{ desc.colorName }} other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
+    {{ desc.colorName }} lerp({{ desc.colorName }} other, double alpha);
 
     /**
      * This method evaluates the inverse of the linear interpolation of {@code this} color and {@code other} color at {@code vLerp}.

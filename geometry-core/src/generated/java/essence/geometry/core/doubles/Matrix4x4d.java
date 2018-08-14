@@ -30,7 +30,6 @@ import essence.util.math.EpsilonEquatable;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.SingularMatrixException;
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.MatrixInpector;
 import essence.geometry.core.MatrixSet;
 import essence.geometry.core.Vector4;
@@ -1155,38 +1154,38 @@ public class Matrix4x4d implements Cloneable, EpsilonEquatable<Matrix4x4d>, Buff
 
     @Override
     public void getInto(MatrixSet matrixSet) {
-        matrixSet.setAt( 0, 0, (double)m00 );
-        matrixSet.setAt( 0, 1, (double)m01 );
-        matrixSet.setAt( 0, 2, (double)m02 );
-        matrixSet.setAt( 0, 3, (double)m03 );
-        matrixSet.setAt( 1, 0, (double)m10 );
-        matrixSet.setAt( 1, 1, (double)m11 );
-        matrixSet.setAt( 1, 2, (double)m12 );
-        matrixSet.setAt( 1, 3, (double)m13 );
-        matrixSet.setAt( 2, 0, (double)m20 );
-        matrixSet.setAt( 2, 1, (double)m21 );
-        matrixSet.setAt( 2, 2, (double)m22 );
-        matrixSet.setAt( 2, 3, (double)m23 );
-        matrixSet.setAt( 3, 0, (double)m30 );
-        matrixSet.setAt( 3, 1, (double)m31 );
-        matrixSet.setAt( 3, 2, (double)m32 );
-        matrixSet.setAt( 3, 3, (double)m33 );
+        matrixSet.setDouble( 0, 0, (double)m00 );
+        matrixSet.setDouble( 0, 1, (double)m01 );
+        matrixSet.setDouble( 0, 2, (double)m02 );
+        matrixSet.setDouble( 0, 3, (double)m03 );
+        matrixSet.setDouble( 1, 0, (double)m10 );
+        matrixSet.setDouble( 1, 1, (double)m11 );
+        matrixSet.setDouble( 1, 2, (double)m12 );
+        matrixSet.setDouble( 1, 3, (double)m13 );
+        matrixSet.setDouble( 2, 0, (double)m20 );
+        matrixSet.setDouble( 2, 1, (double)m21 );
+        matrixSet.setDouble( 2, 2, (double)m22 );
+        matrixSet.setDouble( 2, 3, (double)m23 );
+        matrixSet.setDouble( 3, 0, (double)m30 );
+        matrixSet.setDouble( 3, 1, (double)m31 );
+        matrixSet.setDouble( 3, 2, (double)m32 );
+        matrixSet.setDouble( 3, 3, (double)m33 );
     }
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="MatrixSet">
     @Override
-    public void setAt(int r, int c, float value) {
+    public void setFloat(int r, int c, float value) {
         set(r, c, (double)value);
     }
 
     @Override
-    public void setAt(int r, int c, double value) {
+    public void setDouble(int r, int c, double value) {
         set(r, c, (double)value);
     }
 
     @Override
-    public <T> void setAt(Class<T> type, int r, int c, T value) {
+    public <T> void set(Class<T> type, int r, int c, T value) {
         if (Number.class.isAssignableFrom(type)) {
             set(r, c, ((Number)value).doubleValue());
             return;

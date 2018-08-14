@@ -18,7 +18,6 @@
 
 {%  block import %}
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.{{ desc.colorName }};
 import essence.geometry.core.{{ desc.buffColorName }};
 import essence.geometry.core.DoubleUtils;

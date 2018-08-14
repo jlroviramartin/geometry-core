@@ -26,7 +26,6 @@
 package essence.geometry.core.floats;
 
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector4;
 import essence.geometry.core.DoubleUtils;
 import essence.util.math.ArithmeticError;
@@ -178,6 +177,16 @@ public class Vector4f extends Tuple4f implements Vector4 {
             p <<= 1;
         }
         return v;
+    }
+
+    @Override
+    public double getLength() {
+        return Math.sqrt(getLengthCuad());
+    }
+
+    @Override
+    public double getLengthCuad() {
+        return dot(this);
     }
 
     @Override
@@ -382,6 +391,25 @@ public class Vector4f extends Tuple4f implements Vector4 {
 
     public double dot(BuffVector4f other) {
         return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ() + getW() * other.getW();
+    }
+
+    @Override
+    public double scalarProjection(Vector4 where) {
+        if (where instanceof Vector4f) {
+            return scalarProjection((Vector4f)where);
+        } else if (where instanceof BuffVector4f) {
+            return scalarProjection((BuffVector4f)where);
+        } else {
+            return scalarProjection(new Vector4f(where));
+        }
+    }
+
+    public double scalarProjection(Vector4f where) {
+        return dot(where) / where.getLength();
+    }
+
+    public double scalarProjection(BuffVector4f where) {
+        return dot(where) / where.getLength();
     }
 
     @Override

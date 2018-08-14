@@ -26,7 +26,6 @@
 package essence.geometry.core.floats;
 
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector3;
 import essence.geometry.core.DoubleUtils;
 import essence.util.math.ArithmeticError;
@@ -164,6 +163,16 @@ public class Vector3f extends Tuple3f implements Vector3 {
             p <<= 1;
         }
         return v;
+    }
+
+    @Override
+    public double getLength() {
+        return Math.sqrt(getLengthCuad());
+    }
+
+    @Override
+    public double getLengthCuad() {
+        return dot(this);
     }
 
     @Override
@@ -384,6 +393,44 @@ public class Vector3f extends Tuple3f implements Vector3 {
         return new Vector3f((getY() * other.getZ()) - (getZ() * other.getY()),
                             (getZ() * other.getX()) - (getX() * other.getZ()),
                             (getX() * other.getY()) - (getY() * other.getX()));
+    }
+
+    @Override
+    public double tripleProduct(Vector3 v2, Vector3 v3) {
+        if (v2 instanceof Vector3f && v3 instanceof Vector3f) {
+            return tripleProduct((Vector3f)v2, (Vector3f)v3);
+        } else if (v2 instanceof BuffVector3f && v3 instanceof BuffVector3f) {
+            return tripleProduct((BuffVector3f)v2, (BuffVector3f)v3);
+        } else {
+            return tripleProduct(new Vector3f(v2), new Vector3f(v3));
+        }
+    }
+
+    public double tripleProduct(Vector3f v2, Vector3f v3) {
+        return dot(v2.cross(v3));
+    }
+
+    public double tripleProduct(BuffVector3f v2, BuffVector3f v3) {
+        return dot(v2.cross(v3));
+    }
+
+    @Override
+    public double scalarProjection(Vector3 where) {
+        if (where instanceof Vector3f) {
+            return scalarProjection((Vector3f)where);
+        } else if (where instanceof BuffVector3f) {
+            return scalarProjection((BuffVector3f)where);
+        } else {
+            return scalarProjection(new Vector3f(where));
+        }
+    }
+
+    public double scalarProjection(Vector3f where) {
+        return dot(where) / where.getLength();
+    }
+
+    public double scalarProjection(BuffVector3f where) {
+        return dot(where) / where.getLength();
     }
 
     @Override

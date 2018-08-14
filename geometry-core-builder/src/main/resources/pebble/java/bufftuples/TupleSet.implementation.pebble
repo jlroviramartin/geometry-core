@@ -3,32 +3,32 @@
  #}
 {%  macro TupleSet( desc ) %}
     @Override
-    public final void set(int index, byte value) {
+    public final void setByte(int index, byte value) {
         setAt(index, ({{ desc.type }})value);
     }
 
     @Override
-    public final void set(int index, short value) {
+    public final void setShort(int index, short value) {
         setAt(index, ({{ desc.type }})value);
     }
 
     @Override
-    public final void set(int index, int value) {
+    public final void setInteger(int index, int value) {
         setAt(index, ({{ desc.type }})value);
     }
 
     @Override
-    public final void set(int index, long value) {
+    public final void setLong(int index, long value) {
         setAt(index, ({{ desc.type }})value);
     }
 
     @Override
-    public final void set(int index, float value) {
+    public final void setFloat(int index, float value) {
         setAt(index, ({{ desc.type }})value);
     }
 
     @Override
-    public final void set(int index, double value) {
+    public final void setDouble(int index, double value) {
         setAt(index, ({{ desc.type }})value);
     }
 

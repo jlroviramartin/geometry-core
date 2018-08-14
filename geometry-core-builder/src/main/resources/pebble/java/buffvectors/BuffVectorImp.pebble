@@ -20,7 +20,6 @@
 
 {%  block import %}
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.{{ desc.vectorName }};
 import essence.geometry.core.{{ desc.buffVectorName }};
 import essence.geometry.core.DoubleUtils;

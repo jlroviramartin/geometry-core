@@ -26,7 +26,6 @@
 package essence.geometry.core.doubles;
 
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector2;
 import essence.geometry.core.BuffVector2;
 import essence.geometry.core.DoubleUtils;
@@ -376,6 +375,16 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
     }
 
     @Override
+    public double getLength() {
+        return Math.sqrt(getLengthCuad());
+    }
+
+    @Override
+    public double getLengthCuad() {
+        return dot(this);
+    }
+
+    @Override
     public double getLengthL1() {
         return Math.abs(getX())
                + Math.abs(getY());
@@ -636,6 +645,25 @@ public class BuffVector2d extends BuffTuple2d implements BuffVector2 {
 
     public double cross(BuffVector2d other) {
         return getX() * other.getY() - getY() * other.getX();
+    }
+
+    @Override
+    public double scalarProjection(Vector2 where) {
+        if (where instanceof Vector2d) {
+            return scalarProjection((Vector2d)where);
+        } else if (where instanceof BuffVector2d) {
+            return scalarProjection((BuffVector2d)where);
+        } else {
+            return scalarProjection(new Vector2d(where));
+        }
+    }
+
+    public double scalarProjection(Vector2d where) {
+        return dot(where) / where.getLength();
+    }
+
+    public double scalarProjection(BuffVector2d where) {
+        return dot(where) / where.getLength();
     }
 
     @Override

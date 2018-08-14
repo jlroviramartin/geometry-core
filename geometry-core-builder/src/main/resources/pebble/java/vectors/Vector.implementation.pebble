@@ -24,6 +24,16 @@
     }
 
     @Override
+    public double getLength() {
+        return Math.sqrt(getLengthCuad());
+    }
+
+    @Override
+    public double getLengthCuad() {
+        return dot(this);
+    }
+
+    @Override
     public double getLengthL1() {
         return {{ GetLengthL1(desc) | indent(4) }};
     }
@@ -154,7 +164,45 @@ get{{ property.upperName }}() * other.get{{ property.upperName }}()
                 (getZ() * other.getX()) - (getX() * other.getZ()),
                 (getX() * other.getY()) - (getY() * other.getX()));
     }
+
+    @Override
+    public double tripleProduct({{ desc.vectorName }} v2, {{ desc.vectorName }} v3) {
+        if (v2 instanceof {{ desc.vectorImpName }} && v3 instanceof {{ desc.vectorImpName }}) {
+            return tripleProduct(({{ desc.vectorImpName }})v2, ({{ desc.vectorImpName }})v3);
+        } else if (v2 instanceof {{ desc.buffVectorImpName }} && v3 instanceof {{ desc.buffVectorImpName }}) {
+            return tripleProduct(({{ desc.buffVectorImpName }})v2, ({{ desc.buffVectorImpName }})v3);
+        } else {
+            return tripleProduct(new {{ desc.vectorImpName }}(v2), new {{ desc.vectorImpName }}(v3));
+        }
+    }
+
+    public double tripleProduct({{ desc.vectorImpName }} v2, {{ desc.vectorImpName }} v3) {
+        return dot(v2.cross(v3));
+    }
+
+    public double tripleProduct({{ desc.buffVectorImpName }} v2, {{ desc.buffVectorImpName }} v3) {
+        return dot(v2.cross(v3));
+    }
 {%      endif %}
+
+    @Override
+    public double scalarProjection({{ desc.vectorName }} where) {
+        if (where instanceof {{ desc.vectorImpName }}) {
+            return scalarProjection(({{ desc.vectorImpName }})where);
+        } else if (where instanceof {{ desc.buffVectorImpName }}) {
+            return scalarProjection(({{ desc.buffVectorImpName }})where);
+        } else {
+            return scalarProjection(new {{ desc.vectorImpName }}(where));
+        }
+    }
+
+    public double scalarProjection({{ desc.vectorImpName }} where) {
+        return dot(where) / where.getLength();
+    }
+
+    public double scalarProjection({{ desc.buffVectorImpName }} where) {
+        return dot(where) / where.getLength();
+    }
 
 {# vectorProjection:
    where.getUnit().mul( this.dot( where.getUnit() ) )

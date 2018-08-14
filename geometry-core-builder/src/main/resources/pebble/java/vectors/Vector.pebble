@@ -40,18 +40,14 @@ public interface {{ desc.vectorName }} extends Tuple {
      *
      * @return Length of this vector.
      */
-    default double getLength() {
-        return Math.sqrt(getLengthCuad());
-    }
+    double getLength();
 
     /**
      * This method gets the squared length of {@code this} vector.
      *
      * @return Squared length of this vector.
      */
-    default double getLengthCuad() {
-        return dot(this);
-    }
+    double getLengthCuad();
 
     /**
      * This method gets the L1 (Manhattan) length of {@code this} vector.
@@ -224,9 +220,7 @@ public interface {{ desc.vectorName }} extends Tuple {
      * @param alpha Interpolation.
      * @return {@code this * alpha + other * (1 - alpha)}
      */
-    default {{ desc.vectorName }} lerp({{ desc.vectorName }} other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
+    {{ desc.vectorName }} lerp({{ desc.vectorName }} other, double alpha);
 
     /**
      * This method evaluates the inverse of the linear interpolation of {@code this} vector and {@code other} vector at {@code vLerp}.
@@ -288,9 +282,7 @@ public interface {{ desc.vectorName }} extends Tuple {
      * @param v3 Other vector.
      * @return {@code this . ( v1 x v2 )}
      */
-    default double tripleProduct({{ desc.vectorName }} v2, {{ desc.vectorName }} v3) {
-        return dot(v2.cross(v3));
-    }
+    double tripleProduct({{ desc.vectorName }} v2, {{ desc.vectorName }} v3);
 {%      endif %}
 
     /**
@@ -300,9 +292,7 @@ public interface {{ desc.vectorName }} extends Tuple {
      * @param where Where to project.
      * @return {@code this . where.getUnit()}
      */
-    default double scalarProjection({{ desc.vectorName }} where) {
-        return dot(where) / where.getLength();
-    }
+    double scalarProjection({{ desc.vectorName }} where);
 
     /**
      * This method evaluates the vector projection of {@code this} vector over {@code where} vector.

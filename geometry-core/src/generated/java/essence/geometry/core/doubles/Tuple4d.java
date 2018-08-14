@@ -262,10 +262,10 @@ public class Tuple4d implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
 
     @Override
     public final void getInto(TupleSet tupleSet) {
-        tupleSet.set(0, x);
-        tupleSet.set(1, y);
-        tupleSet.set(2, z);
-        tupleSet.set(3, w);
+        tupleSet.setDouble(0, x);
+        tupleSet.setDouble(1, y);
+        tupleSet.setDouble(2, z);
+        tupleSet.setDouble(3, w);
     }
 //</editor-fold>
 

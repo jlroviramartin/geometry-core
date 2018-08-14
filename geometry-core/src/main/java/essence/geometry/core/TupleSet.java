@@ -24,17 +24,17 @@ package essence.geometry.core;
  */
 public interface TupleSet {
 
-    void set(int index, byte value);
+    void setByte(int index, byte value);
 
-    void set(int index, short value);
+    void setShort(int index, short value);
 
-    void set(int index, int value);
+    void setInteger(int index, int value);
 
-    void set(int index, long value);
+    void setLong(int index, long value);
 
-    void set(int index, float value);
+    void setFloat(int index, float value);
 
-    void set(int index, double value);
+    void setDouble(int index, double value);
 
     <T> void set(Class<T> type, int index, T value);
 }

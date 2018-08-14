@@ -59,18 +59,14 @@ public interface Vector2 extends Tuple {
      *
      * @return Length of this vector.
      */
-    default double getLength() {
-        return Math.sqrt(getLengthCuad());
-    }
+    double getLength();
 
     /**
      * This method gets the squared length of {@code this} vector.
      *
      * @return Squared length of this vector.
      */
-    default double getLengthCuad() {
-        return dot(this);
-    }
+    double getLengthCuad();
 
     /**
      * This method gets the L1 (Manhattan) length of {@code this} vector.
@@ -241,9 +237,7 @@ public interface Vector2 extends Tuple {
      * @param alpha Interpolation.
      * @return {@code this * alpha + other * (1 - alpha)}
      */
-    default Vector2 lerp(Vector2 other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
+    Vector2 lerp(Vector2 other, double alpha);
 
     /**
      * This method evaluates the inverse of the linear interpolation of {@code this} vector and {@code other} vector at {@code vLerp}.
@@ -295,9 +289,7 @@ public interface Vector2 extends Tuple {
      * @param where Where to project.
      * @return {@code this . where.getUnit()}
      */
-    default double scalarProjection(Vector2 where) {
-        return dot(where) / where.getLength();
-    }
+    double scalarProjection(Vector2 where);
 
     /**
      * This method evaluates the vector projection of {@code this} vector over {@code where} vector.

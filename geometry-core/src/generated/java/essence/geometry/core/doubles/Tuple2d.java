@@ -226,8 +226,8 @@ public class Tuple2d implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
 
     @Override
     public final void getInto(TupleSet tupleSet) {
-        tupleSet.set(0, x);
-        tupleSet.set(1, y);
+        tupleSet.setDouble(0, x);
+        tupleSet.setDouble(1, y);
     }
 //</editor-fold>
 

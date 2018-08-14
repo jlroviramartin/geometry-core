@@ -26,7 +26,6 @@
 package essence.geometry.core.bytes;
 
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Color4;
 import essence.geometry.core.BuffColor4;
 import essence.geometry.core.DoubleUtils;

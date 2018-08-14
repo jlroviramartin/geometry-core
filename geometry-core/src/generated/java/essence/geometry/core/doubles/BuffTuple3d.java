@@ -305,40 +305,40 @@ public class BuffTuple3d implements Cloneable, EpsilonEquatable<Tuple>, Tuple, T
 
     @Override
     public final void getInto(TupleSet tupleSet) {
-        tupleSet.set(0, x);
-        tupleSet.set(1, y);
-        tupleSet.set(2, z);
+        tupleSet.setDouble(0, x);
+        tupleSet.setDouble(1, y);
+        tupleSet.setDouble(2, z);
     }
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="TupleSet">
     @Override
-    public final void set(int index, byte value) {
+    public final void setByte(int index, byte value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public final void set(int index, short value) {
+    public final void setShort(int index, short value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public final void set(int index, int value) {
+    public final void setInteger(int index, int value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public final void set(int index, long value) {
+    public final void setLong(int index, long value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public final void set(int index, float value) {
+    public final void setFloat(int index, float value) {
         setAt(index, (double)value);
     }
 
     @Override
-    public final void set(int index, double value) {
+    public final void setDouble(int index, double value) {
         setAt(index, (double)value);
     }
 

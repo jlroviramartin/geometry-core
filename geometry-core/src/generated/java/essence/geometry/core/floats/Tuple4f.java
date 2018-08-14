@@ -262,10 +262,10 @@ public class Tuple4f implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
 
     @Override
     public final void getInto(TupleSet tupleSet) {
-        tupleSet.set(0, x);
-        tupleSet.set(1, y);
-        tupleSet.set(2, z);
-        tupleSet.set(3, w);
+        tupleSet.setFloat(0, x);
+        tupleSet.setFloat(1, y);
+        tupleSet.setFloat(2, z);
+        tupleSet.setFloat(3, w);
     }
 //</editor-fold>
 

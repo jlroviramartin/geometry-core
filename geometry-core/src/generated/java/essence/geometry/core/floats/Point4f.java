@@ -26,7 +26,6 @@
 package essence.geometry.core.floats;
 
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.Vector4;
 import essence.geometry.core.Point4;
 

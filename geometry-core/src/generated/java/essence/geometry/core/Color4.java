@@ -32,8 +32,18 @@ package essence.geometry.core;
  */
 public interface Color4 extends Tuple {
 
+    /**
+     * This method tests if {@code this} color is normalized (coordinates are between the min and max values).
+     *
+     * @return True if {@code this} color is normalized. False otherwise.
+     */
     boolean isNormalized();
 
+    /**
+     * This method gets the {@code this} normalized (coordinates are between the min and max values).
+     *
+     * @return Color normalized.
+     */
     Color4 getNormalized();
 
     /**
@@ -105,9 +115,7 @@ public interface Color4 extends Tuple {
      * @param alpha Interpolation.
      * @return {@code this * alpha + other * (1 - alpha)}
      */
-    default Color4 lerp(Color4 other, double alpha) {
-        return lineal(other, 1 - alpha, alpha);
-    }
+    Color4 lerp(Color4 other, double alpha);
 
     /**
      * This method evaluates the inverse of the linear interpolation of {@code this} color and {@code other} color at {@code vLerp}.

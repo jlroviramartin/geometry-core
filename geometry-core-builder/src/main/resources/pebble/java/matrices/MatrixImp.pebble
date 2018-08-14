@@ -29,7 +29,6 @@ import essence.util.math.EpsilonEquatable;
 import essence.geometry.core.DoubleUtils;
 import essence.geometry.core.SingularMatrixException;
 import essence.geometry.core.Tuple;
-import essence.geometry.core.TupleUtils;
 import essence.geometry.core.MatrixInpector;
 import essence.geometry.core.MatrixSet;
 import essence.geometry.core.{{ desc.vector.vectorName }};
@@ -91,7 +90,7 @@ public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ 
     public void getInto(MatrixSet matrixSet) {
 {%      for row in desc.rows %}
 {%          for property in row.cols %}
-        matrixSet.setAt( {{ row.r }}, {{ property.c }}, ({{ property.type }}){{ property.name }} );
+        matrixSet.set{{ property.ctype }}( {{ row.r }}, {{ property.c }}, ({{ property.type }}){{ property.name }} );
 {%          endfor %}
 {%      endfor %}
     }
@@ -99,17 +98,17 @@ public class {{ desc.matrixImpName }} implements Cloneable, EpsilonEquatable<{{ 
 
 //<editor-fold defaultstate="collapsed" desc="MatrixSet">
     @Override
-    public void setAt(int r, int c, float value) {
+    public void setFloat(int r, int c, float value) {
         set(r, c, ({{ desc.type }})value);
     }
 
     @Override
-    public void setAt(int r, int c, double value) {
+    public void setDouble(int r, int c, double value) {
         set(r, c, ({{ desc.type }})value);
     }
 
     @Override
-    public <T> void setAt(Class<T> type, int r, int c, T value) {
+    public <T> void set(Class<T> type, int r, int c, T value) {
         if (Number.class.isAssignableFrom(type)) {
             set(r, c, ((Number)value).{{ desc.type }}Value());
             return;
