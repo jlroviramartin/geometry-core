@@ -18,10 +18,8 @@
  */
 package templatesforvectors;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.essence.astyle.Astyle;
 import org.essence.pebble.TemplateEngine;
 
 /**
@@ -32,23 +30,28 @@ public abstract class BaseTemplate extends TemplateEngine {
 
 //<editor-fold defaultstate="collapsed" desc="fields">
     private static final Logger LOGGER = Logger.getLogger(BaseTemplate.class.getName());
-    protected final String mainPath = System.getProperty("user.dir") + "\\..\\geometry-core\\src\\generated\\java";
+    private final String mainPath;
+    private final String ext;
 //</editor-fold>
+
+    public BaseTemplate(String mainPath, String ext) {
+        this.mainPath = mainPath;
+        this.ext = ext;
+    }
 
     public abstract void execute();
 
     protected void writeToFile(Template template, Object desc, String className, String _package) {
-        String fileName = mainPath + "\\" + _package.replace('.', '\\') + '\\' + className + ".java";
+        String fileName = mainPath + "\\" + _package.replace('.', '\\') + '\\' + className + ext;
+
+        LOGGER.log(Level.SEVERE, "Writing class " + _package + " " + className);
 
         template.writeToFile(new MapBuilder<String, Object>().put("desc", desc).build(),
                              fileName);
 
-        if (Astyle.INSTANCE != null) {
-            try {
-                Astyle.INSTANCE.javaBeautify(fileName);
-            } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, null, ex);
-            }
-        }
+        beautify(fileName);
+    }
+
+    public void beautify(String fileName) {
     }
 }

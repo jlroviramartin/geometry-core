@@ -1,0 +1,119 @@
+{#
+ # This macro renders the implementation of vector transformations of the matrix.
+ #}
+{%  macro MatrixTransformImplementation( desc, className ) %}
+{%      set vdesc = desc.vector %}
+{%      set vlowdesc = desc.vector.lowerDimension %}
+    public {{ vdesc.vectorImpName }} Mul({{ vdesc.vectorName }} v) {
+        if (v is {{ vdesc.vectorImpName }}) {
+            return Mul(({{ vdesc.vectorImpName }})v);
+        } else if (v is {{ vdesc.buffVectorImpName }}) {
+            return Mul(({{ vdesc.buffVectorImpName }})v);
+        } else {
+            return Mul(new {{ vdesc.vectorImpName }}(v));
+        }
+    }
+
+    public {{ vdesc.vectorImpName }} Mul({{ vdesc.vectorImpName }} v) {
+        {{ MulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
+    }
+
+    public {{ vdesc.vectorImpName }} Mul({{ vdesc.buffVectorImpName }} v) {
+        {{ MulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
+    }
+
+    public {{ vdesc.vectorImpName }} Premul({{ vdesc.vectorName }} v) {
+        if (v is {{ vdesc.vectorImpName }}) {
+            return Premul(({{ vdesc.vectorImpName }})v);
+        } else if (v is {{ vdesc.buffVectorImpName }}) {
+            return Premul(({{ vdesc.buffVectorImpName }})v);
+        } else {
+            return Premul(new {{ vdesc.vectorImpName }}(v));
+        }
+    }
+
+    public {{ vdesc.vectorImpName }} Premul({{ vdesc.vectorImpName }} v) {
+        {{ PremulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
+    }
+
+    public {{ vdesc.vectorImpName }} Premul({{ vdesc.buffVectorImpName }} v) {
+        {{ PremulVector( desc, "", "v.", ret = "return new " ~ vdesc.vectorImpName ) | indent(4) }}
+    }
+{%      if not desc.vector.lowerDimension is empty %}
+{#
+ # Those methods work with vector and points of a lower dimension. 
+ #}
+
+    public {{ vlowdesc.vectorImpName }} Mul({{ vlowdesc.vectorName }} v) {
+        if (v is {{ vlowdesc.vectorImpName }}) {
+            return Mul(({{ vlowdesc.vectorImpName }})v);
+        } else if (v is {{ vlowdesc.buffVectorImpName }}) {
+            return Mul(({{ vlowdesc.buffVectorImpName }})v);
+        } else {
+            return Mul(new {{ vlowdesc.vectorImpName }}(v));
+        }
+    }
+
+    public {{ vlowdesc.vectorImpName }} Mul({{ vlowdesc.vectorImpName }} v) {
+        {{ MulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
+    }
+
+    public {{ vlowdesc.vectorImpName }} Mul({{ vlowdesc.buffVectorImpName }} v) {
+        {{ MulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
+    }
+
+    public {{ vlowdesc.pointImpName }} Mul({{ vlowdesc.pointName }} p) {
+        if (p is {{ vlowdesc.pointImpName }}) {
+            return Mul(({{ vlowdesc.pointImpName }})p);
+        } else if (p is {{ vlowdesc.buffPointImpName }}) {
+            return Mul(({{ vlowdesc.buffPointImpName }})p);
+        } else {
+            return Mul(new {{ vlowdesc.pointImpName }}(p));
+        }
+    }
+
+    public {{ vlowdesc.pointImpName }} Mul({{ vlowdesc.pointImpName }} p) {
+        {{ MulpointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
+    }
+
+    public {{ vlowdesc.pointImpName }} Mul({{ vlowdesc.buffPointImpName }} p) {
+        {{ MulpointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
+    }
+
+    public {{ vlowdesc.vectorImpName }} Premul({{ vlowdesc.vectorName }} v) {
+        if (v is {{ vlowdesc.vectorImpName }}) {
+            return Premul(({{ vlowdesc.vectorImpName }})v);
+        } else if (v is {{ vlowdesc.buffVectorImpName }}) {
+            return Premul(({{ vlowdesc.buffVectorImpName }})v);
+        } else {
+            return Premul(new {{ vlowdesc.vectorImpName }}(v));
+        }
+    }
+
+    public {{ vlowdesc.vectorImpName }} Premul({{ vlowdesc.vectorImpName }} v) {
+        {{ PremulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
+    }
+
+    public {{ vlowdesc.vectorImpName }} Premul({{ vlowdesc.buffVectorImpName }} v) {
+        {{ PremulVectorLow( desc, "", "v.", ret = "return new " ~ vlowdesc.vectorImpName ) | indent(4) }}
+    }
+
+    public {{ vlowdesc.pointImpName }} Premul({{ vlowdesc.pointName }} p) {
+        if (p is {{ vlowdesc.pointImpName }}) {
+            return Premul(({{ vlowdesc.pointImpName }})p);
+        } else if (p is {{ vlowdesc.buffPointImpName }}) {
+            return Premul(({{ vlowdesc.buffPointImpName }})p);
+        } else {
+            return Premul(new {{ vlowdesc.pointImpName }}(p));
+        }
+    }
+
+    public {{ vlowdesc.pointImpName }} Premul({{ vlowdesc.pointImpName }} p) {
+        {{ PremulPointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
+    }
+
+    public {{ vlowdesc.pointImpName }} Premul({{ vlowdesc.buffPointImpName }} p) {
+        {{ PremulPointLow( desc, "", "p.", ret = "return new " ~ vlowdesc.pointImpName ) | indent(4) }}
+    }
+{%      endif %}
+{%  endmacro %}

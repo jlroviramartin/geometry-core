@@ -1,0 +1,63 @@
+{#
+ # This macro renders the overwriting of Object methods of the tuple.
+ #}
+{%  macro Object( desc, className, isBuff = false ) %}
+    public override String ToString() {
+        VectorFormatInfo vfi = VectorFormatInfo.CURRENT_INFO;
+{%      dynmacro Object_toString( desc, property ) %}
+{{ property.name }}
+{%-     enddynmacro %}
+        return String.Format(GetFormat(), vfi.getBeg(), vfi.getSep(), vfi.getEnd(),
+            {{ Properties( desc, ", ", Object_toString ) | indent(3)  }});
+    }
+
+    public override bool Equals(Object other) {
+        if (other is {{ desc.tupleImpName }}) {
+            return Equals(({{ desc.tupleImpName }})other);
+        } else if (other is {{ desc.buffTupleImpName }}) {
+            return Equals(({{ desc.buffTupleImpName }})other);
+        } else if (other is Tuple) {
+            return Equals(new {{ desc.tupleImpName }}((Tuple)other));
+        }
+        return false;
+    }
+
+{%-     dynmacro Object_equals1( desc, property ) %}
+other.Get{{ property.upperName }}()
+{%-     enddynmacro %}
+
+    public bool Equals({{ desc.tupleImpName }} other) {
+{%  if not isBuff %}
+        if (other == this) {
+            return true;
+        }
+{%  endif %}
+        return Equals({{ Properties( desc, ",%n", Object_equals1 ) | indent(4) }});
+    }
+
+    public bool Equals({{ desc.buffTupleImpName }} other) {
+{%  if isBuff %}
+        if (other == this) {
+            return true;
+        }
+{%  endif %}
+        return Equals({{ Properties( desc, ",%n", Object_equals1 ) | indent(4) }});
+    }
+
+    public override int GetHashCode() {
+        // https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method
+        // http://www.jarvana.com/jarvana/view/org/apache/lucene/lucene-spatial/2.9.3/lucene-spatial-2.9.3-sources.jar!/org/apache/lucene/spatial/geometry/shape/Vector2D.java
+        const int prime = 31;
+        int hash = 1;
+{%      for property in desc.properties %}
+        hash = prime * hash + Get{{ property.upperName }}().GetHashCode();
+{%      endfor %}
+        return hash;
+    }
+
+    public {{ className }} Clone() {
+        {{ className }} copy = ({{ className }})base.Clone();
+        return copy;
+    }
+{%  endmacro %}
+

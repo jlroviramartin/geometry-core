@@ -377,6 +377,7 @@ public class Vector4d extends Tuple4d implements Vector4 {
 
     @Override
     public double dot(Vector4 other) {
+
         if (other instanceof Vector4d) {
             return dot((Vector4d)other);
         } else if (other instanceof BuffVector4d) {
@@ -385,6 +386,7 @@ public class Vector4d extends Tuple4d implements Vector4 {
             return dot(new Vector4d(other));
         }
     }
+
     public double dot(Vector4d other) {
         return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ() + getW() * other.getW();
     }
@@ -395,6 +397,7 @@ public class Vector4d extends Tuple4d implements Vector4 {
 
     @Override
     public double scalarProjection(Vector4 where) {
+
         if (where instanceof Vector4d) {
             return scalarProjection((Vector4d)where);
         } else if (where instanceof BuffVector4d) {
@@ -414,6 +417,7 @@ public class Vector4d extends Tuple4d implements Vector4 {
 
     @Override
     public Vector4 vectorProjection(Vector4 where) {
+
         if (where instanceof Vector4d) {
             return vectorProjection((Vector4d)where);
         } else if (where instanceof BuffVector4d) {
@@ -423,12 +427,12 @@ public class Vector4d extends Tuple4d implements Vector4 {
         }
     }
 
-    public Vector4d vectorProjection(Vector4d where) {
+    public Vector4 vectorProjection(Vector4d where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }
 
-    public BuffVector4d vectorProjection(BuffVector4d where) {
+    public Vector4 vectorProjection(BuffVector4d where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }

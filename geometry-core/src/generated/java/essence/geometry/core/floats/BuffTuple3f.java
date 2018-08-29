@@ -46,7 +46,6 @@ public class BuffTuple3f implements Cloneable, EpsilonEquatable<Tuple>, Tuple, T
     private float y;
     /** Z component. */
     private float z;
-    private static final Logger LOG = Logger.getLogger(BuffTuple3f.class.getName());
     private static String format;
 //</editor-fold>
 

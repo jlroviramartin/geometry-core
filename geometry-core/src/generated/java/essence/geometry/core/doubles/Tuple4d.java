@@ -48,7 +48,6 @@ public class Tuple4d implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
     private final double z;
     /** W component. */
     private final double w;
-    private static final Logger LOG = Logger.getLogger(Tuple4d.class.getName());
     private static String format;
 //</editor-fold>
 

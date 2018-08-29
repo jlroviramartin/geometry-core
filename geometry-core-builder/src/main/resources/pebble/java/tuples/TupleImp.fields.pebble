@@ -1,0 +1,10 @@
+{#
+ # This macro renders the fields of the tuple.
+ #}
+{%  macro Fields( desc, className, final = true ) %}
+{%      for property in desc.properties %}
+    /** {{ property.upperName }} component. */
+    private{% if final %} final{% endif %} {{ property.type }} {{ property.name }};
+{%      endfor %}
+    private static String format;
+{%  endmacro %}

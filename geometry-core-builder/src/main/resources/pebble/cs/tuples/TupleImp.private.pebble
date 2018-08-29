@@ -1,0 +1,48 @@
+{#
+ # This macro renders the private items of the matrix.
+ #}
+{%  macro Private( desc ) %}
+{# #}
+{%      dynmacro Private_epsilonEquals( desc, property ) %}
+DoubleUtils.EpsilonEquals(this.{{ property.name }}, {{ property.name }}, epsilon)
+{%-     enddynmacro %}
+{# #}
+{%      dynmacro Private_equals( desc, property ) %}
+this.{{ property.name }} == {{ property.name }}
+{%-     enddynmacro %}
+{# #}
+{%      dynmacro Private_getFormat( desc, property ) %}
+buff.Append("%").Append(k++).Append("$").Append(f);
+{%-     enddynmacro %}
+{# #}
+    private bool EpsilonEquals({{ TypeNameCommaSeparated( desc ) | indent(2) }}, double epsilon) {
+        return {{ Properties( desc, " && ", Private_epsilonEquals ) | indent(3) }};
+    }
+
+    private bool Equals({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+        return {{ Properties( desc, " && ", Private_equals ) | indent(3) }};
+    }
+
+    private static String GetFormat() {
+        if (format == null) {
+{%      if desc.integral %}
+            String f = "d";    // Integer
+{%      else %}
+            String f = ".3f";  // Floating point number with 3 decimal places
+{%      endif %}
+            String b = "%1$s"; // Begin      [
+            String s = "%2$s"; // Separation ,
+            String e = "%3$s"; // End        ]
+
+            StringBuilder buff = new StringBuilder();
+            int k = 4;
+            buff.Append(b);
+            {{ Properties( desc, "%nbuff.Append(s);%n", Private_getFormat ) | indent(3) }}
+
+            buff.Append(e);
+            format = buff.ToString();
+        }
+        return format;
+    }
+{%  endmacro %}
+

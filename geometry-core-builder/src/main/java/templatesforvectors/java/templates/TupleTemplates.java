@@ -18,25 +18,20 @@
  */
 package templatesforvectors.java.templates;
 
-import templatesforvectors.BaseTemplate;
 import templatesforvectors.model.VectorDescription;
 
 /**
  *
  * @author joseluis
  */
-public class TupleTemplates extends BaseTemplate {
+public class TupleTemplates extends JavaTemplate {
 
-    private final Template bufftupleImp = load("pebble/java/bufftuples/BuffTupleImp.pebble");
-
-    private final Template tupleImp = load("pebble/java/tuples/TupleImp.pebble");
-    private final Template tupleImpList = load("pebble/java/collections/TupleImpList.pebble");
+    private final Template bufftupleImp = load(subPath + "/bufftuples/BuffTupleImp.pebble");
+    private final Template tupleImp = load(subPath + "/tuples/TupleImp.pebble");
+    private final Template tupleImpList = load(subPath + "/collections/TupleImpList.pebble");
 
     @Override
     public void execute() {
-
-        System.out.println("user.dir  " + System.getProperty("user.dir"));
-        System.out.println("main path " + mainPath);
 
         for (int i = 2; i <= 4; i++) {
             buildSimple(i);

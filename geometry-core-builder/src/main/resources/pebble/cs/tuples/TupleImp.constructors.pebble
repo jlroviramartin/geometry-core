@@ -1,0 +1,74 @@
+{#
+ # This macro renders the constructors of the tuple.
+ #}
+{%  macro Constructors( desc, className ) %}
+    /**
+     * Empty constructor.
+     */
+    public {{ className }}() {
+{%      dynmacro Constructors_constructor( desc, property ) %}
+({{ desc.type }})0
+{%-     enddynmacro %}
+        this({{ Properties( desc, ", ", Constructors_constructor ) | indent(3) }});
+    }
+
+    /**
+     * This constructor sets the components of this tuple.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the component {{ property.upperName }}.
+{%      endfor %}
+     */
+    public {{ className }}({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      for property in desc.properties %}
+        this.{{ property.name }} = {{ property.name }};
+{%      endfor %}
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ className }}(Tuple tuple) {
+        if (tuple is {{ desc.tupleImpName }}) {
+            {{ desc.tupleImpName }} _tuple = ({{ desc.tupleImpName }})tuple;
+{%      for property in desc.properties %}
+            this.{{ property.name }} = _tuple.Get{{ property.upperName }}();
+{%      endfor %}
+        } else if (tuple is {{ desc.buffTupleImpName }}) {
+            {{ desc.buffTupleImpName }} _tuple = ({{ desc.buffTupleImpName }})tuple;
+{%      for property in desc.properties %}
+            this.{{ property.name }} = _tuple.Get{{ property.upperName }}();
+{%      endfor %}
+        } else {
+            {{ desc.tupleImpName }} _tuple = new {{ desc.tupleImpName }}(tuple);
+{%      for property in desc.properties %}
+            this.{{ property.name }} = _tuple.Get{{ property.upperName }}();
+{%      endfor %}
+        }
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ className }}({{ desc.tupleImpName }} tuple) {
+{%      for property in desc.properties %}
+        this.{{ property.name }} = tuple.Get{{ property.upperName }}();
+{%      endfor %}
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param tuple Tuple.
+     */
+    public {{ className }}({{ desc.buffTupleImpName }} tuple) {
+{%      for property in desc.properties %}
+        this.{{ property.name }} = tuple.Get{{ property.upperName }}();
+{%      endfor %}
+    }
+{%  endmacro %}
+

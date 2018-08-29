@@ -1,0 +1,29 @@
+{%  macro ColorImplementation( desc, className ) %}
+    @Override
+    public boolean isNormalized() {
+{%      dynmacro ColorImplementation_isNormalized( desc, property ) %}
+isNormal(get{{ property.upperName }}(), ({{ property.type }}){{ p().desc.minValue }}, ({{ property.type }}){{ p().desc.maxValue }})
+{%-     enddynmacro %}
+        return {{ Properties( desc, " && ", ColorImplementation_isNormalized ) }};
+    }
+
+    @Override
+    public {{ className }} getNormalized() {
+{%      dynmacro ColorImplementation_getNormalized( desc, property ) %}
+clamp(get{{ property.upperName }}(), ({{ property.type }}){{ p().desc.minValue }}, ({{ property.type }}){{ p().desc.maxValue }})
+{%-     enddynmacro %}
+        return new {{ className }}({{ Properties( desc, ", ", ColorImplementation_getNormalized ) }});
+    }
+
+{{ SimpleMathImplementation( desc, className, desc.colorName, desc.colorImpName, desc.buffColorImpName ) }}
+
+{{ LerpAndInvLerpAndLinealImplementation( desc, className, desc.colorName, desc.colorImpName, desc.buffColorImpName )  }}
+
+    private static boolean isNormal({{ desc.type }} v, {{ desc.type }} min, {{ desc.type }} max) {
+        return v >= min && v <= max;
+    }
+
+    private static {{ desc.type }} clamp({{ desc.type }} v, {{ desc.type }} min, {{ desc.type }} max) {
+        return v < min ? min : v > max ? max : v;
+    }
+{%  endmacro %}

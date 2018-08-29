@@ -1,0 +1,45 @@
+{#
+ # This macro renders the implementation of Tuple_Type of the tuple.
+ #}
+{%  macro TupleSetters( desc ) %}
+    /**
+     * This method sets the component {@code index}.
+     *
+     * @param index Index of the component.
+     * @param value Value of the component.
+     */
+    public void SetAt(int index, {{ desc.type }} value) {
+        switch(index) {
+{%      for property in desc.properties %}
+            case {{ property.index }}:
+                {{ property.name }} = value;
+                return;
+{%      endfor %}
+        }
+        throw new IndexOutOfRangeException();
+    }
+{%      for property in desc.properties %}
+
+    /**
+     * This method sets the {{ property.upperName }} component.
+     *
+     * @param value Value of the {{ property.upperName }} component.
+     */
+    public void Set{{ property.upperName }}({{ property.type }} value) {
+        {{ property.name }} = value;
+    }
+{%      endfor %}
+
+    /**
+     * This method sets all the components.
+     *
+{%      for property in desc.properties %}
+     * @param {{ property.name }} Value of the {{ property.upperName }} component.
+{%      endfor %}
+     */
+    public void Set({{ TypeNameCommaSeparated( desc ) | indent(2) }}) {
+{%      for property in desc.properties %}
+        this.{{ property.name }} = {{ property.name }};
+{%      endfor %}
+    }
+{%  endmacro %}

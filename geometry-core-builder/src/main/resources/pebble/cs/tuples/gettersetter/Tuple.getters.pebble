@@ -1,0 +1,20 @@
+{#
+ # This macro renders the implementation of Tuple_Type of the tuple.
+ #}
+{%  macro TupleGetters( desc ) %}
+    public {{ desc.type }} GetAt(int index) {
+        switch(index) {
+{%      for property in desc.properties %}
+            case {{ property.index }}:
+                return {{ property.name }};
+{%      endfor %}
+        }
+        throw new IndexOutOfRangeException();
+    }
+{%      for property in desc.properties %}
+
+    public {{ property.type }} Get{{ property.upperName }}() {
+        return {{ property.name }};
+    }
+{%      endfor %}
+{%  endmacro %}

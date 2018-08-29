@@ -1,0 +1,23 @@
+{%  macro BuffColorImplementation( desc, className ) %}
+    @Override
+    public {{ className }} normalize() {
+{%      dynmacro BuffColorImplementation_normalize( desc, property ) %}
+clamp(get{{ property.upperName }}(), ({{ desc.type }}){{ p().desc.minValue }}, ({{ desc.type }}){{ p().desc.maxValue }})
+{%-     enddynmacro %}
+        set({{ Properties( desc, ", ", BuffColorImplementation_normalize ) }});
+        return this;
+    }
+
+    @Override
+    public {{ className }} setZero() {
+{%      dynmacro BuffColorImplementation_setZero( desc, property ) %}
+({{ property.type }})0
+{%-     enddynmacro %}
+        set({{ Properties( desc, ", ", BuffColorImplementation_setZero ) | indent(4) }});
+        return this;
+    }
+
+{{ SimpleMathAndSetImplementation( desc, className, desc.colorName, desc.colorImpName, desc.buffColorImpName ) }}
+
+{{ LerpAndLinealAndSetImplementation( desc, className, desc.colorName, desc.colorImpName, desc.buffColorImpName ) }}
+{%  endmacro %}

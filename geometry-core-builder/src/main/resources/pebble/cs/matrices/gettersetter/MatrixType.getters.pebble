@@ -1,0 +1,31 @@
+{#
+ # This macro renders the implementation of the getters of a matrix.
+ #}
+{%  macro MatrixGetters( desc, className ) %}
+    public bool IsSquared() {
+        return {{ desc.dimRows == desc.dimCols }};
+    }
+
+    public {{ desc.type }} Get(int r, int c) {
+        switch(r) {
+{%      for row in desc.rows %}
+            case {{ row.r }}:
+                switch(c) {
+{%          for property in row.cols %}
+                    case {{ property.c }}:
+                        return {{ property.name }};
+{%          endfor %}
+                }
+{%      endfor %}
+        }
+        throw new IndexOutOfBoundsException();
+    }
+{%      for row in desc.rows %}
+{%          for property in row.cols %}
+
+    public {{ property.type }} Get{{ property.upperName }}() {
+        return {{ property.name }};
+    }
+{%          endfor %}
+{%      endfor %}
+{%  endmacro %}

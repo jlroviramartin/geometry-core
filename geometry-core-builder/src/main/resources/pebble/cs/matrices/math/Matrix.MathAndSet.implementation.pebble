@@ -1,0 +1,101 @@
+{#
+ # This macro renders the math operations of the matrix.
+ #}
+{%  macro MatrixMathAndSetImplementation( desc, className ) %}
+    @Override
+    public {{ className }} SetZero() {
+{%      dynmacro Accessors_setZero( desc, property ) %}
+0
+{%-     enddynmacro %}
+        Set({{ RowsAndColumns( desc, ",%n", ", ", Accessors_setZero ) | indent(3) }});
+        return this;
+    }
+{%      if desc.dimRows == desc.dimCols %}
+
+    @Override
+    public {{ className }} SetIdentity() {
+{%          dynmacro Accessors_setIdentity( desc, property ) %}
+{%              if property.r == property.c %}1{% else %}0{% endif %}
+{%-         enddynmacro %}
+        Set({{ RowsAndColumns( desc, ",%n", ", ", Accessors_setIdentity ) | indent(3) }});
+        return this;
+    }
+{%      endif %}
+
+    @Override
+    public {{ className }} AddAndSet({{ desc.matrixName }} other) {
+        {{ className }} _other = to{{ className }}(other);
+
+        Set{{ MatrixBinaryOperator(desc, "+", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} AddAndSet({{ className }} other) {
+        Set{{ MatrixBinaryOperator(desc, "+", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} SubAndSet({{ desc.matrixName }} other) {
+        {{ className }} _other = to{{ className }}(other);
+
+        Set{{ MatrixBinaryOperator(desc, "-", "", "_other.") | indent(4) }};
+        return this;
+    }
+
+    public {{ className }} SubAndSet({{ className }} other) {
+        Set{{ MatrixBinaryOperator(desc, "-", "", "other.") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} MulAndSet(double v) {
+        Set{{ MatrixBinaryOperatorScalar(desc, "*", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} DivAndSet(double v) {
+        Set{{ MatrixBinaryOperatorScalar(desc, "/", "", "v") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} MulAndSet({{ desc.matrixName }} other) {
+        {{ className }} _other = to{{ className }}(other);
+
+        Set{{ MatrixMul( desc, "", "_other."  ) }};
+        return this;
+    }
+
+    public {{ className }} MulAndSet({{ className }} other) {
+        Set{{ MatrixMul( desc, "", "other."  ) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} NegAndSet() {
+        Set{{ MatrixUnaryOperator(desc, "-", "") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} AbsAndSet() {
+        Set{{ MatrixUnaryFunction(desc, "Math.abs", "") | indent(4) }};
+        return this;
+    }
+
+    @Override
+    public {{ className }} TransposeAndSet() {
+        Set{{ MatrixTranspose( desc, "" ) | indent(3) }};
+        return this;
+    }
+{%      if (desc.dimRows >= 2) and (desc.dimRows <= 4) %}
+
+    @Override
+    public {{ className }} InverseAndSet() throws SingularMatrixException {
+        {{ MatrixInverse234( desc, "", "set" ) }}
+        return this;
+    }
+{%      endif %}
+{%  endmacro %}

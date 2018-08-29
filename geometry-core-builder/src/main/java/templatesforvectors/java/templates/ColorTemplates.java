@@ -18,25 +18,21 @@
  */
 package templatesforvectors.java.templates;
 
-import templatesforvectors.BaseTemplate;
 import templatesforvectors.model.VectorDescription;
 
 /**
  *
  * @author joseluis
  */
-public class ColorTemplates extends BaseTemplate {
+public class ColorTemplates extends JavaTemplate {
 
-    private final Template color = load("pebble/java/colors/Color.pebble");
-    private final Template colorImp = load("pebble/java/colors/ColorImp.pebble");
-    private final Template buffcolor = load("pebble/java/buffcolors/BuffColor.pebble");
-    private final Template buffcolorImp = load("pebble/java/buffcolors/BuffColorImp.pebble");
+    private final Template color = load(subPath + "/colors/Color.pebble");
+    private final Template colorImp = load(subPath + "/colors/ColorImp.pebble");
+    private final Template buffcolor = load(subPath + "/buffcolors/BuffColor.pebble");
+    private final Template buffcolorImp = load(subPath + "/buffcolors/BuffColorImp.pebble");
 
     @Override
     public void execute() {
-
-        System.out.println("user.dir  " + System.getProperty("user.dir"));
-        System.out.println("main path " + mainPath);
 
         buildSimple(3);
         buildSimple(4);

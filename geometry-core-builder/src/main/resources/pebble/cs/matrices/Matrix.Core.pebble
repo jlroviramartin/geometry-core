@@ -1,0 +1,313 @@
+{#
+ # This macro renders the property at '(r, c)' of 'desc' in upper case.
+ #}
+{%  macro PropertyUpperName( desc, r, c ) %}{{ reflection( desc, "getProperty", [ r, c ] ).upperName }}{% endmacro %}
+
+
+{#
+ # This macro renders all properties using row and column separator.
+ #}
+{%  macro RowsAndColumns( desc, rseparator, cseparator, macroItem ) %}
+{%      for row in desc.rows %}
+{%          if not (loop.first) %}{{ rseparator | nl }}{% endif %}
+{%          for property in row.cols %}
+{%              if not (loop.first) %}{{ cseparator | nl }}{% endif %}
+{{ dynamic( macroItem, [desc, property] ) | nl }}
+{%          endfor %}
+{%      endfor %}
+{%  endmacro %}
+
+{#
+ # This macro renders all properties using row and column separator.
+ #}
+{%  macro ColumnsAndRows( desc, cseparator, rseparator, macroItem ) %}
+{%      for col in desc.cols %}
+{%          if not (loop.first) %}{{ cseparator | nl }}{% endif %}
+{%          for property in col.rows %}
+{%              if not (loop.first) %}{{ rseparator | nl }}{% endif %}
+{{ dynamic( macroItem, [desc, property] ) | nl }}
+{%          endfor %}
+{%      endfor %}
+{%  endmacro %}
+
+{#
+ # This macro renders the type and name of all properties.
+ #}
+{%  macro TypeNameCommaSeparated( desc ) %}
+{%      dynmacro TypeNameCommaSeparated_anonymous( desc, property ) %}
+{{ property.type }} {{ property.name }}
+{%      enddynmacro %}
+{{ RowsAndColumns( desc, ",%n", ", ", TypeNameCommaSeparated_anonymous ) }}
+{%  endmacro %}
+
+{#
+ # This macro renders the name of all properties.
+ #}
+{%  macro NameCommaSeparated( desc ) %}
+{%      dynmacro NameCommaSeparated_anonymous( desc, property ) %}
+{{ property.name }}
+{%      enddynmacro %}
+{{ RowsAndColumns( desc, ",%n", ", ", NameCommaSeparated_anonymous ) }}
+{%  endmacro %}
+
+
+
+{%  macro MatrixUnaryOperator( desc, op, this, type ) %}
+{%      dynmacro MatrixUnaryOperator_anonymous( desc, property ) %}
+{{ p().op }} {{ p().this }}get{{ property.upperName }}()
+{%-     enddynmacro %}
+({{ RowsAndColumns( desc, ",%n", ", ", MatrixUnaryOperator_anonymous ) | indent(3) }})
+{%- endmacro %}
+
+{%  macro MatrixUnaryFunction( desc, op, this, type ) %}
+{%      dynmacro MatrixUnaryFunction_anonymous( desc, property ) %}
+{{ p().op }}({{ p().this }}get{{ property.upperName }}())
+{%-     enddynmacro %}
+({{ RowsAndColumns( desc, ",%n", ", ", MatrixUnaryFunction_anonymous ) | indent(3) }})
+{%- endmacro %}
+
+{%  macro MatrixBinaryOperator( desc, op, this, other, type ) %}
+{%      dynmacro MatrixBinaryOperator_anonymous( desc, property ) %}
+{{ p().this }}get{{ property.upperName }}() {{ p().op }} {{ p().other }}get{{ property.upperName }}()
+{%-     enddynmacro %}
+({{ RowsAndColumns( desc, ",%n", ", ", MatrixBinaryOperator_anonymous ) | indent(3) }})
+{%- endmacro %}
+
+{%  macro MatrixBinaryFunction( desc, op, this, other ) %}
+{%      dynmacro MatrixBinaryFunction_anonymous( desc, property ) %}
+{{ p().op }}({{ p().this }}get{{ property.upperName }}(), {{ p().other }}get{{ property.upperName }}())
+{%-     enddynmacro %}
+({{ RowsAndColumns( desc, ",%n", ", ", MatrixBinaryFunction_anonymous ) | indent(3) }})
+{%- endmacro %}
+
+{%  macro MatrixBinaryOperatorScalar( desc, op, this, scalar ) %}
+{%      dynmacro MatrixBinaryOperatorScalar_anonymous( desc, property ) %}
+({{ property.type }})({{ p().this }}get{{ property.upperName }}() {{ p().op }} {{ p().scalar }})
+{%-     enddynmacro %}
+({{ RowsAndColumns( desc, ",%n", ", ", MatrixBinaryOperatorScalar_anonymous ) | indent(3) }})
+{%- endmacro %}
+
+
+{#
+ # This macro renders a matrix multiplication.
+ #}
+{%  macro MatrixMul( desc, this = "", other = "other." ) %}
+(
+{%-     for row in desc.rows %}
+{%          if not (loop.first) %},
+{%          endif %}
+{%          for property in row.cols %}
+{%              if not (loop.first) %},
+{%              endif %}
+{%              for k in range( 0, desc.dimRows - 1 ) %}
+{%                  if not (loop.first) %} + {% endif %}
+{{ this }}get{{ PropertyUpperName( desc, row.r, k ) }}() * {{ other }}get{{ PropertyUpperName( desc, k, property.c ) }}()
+{%-             endfor %}
+{%          endfor %}
+{%      endfor %})
+{%- endmacro %}
+
+{#
+ # This macro renders the transpose of a matrix.
+ #}
+{%  macro MatrixTranspose( desc, this = "" ) %}
+{%      dynmacro Math_abs( desc, property ) %}
+{{ p().this }}get{{ PropertyUpperName( desc, property.c, property.r ) }}()
+{%-     enddynmacro %}
+({{ RowsAndColumns( desc, ",%n", ", ", Math_abs ) | indent(3) }})
+{%- endmacro %}
+
+{#
+ # This macro renders the inverse of a matrix of 2x2, 3x3 or 4x4 dimensions.
+ #}
+{%  macro MatrixInverse234( desc, this = "", set = "set" ) %}
+double s = getDeterminant();
+if (DoubleUtils.epsilonZero(s, EPSILON)) {
+    throw new SingularMatrixException();
+}
+
+s = 1 / s;
+
+{%      if desc.dimRows == 2 %}
+{{ set }}(
+    ({{ desc.type }})({{ this }}getM11() * s), ({{ desc.type }})(-{{ this }}getM01() * s),
+    ({{ desc.type }})(-{{ this }}getM10() * s), ({{ desc.type }})({{ this }}getM00() * s));
+{%      elseif desc.dimRows == 3 %}
+{{ set }}(
+    ({{ desc.type }})(({{ this }}getM11() * {{ this }}getM22() - {{ this }}getM12() * {{ this }}getM21()) * s),
+    ({{ desc.type }})(({{ this }}getM02() * {{ this }}getM21() - {{ this }}getM01() * {{ this }}getM22()) * s),
+    ({{ desc.type }})(({{ this }}getM01() * {{ this }}getM12() - {{ this }}getM02() * {{ this }}getM11()) * s),
+    ({{ desc.type }})(({{ this }}getM12() * {{ this }}getM20() - {{ this }}getM10() * {{ this }}getM22()) * s),
+    ({{ desc.type }})(({{ this }}getM00() * {{ this }}getM22() - {{ this }}getM02() * {{ this }}getM20()) * s),
+    ({{ desc.type }})(({{ this }}getM02() * {{ this }}getM10() - {{ this }}getM00() * {{ this }}getM12()) * s),
+    ({{ desc.type }})(({{ this }}getM10() * {{ this }}getM21() - {{ this }}getM11() * {{ this }}getM20()) * s),
+    ({{ desc.type }})(({{ this }}getM01() * {{ this }}getM20() - {{ this }}getM00() * {{ this }}getM21()) * s),
+    ({{ desc.type }})(({{ this }}getM00() * {{ this }}getM11() - {{ this }}getM01() * {{ this }}getM10()) * s));
+{%      elseif desc.dimRows == 4 %}
+{{ set }}(
+    ({{ desc.type }})(({{ this }}getM11() * ({{ this }}getM22() * {{ this }}getM33() - {{ this }}getM23() * {{ this }}getM32())
+        + {{ this }}getM12() * ({{ this }}getM23() * {{ this }}getM31() - {{ this }}getM21() * {{ this }}getM33())
+        + {{ this }}getM13() * ({{ this }}getM21() * {{ this }}getM32() - {{ this }}getM22() * {{ this }}getM31())) * s),
+    ({{ desc.type }})(({{ this }}getM21() * ({{ this }}getM02() * {{ this }}getM33() - {{ this }}getM03() * {{ this }}getM32())
+        + {{ this }}getM22() * ({{ this }}getM03() * {{ this }}getM31() - {{ this }}getM01() * {{ this }}getM33())
+        + {{ this }}getM23() * ({{ this }}getM01() * {{ this }}getM32() - {{ this }}getM02() * {{ this }}getM31())) * s),
+    ({{ desc.type }})(({{ this }}getM31() * ({{ this }}getM02() * {{ this }}getM13() - {{ this }}getM03() * {{ this }}getM12())
+        + {{ this }}getM32() * ({{ this }}getM03() * {{ this }}getM11() - {{ this }}getM01() * {{ this }}getM13())
+        + {{ this }}getM33() * ({{ this }}getM01() * {{ this }}getM12() - {{ this }}getM02() * {{ this }}getM11())) * s),
+    ({{ desc.type }})(({{ this }}getM01() * ({{ this }}getM13() * {{ this }}getM22() - {{ this }}getM12() * {{ this }}getM23())
+        + {{ this }}getM02() * ({{ this }}getM11() * {{ this }}getM23() - {{ this }}getM13() * {{ this }}getM21())
+        + {{ this }}getM03() * ({{ this }}getM12() * {{ this }}getM21() - {{ this }}getM11() * {{ this }}getM22())) * s),
+    ({{ desc.type }})(({{ this }}getM12() * ({{ this }}getM20() * {{ this }}getM33() - {{ this }}getM23() * {{ this }}getM30())
+        + {{ this }}getM13() * ({{ this }}getM22() * {{ this }}getM30() - {{ this }}getM20() * {{ this }}getM32())
+        + {{ this }}getM10() * ({{ this }}getM23() * {{ this }}getM32() - {{ this }}getM22() * {{ this }}getM33())) * s),
+    ({{ desc.type }})(({{ this }}getM22() * ({{ this }}getM00() * {{ this }}getM33() - {{ this }}getM03() * {{ this }}getM30())
+        + {{ this }}getM23() * ({{ this }}getM02() * {{ this }}getM30() - {{ this }}getM00() * {{ this }}getM32())
+        + {{ this }}getM20() * ({{ this }}getM03() * {{ this }}getM32() - {{ this }}getM02() * {{ this }}getM33())) * s),
+    ({{ desc.type }})(({{ this }}getM32() * ({{ this }}getM00() * {{ this }}getM13() - {{ this }}getM03() * {{ this }}getM10())
+        + {{ this }}getM33() * ({{ this }}getM02() * {{ this }}getM10() - {{ this }}getM00() * {{ this }}getM12())
+        + {{ this }}getM30() * ({{ this }}getM03() * {{ this }}getM12() - {{ this }}getM02() * {{ this }}getM13())) * s),
+    ({{ desc.type }})(({{ this }}getM02() * ({{ this }}getM13() * {{ this }}getM20() - {{ this }}getM10() * {{ this }}getM23())
+        + {{ this }}getM03() * ({{ this }}getM10() * {{ this }}getM22() - {{ this }}getM12() * {{ this }}getM20())
+        + {{ this }}getM00() * ({{ this }}getM12() * {{ this }}getM23() - {{ this }}getM13() * {{ this }}getM22())) * s),
+    ({{ desc.type }})(({{ this }}getM13() * ({{ this }}getM20() * {{ this }}getM31() - {{ this }}getM21() * {{ this }}getM30())
+        + {{ this }}getM10() * ({{ this }}getM21() * {{ this }}getM33() - {{ this }}getM23() * {{ this }}getM31())
+        + {{ this }}getM11() * ({{ this }}getM23() * {{ this }}getM30() - {{ this }}getM20() * {{ this }}getM33())) * s),
+    ({{ desc.type }})(({{ this }}getM23() * ({{ this }}getM00() * {{ this }}getM31() - {{ this }}getM01() * {{ this }}getM30())
+        + {{ this }}getM20() * ({{ this }}getM01() * {{ this }}getM33() - {{ this }}getM03() * {{ this }}getM31())
+        + {{ this }}getM21() * ({{ this }}getM03() * {{ this }}getM30() - {{ this }}getM00() * {{ this }}getM33())) * s),
+    ({{ desc.type }})(({{ this }}getM33() * ({{ this }}getM00() * {{ this }}getM11() - {{ this }}getM01() * {{ this }}getM10())
+        + {{ this }}getM30() * ({{ this }}getM01() * {{ this }}getM13() - {{ this }}getM03() * {{ this }}getM11())
+        + {{ this }}getM31() * ({{ this }}getM03() * {{ this }}getM10() - {{ this }}getM00() * {{ this }}getM13())) * s),
+    ({{ desc.type }})(({{ this }}getM03() * ({{ this }}getM11() * {{ this }}getM20() - {{ this }}getM10() * {{ this }}getM21())
+        + {{ this }}getM00() * ({{ this }}getM13() * {{ this }}getM21() - {{ this }}getM11() * {{ this }}getM23())
+        + {{ this }}getM01() * ({{ this }}getM10() * {{ this }}getM23() - {{ this }}getM13() * {{ this }}getM20())) * s),
+    ({{ desc.type }})(({{ this }}getM10() * ({{ this }}getM22() * {{ this }}getM31() - {{ this }}getM21() * {{ this }}getM32())
+        + {{ this }}getM11() * ({{ this }}getM20() * {{ this }}getM32() - {{ this }}getM22() * {{ this }}getM30())
+        + {{ this }}getM12() * ({{ this }}getM21() * {{ this }}getM30() - {{ this }}getM20() * {{ this }}getM31())) * s),
+    ({{ desc.type }})(({{ this }}getM20() * ({{ this }}getM02() * {{ this }}getM31() - {{ this }}getM01() * {{ this }}getM32())
+        + {{ this }}getM21() * ({{ this }}getM00() * {{ this }}getM32() - {{ this }}getM02() * {{ this }}getM30())
+        + {{ this }}getM22() * ({{ this }}getM01() * {{ this }}getM30() - {{ this }}getM00() * {{ this }}getM31())) * s),
+    ({{ desc.type }})(({{ this }}getM30() * ({{ this }}getM02() * {{ this }}getM11() - {{ this }}getM01() * {{ this }}getM12())
+        + {{ this }}getM31() * ({{ this }}getM00() * {{ this }}getM12() - {{ this }}getM02() * {{ this }}getM10())
+        + {{ this }}getM32() * ({{ this }}getM01() * {{ this }}getM10() - {{ this }}getM00() * {{ this }}getM11())) * s),
+    ({{ desc.type }})(({{ this }}getM00() * ({{ this }}getM11() * {{ this }}getM22() - {{ this }}getM12() * {{ this }}getM21())
+        + {{ this }}getM01() * ({{ this }}getM12() * {{ this }}getM20() - {{ this }}getM10() * {{ this }}getM22())
+        + {{ this }}getM02() * ({{ this }}getM10() * {{ this }}getM21() - {{ this }}getM11() * {{ this }}getM20())) * s));
+{%      endif %}
+{%  endmacro %}
+
+
+
+{#
+ # This method multiplies a matrix by a vector.
+ #}
+{%  macro MulVector( desc, this="", other="v.", ret = "return ..." ) %}
+{%      set vdesc = desc.vector %}
+{%      dynmacro MulVector_anonymous( desc, property ) %}
+{{ p().this }}get{{ property.upperName }}() * {{ p().other }}get{{ p().vdesc.properties[property.c].upperName }}()
+{%-     enddynmacro %}
+        {{ ret }}({{ RowsAndColumns( desc, ",%n", " + ", MulVector_anonymous ) | indent(3) }});
+{%  endmacro %}
+
+{#
+ # This method premultiplies a matrix by a vector.
+ #}
+{%  macro PremulVector( desc, this="", other="v.", ret = "return ..." ) %}
+{%      set vdesc = desc.vector %}
+{%      dynmacro PremulVector_anonymous( desc, property ) %}
+{{ p().other }}get{{ p().vdesc.properties[property.r].upperName }}() * {{ p().this }}get{{ property.upperName }}() 
+{%-     enddynmacro %}
+        {{ ret }}({{ ColumnsAndRows( desc, ",%n", " + ", PremulVector_anonymous ) | indent(3) }});
+{%  endmacro %}
+
+{#
+ # This method multiplies a matrix by a vector of a lower dimension.
+ #}
+{%  macro MulVectorLow( desc, this="", other="v.", ret = "return ..." ) %}
+{%      set vdesc = desc.vector %}
+{%      for row in desc.rows %}
+{%          if row.r < desc.dimRows-1 %}
+        {{ vdesc.type }} {{ vdesc.properties[row.r].name }} = 
+{%-             for property in row.cols %}
+{%-                 if property.c < desc.dimCols-1 %}
+{%-                     if not (loop.first) %} +{% endif %}
+ {{ this }}get{{ property.upperName }}() * {{ other }}get{{ vdesc.properties[property.c].upperName }}()
+{%-                 endif %}
+{%-             endfor %};
+{%          endif %}
+{%      endfor %}
+        {{ ret }}(
+{%-     for i in range(0, vdesc.dim - 2) %}
+{%          if not (loop.first) %}, {% endif %}
+{{ vdesc.properties[i].name }}
+{%-     endfor %});
+{%  endmacro %}
+
+{#
+ # This method multiplies a matrix by a point of a lower dimension.
+ #}
+{%  macro MulpointLow( desc, this="", other="p.", ret = "return ..." ) %}
+{%      set vdesc = desc.vector %}
+{%      for row in desc.rows %}
+        {{ vdesc.type }} {{ vdesc.properties[row.r].name }} = 
+{%-         for property in row.cols %}
+{%-             if not (loop.first) %} +{% endif %}
+{%-             if property.c < desc.dimCols-1 %}
+ {{ this }}get{{ property.upperName }}() * {{ other }}get{{ vdesc.properties[property.c].upperName }}()
+{%-             else %}
+ {{ this }}get{{ property.upperName }}()
+{%-             endif %}
+{%-         endfor %};
+{%      endfor %}
+        {{ ret }}(
+{%-     for i in range(0, vdesc.dim - 2) %}
+{%          if not (loop.first) %}, {% endif %}
+{{ vdesc.properties[i].name }} / {{ vdesc.properties[vdesc.dim - 1].name }}
+{%-     endfor %});
+{%  endmacro %}
+
+{#
+ # This method premultiplies a matrix by a vector of a lower dimension.
+ #}
+{%  macro PremulVectorLow( desc, this="", other="v.", ret = "return ..." ) %}
+{%      set vdesc = desc.vector %}
+{%      for col in desc.cols %}
+{%          if col.c < desc.dimCols - 1 %}
+        {{ vdesc.type }} {{ vdesc.properties[col.c].name }} = 
+{%-             for property in col.rows %}
+{%-                 if property.r < desc.dimRows - 1 %}
+{%-                     if not (loop.first) %} +{% endif %}
+ {{ other }}get{{ vdesc.properties[property.r].upperName }}() * {{ this }}get{{ property.upperName }}()
+{%-                 endif %}
+{%-             endfor %};
+{%          endif %}
+{%      endfor %}
+        {{ ret }}(
+{%-     for i in range(0, vdesc.dim - 2) %}
+{%          if not (loop.first) %}, {% endif %}
+{{ vdesc.properties[i].name }}
+{%-     endfor %});
+{%- endmacro %}
+
+{#
+ # This method premultiplies a matrix by a point of a lower dimension.
+ #}
+{%  macro PremulPointLow( desc, this="", other="p.", ret = "return ..." ) %}
+{%      set vdesc = desc.vector %}
+{%      for col in desc.cols %}
+        {{ vdesc.type }} {{ vdesc.properties[col.c].name }} = 
+{%-         for property in col.rows %}
+{%-             if not (loop.first) %} +{% endif %}
+{%-             if property.r < desc.dimRows - 1 %}
+ {{ other }}get{{ vdesc.properties[property.r].upperName }}() * {{ this }}get{{ property.upperName }}()
+{%-             else %}
+ {{ this }}get{{ property.upperName }}()
+{%-             endif %}
+{%-         endfor %};
+{%      endfor %}
+        {{ ret }}(
+{%-     for i in range(0, vdesc.dim - 2) %}
+{%          if not (loop.first) %}, {% endif %}
+{{ vdesc.properties[i].name }} / {{ vdesc.properties[vdesc.dim - 1].name }}
+{%-     endfor %});
+{%- endmacro %}

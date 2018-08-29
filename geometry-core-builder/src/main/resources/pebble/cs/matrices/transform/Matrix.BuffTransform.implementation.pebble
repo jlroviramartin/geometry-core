@@ -1,0 +1,95 @@
+{#
+ # This macro renders the implementation of vector transformations of the matrix.
+ #}
+{%  macro MatrixBuffTransformImplementation( desc, className ) %}
+{%      set vdesc = desc.vector %}
+{%      set vlowdesc = desc.vector.lowerDimension %}
+    public void MulAndSetInto({{ vdesc.buffVectorName }} v) {
+        if (v is {{ vdesc.buffVectorImpName }}) {
+            this.MulAndSetInto(({{ vdesc.buffVectorImpName }})v);
+        } else {
+            {{ vdesc.buffVectorImpName }} _v = new {{ vdesc.buffVectorImpName }}(v);
+            this.MulAndSetInto(_v);
+            _v.getInto(v);
+        }
+    }
+
+    public void MulAndSetInto({{ vdesc.buffVectorImpName }} v) {
+        {{ MulVector( desc, "", "v.", ret = "v.set" ) | indent(4) }}
+    }
+
+    public void PremulAndSetInto({{ vdesc.buffVectorName }} v) {
+        if (v is {{ vdesc.buffVectorImpName }}) {
+            this.PremulAndSetInto(({{ vdesc.buffVectorImpName }})v);
+        } else {
+            {{ vdesc.buffVectorImpName }} _v = new {{ vdesc.buffVectorImpName }}(v);
+            this.PremulAndSetInto(_v);
+            _v.getInto(v);
+        }
+    }
+
+    public void PremulAndSetInto({{ vdesc.buffVectorImpName }} v) {
+        {{ PremulVector( desc, "", "v.", ret = "v.set " ) | indent(4) }}
+    }
+{%      if not desc.vector.lowerDimension is empty %}
+{#
+ # Those methods work with vector and points of a lower dimension. 
+ #}
+
+    public void MulAndSetInto({{ vlowdesc.buffVectorName }} v) {
+        if (v is {{ vlowdesc.buffVectorImpName }}) {
+            this.MulAndSetInto(({{ vlowdesc.buffVectorImpName }})v);
+        } else {
+            {{ vlowdesc.buffVectorImpName }} _v = new {{ vlowdesc.buffVectorImpName }}(v);
+            this.MulAndSetInto(_v);
+            _v.getInto(v);
+        }
+    }
+
+    public void MulAndSetInto({{ vlowdesc.buffVectorImpName }} v) {
+        {{ MulVectorLow( desc, "", "v.", ret = "v.set" ) | indent(4) }}
+    }
+
+    public void MulAndSetInto({{ vlowdesc.buffPointName }} p) {
+        if (p is {{ vlowdesc.buffVectorImpName }}) {
+            this.MulAndSetInto(({{ vlowdesc.buffPointImpName }})p);
+        } else {
+            {{ vlowdesc.buffPointImpName }} _p = new {{ vlowdesc.buffPointImpName }}(p);
+            this.MulAndSetInto(_p);
+            _p.getInto(p);
+        }
+    }
+
+    public void MulAndSetInto({{ vlowdesc.buffPointImpName }} p) {
+        {{ MulpointLow( desc, "", "p.", ret = "p.set" ) | indent(4) }}
+    }
+
+    public void PremulAndSetInto({{ vlowdesc.buffVectorName }} v) {
+        if (v is {{ vlowdesc.buffVectorImpName }}) {
+            this.PremulAndSetInto(({{ vlowdesc.buffVectorImpName }})v);
+        } else {
+            {{ vlowdesc.buffVectorImpName }} _v = new {{ vlowdesc.buffVectorImpName }}(v);
+            this.PremulAndSetInto(_v);
+            _v.getInto(v);
+        }
+    }
+
+    public void PremulAndSetInto({{ vlowdesc.buffVectorImpName }} v) {
+        {{ PremulVectorLow( desc, "", "v.", ret = "v.set"  ) | indent(4) }}
+    }
+
+    public void PremulAndSetInto({{ vlowdesc.buffPointName }} p) {
+        if (p is {{ vlowdesc.buffVectorImpName }}) {
+            this.PremulAndSetInto(({{ vlowdesc.buffPointImpName }})p);
+        } else {
+            {{ vlowdesc.buffPointImpName }} _p = new {{ vlowdesc.buffPointImpName }}(p);
+            this.PremulAndSetInto(_p);
+            _p.getInto(p);
+        }
+    }
+
+    public void PremulAndSetInto({{ vlowdesc.buffPointImpName }} p) {
+        {{ PremulPointLow( desc, "", "p.", ret = "p.set" ) | indent(4) }}
+    }
+{%      endif %}
+{%  endmacro %}

@@ -1,0 +1,25 @@
+{%  extends "pebble/cs/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/cs/Tuple.Core.pebble" %}
+
+{%  import "pebble/cs/tuples/TupleImp.constructors.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.public.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.private.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.Object.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.EpsilonEquatable.pebble" %}
+
+{%  import "pebble/cs/tuples/gettersetter/Tuple.getters.pebble" %}
+
+{%  import "pebble/cs/tuples/Tuple.implementation.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+{%  endblock %}
+
+{%  block content %}
+{%  endblock %}

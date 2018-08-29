@@ -1,0 +1,5 @@
+{#
+ # This macro renders the overwriting of Object methods of the tuple.
+ #}
+{%  macro Object( desc, className, isBuff = false ) %}
+{%  endmacro %}

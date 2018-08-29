@@ -356,6 +356,7 @@ public class Vector3d extends Tuple3d implements Vector3 {
 
     @Override
     public double dot(Vector3 other) {
+
         if (other instanceof Vector3d) {
             return dot((Vector3d)other);
         } else if (other instanceof BuffVector3d) {
@@ -364,6 +365,7 @@ public class Vector3d extends Tuple3d implements Vector3 {
             return dot(new Vector3d(other));
         }
     }
+
     public double dot(Vector3d other) {
         return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ();
     }
@@ -374,6 +376,7 @@ public class Vector3d extends Tuple3d implements Vector3 {
 
     @Override
     public Vector3d cross(Vector3 other) {
+
         if (other instanceof Vector3d) {
             return cross((Vector3d)other);
         } else if (other instanceof BuffVector3d) {
@@ -397,6 +400,7 @@ public class Vector3d extends Tuple3d implements Vector3 {
 
     @Override
     public double tripleProduct(Vector3 v2, Vector3 v3) {
+
         if (v2 instanceof Vector3d && v3 instanceof Vector3d) {
             return tripleProduct((Vector3d)v2, (Vector3d)v3);
         } else if (v2 instanceof BuffVector3d && v3 instanceof BuffVector3d) {
@@ -416,6 +420,7 @@ public class Vector3d extends Tuple3d implements Vector3 {
 
     @Override
     public double scalarProjection(Vector3 where) {
+
         if (where instanceof Vector3d) {
             return scalarProjection((Vector3d)where);
         } else if (where instanceof BuffVector3d) {
@@ -435,6 +440,7 @@ public class Vector3d extends Tuple3d implements Vector3 {
 
     @Override
     public Vector3 vectorProjection(Vector3 where) {
+
         if (where instanceof Vector3d) {
             return vectorProjection((Vector3d)where);
         } else if (where instanceof BuffVector3d) {
@@ -444,12 +450,12 @@ public class Vector3d extends Tuple3d implements Vector3 {
         }
     }
 
-    public Vector3d vectorProjection(Vector3d where) {
+    public Vector3 vectorProjection(Vector3d where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }
 
-    public BuffVector3d vectorProjection(BuffVector3d where) {
+    public Vector3 vectorProjection(BuffVector3d where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }

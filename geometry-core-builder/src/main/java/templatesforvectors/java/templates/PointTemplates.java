@@ -18,25 +18,21 @@
  */
 package templatesforvectors.java.templates;
 
-import templatesforvectors.BaseTemplate;
 import templatesforvectors.model.VectorDescription;
 
 /**
  *
  * @author joseluis
  */
-public class PointTemplates extends BaseTemplate {
+public class PointTemplates extends JavaTemplate {
 
-    private final Template point = load("pebble/java/points/Point.pebble");
-    private final Template pointImp = load("pebble/java/points/PointImp.pebble");
-    private final Template buffpoint = load("pebble/java/buffpoints/BuffPoint.pebble");
-    private final Template buffpointImp = load("pebble/java/buffpoints/BuffPointImp.pebble");
+    private final Template point = load(subPath + "/points/Point.pebble");
+    private final Template pointImp = load(subPath + "/points/PointImp.pebble");
+    private final Template buffpoint = load(subPath + "/buffpoints/BuffPoint.pebble");
+    private final Template buffpointImp = load(subPath + "/buffpoints/BuffPointImp.pebble");
 
     @Override
     public void execute() {
-
-        System.out.println("user.dir  " + System.getProperty("user.dir"));
-        System.out.println("main path " + mainPath);
 
         for (int i = 2; i <= 4; i++) {
             buildSimple(i);

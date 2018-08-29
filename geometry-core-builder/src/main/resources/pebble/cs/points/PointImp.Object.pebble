@@ -1,0 +1,10 @@
+{#
+ # This macro renders the overwriting of Object methods of the tuple.
+ #}
+{%  macro Object( desc, className ) %}
+    @Override
+    public {{ className }} Clone() {
+        return ({{ className }})base.Clone();
+    }
+{%  endmacro %}
+

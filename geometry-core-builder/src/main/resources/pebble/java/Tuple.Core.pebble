@@ -115,6 +115,109 @@ return new Point{{ desc.dim }}{{ desc.suffix }}({{ Properties( desc, ",%n", Proj
 {%- endmacro %}
 #}
 
+{%  macro Documentation( text, arguments = [], return = "", throws = [] ) %}
+/**
+{{ text }}
+{% for arg in arguments %}
+{{ arg }}
+{% endfor %})
+{{ return }}
+{% for throw in throws %}
+{{ throw }}
+{% endfor %})
+ */
+{%  endmacro %}
+
+{%  macro UnfoldMethod( desc, returnType, methodName, arguments, body, modifiers = "public", override = true ) %}
+    {% if override %}
+    @Override
+    {% endif %}
+    {{ modifiers }} {{ returnType }} {{ methodName }}(
+        {%- for arg in arguments %}
+            {%- if not (loop.first) %}, {% endif %}
+            {{- arg[0] }} {{ arg[1] }}
+        {%- endfor %}) {
+
+        if (
+            {%- for arg in arguments %}
+                {%- if not (loop.first) %} && {% endif %}
+                {%- if arg[0] == desc.vectorName %}{{ arg[1] }} instanceof {{ desc.vectorImpName }}
+                {%- elseif arg[0] == desc.pointName %}{{ arg[1] }} instanceof {{ desc.pointImpName }}
+                {%- else %}true
+                {%- endif %}
+            {%- endfor %}) {
+            {% if not returnType == "void" %}return {% endif %}{{ methodName }}(
+                {%- for arg in arguments %}
+                    {%- if not (loop.first) %}, {% endif %}
+                    {%- if arg[0] == desc.vectorName %}({{ desc.vectorImpName }}){{ arg[1] }}
+                    {%- elseif arg[0] == desc.pointName %}({{ desc.pointImpName }}){{ arg[1] }}
+                    {%- else %}{{ arg[1] }}
+                    {%- endif %}
+                {%- endfor %});
+        } else if (
+            {%- for arg in arguments %}
+                {%- if not (loop.first) %} && {% endif %}
+                {%- if arg[0] == desc.vectorName %}{{ arg[1] }} instanceof {{ desc.buffVectorImpName }}
+                {%- elseif arg[0] == desc.pointName %}{{ arg[1] }} instanceof {{ desc.buffPointImpName }}
+                {%- else %}true
+                {%- endif %}
+            {%- endfor %}) {
+            {% if not returnType == "void" %}return {% endif %}{{ methodName }}(
+                {%- for arg in arguments %}
+                    {%- if not (loop.first) %}, {% endif %}
+                    {%- if arg[0] == desc.vectorName %}({{ desc.buffVectorImpName }}){{ arg[1] }}
+                    {%- elseif arg[0] == desc.pointName %}({{ desc.buffPointImpName }}){{ arg[1] }}
+                    {%- else %}{{ arg[1] }}
+                    {%- endif %}
+                {%- endfor %});
+        } else {
+            {% if not returnType == "void" %}return {% endif %}{{ methodName }}(
+                {%- for arg in arguments %}
+                    {%- if not (loop.first) %}, {% endif %}
+                    {%- if arg[0] == desc.vectorName %}new {{ desc.vectorImpName }}({{ arg[1] }})
+                    {%- elseif arg[0] == desc.pointName %}new {{ desc.pointImpName }}({{ arg[1] }})
+                    {%- else %}{{ arg[1] }}
+                    {%- endif %}
+                {%- endfor %});
+        }
+    }
+
+    {{ modifiers }} {{ returnType }} {{ methodName }}(
+        {%- for arg in arguments %}
+            {%- if not (loop.first) %}, {% endif %}
+            {%- if arg[0] == desc.vectorName %}{{ desc.vectorImpName }} {{ arg[1] }}
+            {%- elseif arg[0] == desc.pointName %}{{ desc.pointImpName }} {{ arg[1] }}
+            {%- else %}{{ arg[0] }} {{ arg[1] }}
+            {%- endif %}
+        {%- endfor %}) {
+        {{ body }}
+    }
+
+    {{ modifiers }} {{ returnType }} {{ methodName }}(
+        {%- for arg in arguments %}
+            {%- if not (loop.first) %}, {% endif %}
+            {%- if arg[0] == desc.vectorName %}{{ desc.buffVectorImpName }} {{ arg[1] }}
+            {%- elseif arg[0] == desc.pointName %}{{ desc.buffPointImpName }} {{ arg[1] }}
+            {%- else %}{{ arg[0] }} {{ arg[1] }}
+            {%- endif %}
+        {%- endfor %}) {
+        {{ body }}
+    }
+{%  endmacro %}
+
+{%  macro Method( desc, returnType, methodName, arguments, body, modifiers = "public", override = true ) %}
+    {% if override %}
+    @Override
+    {% endif %}
+    {{ modifiers }} {{ returnType }} {{ methodName }}(
+        {%- for arg in arguments %}
+            {%- if not (loop.first) %}, {% endif %}
+            {{- arg[0] }} {{ arg[1] }}
+        {%- endfor %}) {
+        {{ body }}
+    }
+{%  endmacro %}
+
 {#
  # This macro renders the function InvLerp of the vector/point.
  #}

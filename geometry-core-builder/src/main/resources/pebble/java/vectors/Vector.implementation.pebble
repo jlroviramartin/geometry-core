@@ -1,232 +1,167 @@
 {%  macro Math( desc, className ) %}
-    @Override
-    public boolean isUnit() {
+{%  macrocall Method(
+        desc,
+        "boolean", "isUnit", [] ) %}
+    {% argument body %}
         return isUnit(EPSILON);
-    }
+{%  endmacrocall%}
 
-    @Override
-    public boolean isUnit(double epsilon) {
+{%  macrocall Method(
+        desc,
+        "boolean", "isUnit", [["double", "epsilon"]] ) %}
+    {% argument body %}
         return DoubleUtils.epsilonEquals(getLength(), 1, epsilon);
-    }
+{%  endmacrocall%}
 
-    @Override
-    public {{ className }} getUnit() {
+{%  macrocall Method(
+        desc,
+        className, "getUnit", [] ) %}
+    {% argument body %}
         double len = getLength();
         if (DoubleUtils.epsilonZero(len)) {
             throw new ArithmeticException("Divided by 0");
         }
         return div(len);
-    }
+{%  endmacrocall%}
 
-    @Override
-    public int getQuadrant() {
+{%  macrocall Method(
+        desc,
+        "int", "getQuadrant", [] ) %}
+    {% argument body %}
         {{ GetQuadrant(desc) | indent(2) }}
-    }
+{%  endmacrocall%}
 
-    @Override
-    public double getLength() {
+{%  macrocall Method(
+        desc,
+        "double", "getLength", [] ) %}
+    {% argument body %}
         return Math.sqrt(getLengthCuad());
-    }
+{%  endmacrocall%}
 
-    @Override
-    public double getLengthCuad() {
+{%  macrocall Method(
+        desc,
+        "double", "getLengthCuad", [] ) %}
+    {% argument body %}
         return dot(this);
-    }
+{%  endmacrocall%}
 
-    @Override
-    public double getLengthL1() {
+{%  macrocall Method(
+        desc,
+        "double", "getLengthL1", [] ) %}
+    {% argument body %}
         return {{ GetLengthL1(desc) | indent(4) }};
-    }
+{%  endmacrocall%}
 {%      if desc.dim == 2 %}
 
-    @Override
-    public double getAngle() {
+{%  macrocall Method(
+        desc,
+        "double", "getAngle", [] ) %}
+    {% argument body %}
         return (double) Math.atan2(getY(), getX());
-    }
+{%  endmacrocall%}
 
-    @Override
-    public double angleTo({{ desc.vectorName }} other) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return angleTo(({{ desc.vectorImpName }})other);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return angleTo(({{ desc.buffVectorImpName }})other);
-        } else {
-            return angleTo(new {{ desc.vectorImpName }}(other));
-        }
-    }
-
-    public double angleTo({{ desc.vectorImpName }} other) {
+{%  macrocall UnfoldMethod(
+        desc,
+        "double", "angleTo", [[ desc.vectorName, "other" ]] ) %}
+    {% argument body %}
         // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
         return Math.atan2(getX() * other.getY() - getY() * other.getX(),
                 getX() * other.getX() + getY() * other.getY());
-    }
+{%  endmacrocall%}
 
-    public double angleTo({{ desc.buffVectorImpName }} other) {
-        // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
-        return Math.atan2(getX() * other.getY() - getY() * other.getX(),
-                getX() * other.getX() + getY() * other.getY());
-    }
-
-    @Override
-    public {{ className }} getPerpLeft() {
+{%  macrocall Method(
+        desc,
+        className, "getPerpLeft", [] ) %}
+    {% argument body %}
         return new {{ className }}(-getY(), getX());
-    }
+{%  endmacrocall%}
 
-    @Override
-    public {{ className }} getPerpRight() {
+{%  macrocall Method(
+        desc,
+        className, "getPerpRight", [] ) %}
+    {% argument body %}
         return new {{ className }}(getY(), -getX());
-    }
+{%  endmacrocall%}
 
-    @Override
-    public {{ className }} rotate(double angle) {
+{%  macrocall Method(
+        desc,
+        className, "rotate", [[ "double", "angle" ]] ) %}
+    {% argument body %}
         double s = Math.sin(angle);
         double c = Math.cos(angle);
         return new {{ className }}(({{ desc.type }})(getX() * c - getY() * s),
                 ({{ desc.type }})(getX() * s + getY() * c));
-    }
+{%  endmacrocall%}
 
-    @Override
-    public {{ className }} rotateAndScale(double angle, double len) {
+{%  macrocall Method(
+        desc,
+        className, "rotateAndScale", [[ "double", "angle" ], [ "double", "len" ]] ) %}
+    {% argument body %}
         double s = Math.sin(angle);
         double c = Math.cos(angle);
         return new {{ className }}(({{ desc.type }})(len*(getX() * c - getY() * s)),
                 ({{ desc.type }})(len*(getX() * s + getY() * c)));
-    }
+{%  endmacrocall%}
 {%      endif %}
 
 {{ SimpleMathImplementation( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName ) }}
 
 {{ LerpAndInvLerpAndLinealImplementation( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName )  }}
 
-    @Override
-    public double dot({{ desc.vectorName }} other) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return dot(({{ desc.vectorImpName }})other);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return dot(({{ desc.buffVectorImpName }})other);
-        } else {
-            return dot(new {{ desc.vectorImpName }}(other));
-        }
-    }
-
 {%-     dynmacro Math_dot1( desc, property ) %}
 get{{ property.upperName }}() * other.get{{ property.upperName }}()
 {%-     enddynmacro %}
 
-    public double dot({{ desc.vectorImpName }} other) {
+{%  macrocall UnfoldMethod(
+        desc,
+        "double", "dot", [[ desc.vectorName, "other" ]] ) %}
+    {% argument body %}
         return {{ Properties( desc, " + ", Math_dot1 ) }};
-    }
-
-    public double dot({{ desc.buffVectorImpName }} other) {
-        return {{ Properties( desc, " + ", Math_dot1 ) }};
-    }
+{%  endmacrocall %}
 {%      if desc.dim == 2 %}
 
-    @Override
-    public double cross({{ desc.vectorName }} other) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return cross(({{ desc.vectorImpName }})other);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return cross(({{ desc.buffVectorImpName }})other);
-        } else {
-            return cross(new {{ desc.vectorImpName }}(other));
-        }
-    }
-
-    public double cross({{ desc.vectorImpName }} other) {
+{%  macrocall UnfoldMethod(
+        desc,
+        "double", "cross", [[ desc.vectorName, "other" ]] ) %}
+    {% argument body %}
         return getX() * other.getY() - getY() * other.getX();
-    }
-
-    public double cross({{ desc.buffVectorImpName }} other) {
-        return getX() * other.getY() - getY() * other.getX();
-    }
+{%  endmacrocall %}
 {%      elseif desc.dim == 3 %}
 
-    @Override
-    public {{ className }} cross({{ desc.vectorName }} other) {
-        if (other instanceof {{ desc.vectorImpName }}) {
-            return cross(({{ desc.vectorImpName }})other);
-        } else if (other instanceof {{ desc.buffVectorImpName }}) {
-            return cross(({{ desc.buffVectorImpName }})other);
-        } else {
-            return cross(new {{ desc.vectorImpName }}(other));
-        }
-    }
-
-    public {{ className }} cross({{ desc.vectorImpName }} other) {
+{%  macrocall UnfoldMethod(
+        desc,
+        className, "cross", [[ desc.vectorName, "other" ]] ) %}
+    {% argument body %}
         return new {{ className }}((getY() * other.getZ()) - (getZ() * other.getY()),
                 (getZ() * other.getX()) - (getX() * other.getZ()),
                 (getX() * other.getY()) - (getY() * other.getX()));
-    }
+{%  endmacrocall %}
 
-    public {{ className }} cross({{ desc.buffVectorImpName }} other) {
-        return new {{ className }}((getY() * other.getZ()) - (getZ() * other.getY()),
-                (getZ() * other.getX()) - (getX() * other.getZ()),
-                (getX() * other.getY()) - (getY() * other.getX()));
-    }
-
-    @Override
-    public double tripleProduct({{ desc.vectorName }} v2, {{ desc.vectorName }} v3) {
-        if (v2 instanceof {{ desc.vectorImpName }} && v3 instanceof {{ desc.vectorImpName }}) {
-            return tripleProduct(({{ desc.vectorImpName }})v2, ({{ desc.vectorImpName }})v3);
-        } else if (v2 instanceof {{ desc.buffVectorImpName }} && v3 instanceof {{ desc.buffVectorImpName }}) {
-            return tripleProduct(({{ desc.buffVectorImpName }})v2, ({{ desc.buffVectorImpName }})v3);
-        } else {
-            return tripleProduct(new {{ desc.vectorImpName }}(v2), new {{ desc.vectorImpName }}(v3));
-        }
-    }
-
-    public double tripleProduct({{ desc.vectorImpName }} v2, {{ desc.vectorImpName }} v3) {
+{%  macrocall UnfoldMethod(
+        desc,
+        "double", "tripleProduct", [[ desc.vectorName, "v2" ], [ desc.vectorName, "v3" ]] ) %}
+    {% argument body %}
         return dot(v2.cross(v3));
-    }
-
-    public double tripleProduct({{ desc.buffVectorImpName }} v2, {{ desc.buffVectorImpName }} v3) {
-        return dot(v2.cross(v3));
-    }
+{%  endmacrocall %}
 {%      endif %}
 
-    @Override
-    public double scalarProjection({{ desc.vectorName }} where) {
-        if (where instanceof {{ desc.vectorImpName }}) {
-            return scalarProjection(({{ desc.vectorImpName }})where);
-        } else if (where instanceof {{ desc.buffVectorImpName }}) {
-            return scalarProjection(({{ desc.buffVectorImpName }})where);
-        } else {
-            return scalarProjection(new {{ desc.vectorImpName }}(where));
-        }
-    }
-
-    public double scalarProjection({{ desc.vectorImpName }} where) {
+{%  macrocall UnfoldMethod(
+        desc,
+        "double", "scalarProjection", [[ desc.vectorName, "where" ]] ) %}
+    {% argument body %}
         return dot(where) / where.getLength();
-    }
-
-    public double scalarProjection({{ desc.buffVectorImpName }} where) {
-        return dot(where) / where.getLength();
-    }
+{%  endmacrocall %}
 
 {# vectorProjection:
    where.getUnit().mul( this.dot( where.getUnit() ) )
    =
    where.mul( this.dot( where ) / where.getLengthCuad() )
 #}
-    @Override
-    public {{ desc.vectorName }} vectorProjection({{ desc.vectorName }} where) {
-        if (where instanceof {{ desc.vectorImpName }}) {
-            return vectorProjection(({{ desc.vectorImpName }})where);
-        } else if (where instanceof {{ desc.buffVectorImpName }}) {
-            return vectorProjection(({{ desc.buffVectorImpName }})where);
-        } else {
-            return vectorProjection(new {{ desc.vectorImpName }}(where));
-        }
-    }
-
-    public {{ desc.vectorImpName }} vectorProjection({{ desc.vectorImpName }} where) {
+{%  macrocall UnfoldMethod(
+        desc,
+        desc.vectorName, "vectorProjection", [[ desc.vectorName, "where" ]] ) %}
+    {% argument body %}
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
-    }
-
-    public {{ desc.buffVectorImpName }} vectorProjection({{ desc.buffVectorImpName }} where) {
-        double r = dot(where) / where.getLengthCuad();
-        return where.mul(r);
-    }
+{%  endmacrocall %}
 {%  endmacro %}

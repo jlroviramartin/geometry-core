@@ -1,0 +1,38 @@
+{#
+ # This macro renders the implementation of EpsilonEquatable of the tuple.
+ #}
+{%  macro EpsilonEquatable( desc, className, isBuff = false ) %}
+{# #}
+{%      dynmacro EpsilonEquatable_epsilonEquals1( desc, property ) %}
+other.Get{{ property.upperName }}()
+{%-     enddynmacro %}
+{# #}
+    public bool EpsilonEquals(Tuple other, double epsilon = EPSILON) {
+        if (other is {{ desc.tupleImpName }}) {
+            return EpsilonEquals(({{ desc.tupleImpName }})other, epsilon);
+        } else if (other is {{ desc.buffTupleImpName }}) {
+            return EpsilonEquals(({{ desc.buffTupleImpName }})other, epsilon);
+        } else if (other is Tuple) {
+            return EpsilonEquals(new {{ desc.tupleImpName }}(other), epsilon);
+        }
+        return false;
+    }
+
+    public bool EpsilonEquals({{ desc.tupleImpName }} other, double epsilon = EPSILON) {
+{%  if not isBuff %}
+        if (other == this) {
+            return true;
+        }
+{%  endif %}
+        return EpsilonEquals({{ Properties( desc, ",%n", EpsilonEquatable_epsilonEquals1 ) | indent(4) }}, epsilon);
+    }
+
+    public bool EpsilonEquals({{ desc.buffTupleImpName }} other, double epsilon = EPSILON) {
+{%  if isBuff %}
+        if (other == this) {
+            return true;
+        }
+{%  endif %}
+        return EpsilonEquals({{ Properties( desc, ",%n", EpsilonEquatable_epsilonEquals1 ) | indent(4) }}, epsilon);
+    }
+{%  endmacro %}

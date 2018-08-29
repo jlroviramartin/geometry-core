@@ -574,6 +574,7 @@ public class BuffVector4f extends BuffTuple4f implements BuffVector4 {
 
     @Override
     public double dot(Vector4 other) {
+
         if (other instanceof Vector4f) {
             return dot((Vector4f)other);
         } else if (other instanceof BuffVector4f) {
@@ -582,6 +583,7 @@ public class BuffVector4f extends BuffTuple4f implements BuffVector4 {
             return dot(new Vector4f(other));
         }
     }
+
     public double dot(Vector4f other) {
         return getX() * other.getX() + getY() * other.getY() + getZ() * other.getZ() + getW() * other.getW();
     }
@@ -592,6 +594,7 @@ public class BuffVector4f extends BuffTuple4f implements BuffVector4 {
 
     @Override
     public double scalarProjection(Vector4 where) {
+
         if (where instanceof Vector4f) {
             return scalarProjection((Vector4f)where);
         } else if (where instanceof BuffVector4f) {
@@ -611,6 +614,7 @@ public class BuffVector4f extends BuffTuple4f implements BuffVector4 {
 
     @Override
     public Vector4 vectorProjection(Vector4 where) {
+
         if (where instanceof Vector4f) {
             return vectorProjection((Vector4f)where);
         } else if (where instanceof BuffVector4f) {
@@ -620,12 +624,12 @@ public class BuffVector4f extends BuffTuple4f implements BuffVector4 {
         }
     }
 
-    public Vector4f vectorProjection(Vector4f where) {
+    public Vector4 vectorProjection(Vector4f where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }
 
-    public BuffVector4f vectorProjection(BuffVector4f where) {
+    public Vector4 vectorProjection(BuffVector4f where) {
         double r = dot(where) / where.getLengthCuad();
         return where.mul(r);
     }

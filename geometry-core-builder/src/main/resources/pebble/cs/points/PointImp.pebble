@@ -1,0 +1,47 @@
+{%  extends "pebble/cs/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/cs/Tuple.Core.pebble" %}
+
+{%  import "pebble/cs/points/PointImp.constructors.pebble" %}
+{%  import "pebble/cs/points/PointImp.Object.pebble" %}
+{%  import "pebble/cs/points/PointImp.public.pebble" %}
+{%  import "pebble/cs/points/PointImp.private.pebble" %}
+
+{%  import "pebble/cs/points/Point.common.pebble" %}
+{%  import "pebble/cs/points/Point.implementation.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+using essence.geometry.core.Tuple;
+using essence.geometry.core.{{ desc.vectorName }};
+using essence.geometry.core.{{ desc.pointName }};
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public class {{ desc.pointImpName }} : {{ desc.tupleImpName }}, {{ desc.pointName }} {
+
+{{ Constructors( desc, desc.pointImpName ) }}
+
+{{ Public( desc, desc.pointImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.pointName }}">
+{{ Math( desc, desc.pointImpName, desc.vectorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.pointImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc ) }}
+//</editor-fold>
+}
+{%  endblock %}

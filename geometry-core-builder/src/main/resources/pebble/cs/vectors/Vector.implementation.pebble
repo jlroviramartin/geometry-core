@@ -1,0 +1,234 @@
+{%  macro Math( desc, className ) %}
+    public bool IsUnit(double epsilon = EPSILON) {
+        return DoubleUtils.epsilonEquals(getLength(), 1, epsilon);
+    }
+
+    public {{ className }} GetUnit() {
+        double len = getLength();
+        if (DoubleUtils.epsilonZero(len)) {
+            throw new ArithmeticException("Divided by 0");
+        }
+        return div(len);
+    }
+
+    public int GetQuadrant() {
+        {{ GetQuadrant(desc) | indent(2) }}
+    }
+
+    public double GetLength() {
+        return Math.sqrt(getLengthCuad());
+    }
+
+    public double GetLengthCuad() {
+        return dot(this);
+    }
+
+    public double GetLengthL1() {
+        return {{ GetLengthL1(desc) | indent(4) }};
+    }
+{%      if desc.dim == 2 %}
+
+    public double GetAngle() {
+        return (double) Math.atan2(getY(), getX());
+    }
+
+    public double AngleTo({{ desc.vectorName }} other) {
+        if (other is {{ desc.vectorImpName }}) {
+            return angleTo(({{ desc.vectorImpName }})other);
+        } else if (other is {{ desc.buffVectorImpName }}) {
+            return angleTo(({{ desc.buffVectorImpName }})other);
+        } else {
+            return angleTo(new {{ desc.vectorImpName }}(other));
+        }
+    }
+
+    public double AngleTo({{ desc.vectorImpName }} other) {
+        // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
+        return Math.atan2(getX() * other.getY() - getY() * other.getX(),
+                getX() * other.getX() + getY() * other.getY());
+    }
+
+    public double AngleTo({{ desc.buffVectorImpName }} other) {
+        // http://stackoverflow.com/questions/2150050/finding-signed-angle-between-vectors
+        return Math.atan2(getX() * other.getY() - getY() * other.getX(),
+                getX() * other.getX() + getY() * other.getY());
+    }
+
+    public {{ className }} GetPerpLeft() {
+        return new {{ className }}(-getY(), getX());
+    }
+
+    public {{ className }} GetPerpRight() {
+        return new {{ className }}(getY(), -getX());
+    }
+
+    public {{ className }} Rotate(double angle) {
+        double s = Math.sin(angle);
+        double c = Math.cos(angle);
+        return new {{ className }}(({{ desc.type }})(getX() * c - getY() * s),
+                ({{ desc.type }})(getX() * s + getY() * c));
+    }
+
+    public {{ className }} RotateAndScale(double angle, double len) {
+        double s = Math.sin(angle);
+        double c = Math.cos(angle);
+        return new {{ className }}(({{ desc.type }})(len*(getX() * c - getY() * s)),
+                ({{ desc.type }})(len*(getX() * s + getY() * c)));
+    }
+{%      endif %}
+
+{{ SimpleMathImplementation( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName ) }}
+
+{{ LerpAndInvLerpAndLinealImplementation( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName )  }}
+
+    public double Dot({{ desc.vectorName }} other) {
+        if (other is {{ desc.vectorImpName }}) {
+            return Dot(({{ desc.vectorImpName }})other);
+        } else if (other is {{ desc.buffVectorImpName }}) {
+            return Dot(({{ desc.buffVectorImpName }})other);
+        } else {
+            return Dot(new {{ desc.vectorImpName }}(other));
+        }
+    }
+
+{%-     dynmacro Math_dot1( desc, property ) %}
+get{{ property.upperName }}() * other.get{{ property.upperName }}()
+{%-     enddynmacro %}
+
+    public double Dot({{ desc.vectorImpName }} other) {
+        return {{ Properties( desc, " + ", Math_dot1 ) }};
+    }
+
+    public double Dot({{ desc.buffVectorImpName }} other) {
+        return {{ Properties( desc, " + ", Math_dot1 ) }};
+    }
+{%      if desc.dim == 2 %}
+
+    public double Cross({{ desc.vectorName }} other) {
+        if (other is {{ desc.vectorImpName }}) {
+            return Cross(({{ desc.vectorImpName }})other);
+        } else if (other is {{ desc.buffVectorImpName }}) {
+            return Cross(({{ desc.buffVectorImpName }})other);
+        } else {
+            return Cross(new {{ desc.vectorImpName }}(other));
+        }
+    }
+
+    public double Cross({{ desc.vectorImpName }} other) {
+        return getX() * other.getY() - getY() * other.getX();
+    }
+
+    public double Cross({{ desc.buffVectorImpName }} other) {
+        return getX() * other.getY() - getY() * other.getX();
+    }
+{%      elseif desc.dim == 3 %}
+
+    public {{ className }} cross({{ desc.vectorName }} other) {
+        if (other is {{ desc.vectorImpName }}) {
+            return cross(({{ desc.vectorImpName }})other);
+        } else if (other is {{ desc.buffVectorImpName }}) {
+            return cross(({{ desc.buffVectorImpName }})other);
+        } else {
+            return cross(new {{ desc.vectorImpName }}(other));
+        }
+    }
+
+    public {{ className }} cross({{ desc.vectorImpName }} other) {
+        return new {{ className }}((getY() * other.getZ()) - (getZ() * other.getY()),
+                (getZ() * other.getX()) - (getX() * other.getZ()),
+                (getX() * other.getY()) - (getY() * other.getX()));
+    }
+
+    public {{ className }} cross({{ desc.buffVectorImpName }} other) {
+        return new {{ className }}((getY() * other.getZ()) - (getZ() * other.getY()),
+                (getZ() * other.getX()) - (getX() * other.getZ()),
+                (getX() * other.getY()) - (getY() * other.getX()));
+    }
+
+    public double tripleProduct({{ desc.vectorName }} v2, {{ desc.vectorName }} v3) {
+        if (v2 is {{ desc.vectorImpName }} && v3 is {{ desc.vectorImpName }}) {
+            return tripleProduct(({{ desc.vectorImpName }})v2, ({{ desc.vectorImpName }})v3);
+        } else if (v2 is {{ desc.buffVectorImpName }} && v3 is {{ desc.buffVectorImpName }}) {
+            return tripleProduct(({{ desc.buffVectorImpName }})v2, ({{ desc.buffVectorImpName }})v3);
+        } else {
+            return tripleProduct(new {{ desc.vectorImpName }}(v2), new {{ desc.vectorImpName }}(v3));
+        }
+    }
+
+    public double tripleProduct({{ desc.vectorImpName }} v2, {{ desc.vectorImpName }} v3) {
+        return dot(v2.cross(v3));
+    }
+
+    public double tripleProduct({{ desc.buffVectorImpName }} v2, {{ desc.buffVectorImpName }} v3) {
+        return dot(v2.cross(v3));
+    }
+{%      endif %}
+
+    public double scalarProjection({{ desc.vectorName }} where) {
+        if (where is {{ desc.vectorImpName }}) {
+            return scalarProjection(({{ desc.vectorImpName }})where);
+        } else if (where is {{ desc.buffVectorImpName }}) {
+            return scalarProjection(({{ desc.buffVectorImpName }})where);
+        } else {
+            return scalarProjection(new {{ desc.vectorImpName }}(where));
+        }
+    }
+
+    public double scalarProjection({{ desc.vectorImpName }} where) {
+        return dot(where) / where.getLength();
+    }
+
+    public double scalarProjection({{ desc.buffVectorImpName }} where) {
+        return dot(where) / where.getLength();
+    }
+
+{# vectorProjection:
+   where.getUnit().mul( this.dot( where.getUnit() ) )
+   =
+   where.mul( this.dot( where ) / where.getLengthCuad() )
+#}
+    public {{ desc.vectorName }} vectorProjection({{ desc.vectorName }} where) {
+        if (where is {{ desc.vectorImpName }}) {
+            return vectorProjection(({{ desc.vectorImpName }})where);
+        } else if (where is {{ desc.buffVectorImpName }}) {
+            return vectorProjection(({{ desc.buffVectorImpName }})where);
+        } else {
+            return vectorProjection(new {{ desc.vectorImpName }}(where));
+        }
+    }
+
+    public {{ desc.vectorImpName }} vectorProjection({{ desc.vectorImpName }} where) {
+        double r = dot(where) / where.getLengthCuad();
+        return where.mul(r);
+    }
+
+    public {{ desc.buffVectorImpName }} vectorProjection({{ desc.buffVectorImpName }} where) {
+        double r = dot(where) / where.getLengthCuad();
+        return where.mul(r);
+    }
+{%  endmacro %}
+
+
+
+{%  macro Method1( name,
+                   iName, impName, buffImpName,
+                   return, paramsDecl, paramsCall,
+                   body, args ) %}
+    public {{ return }} {{ name }}({{ iName }} other {{ paramsDecl }}) {
+        if (other is {{ impName }}) {
+            return {{name}}(({{ impName }})other {{ paramsCall }});
+        } else if (other is {{ buffImpName }}) {
+            return {{name}}(({{ buffImpName }})other {{ paramsCall }});
+        } else {
+            return {{name}}(new {{ impName }}(other) {{ paramsCall }});
+        }
+    }
+
+    public {{ return }} {{name}}({{ impName }} other {{ paramsDecl }}) {
+        {{ dynamic( body, args ) | nl }}
+    }
+
+    public {{ return }} {{name}}({{ buffImpName }} other {{ paramsDecl }}) {
+        {{ dynamic( body, args ) | nl }}
+    }
+{%  endmacro %}

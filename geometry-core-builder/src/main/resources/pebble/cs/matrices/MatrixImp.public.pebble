@@ -1,0 +1,19 @@
+{#
+ # This macro renders the public items of the matrix.
+ #}
+{%  macro Public( desc, className ) %}
+{%      if desc.dimRows == desc.dimCols %}
+    /*
+     * This method gets an identity matrix.
+     *
+     * return Identity matrix. 
+     */
+    public static {{ className }} getIdentity() {
+{%          dynmacro Public_getIdentity( desc, property ) %}
+{%              if property.r == property.c %}1{% else %}0{% endif %}
+{%-         enddynmacro %}
+        return new {{ className }}({{ RowsAndColumns( desc, ",%n", ", ", Public_getIdentity ) | indent(3) }});
+    }
+{%      endif %}
+{%  endmacro %}
+

@@ -1,0 +1,80 @@
+{%  extends "pebble/cs/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/cs/Tuple.Core.pebble" %}
+
+{%  import "pebble/cs/tuples/TupleImp.constructors.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.Object.pebble" %}
+{%  import "pebble/cs/tuples/gettersetter/Tuple.getters.pebble" %}
+{%  import "pebble/cs/tuples/Tuple.implementation.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.EpsilonEquatable.pebble" %}
+
+{%  import "pebble/cs/vectors/VectorImp.public.pebble" %}
+{%  import "pebble/cs/vectors/VectorImp.private.pebble" %}
+
+{%  import "pebble/cs/vectors/Vector.common.pebble" %}
+{%  import "pebble/cs/vectors/Vector.implementation.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+using System;
+using essence.geometry.core;
+using essence.util.math;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension vector.
+ */
+public struct {{ desc.vectorImpName }} : {{ desc.vectorName }} {
+
+#region fields
+{{ Fields( desc ) }}
+#endregion
+
+{{ Constructors( desc, desc.vectorImpName ) }}
+
+{{ Public( desc, desc.vectorImpName ) }}
+
+#region accessors
+{{ TupleGetters( desc ) }}
+#endregion
+
+#region {{ desc.vectorName }}
+
+{{ Math( desc, desc.vectorImpName ) }}
+#endregion
+
+#region Object
+{{ Object( desc, desc.vectorImpName ) }}
+#endregion
+
+#region Tuple
+{{ Tuple( desc ) }}
+#endregion
+
+#region EpsilonEquatable<Tuple>
+{{ EpsilonEquatable( desc, desc.tupleImpName ) }}
+#endregion
+
+#region private
+{{ Private( desc, desc.vectorImpName ) }}
+#endregion
+}
+{%  endblock %}
+
+{#
+ # This macro renders the fields of the tuple.
+ #}
+{%  macro Fields( desc ) %}
+    public const {{ desc.type }} EPSILON = essence.util.math.{{ desc.ctype }}Utils.EPSILON;
+{%      for property in desc.properties %}
+    /** {{ property.upperName }} component. */
+    private readonly {{ property.type }} {{ property.name }};
+{%      endfor %}
+    private static String format;
+{%  endmacro %}

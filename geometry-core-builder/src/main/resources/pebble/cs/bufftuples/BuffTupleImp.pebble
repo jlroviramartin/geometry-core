@@ -1,0 +1,84 @@
+{%  extends "pebble/cs/Base.pebble" %}
+
+{#
+ # This template renders a tupe.
+ #}
+
+{%  import "pebble/cs/Tuple.Core.pebble" %}
+
+{%  import "pebble/cs/tuples/TupleImp.constructors.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.public.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.private.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.Object.pebble" %}
+{%  import "pebble/cs/tuples/TupleImp.EpsilonEquatable.pebble" %}
+
+{%  import "pebble/cs/tuples/gettersetter/Tuple.getters.pebble" %}
+{%  import "pebble/cs/tuples/gettersetter/Tuple.setters.pebble" %}
+
+{%  import "pebble/cs/tuples/Tuple.implementation.pebble" %}
+
+{%  import "pebble/cs/bufftuples/TupleSet.implementation.pebble" %}
+
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+using System;
+using System.Text;
+using essence.util.math;
+using essence.geometry.core;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension tuple.
+ */
+public class {{ desc.buffTupleImpName }} : ICloneable, IEpsilonEquatable<Tuple>, Tuple, TupleSet  {
+
+//<editor-fold defaultstate="collapsed" desc="fields">
+{{ Fields( desc ) }}
+//</editor-fold>
+
+{{ Constructors( desc, desc.buffTupleImpName ) }}
+
+{{ Public( desc ) }}
+
+//<editor-fold defaultstate="collapsed" desc="accessors">
+{{ TupleGetters( desc ) }}
+
+{{ TupleSetters( desc ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.buffTupleImpName, true ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Tuple">
+{{ Tuple( desc ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="TupleSet">
+{{ TupleSet( desc ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="EpsilonEquatable<Tuple>">
+{{ EpsilonEquatable( desc, desc.buffTupleImpName, true ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc ) }}
+//</editor-fold>
+}
+{%  endblock %}
+
+{#
+ # This macro renders the fields of the tuple.
+ #}
+{%  macro Fields( desc ) %}
+    public const {{ desc.type }} EPSILON = essence.util.math.{{ desc.ctype }}Utils.EPSILON;
+{%      for property in desc.properties %}
+    /** {{ property.upperName }} component. */
+    private {{ property.type }} {{ property.name }};
+{%      endfor %}
+    private static String format;
+{%  endmacro %}

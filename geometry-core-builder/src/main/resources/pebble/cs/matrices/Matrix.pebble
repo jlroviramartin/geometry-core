@@ -1,0 +1,29 @@
+{%  extends "pebble/cs/Base.pebble" %}
+
+{#
+ # This template renders a matrix.
+ #}
+
+{%  import "pebble/cs/matrices/math/Matrix.Math.interfaces.pebble" %}
+{%  import "pebble/cs/matrices/transform/Matrix.Transform.interfaces.pebble" %}
+{%  import "pebble/cs/matrices/transform/Matrix.BuffTransform.interfaces.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+using essence.geometry.core.MatrixInpector;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.matrixName }}} is a collection of values that represents a matrix.
+ */
+public interface {{ desc.matrixName }} : MatrixInpector {
+
+{{ MatrixTransformInterfaces( desc,desc.matrixName  ) }}
+
+{{ MatrixBuffTransformInterfaces( desc,desc.matrixName  ) }}
+
+{{ MatrixMathInterfaces( desc,desc.matrixName  ) }}
+}
+{%  endblock %}

@@ -1,0 +1,37 @@
+{#
+ # This macro renders the implementation of Tuple of the tuple.
+ #}
+{%  macro TupleSet( desc ) %}
+    public void SetByte(int index, byte value) {
+        SetAt(index, ({{ desc.type }})value);
+    }
+
+    public void SetShort(int index, short value) {
+        SetAt(index, ({{ desc.type }})value);
+    }
+
+    public void SetInteger(int index, int value) {
+        SetAt(index, ({{ desc.type }})value);
+    }
+
+    public void SetLong(int index, long value) {
+        SetAt(index, ({{ desc.type }})value);
+    }
+
+    public void SetFloat(int index, float value) {
+        SetAt(index, ({{ desc.type }})value);
+    }
+
+    public void SetDouble(int index, double value) {
+        SetAt(index, ({{ desc.type }})value);
+    }
+
+    public void Set<T>(int index, T value) {
+        if (typeof(IConvertible).IsAssignableFrom(typeof(T))) {
+            SetAt(index, ((IConvertible)value).To{{ desc.ctype }}(null));
+            return;
+        }
+        throw new NotSupportedException();
+    }
+{%  endmacro %}
+

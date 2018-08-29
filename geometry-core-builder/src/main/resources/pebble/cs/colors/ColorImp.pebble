@@ -1,0 +1,47 @@
+{%  extends "pebble/cs/Base.pebble" %}
+
+{#
+ # This template renders a color.
+ #}
+
+{%  import "pebble/cs/Tuple.Core.pebble" %}
+
+{%  import "pebble/cs/colors/ColorImp.constructors.pebble" %}
+{%  import "pebble/cs/colors/ColorImp.Object.pebble" %}
+{%  import "pebble/cs/colors/ColorImp.public.pebble" %}
+{%  import "pebble/cs/colors/ColorImp.private.pebble" %}
+
+{%  import "pebble/cs/colors/Color.implementation.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+import essence.geometry.core.Tuple;
+import essence.geometry.core.{{ desc.colorName }};
+import essence.geometry.core.DoubleUtils;
+import essence.util.math.ArithmeticError;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * Basic implementation of a {{ desc.dim }} dimension color.
+ */
+public class {{ desc.colorImpName }} : {{ desc.tupleImpName }}, {{ desc.colorName }} {
+
+{{ Constructors( desc, desc.colorImpName ) }}
+
+{{ Public( desc, desc.colorImpName ) }}
+
+//<editor-fold defaultstate="collapsed" desc="{{ desc.colorName }}">
+{{ ColorImplementation( desc, desc.colorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="Object">
+{{ Object( desc, desc.colorImpName ) }}
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="private">
+{{ Private( desc, desc.colorImpName ) }}
+//</editor-fold>
+}
+{%  endblock %}

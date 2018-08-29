@@ -1,0 +1,106 @@
+{%  macro Math( desc, className, vectorClassName ) %}
+    @Override
+    public int GetQuadrant() {
+        {{ GetQuadrant(desc) | indent(2) }}
+    }
+
+{{ Math_GetDistance( desc, "getDistance", "Sqrt" ) }}
+
+{{ Math_GetDistance( desc, "getDistanceCuad", "Cuad" ) }}
+
+{{ Math_GetDistance( desc, "getDistanceL1", "L1" ) }}
+
+{{ SimpleMathImplementation_BinaryOperator( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName, "add", "+" ) }}
+
+{{ SimpleMathImplementation_BinaryOperator( desc, className, desc.vectorName, desc.vectorImpName, desc.buffVectorImpName, "sub", "-" ) }}
+
+    @Override
+    public {{ vectorClassName }} VectorTo({{ desc.pointName }} other) {
+        if (other is {{ desc.pointImpName }}) {
+            return VectorTo(({{ desc.pointImpName }})other);
+        } else if (other is {{ desc.buffPointImpName }}) {
+            return VectorTo(({{ desc.buffPointImpName }})other);
+        } else {
+            return VectorTo(new {{ desc.pointImpName }}(other));
+        }
+    }
+
+    public {{ vectorClassName }} VectorTo({{ desc.pointImpName }} other) {
+        return new {{ vectorClassName }}{{ BinaryOperator(desc, "-", "other.", "") | indent(4) }};
+    }
+
+    public {{ vectorClassName }} VectorTo({{ desc.buffPointImpName }} other) {
+        return new {{ vectorClassName }}{{ BinaryOperator(desc, "-", "other.", "") | indent(4) }};
+    }
+
+{{ LerpAndInvLerpAndLinealImplementation( desc, className, desc.pointName, desc.pointImpName, desc.buffPointImpName )  }}
+
+    @Override
+    public double ScalarProjection({{ desc.vectorName }} where) {
+        if (where is {{ desc.vectorImpName }}) {
+            return ScalarProjection(({{ desc.vectorImpName }})where);
+        } else if (where is {{ desc.buffVectorImpName }}) {
+            return ScalarProjection(({{ desc.buffVectorImpName }})where);
+        } else {
+            return ScalarProjection(new {{ desc.vectorImpName }}(where));
+        }
+    }
+
+    public double ScalarProjection({{ desc.vectorImpName }} where) {
+        {{ ScalarProjection(desc, "", "where.", "return " ) | indent(4) }}
+    }
+
+    public double ScalarProjection({{ desc.buffVectorImpName }} where) {
+        {{ ScalarProjection(desc, "", "where.", "return " ) | indent(4) }}
+    }
+
+{#
+    return new {{ className }}(new {{ vectorClassName }}(this).VectorProjection(where));
+#}
+    @Override
+    public {{ className }} VectorProjection({{ desc.vectorName }} where) {
+        if (where is {{ desc.vectorImpName }}) {
+            return VectorProjection(({{ desc.vectorImpName }})where);
+        } else if (where is {{ desc.buffVectorImpName }}) {
+            return VectorProjection(({{ desc.buffVectorImpName }})where);
+        } else {
+            return VectorProjection(new {{ desc.vectorImpName }}(where));
+        }
+    }
+
+    public {{ className }} VectorProjection({{ desc.vectorImpName }} where) {
+        {{ VectorProjection(desc, "", "where.", "return new " ~ className ) | indent(4) }}
+    }
+
+    public {{ className }} VectorProjection({{ desc.buffVectorImpName }} where) {
+        {{ VectorProjection(desc, "", "where.", "return new " ~ className ) | indent(4) }}
+    }
+{%  endmacro %}
+
+{%  macro Math_GetDistance( desc, name, type ) %}
+    @Override
+    public double {{ name }}({{ desc.pointName }} other) {
+        if (other is {{ desc.pointImpName }}) {
+            return {{ name }}(({{ desc.pointImpName }})other);
+        } else if (other is {{ desc.buffPointImpName }}) {
+            return {{ name }}(({{ desc.buffPointImpName }})other);
+        } else {
+            return {{ name }}(new {{ desc.pointImpName }}(other));
+        }
+    }
+
+    public double {{ name }}({{ desc.pointImpName }} other) {
+        return {{ Math_GetDistanceByType( desc, type ) }};
+    }
+
+    public double {{ name }}({{ desc.buffPointImpName }} other) {
+        return {{ Math_GetDistanceByType( desc, type ) }};
+    }
+{%  endmacro %}
+
+{%  macro Math_GetDistanceByType( desc, type ) %}
+{%  if type == "Sqrt" %}Math.sqrt(getDistanceCuad(other))
+{%- elseif type == "Cuad" %}{{ GetDistanceCuad(desc, "", "other.") | indent(4) }}
+{%- elseif type == "L1" %}{{ GetDistanceL1(desc, "", "other.") | indent(4) }}
+{%- endif %}
+{%  endmacro %}

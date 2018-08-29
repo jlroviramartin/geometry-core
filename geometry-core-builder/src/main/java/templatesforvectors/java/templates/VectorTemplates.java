@@ -18,26 +18,22 @@
  */
 package templatesforvectors.java.templates;
 
-import templatesforvectors.BaseTemplate;
 import templatesforvectors.model.VectorDescription;
 
 /**
  *
  * @author joseluis
  */
-public class VectorTemplates extends BaseTemplate {
+public class VectorTemplates extends JavaTemplate {
 
-    private final Template vector = load("pebble/java/vectors/Vector.pebble");
-    private final Template vectorImp = load("pebble/java/vectors/VectorImp.pebble");
+    private final Template vector = load(subPath + "/vectors/Vector.pebble");
+    private final Template vectorImp = load(subPath + "/vectors/VectorImp.pebble");
 
-    private final Template buffvector = load("pebble/java/buffvectors/BuffVector.pebble");
-    private final Template buffvectorImp = load("pebble/java/buffvectors/BuffVectorImp.pebble");
+    private final Template buffvector = load(subPath + "/buffvectors/BuffVector.pebble");
+    private final Template buffvectorImp = load(subPath + "/buffvectors/BuffVectorImp.pebble");
 
     @Override
     public void execute() {
-
-        System.out.println("user.dir  " + System.getProperty("user.dir"));
-        System.out.println("main path " + mainPath);
 
         for (int i = 2; i <= 4; i++) {
             buildSimple(i);

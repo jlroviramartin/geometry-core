@@ -44,7 +44,6 @@ public class BuffTuple2i implements Cloneable, EpsilonEquatable<Tuple>, Tuple, T
     private int x;
     /** Y component. */
     private int y;
-    private static final Logger LOG = Logger.getLogger(BuffTuple2i.class.getName());
     private static String format;
 //</editor-fold>
 

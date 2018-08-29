@@ -1,0 +1,20 @@
+{%  macro Class( name, accessLevel = "public", extends = "Object", implements = "", body = [], bodyArgs = [] ) %}
+{{ accessLevel }} class {{ name }} : {{ extends }}{{ implements }}
+{
+    {{ dynamic( body, bodyArgs ) }}
+}
+{%  endmacro %}
+
+{%  macro Method( name, accessLevel = "public", return = "void", modifiers="", override = false, params = "", body = [], bodyArgs = [] ) %}
+{{ accessLevel }} {{ modifiers }} {% if override %}override{% endif %} {{ return }} {{ name }}({{ params }})
+{
+    {{ dynamic( body, bodyArgs ) }}
+}
+{%  endmacro %}
+
+
+{%  macro Group( name,body = [], bodyArgs = [] ) %}
+//<editor-fold defaultstate="collapsed" desc="{{ name }}">
+    {{ dynamic( body, bodyArgs ) }}
+//</editor-fold>
+{%  endmacro %}

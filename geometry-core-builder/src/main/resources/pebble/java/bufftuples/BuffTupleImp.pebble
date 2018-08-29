@@ -6,6 +6,7 @@
 
 {%  import "pebble/java/Tuple.Core.pebble" %}
 
+{%  import "pebble/java/tuples/TupleImp.fields.pebble" %}
 {%  import "pebble/java/tuples/TupleImp.constructors.pebble" %}
 {%  import "pebble/java/tuples/TupleImp.public.pebble" %}
 {%  import "pebble/java/tuples/TupleImp.private.pebble" %}
@@ -40,7 +41,7 @@ import static essence.geometry.core.{{ desc.ctype }}Utils.EPSILON;
 public class {{ desc.buffTupleImpName }} implements Cloneable, EpsilonEquatable<Tuple>, Tuple, TupleSet  {
 
 //<editor-fold defaultstate="collapsed" desc="fields">
-{{ Fields( desc ) }}
+{{ Fields( desc, desc.tupleImpName, false ) }}
 //</editor-fold>
 
 {{ Constructors( desc, desc.buffTupleImpName ) }}
@@ -74,15 +75,3 @@ public class {{ desc.buffTupleImpName }} implements Cloneable, EpsilonEquatable<
 //</editor-fold>
 }
 {%  endblock %}
-
-{#
- # This macro renders the fields of the tuple.
- #}
-{%  macro Fields( desc ) %}
-{%      for property in desc.properties %}
-    /** {{ property.upperName }} component. */
-    private {{ property.type }} {{ property.name }};
-{%      endfor %}
-    private static final Logger LOG = Logger.getLogger({{ desc.buffTupleImpName }}.class.getName());
-    private static String format;
-{%  endmacro %}

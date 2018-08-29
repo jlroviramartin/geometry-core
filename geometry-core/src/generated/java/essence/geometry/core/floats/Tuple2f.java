@@ -44,7 +44,6 @@ public class Tuple2f implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
     private final float x;
     /** Y component. */
     private final float y;
-    private static final Logger LOG = Logger.getLogger(Tuple2f.class.getName());
     private static String format;
 //</editor-fold>
 

@@ -46,7 +46,6 @@ public class Tuple3b implements Cloneable, EpsilonEquatable<Tuple>, Tuple  {
     private final byte y;
     /** Z component. */
     private final byte z;
-    private static final Logger LOG = Logger.getLogger(Tuple3b.class.getName());
     private static String format;
 //</editor-fold>
 

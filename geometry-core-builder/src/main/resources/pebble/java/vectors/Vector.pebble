@@ -1,5 +1,7 @@
 {%  extends "pebble/java/Base.pebble" %}
 
+{%  import "pebble/java/Tuple.Core.pebble" %}
+
 {%  block package %}{{ desc._package }}{% endblock %}
 
 {#
@@ -7,10 +9,11 @@
  #}
 
 {%  block content %}
-/**
- * A {@code {{ desc.vectorName }}} is a {{ desc.dim }} dimensional collection of values
- * that represents a vector.
- */
+{% macrocall Documentation() %}
+    {% argument text %}
+A {@code {{ desc.vectorName }}} is a {{ desc.dim }} dimensional collection of values
+that represents a vector.
+{% endmacrocall %}
 public interface {{ desc.vectorName }} extends Tuple {
 
     /**

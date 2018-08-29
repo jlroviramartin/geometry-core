@@ -27,8 +27,10 @@ package essence.geometry.core;
 
 
 /**
- * A {@code Vector2} is a 2 dimensional collection of values
- * that represents a vector.
+A {@code Vector2} is a 2 dimensional collection of values
+that represents a vector.
+)
+)
  */
 public interface Vector2 extends Tuple {
 

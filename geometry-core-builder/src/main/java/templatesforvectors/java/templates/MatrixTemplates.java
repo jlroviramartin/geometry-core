@@ -18,28 +18,20 @@
  */
 package templatesforvectors.java.templates;
 
-import templatesforvectors.BaseTemplate;
 import templatesforvectors.model.MatrixDescription;
 
 /**
  *
  * @author joseluis
  */
-public class MatrixTemplates extends BaseTemplate {
+public class MatrixTemplates extends JavaTemplate {
 
-    private final Template matrixImpPebble = load("pebble/java/matrices/MatrixImp.pebble");
-
-    private final Template matrixPebble = load("pebble/java/matrices/Matrix.pebble");
-    private final Template buffmatrixPebble = load("pebble/java/matrices/BuffMatrix.pebble");
-
-    //private final Template matrixGetterTypePebble = load("pebble/java/matrices/gettersetter/MatrixGetter_Type.pebble");
-    //private final Template matrixSetterTypePebble = load("pebble/java/matrices/gettersetter/Matrixsetter_Type.pebble");
+    private final Template matrixImpPebble = load(subPath + "/matrices/MatrixImp.pebble");
+    private final Template matrixPebble = load(subPath + "/matrices/Matrix.pebble");
+    private final Template buffmatrixPebble = load(subPath + "/matrices/BuffMatrix.pebble");
 
     @Override
     public void execute() {
-
-        System.out.println("user.dir  " + System.getProperty("user.dir"));
-        System.out.println("main path " + mainPath);
 
         for (int i = 2; i <= 4; i++) {
             buildSimple(i);

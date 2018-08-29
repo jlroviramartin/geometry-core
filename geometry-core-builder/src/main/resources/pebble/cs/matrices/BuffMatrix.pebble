@@ -1,0 +1,23 @@
+{%  extends "pebble/cs/Base.pebble" %}
+
+{#
+ # This template renders a matrix.
+ #}
+
+{%  import "pebble/cs/matrices/math/Matrix.MathAndSet.interfaces.pebble" %}
+
+{%  block package %}{{ desc._package }}{% endblock %}
+
+{%  block import %}
+using essence.geometry.core.MatrixSet;
+{%  endblock %}
+
+{%  block content %}
+/**
+ * A {@code {{ desc.buffMatrixName }}} is a collection of values that represents a matrix.
+ */
+public interface {{ desc.buffMatrixName }} : {{ desc.matrixName }}, MatrixSet {
+
+{{ MatrixMathAndSetInterfaces( desc,desc.buffMatrixName  ) }}
+}
+{%  endblock %}

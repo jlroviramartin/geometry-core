@@ -1,0 +1,15 @@
+{#
+ # This macro renders the implementation of Tuple of the tuple.
+ #}
+{%  macro Tuple( desc ) %}
+    public int Size {
+        get { return {{ desc.dim }}; }
+    }
+
+    public void GetInto(TupleSet tupleSet) {
+{%      for property in desc.properties %}
+        tupleSet.Set{{ property.ctype }}({{ property.index }}, {{ property.name }});
+{%      endfor %}
+    }
+{%  endmacro %}
+

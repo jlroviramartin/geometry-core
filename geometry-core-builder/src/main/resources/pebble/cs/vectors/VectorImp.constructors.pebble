@@ -1,0 +1,6 @@
+{#
+ # This macro renders the constructors of the vector.
+ #}
+{%  macro Constructors( desc, className ) %}
+{%  endmacro %}
+
